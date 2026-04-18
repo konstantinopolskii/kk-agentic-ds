@@ -1,0 +1,9 @@
+.DS_Store
+*.log
+node_modules/
+
+# Local-only Claude Code settings
+.claude/settings.local.json
+
+# External skill reference clone (not part of this project)
+bencium-claude-code-design-skill/

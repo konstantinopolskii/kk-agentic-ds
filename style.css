@@ -1,0 +1,587 @@
+/* =========================================================================
+   Reset & base
+   ========================================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ul, ol, menu { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+input, textarea {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+input::placeholder, textarea::placeholder { color: var(--color-text-subtle); }
+img, svg { display: block; max-width: 100%; }
+
+html, body {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--color-text);
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+/* =========================================================================
+   Typography utilities — the whole lexicon fits on one screen
+   ========================================================================= */
+.t-hero {
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tighter);
+}
+.t-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tighter);
+}
+.t-display--medium { font-weight: var(--fw-medium); }
+.t-title {
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-bold);
+}
+.t-subtitle {
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-subtitle);
+  font-weight: var(--fw-bold);
+}
+.t-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--track-tight);
+}
+.t-caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-regular);
+}
+.t-caption--bold { font-weight: var(--fw-bold); }
+.t-micro {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-regular);
+}
+.t-muted { color: var(--color-text-muted); }
+.t-subtle { color: var(--color-text-subtle); }
+.t-mono { font-feature-settings: "tnum" 1, "ss01" 1; font-variant-numeric: tabular-nums; }
+
+/* =========================================================================
+   App shell — three-pane layout, iPad-style split view
+   The frame floats on a muted surface. Each pane scrolls on its own.
+   ========================================================================= */
+.app {
+  background: var(--color-bg);
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, var(--sidebar-w)) 1fr minmax(380px, var(--inspector-w));
+  overflow: hidden;
+}
+
+.sidebar, .doc, .inspector {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+/* Sidebar and doc animate via CSS scroll-behavior on link-click.
+   The inspector drives its own scroll from JS (see index.html), so we
+   leave its scroll-behavior at the default (auto). */
+.sidebar, .doc {
+  scroll-behavior: smooth;
+}
+.sidebar::-webkit-scrollbar,
+.doc::-webkit-scrollbar,
+.inspector::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb,
+.doc::-webkit-scrollbar-thumb,
+.inspector::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: var(--radius-full);
+}
+.sidebar:hover::-webkit-scrollbar-thumb,
+.doc:hover::-webkit-scrollbar-thumb,
+.inspector:hover::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+
+/* =========================================================================
+   Sidebar — brand, nav groups, footer. Stays put; only nav scrolls.
+   ========================================================================= */
+.sidebar {
+  padding: var(--space-6) var(--space-5) var(--space-5) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.sidebar__brand { padding-bottom: var(--space-4); }
+.sidebar__nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+}
+
+/* A single sliding bar tracks the active section. JS updates transform
+   and height; CSS does the motion. */
+.toc__indicator {
+  position: absolute;
+  left: calc(-1 * var(--space-5));
+  top: 0;
+  width: 4px;
+  height: 22px;
+  background: var(--color-text);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, height;
+}
+.toc__indicator.is-positioned {
+  opacity: 1;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.toc__indicator.is-tracking {
+  transition: transform var(--dur-base) var(--ease-out),
+              height var(--dur-base) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
+}
+.sidebar__footer {
+  padding-top: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+/* Nav group — a labeled set of links with a hairline after it */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-bottom: var(--space-3);
+  border-bottom: 0.5px solid var(--color-border);
+}
+.nav-group:last-of-type { border-bottom: none; }
+.nav-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-group > h3 {
+  color: var(--color-text-muted);
+  transition: color var(--dur-base) var(--ease-out);
+}
+.nav-group.is-active > h3 { color: var(--color-text); }
+
+.nav-group__items a {
+  display: block;
+  padding: 2px 0;
+  color: var(--color-text-muted);
+  transition: color var(--dur-base) var(--ease-out);
+}
+.nav-group.is-active .nav-group__items a { color: var(--color-text); }
+.nav-group__items a:hover { color: var(--color-text); }
+
+/* =========================================================================
+   Main document — centered column, generous left indent, long-form
+   ========================================================================= */
+.doc {
+  background: var(--color-bg);
+  padding: var(--space-4) 120px var(--space-20) var(--space-15);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.doc__intro {
+  max-width: 612px;
+  padding-top: var(--space-3);
+}
+.doc__signoff {
+  padding-top: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.doc__signoff-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+}
+.doc__signoff-signature {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: var(--space-2);
+}
+.doc__signoff-signature-img {
+  width: 148px;
+  height: 81px;
+  flex-shrink: 0;
+}
+
+.doc__section {
+  padding-top: var(--space-8);
+  margin-top: var(--space-5);
+  border-top: 0.5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 612px;
+  scroll-margin-top: var(--space-5);
+}
+.doc__section > p + p { margin-top: var(--space-4); }
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-right: var(--space-4);
+}
+/* Each stat entry locks to exactly two lines at the caption line-height,
+   so rows across columns stay level regardless of prose length. */
+.stat > div {
+  min-height: calc(var(--lh-caption) * 2);
+}
+
+/* =========================================================================
+   Inspector — right panel, card-based, content is flexible
+   ========================================================================= */
+.inspector {
+  padding: var(--space-1) var(--space-2) var(--space-20) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.inspector__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* =========================================================================
+   Card — the workhorse surface
+   Transparent by default. On :hover or :focus-within (any focusable
+   descendant has focus), or with [data-state="active"], the surface
+   fades in. That is the entire interaction vocabulary of this kit.
+   ========================================================================= */
+.card {
+  background: transparent;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+/* The surface lights up on hover, on input/textarea focus (typing), or when
+   a card is promoted via data-state. Button focus does NOT count — buttons
+   fire and forget; they shouldn't leave a trail. */
+.card:hover,
+.card:has(input:focus),
+.card:has(textarea:focus),
+.card[data-state="active"] {
+  background: var(--color-surface-overlay);
+}
+.card--heading {
+  padding: var(--space-5) var(--space-6) var(--space-3);
+  gap: var(--space-3);
+}
+.card--heading:hover { background: transparent; } /* headings don't light up */
+.card--comments { padding: var(--space-4) var(--space-10) var(--space-4) var(--space-6); }
+.card--tight { padding: var(--space-4) var(--space-5); gap: var(--space-2); }
+
+/* Interactive card — form-bearing card that runs on a sticky active /
+   minimized state. Active = gray, form visible. Minimized = transparent,
+   heading + CTA only. Promotion and demotion are wired up in JS. */
+.card--interactive {
+  cursor: pointer;
+}
+.card--interactive[data-state="active"] {
+  cursor: default;
+}
+/* Hover no longer needs to reveal the surface on interactive cards — their
+   state is explicit. We let the default hover rule apply to minimized cards
+   (hinting at clickability) but override on active to keep the surface solid. */
+.card--interactive[data-state="active"]:hover { background: var(--color-surface-overlay); }
+
+/* The collapsible is a single-row grid that animates between 0fr and 1fr.
+   Its inner div carries the real content with overflow:hidden so children
+   can clip cleanly while grid-template-rows transitions. */
+.card__collapsible {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--dur-base) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
+}
+.card__collapsible-inner {
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.card--interactive:not([data-state="active"]) .card__collapsible {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-right: var(--space-6);
+}
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* =========================================================================
+   Field — one line, one label, one underline
+   ========================================================================= */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: var(--space-1);
+  border-bottom: 0.5px solid var(--color-border);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.field:focus-within { border-bottom-color: var(--color-border-strong); }
+.field--row {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 6px;
+}
+.field__label { width: 70px; flex-shrink: 0; }
+.field__value {
+  flex: 1;
+  color: var(--color-text-muted);
+}
+.field__input {
+  color: var(--color-text);
+}
+.field__input::placeholder { color: var(--color-text-subtle); }
+
+/* =========================================================================
+   Tiers — side-by-side choice cards inside an inspector card
+   ========================================================================= */
+.tiers {
+  display: flex;
+  gap: var(--space-3);
+}
+.tier {
+  flex: 1;
+  background: var(--color-surface-overlay);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) 21px var(--space-3) var(--space-3);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.tier:hover { background: var(--color-surface-strong); }
+
+/* =========================================================================
+   Button — full-width caption on a surface
+   ========================================================================= */
+.button {
+  background: var(--color-surface-overlay);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  padding: 14px var(--space-6);
+  text-align: center;
+  width: 100%;
+  transition: background-color var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
+}
+.button:hover { background: var(--color-surface-strong); }
+.button:active { background: var(--color-border); }
+.button:focus-visible { outline: 2px solid var(--color-border-strong); outline-offset: 2px; }
+
+/* Primary button — inverts the surface. Black bg, white label. Used as the
+   executing CTA inside an active interactive card. */
+.button--primary {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+.button--primary:hover { background: var(--color-text); opacity: 0.9; }
+.button--primary:active { background: var(--color-text); opacity: 0.8; }
+
+/* State-swap CTAs: interactive cards show different buttons in each state.
+   Minimized card -> secondary CTA (expands). Active card -> primary CTA
+   (executes). The labels must differ — a primary button never repeats the
+   minimized one's text. */
+.card--interactive [data-cta="active"] { display: none; }
+.card--interactive[data-state="active"] [data-cta="minimized"] { display: none; }
+.card--interactive[data-state="active"] [data-cta="active"] { display: block; }
+
+/* =========================================================================
+   Comments
+   ========================================================================= */
+.comment {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: var(--space-2);
+}
+.comment:last-child { padding-bottom: 0; }
+.comment__draft {
+  padding-bottom: var(--space-1);
+  border-bottom: 0.5px solid var(--color-border);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+}
+.comment__draft input { color: var(--color-text); }
+.comment__draft input::placeholder { color: var(--color-text-muted); }
+
+/* =========================================================================
+   Doc example — a live component rendered inline in the manifesto
+   No frame. The section gap does the spacing work.
+   ========================================================================= */
+.doc__example {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.doc__example--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* =========================================================================
+   Tag / pill — tiny inline label for metadata
+   ========================================================================= */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-overlay);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  color: var(--color-text-muted);
+}
+.tag--bold { font-weight: var(--fw-bold); color: var(--color-text); }
+
+/* =========================================================================
+   Divider — hairline break between sections inline with text
+   ========================================================================= */
+.divider {
+  height: 0.5px;
+  background: var(--color-border);
+  border: none;
+  width: 100%;
+}
+
+/* =========================================================================
+   Kbd — keyboard key inline
+   ========================================================================= */
+.kbd {
+  display: inline-block;
+  padding: 1px var(--space-2);
+  border-radius: 6px;
+  background: var(--color-surface-overlay);
+  border: 0.5px solid var(--color-border);
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+}
+
+/* =========================================================================
+   Quote — blockquote with a left rule
+   ========================================================================= */
+.quote {
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-left: 2px solid var(--color-text);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* =========================================================================
+   Checkbox — custom, accessible
+   ========================================================================= */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox input {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  flex-shrink: 0;
+  display: grid;
+  place-content: center;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.checkbox input:checked { background: var(--color-text); border-color: var(--color-text); }
+.checkbox input:checked::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--color-bg);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+/* =========================================================================
+   Avatar — tiny initial disc for author bylines
+   ========================================================================= */
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+/* =========================================================================
+   Utility — inline token chip used inside the manifesto
+   ========================================================================= */
+.swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.swatch__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 0.5px solid var(--color-border);
+  flex-shrink: 0;
+}

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Strategy — the design system, signed</title>
+  <link rel="stylesheet" href="./vars.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- ================================================================= -->
+    <!-- Sidebar: brand, nav groups (scroll-spy targets), footer            -->
+    <!-- ================================================================= -->
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__brand t-title">Konstantin<br />Konstantinopolskii</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+        <section class="nav-group">
+          <h3 class="t-subtitle">Foundations</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#philosophy">Philosophy</a></li>
+            <li class="t-caption"><a href="#material">Material</a></li>
+            <li class="t-caption"><a href="#color">Color</a></li>
+            <li class="t-caption"><a href="#type">Type</a></li>
+            <li class="t-caption"><a href="#space">Space &amp; rhythm</a></li>
+            <li class="t-caption"><a href="#radii">Radii</a></li>
+            <li class="t-caption"><a href="#motion">Motion</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Components</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#card">Card</a></li>
+            <li class="t-caption"><a href="#field">Field</a></li>
+            <li class="t-caption"><a href="#button">Button</a></li>
+            <li class="t-caption"><a href="#tag">Tag</a></li>
+            <li class="t-caption"><a href="#nav">Navigation</a></li>
+            <li class="t-caption"><a href="#comment">Comment</a></li>
+            <li class="t-caption"><a href="#signoff">Signoff</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Patterns</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#columns">Three columns</a></li>
+            <li class="t-caption"><a href="#scroll">Scrolling</a></li>
+            <li class="t-caption"><a href="#states">States</a></li>
+            <li class="t-caption"><a href="#dont-invent">Don&rsquo;t invent</a></li>
+            <li class="t-caption"><a href="#ipad">The iPad feel</a></li>
+            <li class="t-caption"><a href="#tone">Tone of voice</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        2026, fuckgrechka.ru<br />
+        Powered by kk.consulting
+      </footer>
+    </aside>
+
+    <!-- ================================================================= -->
+    <!-- Document: hero + intro + signoff + 20 sections of manifesto        -->
+    <!-- ================================================================= -->
+    <main class="doc" id="doc">
+      <h1 class="t-hero">Strategy</h1>
+
+      <p class="doc__intro t-body">
+        This is the design system for my products. Twenty sections, three
+        parts, seven components, one rule above all rules: don&rsquo;t invent.
+        Read it once. Sign it. Keep a copy next to your editor.
+      </p>
+
+      <div class="doc__signoff">
+        <div class="doc__signoff-stats">
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">20</span> sections written across this document.</div>
+            <div><span class="t-caption--bold">7</span> reusable components in the kit.</div>
+          </div>
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">3</span> parts &mdash; Foundations, Components, Patterns.</div>
+            <div><span class="t-caption--bold">9</span> color tokens, and not one more.</div>
+          </div>
+        </div>
+
+        <div class="doc__signoff-signature">
+          <p class="t-caption">
+            Signed by
+            <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
+            founder at
+            <span class="t-caption--bold">kk.consulting<br /></span>
+            <span class="t-muted">18 April &lsquo;26 at 13:37 Tbilisi Time.</span>
+          </p>
+          <img class="doc__signoff-signature-img" src="signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
+        </div>
+      </div>
+
+      <!-- ================== FOUNDATIONS ================================= -->
+
+      <article class="doc__section" id="philosophy">
+        <h2 class="t-display">
+          Philosophy<br />
+          <span class="t-display--medium t-muted">The essence</span>
+        </h2>
+        <p class="t-body">
+          A product is a document. A document is a conversation. I want both
+          to feel like one object &mdash; floating, quiet, responsive to
+          attention. The rest of this system exists in service of that
+          feeling.
+        </p>
+        <p class="t-body">
+          Read it the way you&rsquo;d read a good memo: once, carefully, then
+          keep a copy next to your editor.
+        </p>
+      </article>
+
+      <article class="doc__section" id="material">
+        <h2 class="t-display">
+          Material<br />
+          <span class="t-display--medium t-muted">Light on white</span>
+        </h2>
+        <p class="t-body">
+          No gradients. No drop shadows. No glass. No blur. Depth comes from
+          type and rhythm, not from imitating physical surfaces. If a card
+          needs weight, give it more space. If a button needs authority, give
+          it a bolder caption. We do not draw plastic on a screen.
+        </p>
+      </article>
+
+      <article class="doc__section" id="color">
+        <h2 class="t-display">
+          Color<br />
+          <span class="t-display--medium t-muted">Nine tokens</span>
+        </h2>
+        <p class="t-body">
+          Nine tokens, end of story. Two backgrounds, two surface tints, two
+          hairlines, three text alphas. No brand blue. No status red. No
+          accent teal.
+        </p>
+        <p class="t-body">
+          If your copy isn&rsquo;t unambiguous without color, rewrite the
+          copy &mdash; not the palette.
+        </p>
+      </article>
+
+      <article class="doc__section" id="type">
+        <h2 class="t-display">
+          Type<br />
+          <span class="t-display--medium t-muted">Inter, three weights</span>
+        </h2>
+        <p class="t-body">
+          Inter &mdash; regular, medium, bold. Seven sizes from 64&thinsp;px
+          hero to 12&thinsp;px micro on a tightened track. No italics outside
+          of quotes.
+        </p>
+        <p class="t-body">
+          Use weight and size for hierarchy. If a layout needs a fourth weight
+          to read, the layout is wrong.
+        </p>
+      </article>
+
+      <article class="doc__section" id="space">
+        <h2 class="t-display">
+          Space &amp; rhythm<br />
+          <span class="t-display--medium t-muted">A 4px grid</span>
+        </h2>
+        <p class="t-body">
+          Every gap, every padding, every margin snaps to a multiple of
+          four. Most of the time: <span class="kbd">4</span>
+          <span class="kbd">8</span> <span class="kbd">12</span>
+          <span class="kbd">16</span> <span class="kbd">20</span>
+          <span class="kbd">24</span> <span class="kbd">32</span>
+          <span class="kbd">48</span>. Larger jumps mean larger semantic
+          distance. If you need a 13&thinsp;px gap, you need something else.
+        </p>
+      </article>
+
+      <article class="doc__section" id="radii">
+        <h2 class="t-display">
+          Radii<br />
+          <span class="t-display--medium t-muted">Two corners</span>
+        </h2>
+        <p class="t-body">
+          Twelve pixels on the little things &mdash; buttons, tiers, keys.
+          Twenty-four on the big things &mdash; cards, heading slots,
+          anything that holds content. That&rsquo;s it. A third radius
+          forces the eye to ask &ldquo;why is this one different?&rdquo;.
+          Usually it isn&rsquo;t.
+        </p>
+      </article>
+
+      <article class="doc__section" id="motion">
+        <h2 class="t-display">
+          Motion<br />
+          <span class="t-display--medium t-muted">200ms ease-out</span>
+        </h2>
+        <p class="t-body">
+          Motion is confirmation, not performance. Two hundred milliseconds,
+          ease-out, on <span class="kbd">transform</span> and
+          <span class="kbd">opacity</span> only. You should feel it, not watch
+          it.
+        </p>
+        <p class="t-body">
+          If a user has <span class="kbd">prefers-reduced-motion</span> on, we
+          drop duration to zero and let state change instantly.
+        </p>
+      </article>
+
+      <!-- ================== COMPONENTS ================================== -->
+
+      <article class="doc__section" id="card">
+        <h2 class="t-display">
+          Card<br />
+          <span class="t-display--medium t-muted">The surface that breathes</span>
+        </h2>
+        <p class="t-body">
+          Every widget is a card. Cards come in two flavors. A
+          <span class="t-caption--bold">static card</span> is transparent at
+          rest and fades to a 3% surface on hover or while an input inside
+          has focus. Use it for info and light actions.
+        </p>
+        <p class="t-body">
+          An <span class="t-caption--bold">interactive card</span> has
+          additional content hidden under a minimized version. It runs on a
+          sticky active / minimized state. Active means gray with the
+          collapsible revealed. Minimized means transparent with only the
+          heading and a CTA. Triggering another interactive card in the
+          same stack promotes it and demotes the previous one. One active
+          per stack.
+        </p>
+        <p class="t-body">
+          What qualifies a card to <em>have</em> a minimized state is
+          hidden content, not inputs. A card that just fires an action has
+          nothing worth keeping open &mdash; it stays static. But input
+          focus still lights the surface on any card: if someone&rsquo;s
+          typing here, that card is active.
+        </p>
+        <p class="t-body">
+          No borders. No shadows. Let hover, input focus, and state do the
+          work.
+        </p>
+        <div class="doc__example">
+          <div class="card">
+            <div class="card__heading">
+              <h3 class="t-title">Static card</h3>
+              <p class="t-caption">Hover me. Focus any child input and the surface persists.</p>
+            </div>
+            <label class="field">
+              <input class="t-caption field__input" type="text" placeholder="Type here to hold the surface" />
+            </label>
+          </div>
+          <div class="card card--interactive">
+            <div class="card__heading">
+              <h3 class="t-title">Interactive card</h3>
+              <p class="t-caption">Click me to expand. Active is sticky; only one per stack at a time.</p>
+            </div>
+            <div class="card__collapsible">
+              <div class="card__collapsible-inner">
+                <label class="field">
+                  <input class="t-caption field__input" type="text" placeholder="Now I&rsquo;m open for business" />
+                </label>
+              </div>
+            </div>
+            <button class="button t-subtitle" data-cta="minimized">Open</button>
+            <button class="button button--primary t-subtitle" data-cta="active">Commit</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="doc__section" id="field">
+        <h2 class="t-display">
+          Field<br />
+          <span class="t-display--medium t-muted">A line and a label</span>
+        </h2>
+        <p class="t-body">
+          A label above, a value below, a 0.5&thinsp;px hairline between
+          this field and the next. On focus the hairline deepens from 10%
+          to 20%. No boxes around inputs. The underline is the input.
+        </p>
+        <div class="doc__example">
+          <div class="card">
+            <label class="field field--row">
+              <span class="t-caption--bold field__label">Base</span>
+              <input class="t-caption field__input" type="text" value="16px" />
+            </label>
+            <label class="field field--row">
+              <span class="t-caption--bold field__label">Ratio</span>
+              <input class="t-caption field__input" type="text" value="1.25" />
+            </label>
+            <label class="field">
+              <input class="t-caption field__input" type="text" placeholder="Leave a note" />
+            </label>
+          </div>
+        </div>
+      </article>
+
+      <article class="doc__section" id="button">
+        <h2 class="t-display">
+          Button<br />
+          <span class="t-display--medium t-muted">A caption on a surface</span>
+        </h2>
+        <p class="t-body">
+          A bold 16&thinsp;px label on a 12&thinsp;px radius, full-width by
+          default. Two variants.
+        </p>
+        <p class="t-body">
+          The <span class="t-caption--bold">secondary</span> sits on a 3%
+          surface &mdash; this is the default. Use it for the CTA of a
+          minimized card, a confirmation, any light action. Hover deepens.
+          Press deepens further.
+        </p>
+        <p class="t-body">
+          The <span class="t-caption--bold">primary</span> inverts: black
+          surface, white label. Use it for the executing action inside an
+          active interactive card &mdash; where the user has made a choice
+          and now commits. Its label is never the same as the minimized
+          CTA: if the minimized card says &ldquo;Pick tokens&rdquo;, the
+          primary says &ldquo;Copy tokens&rdquo;, not &ldquo;Pick
+          tokens&rdquo; again.
+        </p>
+        <p class="t-body">
+          Never outline-only. Never text-only. Never floating over content.
+          One primary per card.
+        </p>
+        <div class="doc__example">
+          <button class="button t-subtitle">Secondary</button>
+          <button class="button button--primary t-subtitle">Primary</button>
+        </div>
+      </article>
+
+      <article class="doc__section" id="tag">
+        <h2 class="t-display">
+          Tag<br />
+          <span class="t-display--medium t-muted">Metadata, not action</span>
+        </h2>
+        <p class="t-body">
+          A 12&thinsp;px micro-caption on a pill-shaped 3% surface. Tags are
+          for metadata &mdash; <span class="tag">a date</span>
+          <span class="tag">a count</span>
+          <span class="tag">a status word</span>. They are never clickable.
+          If you feel tempted, you want a button.
+        </p>
+        <div class="doc__example doc__example--row">
+          <span class="tag">Foundations</span>
+          <span class="tag">7 components</span>
+          <span class="tag">18 Apr &rsquo;26</span>
+          <span class="tag tag--bold">Signed</span>
+        </div>
+      </article>
+
+      <article class="doc__section" id="nav">
+        <h2 class="t-display">
+          Navigation<br />
+          <span class="t-display--medium t-muted">A list with a hairline</span>
+        </h2>
+        <p class="t-body">
+          A nav group is a bold subtitle, a list of captions, a 0.5&thinsp;px
+          hairline under the whole thing. The active item is in bold; nothing
+          else marks it. No colored dot. No left bar. No pill. Just the
+          weight change.
+        </p>
+        <div class="doc__example">
+          <section class="nav-group">
+            <h3 class="t-subtitle">Foundations</h3>
+            <ul class="nav-group__items">
+              <li class="t-caption"><a href="#philosophy">Philosophy</a></li>
+              <li class="t-caption is-active"><a href="#type">Type</a></li>
+              <li class="t-caption"><a href="#space">Space &amp; rhythm</a></li>
+              <li class="t-caption"><a href="#motion">Motion</a></li>
+            </ul>
+          </section>
+        </div>
+      </article>
+
+      <article class="doc__section" id="comment">
+        <h2 class="t-display">
+          Comment<br />
+          <span class="t-display--medium t-muted">Name and body</span>
+        </h2>
+        <p class="t-body">
+          A comment is a bold subtitle for the name and a caption for the
+          body. Drafts render the body as an input. Comments live inside a
+          comments card, never floating loose.
+        </p>
+        <div class="doc__example">
+          <div class="card card--comments">
+            <div class="comment">
+              <div class="t-subtitle">Sofia Hlazunova</div>
+              <p class="t-caption">Could you add one more example?</p>
+            </div>
+            <div class="comment">
+              <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+              <p class="t-caption">Already did. Look above.</p>
+            </div>
+            <div class="comment">
+              <div class="t-subtitle">You</div>
+              <label class="comment__draft t-caption">
+                <input type="text" placeholder="Reply&hellip;" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="doc__section" id="signoff">
+        <h2 class="t-display">
+          Signoff<br />
+          <span class="t-display--medium t-muted">Stats, signature, time</span>
+        </h2>
+        <p class="t-body">
+          A few short stats in a three-column grid, each stat exactly two
+          lines tall at the column&rsquo;s width. If you only have four
+          things to say, leave the third column empty &mdash; whitespace is
+          the fifth stat. One-line stats feel careless; three feels bloated.
+        </p>
+        <p class="t-body">
+          One short paragraph with author, role, timestamp. A handwritten
+          signature in SVG, right-aligned. This is how a document ends. Use
+          it. Don&rsquo;t invent a different ending.
+        </p>
+        <div class="doc__example">
+          <div class="doc__signoff-stats">
+            <div class="stat t-caption">
+              <div><span class="t-caption--bold">3</span> revisions logged before this sealing.</div>
+            </div>
+            <div class="stat t-caption">
+              <div><span class="t-caption--bold">0</span> edits pending after the signoff.</div>
+            </div>
+          </div>
+          <div class="doc__signoff-signature">
+            <p class="t-caption">
+              Signed by <span class="t-caption--bold">Author Name,</span><br />
+              role at <span class="t-caption--bold">organization</span><br />
+              <span class="t-muted">day, time, timezone.</span>
+            </p>
+            <img class="doc__signoff-signature-img" src="signature.svg" alt="Sample signature" />
+          </div>
+        </div>
+      </article>
+
+      <!-- ================== PATTERNS ==================================== -->
+
+      <article class="doc__section" id="columns">
+        <h2 class="t-display">
+          Three columns<br />
+          <span class="t-display--medium t-muted">Nav, doc, inspector</span>
+        </h2>
+        <p class="t-body">
+          Left column is the map. Middle column is the territory. Right
+          column is the margin &mdash; actions, references, comments.
+        </p>
+        <p class="t-body">
+          The middle column is the thing you read; the other two answer
+          questions about it without ever becoming the thing.
+        </p>
+      </article>
+
+      <article class="doc__section" id="scroll">
+        <h2 class="t-display">
+          Scrolling<br />
+          <span class="t-display--medium t-muted">Three independent scrolls</span>
+        </h2>
+        <p class="t-body">
+          The shell is fixed. Each column scrolls by itself. This is what
+          makes the app feel like one object instead of one long page: you
+          can read without losing your place in the inspector, and work the
+          inspector without losing your place in the doc.
+        </p>
+      </article>
+
+      <article class="doc__section" id="states">
+        <h2 class="t-display">
+          States<br />
+          <span class="t-display--medium t-muted">One surface, three meanings</span>
+        </h2>
+        <p class="t-body">
+          Three states, one visual: the 3% surface. Hover means
+          &ldquo;I&rsquo;m pointing&rdquo;. Input focus means &ldquo;I&rsquo;m
+          typing&rdquo;. Active means &ldquo;this is the thing &mdash;
+          there&rsquo;s content revealed here worth staying with&rdquo;.
+          Button focus is not a card state &mdash; buttons fire and forget,
+          so the card fades back as soon as the mouse leaves.
+        </p>
+        <p class="t-body">
+          For interactive cards, active is sticky and exclusive: it stays
+          until another card in the same stack is triggered &mdash; a
+          click, a focus on an input, any action that semantically targets
+          that card. Reading the doc, scrolling, tabbing through the
+          sidebar: none of those touch inspector state.
+        </p>
+        <p class="t-body">
+          When a card is triggered, the inspector glides so the newly-active
+          card sits at the top &mdash; a 320&thinsp;ms ease-out that starts
+          immediately, not after anything else. The next thing you want is
+          always the first thing you see. The replaced card collapses
+          silently under the fold; you never see it close.
+        </p>
+      </article>
+
+      <article class="doc__section" id="dont-invent">
+        <h2 class="t-display">
+          Don&rsquo;t invent<br />
+          <span class="t-display--medium t-muted">Ask before you add</span>
+        </h2>
+        <p class="t-body">
+          Every new component doubles the rules people have to remember.
+          Before you reach for a new shape, ask whether a card with
+          different contents will do. The answer is yes more often than you
+          think.
+        </p>
+        <p class="t-body">
+          If it&rsquo;s not yes, bring the sketch to me.
+        </p>
+      </article>
+
+      <article class="doc__section" id="ipad">
+        <h2 class="t-display">
+          The iPad feel<br />
+          <span class="t-display--medium t-muted">Split view, soft inside</span>
+        </h2>
+        <p class="t-body">
+          Three panes in one frame, each with its own scroll. The left stays
+          while you read. The right stays while you read. Only the middle
+          moves. That&rsquo;s the iPad split view.
+        </p>
+        <p class="t-body">
+          Soft corners on every surface inside. Crisp edges outside where
+          the document meets the screen. Not skeuomorphic buttons, not
+          liquid glass. Rest and motion.
+        </p>
+      </article>
+
+      <article class="doc__section" id="tone">
+        <h2 class="t-display">
+          Tone of voice<br />
+          <span class="t-display--medium t-muted">First person, signed</span>
+        </h2>
+        <p class="t-body">
+          Every page is authored. Use &ldquo;I&rdquo; and &ldquo;we&rdquo;.
+          Make claims. Use periods. If a paragraph doesn&rsquo;t end in a
+          decision, cut it.
+        </p>
+        <p class="t-body">
+          If a page doesn&rsquo;t deserve a signature, it doesn&rsquo;t
+          deserve to exist. Sign everything.
+        </p>
+      </article>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- Inspector: flexible widgets. Cards are transparent until touched.  -->
+    <!-- ================================================================= -->
+    <aside class="inspector" aria-label="Actions and comments">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Next steps</h2>
+        </header>
+
+        <div class="card card--interactive" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title">Try the surface</h3>
+            <p class="t-caption">The whole kit in one card &mdash; fields, tiers, a button. Trigger another card below to watch this one minimize.</p>
+          </div>
+
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Scale</span>
+                <input class="t-caption field__input" type="text" value="1.25" />
+              </label>
+              <label class="field">
+                <input class="t-caption field__input" type="text" placeholder="Add a note" />
+              </label>
+
+              <div class="card__heading">
+                <h4 class="t-subtitle">Pick a default</h4>
+                <p class="t-caption">Either is fine. Change is cheap.</p>
+              </div>
+
+              <div class="tiers">
+                <div class="tier">
+                  <div class="t-caption--bold">Monochrome</div>
+                  <p class="t-caption">Pure black on white. Six alphas. No brand.</p>
+                </div>
+                <div class="tier">
+                  <div class="t-caption--bold">Muted warm</div>
+                  <p class="t-caption">Same tokens with a 2% warm tint in neutrals.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="button t-subtitle" data-cta="minimized">Try it</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Apply</button>
+        </div>
+
+        <div class="card card--interactive">
+          <div class="card__heading">
+            <h3 class="t-title">Adopt the kit</h3>
+            <p class="t-caption">Copy <span class="kbd">vars.css</span> and <span class="kbd">style.css</span> into your app. Delete what you don&rsquo;t need. Sign your document.</p>
+          </div>
+
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <label class="checkbox t-caption">
+                <input type="checkbox" checked />
+                <span>Color tokens</span>
+              </label>
+              <label class="checkbox t-caption">
+                <input type="checkbox" checked />
+                <span>Type tokens</span>
+              </label>
+              <label class="checkbox t-caption">
+                <input type="checkbox" />
+                <span>Motion tokens</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="button t-subtitle" data-cta="minimized">Pick tokens</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Copy tokens</button>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Read once, skim forever</h3>
+            <p class="t-caption">Keep this tab open while you build. When something feels off, the answer is in one of the twenty sections.</p>
+          </div>
+          <button class="button t-subtitle">Go to top</button>
+        </div>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Comments</h2>
+        </header>
+
+        <div class="card card--comments">
+          <div class="comment">
+            <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+            <label class="comment__draft t-caption">
+              <input type="text" placeholder="Add a comment" />
+            </label>
+          </div>
+        </div>
+
+        <div class="card card--comments">
+          <div class="comment">
+            <div class="t-subtitle">Sofia Hlazunova</div>
+            <p class="t-caption">It&rsquo;s 20/80. Let&rsquo;s ship.</p>
+          </div>
+          <div class="comment">
+            <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+            <p class="t-caption">I&rsquo;d reduce one more thing and sign.</p>
+          </div>
+          <div class="comment">
+            <div class="t-subtitle">Sofia Hlazunova</div>
+            <p class="t-caption">Which one?</p>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <!-- Minimal scroll-spy: highlight the nav item for the section on screen -->
+  <script>
+    (function () {
+      var nav = document.getElementById('toc');
+      var doc = document.getElementById('doc');
+      if (!nav || !doc || !('IntersectionObserver' in window)) return;
+
+      var indicator = nav.querySelector('.toc__indicator');
+      var sections = doc.querySelectorAll('.doc__section');
+      var links = {};
+      nav.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        links[a.getAttribute('href').slice(1)] = a.parentElement;
+      });
+
+      var firstId = sections[0] && sections[0].id;
+
+      function setActive(id) {
+        var activeLi = null;
+        Object.keys(links).forEach(function (key) {
+          var li = links[key];
+          var on = key === id;
+          li.classList.toggle('is-active', on);
+          if (on) activeLi = li;
+        });
+        // Mark the owning group as active (heading + items go full color).
+        nav.querySelectorAll('.nav-group').forEach(function (group) {
+          group.classList.toggle('is-active', activeLi && group.contains(activeLi));
+        });
+        moveIndicator(activeLi);
+      }
+
+      function moveIndicator(activeLi) {
+        if (!indicator) return;
+        if (!activeLi) {
+          indicator.classList.remove('is-positioned');
+          return;
+        }
+        var navRect = nav.getBoundingClientRect();
+        var liRect = activeLi.getBoundingClientRect();
+        var top = liRect.top - navRect.top;
+        indicator.style.transform = 'translate3d(0,' + top + 'px,0)';
+        indicator.style.height = liRect.height + 'px';
+        if (!indicator.classList.contains('is-positioned')) {
+          indicator.classList.add('is-positioned');
+          // One frame later, turn on the sliding transitions so the first
+          // placement doesn't animate in from the origin.
+          requestAnimationFrame(function () {
+            indicator.classList.add('is-tracking');
+          });
+        }
+      }
+
+      var visible = new Set();
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        });
+        var best = null;
+        for (var i = 0; i < sections.length; i++) {
+          if (visible.has(sections[i].id)) { best = sections[i].id; break; }
+        }
+        setActive(best || firstId);
+      }, { root: doc, rootMargin: '0px 0px -60% 0px', threshold: 0 });
+
+      sections.forEach(function (s) { observer.observe(s); });
+      setActive(firstId);
+
+      // Keep the indicator aligned when the sidebar resizes.
+      window.addEventListener('resize', function () {
+        var active = nav.querySelector('.nav-group__items li.is-active');
+        if (active) moveIndicator(active);
+      });
+
+      // Smooth-scroll clicks inside the doc column (not the whole window).
+      nav.addEventListener('click', function (e) {
+        var a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        var id = a.getAttribute('href').slice(1);
+        var target = document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        var top = target.offsetTop - 20;
+        doc.scrollTo({ top: top, behavior: 'smooth' });
+        history.replaceState(null, '', '#' + id);
+      });
+    })();
+
+    // Interactive cards: one-active-per-stack in the inspector. Any click or
+    // focus inside a card--interactive promotes it and demotes the rest.
+    // Static cards and the doc don't trigger anything.
+    (function () {
+      var inspector = document.querySelector('.inspector');
+      if (!inspector) return;
+
+      // JS-driven tween of inspector.scrollTop. We roll our own because CSS
+      // scroll-behavior: smooth fights the collapsible's height animation
+      // on the same element tree. Uses rAF so it runs at display rate and
+      // cooperates with the collapsible's transition.
+      var _inspectorScrollAnim = 0;
+      function glideInspectorScroll(target, duration) {
+        var startTop = inspector.scrollTop;
+        var distance = target - startTop;
+        if (Math.abs(distance) < 1) return;
+        var startTime = performance.now();
+        var myId = ++_inspectorScrollAnim;
+        function step(now) {
+          if (myId !== _inspectorScrollAnim) return; // a newer trigger superseded us
+          var elapsed = now - startTime;
+          var progress = Math.min(elapsed / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+          inspector.scrollTop = startTop + distance * eased;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      function setActive(card) {
+        if (card.getAttribute('data-state') === 'active') return;
+
+        // Collapse every other active card INSTANTLY. We suppress the
+        // collapsible's transition for exactly one reflow so the user
+        // never sees the close animation — the replaced card just
+        // vanishes from view.
+        inspector.querySelectorAll('.card--interactive[data-state="active"]').forEach(function (c) {
+          var collapsible = c.querySelector('.card__collapsible');
+          if (collapsible) collapsible.style.transition = 'none';
+          c.removeAttribute('data-state');
+          if (collapsible) {
+            // Force the browser to commit the closed layout with no
+            // animation, then restore the transition for future opens.
+            collapsible.offsetHeight; // eslint-disable-line no-unused-expressions
+            collapsible.style.transition = '';
+          }
+        });
+
+        // Promote the new card. CSS transition on its collapsible runs
+        // naturally — it animates OPEN downward over --dur-base (200 ms).
+        card.setAttribute('data-state', 'active');
+
+        // Start the scroll right now — don't wait for anything. We measured
+        // after the instant close above, so the target is the card's
+        // settled top. The scroll glides over 320 ms (--dur-slow), running
+        // in parallel with the new card's 200 ms open.
+        var inspectorRect = inspector.getBoundingClientRect();
+        var cardRect = card.getBoundingClientRect();
+        var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
+        glideInspectorScroll(Math.max(0, target), 320);
+      }
+
+      inspector.addEventListener('click', function (e) {
+        var card = e.target.closest('.card--interactive');
+        if (card) setActive(card);
+      });
+      inspector.addEventListener('focusin', function (e) {
+        var card = e.target.closest('.card--interactive');
+        if (card) setActive(card);
+      });
+    })();
+  </script>
+</body>
+</html>
