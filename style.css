@@ -585,3 +585,119 @@ body {
   border: 0.5px solid var(--color-border);
   flex-shrink: 0;
 }
+
+/* =========================================================================
+   Narrow — one rule: show the column where the change is happening.
+   Desktop shows three columns. Tablet shows doc + inspector, with the
+   sidebar invoked on demand. Phone shows one column at a time, selected
+   by [data-view] on .app. Everything inside a column — cards, fields,
+   active-sticky state — is identical at any width.
+   ========================================================================= */
+
+/* Narrow-only controls are hidden on desktop. */
+.doc__topbar,
+.column__back { display: none; }
+
+/* Topbar — sticky band inside the doc with two caption-bold tabs. Left
+   swaps to nav; right swaps to inspector. Visible only on narrow views. */
+.doc__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--color-bg);
+  padding: var(--space-3) 0;
+  margin-bottom: var(--space-3);
+  border-bottom: 0.5px solid var(--color-border);
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+.doc__topbar-tab {
+  color: var(--color-text-muted);
+  padding: 0;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.doc__topbar-tab:hover { color: var(--color-text); }
+.doc__topbar-tab--right { margin-left: auto; }
+
+/* Back caption — sticky row at the top of a sidebar or inspector when it
+   takes over the phone viewport. Bold caption on a hairline. */
+.column__back {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  padding: var(--space-3) 0;
+  margin: 0 0 var(--space-3);
+  border-bottom: 0.5px solid var(--color-border);
+  text-align: left;
+  width: 100%;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.column__back:hover { color: var(--color-text); }
+
+/* Tablet — two columns. Sidebar is hidden by default and invoked via
+   [data-view="nav"], which swaps it in at the inspector's expense. */
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 1fr minmax(360px, var(--inspector-w));
+  }
+  .sidebar { display: none; }
+  .app[data-view="nav"] {
+    grid-template-columns: minmax(220px, var(--sidebar-w)) 1fr;
+  }
+  .app[data-view="nav"] .sidebar { display: flex; }
+  .app[data-view="nav"] .inspector { display: none; }
+
+  .doc__topbar { display: flex; }
+  /* The inspector is present by default on tablet, so a Comments tab
+     would be decorative. Only Navigation shows. */
+  .doc__topbar-tab--right { display: none; }
+
+  .doc {
+    padding: 0 var(--space-6) var(--space-20) var(--space-6);
+  }
+}
+
+/* Phone — one column at a time, governed by [data-view] on .app. */
+@media (max-width: 768px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .sidebar, .doc, .inspector { display: none; }
+  .app[data-view="doc"] .doc { display: flex; }
+  .app[data-view="nav"] .sidebar { display: flex; }
+  .app[data-view="inspector"] .inspector { display: flex; }
+
+  .doc__topbar-tab--right { display: block; }
+  .column__back { display: block; }
+
+  .doc {
+    padding: 0 var(--space-4) var(--space-20) var(--space-4);
+  }
+  .sidebar {
+    padding: 0 var(--space-4) var(--space-5) var(--space-4);
+  }
+  .inspector {
+    padding: 0 var(--space-4) var(--space-20) var(--space-4);
+  }
+
+  /* Signoff reflows to a single column; whitespace is the last stat. */
+  .doc__signoff-stats { grid-template-columns: 1fr; }
+  .doc__signoff-signature {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
+  .t-hero { font-size: 48px; line-height: 48px; }
+
+  /* Comments card is wide by default — tighten the right padding on phone. */
+  .card--comments { padding: var(--space-4) var(--space-5); }
+
+  /* The toc indicator's left offset tracks sidebar padding, which
+     tightens on phone. */
+  .sidebar .toc__indicator { left: calc(-1 * var(--space-4)); }
+}

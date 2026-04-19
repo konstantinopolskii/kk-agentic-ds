@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="app">
+  <div class="app" data-view="doc">
     <!-- ================================================================= -->
     <!-- Sidebar: brand, nav groups (scroll-spy targets), footer            -->
+    <!-- Includes a narrow-only back caption at the top.                    -->
     <!-- ================================================================= -->
     <aside class="sidebar" aria-label="Navigation">
+      <button class="column__back t-caption--bold" data-view-target="doc" type="button">Back to doc</button>
       <div class="sidebar__brand t-title">Konstantin<br />Konstantinopolskii</div>
 
       <nav class="sidebar__nav" id="toc">
@@ -51,6 +53,7 @@
             <li class="t-caption"><a href="#states">States</a></li>
             <li class="t-caption"><a href="#dont-invent">Don&rsquo;t invent</a></li>
             <li class="t-caption"><a href="#ipad">The iPad feel</a></li>
+            <li class="t-caption"><a href="#narrow">Narrow</a></li>
             <li class="t-caption"><a href="#tone">Tone of voice</a></li>
           </ul>
         </section>
@@ -66,18 +69,26 @@
     <!-- Document: hero + intro + signoff + 20 sections of manifesto        -->
     <!-- ================================================================= -->
     <main class="doc" id="doc">
+      <!-- Narrow-only top bar. Two captions target the other columns.
+           Hidden on desktop by CSS. On tablet only the left one shows. -->
+      <header class="doc__topbar">
+        <button class="doc__topbar-tab t-caption--bold" data-view-target="nav" type="button">Navigation</button>
+        <button class="doc__topbar-tab doc__topbar-tab--right t-caption--bold" data-view-target="inspector" type="button">Comments</button>
+      </header>
+
       <h1 class="t-hero">Strategy</h1>
 
       <p class="doc__intro t-body">
-        This is the design system for my products. Twenty sections, three
-        parts, seven components, one rule above all rules: don&rsquo;t invent.
+        This is the design system for my products. Twenty-one sections,
+        three parts, seven components, one rule above all rules:
+        don&rsquo;t invent.
         Read it once. Sign it. Keep a copy next to your editor.
       </p>
 
       <div class="doc__signoff">
         <div class="doc__signoff-stats">
           <div class="stat t-caption">
-            <div><span class="t-caption--bold">20</span> sections written across this document.</div>
+            <div><span class="t-caption--bold">21</span> sections written across this document.</div>
             <div><span class="t-caption--bold">7</span> reusable components in the kit.</div>
           </div>
           <div class="stat t-caption">
@@ -533,6 +544,49 @@
         </p>
       </article>
 
+      <article class="doc__section" id="narrow">
+        <h2 class="t-display">
+          Narrow<br />
+          <span class="t-display--medium t-muted">Show where change happens</span>
+        </h2>
+        <p class="t-body">
+          Three columns don&rsquo;t fit on a phone. They almost fit on a
+          tablet. One rule resolves it: <span class="t-caption--bold">show
+          the column where the change is happening</span>. Every other
+          question about narrow layouts &mdash; what collapses, what swaps,
+          what returns &mdash; follows from that sentence.
+        </p>
+        <p class="t-body">
+          On phone, one column at a time. The doc is the default. Two
+          captions sit in a sticky bar at the top of the doc &mdash;
+          <span class="t-caption--bold">Navigation</span> on the left,
+          <span class="t-caption--bold">Comments</span> on the right.
+          Tap either to swap in that column. When you trigger something
+          that changes the inspector &mdash; tapping a comment, firing an
+          action the inspector answers for &mdash; the inspector takes
+          over. Tap a nav item and the doc takes over again, because the
+          scroll is the change you wanted. The sidebar doesn&rsquo;t
+          linger.
+        </p>
+        <p class="t-body">
+          On tablet, two columns &mdash; the doc and the inspector. The
+          sidebar is hidden by default; the Navigation caption brings it
+          in and it yields back to the inspector as soon as
+          you&rsquo;ve jumped. The doc never yields. The doc is the thing
+          you read.
+        </p>
+        <p class="t-body">
+          On desktop, three columns, as always. No caption bar.
+          Nothing to swap.
+        </p>
+        <p class="t-body">
+          No new components. No new states. The card&rsquo;s active /
+          minimized rules work exactly the same at any width; they run
+          inside whichever column is currently mounted. A phone is a
+          desktop with two columns collapsed.
+        </p>
+      </article>
+
       <article class="doc__section" id="tone">
         <h2 class="t-display">
           Tone of voice<br />
@@ -554,6 +608,7 @@
     <!-- Inspector: flexible widgets. Cards are transparent until touched.  -->
     <!-- ================================================================= -->
     <aside class="inspector" aria-label="Actions and comments">
+      <button class="column__back t-caption--bold" data-view-target="doc" type="button">Back to doc</button>
       <section class="inspector__group">
         <header class="card card--heading">
           <h2 class="t-display">Next steps</h2>
@@ -740,6 +795,8 @@
       });
 
       // Smooth-scroll clicks inside the doc column (not the whole window).
+      // On narrow widths a sticky topbar eats the top of the doc, so the
+      // scroll target has to clear it.
       nav.addEventListener('click', function (e) {
         var a = e.target.closest('a[href^="#"]');
         if (!a) return;
@@ -747,15 +804,56 @@
         var target = document.getElementById(id);
         if (!target) return;
         e.preventDefault();
-        var top = target.offsetTop - 20;
+        var topbar = doc.querySelector('.doc__topbar');
+        var offset = (topbar && topbar.offsetHeight ? topbar.offsetHeight : 0) + 20;
+        var top = Math.max(0, target.offsetTop - offset);
         doc.scrollTo({ top: top, behavior: 'smooth' });
         history.replaceState(null, '', '#' + id);
       });
     })();
 
-    // Interactive cards: one-active-per-stack in the inspector. Any click or
-    // focus inside a card--interactive promotes it and demotes the rest.
-    // Static cards and the doc don't trigger anything.
+    // Narrow views — show the column where the change is happening.
+    // The app carries a [data-view] attribute: "doc" (default), "nav", or
+    // "inspector". CSS hides the other columns on phone and swaps the
+    // sidebar for the inspector on tablet. Desktop ignores the attribute.
+    // Buttons with [data-view-target] set the view; nav-item clicks pull
+    // the user back to the doc, because the change they just triggered
+    // (a scroll) lives in the doc.
+    (function () {
+      var app = document.querySelector('.app');
+      if (!app) return;
+
+      function setView(view) {
+        app.setAttribute('data-view', view);
+      }
+
+      document.querySelectorAll('[data-view-target]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var target = el.getAttribute('data-view-target');
+          // Tabs toggle — tapping the active target returns to the doc.
+          // Back buttons target "doc" explicitly; toggling that is a no-op.
+          var next = (app.getAttribute('data-view') === target && target !== 'doc')
+            ? 'doc'
+            : target;
+          setView(next);
+        });
+      });
+
+      var toc = document.getElementById('toc');
+      if (toc) {
+        toc.addEventListener('click', function (e) {
+          if (e.target.closest('a[href^="#"]')) setView('doc');
+        });
+      }
+    })();
+
+    // Inspector stack — one active per stack, sticky and exclusive.
+    // The rule (from the manifesto): active holds until another card in
+    // the stack is triggered. A trigger is a click or a focus landing in
+    // any card — interactive or static. Interactive cards promote; static
+    // cards (comments, headings-as-cards) just demote the currently-
+    // active interactive card, because attention has moved elsewhere in
+    // the stack.
     (function () {
       var inspector = document.querySelector('.inspector');
       if (!inspector) return;
@@ -782,13 +880,7 @@
         requestAnimationFrame(step);
       }
 
-      function setActive(card) {
-        if (card.getAttribute('data-state') === 'active') return;
-
-        // Collapse every other active card INSTANTLY. We suppress the
-        // collapsible's transition for exactly one reflow so the user
-        // never sees the close animation — the replaced card just
-        // vanishes from view.
+      function collapseAllActive() {
         inspector.querySelectorAll('.card--interactive[data-state="active"]').forEach(function (c) {
           var collapsible = c.querySelector('.card__collapsible');
           if (collapsible) collapsible.style.transition = 'none';
@@ -800,9 +892,12 @@
             collapsible.style.transition = '';
           }
         });
+      }
 
-        // Promote the new card. CSS transition on its collapsible runs
-        // naturally — it animates OPEN downward over --dur-base (200 ms).
+      function setActive(card) {
+        if (card.getAttribute('data-state') === 'active') return;
+
+        collapseAllActive();
         card.setAttribute('data-state', 'active');
 
         // Start the scroll right now — don't wait for anything. We measured
@@ -815,14 +910,23 @@
         glideInspectorScroll(Math.max(0, target), 320);
       }
 
-      inspector.addEventListener('click', function (e) {
-        var card = e.target.closest('.card--interactive');
-        if (card) setActive(card);
-      });
-      inspector.addEventListener('focusin', function (e) {
-        var card = e.target.closest('.card--interactive');
-        if (card) setActive(card);
-      });
+      function handleTrigger(e) {
+        var card = e.target.closest('.card');
+        if (!card) return;
+        // Heading cards are decorative; they don't participate in state.
+        if (card.classList.contains('card--heading')) return;
+
+        if (card.classList.contains('card--interactive')) {
+          setActive(card);
+        } else {
+          // Static card touched (a comments card, for instance) —
+          // attention moved, so the active interactive card demotes.
+          collapseAllActive();
+        }
+      }
+
+      inspector.addEventListener('click', handleTrigger);
+      inspector.addEventListener('focusin', handleTrigger);
     })();
   </script>
 </body>
