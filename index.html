@@ -39,6 +39,8 @@
             <li class="t-caption"><a href="#field">Field</a></li>
             <li class="t-caption"><a href="#button">Button</a></li>
             <li class="t-caption"><a href="#tag">Tag</a></li>
+            <li class="t-caption"><a href="#switch">Switch</a></li>
+            <li class="t-caption"><a href="#card-stack">Card stack</a></li>
             <li class="t-caption"><a href="#nav">Navigation</a></li>
             <li class="t-caption"><a href="#comment">Comment</a></li>
             <li class="t-caption"><a href="#signoff">Signoff</a></li>
@@ -69,18 +71,11 @@
     <!-- Document: hero + intro + signoff + 20 sections of manifesto        -->
     <!-- ================================================================= -->
     <main class="doc" id="doc">
-      <!-- Narrow-only top bar. Two captions target the other columns.
-           Hidden on desktop by CSS. On tablet only the left one shows. -->
-      <header class="doc__topbar">
-        <button class="doc__topbar-tab t-caption--bold" data-view-target="nav" type="button">Navigation</button>
-        <button class="doc__topbar-tab doc__topbar-tab--right t-caption--bold" data-view-target="inspector" type="button">Comments</button>
-      </header>
-
       <h1 class="t-hero">Strategy</h1>
 
       <p class="doc__intro t-body">
-        This is the design system for my products. Twenty-one sections,
-        three parts, seven components, one rule above all rules:
+        This is the design system for my products. Twenty-three sections,
+        three parts, nine components, one rule above all rules:
         don&rsquo;t invent.
         Read it once. Sign it. Keep a copy next to your editor.
       </p>
@@ -88,8 +83,8 @@
       <div class="doc__signoff">
         <div class="doc__signoff-stats">
           <div class="stat t-caption">
-            <div><span class="t-caption--bold">21</span> sections written across this document.</div>
-            <div><span class="t-caption--bold">7</span> reusable components in the kit.</div>
+            <div><span class="t-caption--bold">23</span> sections written across this document.</div>
+            <div><span class="t-caption--bold">9</span> reusable components in the kit.</div>
           </div>
           <div class="stat t-caption">
             <div><span class="t-caption--bold">3</span> parts &mdash; Foundations, Components, Patterns.</div>
@@ -180,11 +175,11 @@
         </h2>
         <p class="t-body">
           Every gap, every padding, every margin snaps to a multiple of
-          four. Most of the time: <span class="kbd">4</span>
-          <span class="kbd">8</span> <span class="kbd">12</span>
-          <span class="kbd">16</span> <span class="kbd">20</span>
-          <span class="kbd">24</span> <span class="kbd">32</span>
-          <span class="kbd">48</span>. Larger jumps mean larger semantic
+          four. Most of the time: <span class="tag tag--inline">4</span>
+          <span class="tag tag--inline">8</span> <span class="tag tag--inline">12</span>
+          <span class="tag tag--inline">16</span> <span class="tag tag--inline">20</span>
+          <span class="tag tag--inline">24</span> <span class="tag tag--inline">32</span>
+          <span class="tag tag--inline">48</span>. Larger jumps mean larger semantic
           distance. If you need a 13&thinsp;px gap, you need something else.
         </p>
       </article>
@@ -210,13 +205,26 @@
         </h2>
         <p class="t-body">
           Motion is confirmation, not performance. Two hundred milliseconds,
-          ease-out, on <span class="kbd">transform</span> and
-          <span class="kbd">opacity</span> only. You should feel it, not watch
+          ease-out, on <span class="tag tag--inline">transform</span> and
+          <span class="tag tag--inline">opacity</span> only. You should feel it, not watch
           it.
         </p>
         <p class="t-body">
-          If a user has <span class="kbd">prefers-reduced-motion</span> on, we
-          drop duration to zero and let state change instantly.
+          Two easing functions. <span class="t-caption--bold">Functional</span>
+          elements use <span class="tag tag--inline">ease-out</span> &mdash; quick
+          settle, no bounce. <span class="t-caption--bold">Playful</span> elements
+          use <span class="tag tag--inline">ease-spring</span> &mdash; a brief
+          overshoot before landing. If an element has a job to do, it doesn&rsquo;t bounce.
+          If it&rsquo;s there to delight, let it spring.
+        </p>
+        <p class="t-body">
+          Press feedback is universal: every tappable surface scales to
+          <span class="tag tag--inline">0.96</span> on <span class="tag tag--inline">:active</span>.
+          This is confirmation that the gesture landed.
+        </p>
+        <p class="t-body">
+          If a user has <span class="tag tag--inline">prefers-reduced-motion</span> on, we
+          drop every duration to zero and let state change instantly.
         </p>
       </article>
 
@@ -348,17 +356,101 @@
           <span class="t-display--medium t-muted">Metadata, not action</span>
         </h2>
         <p class="t-body">
-          A 12&thinsp;px micro-caption on a pill-shaped 3% surface. Tags are
-          for metadata &mdash; <span class="tag">a date</span>
-          <span class="tag">a count</span>
-          <span class="tag">a status word</span>. They are never clickable.
-          If you feel tempted, you want a button.
+          Two kinds. <span class="t-caption--bold">Metadata tags</span> are bold
+          secondary text &mdash; a date, a count, a status word. No pill, no surface,
+          just the word in gray. Use them in rows with generous spacing between.
+        </p>
+        <p class="t-body">
+          <span class="t-caption--bold">Inline tags</span> appear inside running body
+          text to call out a token or value: gray surface, normal weight, size
+          inherited from surrounding copy.
+        </p>
+        <p class="t-body">
+          Neither is ever clickable. If you feel tempted, you want a button.
         </p>
         <div class="doc__example doc__example--row">
           <span class="tag">Foundations</span>
-          <span class="tag">7 components</span>
+          <span class="tag">9 components</span>
           <span class="tag">18 Apr &rsquo;26</span>
           <span class="tag tag--bold">Signed</span>
+        </div>
+      </article>
+
+      <article class="doc__section" id="switch">
+        <h2 class="t-display">
+          Switch<br />
+          <span class="t-display--medium t-muted">A binary toggle</span>
+        </h2>
+        <p class="t-body">
+          A track and a thumb. Off is the border tint; on is full text color.
+          The thumb springs across with a brief overshoot &mdash;
+          <span class="tag tag--inline">ease-spring</span> at the fast duration.
+          The track fills at the base duration.
+        </p>
+        <p class="t-body">
+          Use it wherever a checkbox would sit: preferences, feature flags,
+          opt-ins. Never use a switch if the result isn&rsquo;t instant;
+          anything requiring a save button should stay a checkbox.
+        </p>
+        <div class="doc__example">
+          <div class="card">
+            <label class="switch t-caption">
+              <input type="checkbox" class="switch__input" checked />
+              <span class="switch__track"></span>
+              Color tokens
+            </label>
+            <label class="switch t-caption">
+              <input type="checkbox" class="switch__input" checked />
+              <span class="switch__track"></span>
+              Type tokens
+            </label>
+            <label class="switch t-caption">
+              <input type="checkbox" class="switch__input" />
+              <span class="switch__track"></span>
+              Motion tokens
+            </label>
+          </div>
+        </div>
+      </article>
+
+      <article class="doc__section" id="card-stack">
+        <h2 class="t-display">
+          Card stack<br />
+          <span class="t-display--medium t-muted">Browse by hovering or dragging</span>
+        </h2>
+        <p class="t-body">
+          A horizontal deck where one card is always active and the rest tilt
+          back in perspective. On desktop, hover promotes. On mobile, drag cycles.
+          The active card springs to flat; the others collapse behind it.
+        </p>
+        <p class="t-body">
+          One spring per transition, one active per stack &mdash; the same rule
+          as the interactive card, extended to a browsable surface.
+        </p>
+        <div class="doc__example">
+          <div class="reviews-wrapper">
+            <div class="review-card active">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-quote">The whole kit in one card. Hover or drag the others.</p>
+              <div class="review-author-wrapper">
+                <span class="review-author">Konstantin K.</span>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-quote">Two hundred lines of CSS that feel like a system.</p>
+              <div class="review-author-wrapper">
+                <span class="review-author">Sofia H.</span>
+              </div>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="review-quote">Read it once. Never question spacing again.</p>
+              <div class="review-author-wrapper">
+                <span class="review-author">Anonymous</span>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -422,10 +514,9 @@
           <span class="t-display--medium t-muted">Stats, signature, time</span>
         </h2>
         <p class="t-body">
-          A few short stats in a three-column grid, each stat exactly two
-          lines tall at the column&rsquo;s width. If you only have four
+          A few short stats in a three-column grid. If you only have four
           things to say, leave the third column empty &mdash; whitespace is
-          the fifth stat. One-line stats feel careless; three feels bloated.
+          the fifth stat.
         </p>
         <p class="t-body">
           One short paragraph with author, role, timestamp. A handwritten
@@ -558,19 +649,16 @@
         </p>
         <p class="t-body">
           On phone, one column at a time. The doc is the default. Two
-          captions sit in a sticky bar at the top of the doc &mdash;
-          <span class="t-caption--bold">Navigation</span> on the left,
-          <span class="t-caption--bold">Comments</span> on the right.
-          Tap either to swap in that column. When you trigger something
-          that changes the inspector &mdash; tapping a comment, firing an
-          action the inspector answers for &mdash; the inspector takes
-          over. Tap a nav item and the doc takes over again, because the
-          scroll is the change you wanted. The sidebar doesn&rsquo;t
-          linger.
+          circle buttons float at the bottom corners &mdash; a hamburger
+          at the left to invoke navigation, a comment count at the right
+          to invoke the inspector. When something changes in the inspector
+          after a tap, the inspector takes over. Tap a nav item and the doc
+          takes over again, because the scroll is the change you wanted.
+          The buttons are always there; they don&rsquo;t linger or disappear.
         </p>
         <p class="t-body">
           On tablet, two columns &mdash; the doc and the inspector. The
-          sidebar is hidden by default; the Navigation caption brings it
+          sidebar is hidden by default; the hamburger button brings it
           in and it yields back to the inspector as soon as
           you&rsquo;ve jumped. The doc never yields. The doc is the thing
           you read.
@@ -655,22 +743,25 @@
         <div class="card card--interactive">
           <div class="card__heading">
             <h3 class="t-title">Adopt the kit</h3>
-            <p class="t-caption">Copy <span class="kbd">vars.css</span> and <span class="kbd">style.css</span> into your app. Delete what you don&rsquo;t need. Sign your document.</p>
+            <p class="t-caption">Copy <span class="tag tag--inline">vars.css</span> and <span class="tag tag--inline">style.css</span> into your app. Delete what you don&rsquo;t need. Sign your document.</p>
           </div>
 
           <div class="card__collapsible">
             <div class="card__collapsible-inner">
-              <label class="checkbox t-caption">
-                <input type="checkbox" checked />
-                <span>Color tokens</span>
+              <label class="switch t-caption">
+                <input type="checkbox" class="switch__input" checked />
+                <span class="switch__track"></span>
+                Color tokens
               </label>
-              <label class="checkbox t-caption">
-                <input type="checkbox" checked />
-                <span>Type tokens</span>
+              <label class="switch t-caption">
+                <input type="checkbox" class="switch__input" checked />
+                <span class="switch__track"></span>
+                Type tokens
               </label>
-              <label class="checkbox t-caption">
-                <input type="checkbox" />
-                <span>Motion tokens</span>
+              <label class="switch t-caption">
+                <input type="checkbox" class="switch__input" />
+                <span class="switch__track"></span>
+                Motion tokens
               </label>
             </div>
           </div>
@@ -795,8 +886,6 @@
       });
 
       // Smooth-scroll clicks inside the doc column (not the whole window).
-      // On narrow widths a sticky topbar eats the top of the doc, so the
-      // scroll target has to clear it.
       nav.addEventListener('click', function (e) {
         var a = e.target.closest('a[href^="#"]');
         if (!a) return;
@@ -804,9 +893,7 @@
         var target = document.getElementById(id);
         if (!target) return;
         e.preventDefault();
-        var topbar = doc.querySelector('.doc__topbar');
-        var offset = (topbar && topbar.offsetHeight ? topbar.offsetHeight : 0) + 20;
-        var top = Math.max(0, target.offsetTop - offset);
+        var top = Math.max(0, target.offsetTop - 20);
         doc.scrollTo({ top: top, behavior: 'smooth' });
         history.replaceState(null, '', '#' + id);
       });
@@ -919,15 +1006,104 @@
         if (card.classList.contains('card--interactive')) {
           setActive(card);
         } else {
-          // Static card touched (a comments card, for instance) —
-          // attention moved, so the active interactive card demotes.
+          // Static card touched — demote any active interactive card and
+          // glide this card to the top so the user sees what they tapped.
           collapseAllActive();
+          var inspectorRect = inspector.getBoundingClientRect();
+          var cardRect = card.getBoundingClientRect();
+          var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
+          glideInspectorScroll(Math.max(0, target), 320);
         }
       }
 
       inspector.addEventListener('click', handleTrigger);
       inspector.addEventListener('focusin', handleTrigger);
     })();
+
+    // Card stack — hover on desktop, horizontal drag on mobile.
+    // Adapted from coin hero-reviews interaction (new.fuckgrechka.ru/coin).
+    (function () {
+      var stacks = document.querySelectorAll('.reviews-wrapper');
+      var isMobileStack = window.matchMedia('(max-width: 1024px)').matches;
+
+      stacks.forEach(function (wrapper) {
+        var cards = wrapper.querySelectorAll('.review-card');
+        if (cards.length === 0) return;
+
+        var currentIndex = 0;
+
+        function setActiveCard(index) {
+          cards.forEach(function (c) { c.classList.remove('active'); });
+          cards[index].classList.add('active');
+          currentIndex = index;
+        }
+
+        setActiveCard(0);
+
+        if (isMobileStack) {
+          var overlay = document.createElement('div');
+          overlay.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;z-index:10;touch-action:pan-y;-webkit-tap-highlight-color:transparent;';
+          wrapper.style.position = 'relative';
+          wrapper.appendChild(overlay);
+
+          var touchStartX = 0, touchStartY = 0, lastSwitchX = 0, isHSwipe = false;
+
+          overlay.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
+            lastSwitchX = touchStartX;
+            isHSwipe = false;
+          }, { passive: true });
+
+          overlay.addEventListener('touchmove', function (e) {
+            var cx = e.changedTouches[0].clientX;
+            var cy = e.changedTouches[0].clientY;
+            var dx = Math.abs(cx - touchStartX);
+            var dy = Math.abs(cy - touchStartY);
+            if (!isHSwipe && (dx > 10 || dy > 10)) {
+              isHSwipe = dx > dy;
+              if (isHSwipe) overlay.style.touchAction = 'pan-x';
+            }
+            if (isHSwipe) {
+              e.preventDefault();
+              var drag = cx - lastSwitchX;
+              if (Math.abs(drag) >= 30) {
+                setActiveCard(drag > 0
+                  ? (currentIndex > 0 ? currentIndex - 1 : cards.length - 1)
+                  : (currentIndex + 1) % cards.length);
+                lastSwitchX = cx;
+              }
+            }
+          }, { passive: false });
+
+          overlay.addEventListener('touchend', function () {
+            overlay.style.touchAction = 'pan-y';
+            isHSwipe = false;
+          }, { passive: true });
+
+        } else {
+          cards.forEach(function (card, index) {
+            card.addEventListener('mouseenter', function () {
+              setActiveCard(index);
+            });
+          });
+        }
+      });
+    })();
   </script>
+
+  <!-- FABs — floating action buttons for narrow views (tablet + phone).
+       Sit outside .app to escape overflow:hidden. data-view-target wires
+       them into the existing narrow-view toggle script above. -->
+  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Navigation">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+      <rect width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Comments">
+    <span class="fab__count">2</span>
+  </button>
 </body>
 </html>
