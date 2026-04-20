@@ -131,7 +131,7 @@ body {
    Sidebar — brand, nav groups, footer. Stays put; only nav scrolls.
    ========================================================================= */
 .sidebar {
-  padding: var(--space-6) var(--space-5) var(--space-5) var(--space-5);
+  padding: var(--space-6) var(--col-pad-x) var(--space-5) var(--col-pad-x);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -207,7 +207,7 @@ body {
    ========================================================================= */
 .doc {
   background: var(--color-bg);
-  padding: var(--space-4) 120px var(--space-20) var(--space-15);
+  padding: var(--space-4) var(--doc-pad-right) var(--space-20) var(--doc-pad-left);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -258,17 +258,12 @@ body {
   gap: var(--space-3);
   padding-right: var(--space-4);
 }
-/* Each stat entry locks to exactly two lines at the caption line-height,
-   so rows across columns stay level regardless of prose length. */
-.stat > div {
-  min-height: calc(var(--lh-caption) * 2);
-}
 
 /* =========================================================================
    Inspector — right panel, card-based, content is flexible
    ========================================================================= */
 .inspector {
-  padding: var(--space-1) var(--space-2) var(--space-20) var(--space-2);
+  padding: var(--space-1) var(--col-pad-x) var(--space-20) var(--col-pad-x);
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -365,7 +360,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-bottom: var(--space-1);
+  padding-bottom: var(--space-3);
   border-bottom: 0.5px solid var(--color-border);
   transition: border-color var(--dur-fast) var(--ease-out);
 }
@@ -398,9 +393,11 @@ body {
   border-radius: var(--radius-sm);
   padding: var(--space-3) 21px var(--space-3) var(--space-3);
   cursor: pointer;
-  transition: background-color var(--dur-fast) var(--ease-out);
+  transition: background-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 .tier:hover { background: var(--color-surface-strong); }
+.tier:active { transform: scale(0.98); }
 
 /* =========================================================================
    Button — full-width caption on a surface
@@ -413,10 +410,11 @@ body {
   text-align: center;
   width: 100%;
   transition: background-color var(--dur-fast) var(--ease-out),
-              opacity var(--dur-fast) var(--ease-out);
+              opacity var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 .button:hover { background: var(--color-surface-strong); }
-.button:active { background: var(--color-border); }
+.button:active { background: var(--color-border); transform: scale(0.96); }
 .button:focus-visible { outline: 2px solid var(--color-border-strong); outline-offset: 2px; }
 
 /* Primary button — inverts the surface. Black bg, white label. Used as the
@@ -469,24 +467,33 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-4);
 }
 
 /* =========================================================================
-   Tag / pill — tiny inline label for metadata
+   Tag — two kinds: metadata (plain bold) and inline (surface in text)
    ========================================================================= */
+/* Metadata tag — bold secondary text, no pill or surface */
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-full);
-  background: var(--color-surface-overlay);
-  font-size: var(--fs-micro);
-  line-height: var(--lh-micro);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
   color: var(--color-text-muted);
 }
-.tag--bold { font-weight: var(--fw-bold); color: var(--color-text); }
+.tag--bold { color: var(--color-text); }
+
+/* Inline tag — gray surface chip used in running body text */
+.tag--inline {
+  display: inline;
+  padding: 1px var(--space-2);
+  border-radius: 6px;
+  background: var(--color-surface-overlay);
+  font-size: inherit;
+  font-weight: var(--fw-regular);
+  color: inherit;
+}
 
 /* =========================================================================
    Divider — hairline break between sections inline with text
@@ -499,18 +506,106 @@ body {
 }
 
 /* =========================================================================
-   Kbd — keyboard key inline
+   Switch — iOS-style binary toggle replacing checkboxes
    ========================================================================= */
-.kbd {
-  display: inline-block;
-  padding: 1px var(--space-2);
-  border-radius: 6px;
-  background: var(--color-surface-overlay);
-  border: 0.5px solid var(--color-border);
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace;
-  font-size: var(--fs-micro);
-  line-height: 1.4;
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
 }
+.switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  pointer-events: none;
+}
+.switch__track {
+  width: 36px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+.switch__track::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  top: 2px;
+  left: 2px;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+.switch__input:checked + .switch__track { background: var(--color-text); }
+.switch__input:checked + .switch__track::after { transform: translateX(16px); }
+.switch:focus-within .switch__track {
+  outline: 2px solid var(--color-border-strong);
+  outline-offset: 2px;
+}
+
+/* =========================================================================
+   Card stack — browsable deck, adapted from coin hero-reviews
+   ========================================================================= */
+.reviews-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+}
+
+.review-card {
+  flex-shrink: 0;
+  width: 200px;
+  min-height: 160px;
+  background: var(--color-surface-overlay);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  cursor: pointer;
+  margin-right: -160px;
+  transform: perspective(300px) rotateY(15deg) rotateX(5deg);
+  transform-origin: left center;
+  scale: 0.75;
+  transition: transform 300ms var(--ease-spring),
+              scale 300ms var(--ease-spring),
+              margin-right 300ms cubic-bezier(0.25, 1, 0.5, 1),
+              background-color var(--dur-base) var(--ease-out);
+  isolation: isolate;
+}
+
+.review-card.active {
+  transform: perspective(300px) rotateY(3deg) rotateX(0deg);
+  scale: 0.95;
+  z-index: 2;
+  background: var(--color-surface-strong);
+  margin-right: -1rem;
+}
+
+.review-stars { font-size: 10px; color: #ff9100; letter-spacing: 1px; }
+.review-quote {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tight);
+  margin-top: auto;
+}
+.review-author {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-muted);
+}
+.review-author-wrapper { display: flex; flex-direction: column; gap: 2px; }
 
 /* =========================================================================
    Quote — blockquote with a left rule
@@ -595,30 +690,34 @@ body {
    ========================================================================= */
 
 /* Narrow-only controls are hidden on desktop. */
-.doc__topbar,
-.column__back { display: none; }
+.column__back,
+.fab { display: none; }
 
-/* Topbar — sticky band inside the doc with two caption-bold tabs. Left
-   swaps to nav; right swaps to inspector. Visible only on narrow views. */
-.doc__topbar {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: var(--color-bg);
-  padding: var(--space-3) 0;
-  margin-bottom: var(--space-3);
-  border-bottom: 0.5px solid var(--color-border);
-  justify-content: space-between;
+/* FABs — floating circle buttons at bottom corners for narrow views.
+   Left = hamburger → nav. Right = comment count → inspector. */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-text);
+  color: var(--color-bg);
   align-items: center;
-  gap: var(--space-4);
+  justify-content: center;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  transition: transform var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
 }
-.doc__topbar-tab {
-  color: var(--color-text-muted);
-  padding: 0;
-  transition: color var(--dur-fast) var(--ease-out);
+.fab:active { transform: scale(0.94); }
+.fab--nav { left: 24px; }
+.fab--inspector { right: 24px; }
+.fab__count {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
+  line-height: 1;
 }
-.doc__topbar-tab:hover { color: var(--color-text); }
-.doc__topbar-tab--right { margin-left: auto; }
 
 /* Back caption — sticky row at the top of a sidebar or inspector when it
    takes over the phone viewport. Bold caption on a hairline. */
@@ -650,10 +749,9 @@ body {
   .app[data-view="nav"] .sidebar { display: flex; }
   .app[data-view="nav"] .inspector { display: none; }
 
-  .doc__topbar { display: flex; }
-  /* The inspector is present by default on tablet, so a Comments tab
-     would be decorative. Only Navigation shows. */
-  .doc__topbar-tab--right { display: none; }
+  /* Nav FAB visible on tablet. Inspector FAB not needed — inspector is
+     always the default right column; nav FAB handles the one-off swap. */
+  .fab--nav { display: flex; }
 
   .doc {
     padding: 0 var(--space-6) var(--space-20) var(--space-6);
@@ -670,17 +768,19 @@ body {
   .app[data-view="nav"] .sidebar { display: flex; }
   .app[data-view="inspector"] .inspector { display: flex; }
 
-  .doc__topbar-tab--right { display: block; }
+  /* Both FABs visible on phone; back buttons visible in sidebar/inspector. */
+  .fab--inspector { display: flex; }
   .column__back { display: block; }
 
   .doc {
     padding: 0 var(--space-4) var(--space-20) var(--space-4);
   }
   .sidebar {
+    width: 100%;
     padding: 0 var(--space-4) var(--space-5) var(--space-4);
   }
   .inspector {
-    padding: 0 var(--space-4) var(--space-20) var(--space-4);
+    padding: 0 var(--space-2) var(--space-20) var(--space-2);
   }
 
   /* Signoff reflows to a single column; whitespace is the last stat. */
@@ -694,10 +794,17 @@ body {
   /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
   .t-hero { font-size: 48px; line-height: 48px; }
 
-  /* Comments card is wide by default — tighten the right padding on phone. */
+  /* Comments card is wide by default — tighten on phone. */
   .card--comments { padding: var(--space-4) var(--space-5); }
 
-  /* The toc indicator's left offset tracks sidebar padding, which
-     tightens on phone. */
+  /* The toc indicator's left offset tracks sidebar padding. */
   .sidebar .toc__indicator { left: calc(-1 * var(--space-4)); }
+}
+
+/* Inspector bottom spacer — any card can scroll to the very top. */
+.inspector::after {
+  content: "";
+  flex-shrink: 0;
+  min-height: 50vh;
+  display: block;
 }
