@@ -599,8 +599,6 @@ body {
   scale: 0.95;   /* not 1.0 — active card stays part of the deck */
   z-index: 2;
   background: var(--color-surface-strong);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   filter: none;
   margin-right: -1rem;
 }
