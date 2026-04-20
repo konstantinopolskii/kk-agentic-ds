@@ -52,6 +52,7 @@
   /* Motion */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-fast: 120ms;
   --dur-base: 200ms;
   --dur-slow: 320ms;
@@ -59,6 +60,11 @@
   /* Layout — app is edge-to-edge; no shell gutter */
   --sidebar-w: 260px;
   --inspector-w: 420px;
+
+  /* Column padding — clamp-based, asymmetric doc preserved */
+  --col-pad-x: clamp(1.25rem, 1.4vw, 1.5rem);
+  --doc-pad-left: clamp(2rem, 4.2vw, 3.75rem);
+  --doc-pad-right: clamp(3rem, 8.3vw, 7.5rem);
 }
 
 @media (prefers-reduced-motion: reduce) {
