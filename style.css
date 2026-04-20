@@ -481,8 +481,8 @@ body {
   padding: 2px var(--space-2) 4px;
   border-radius: 6px;
   background: var(--color-surface-overlay);
-  font-size: inherit;
-  font-weight: var(--fw-regular);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
   color: inherit;
 }
 
