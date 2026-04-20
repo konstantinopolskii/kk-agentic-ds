@@ -607,6 +607,19 @@ body {
   margin-right: 0px;
 }
 
+/* CTA inside a card stack — always rendered to keep height stable,
+   visible only on the active card so browsing is commitment-free. */
+.review-card .button {
+  margin-top: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.review-card.active .button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .review-stars { font-size: 10px; color: #ff9100; letter-spacing: 1px; }
 .review-quote {
   font-size: var(--fs-caption);
