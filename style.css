@@ -572,7 +572,7 @@ body {
   flex-direction: column;
   gap: var(--space-3);
   cursor: pointer;
-  margin-right: -182px;
+  margin-right: -190px;
   transform: perspective(120px) rotateY(52deg) rotateX(8deg);
   transform-origin: left center;   /* cards fan from their left edge */
   -webkit-transform-style: preserve-3d;
