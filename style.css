@@ -557,13 +557,11 @@ body {
   flex-direction: row;
   align-items: stretch;
   position: relative;
-  width: 100%;
-  /* JS sets --stack-card-w and --stack-mr per wrapper based on N and W */
 }
 
 .review-card {
   flex-shrink: 0;
-  width: var(--stack-card-w, 200px);
+  width: 200px;
   min-height: 160px;
   background: rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(5px);
@@ -574,8 +572,8 @@ body {
   flex-direction: column;
   gap: var(--space-3);
   cursor: pointer;
-  margin-right: var(--stack-mr, -160px);
-  transform: perspective(200px) rotateY(15deg) rotateX(5deg);
+  margin-right: -182px;
+  transform: perspective(120px) rotateY(52deg) rotateX(8deg);
   transform-origin: left center;   /* cards fan from their left edge */
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
@@ -597,8 +595,8 @@ body {
 }
 
 .review-card.active {
-  transform: perspective(200px) rotateY(3deg) rotateX(0deg);
-  scale: 0.95;   /* not 1.0 — active card stays part of the deck */
+  transform: perspective(120px) rotateY(3deg) rotateX(0deg);
+  scale: 0.95;
   z-index: 2;
   background: var(--color-surface-strong);
   filter: none;
