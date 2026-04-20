@@ -416,16 +416,40 @@
       <article class="doc__section" id="card-stack">
         <h2 class="t-display">
           Card stack<br />
-          <span class="t-display--medium t-muted">Browse by hovering or dragging</span>
+          <span class="t-display--medium t-muted">Two easings, one gesture</span>
         </h2>
         <p class="t-body">
           A horizontal deck where one card is always active and the rest tilt
-          back in perspective. On desktop, hover promotes. On mobile, drag cycles.
-          The active card springs to flat; the others collapse behind it.
+          back in perspective. On desktop, hover promotes. On mobile, horizontal
+          drag cycles through cards at a 30&thinsp;px threshold.
         </p>
         <p class="t-body">
-          One spring per transition, one active per stack &mdash; the same rule
-          as the interactive card, extended to a browsable surface.
+          The inactive state: <span class="tag tag--inline">rotateY(15deg) rotateX(5deg)</span>
+          at <span class="tag tag--inline">scale(0.75)</span> with a
+          <span class="tag tag--inline">blur(0.5px)</span> filter. The tilt fans
+          the deck. The scale creates depth. The blur separates the background
+          from the foreground without hiding content. A tight
+          <span class="tag tag--inline">perspective(200px)</span> makes the tilt
+          dramatic &mdash; wider perspective would look flat.
+          <span class="tag tag--inline">transform-origin: left center</span> means
+          every card fans from the same left edge.
+        </p>
+        <p class="t-body">
+          The active state: <span class="tag tag--inline">rotateY(3deg)</span>
+          at <span class="tag tag--inline">scale(0.95)</span>. Not
+          <span class="tag tag--inline">scale(1.0)</span> &mdash; stopping at 0.95
+          keeps the active card slightly inset, as if still part of the deck
+          rather than pulled out of it.
+        </p>
+        <p class="t-body">
+          Two easing functions on the same transition, intentionally different.
+          The <span class="t-caption--bold">rotation</span> uses
+          <span class="tag tag--inline">ease-out</span> &mdash; the tilt is a
+          functional position, it settles cleanly. The
+          <span class="t-caption--bold">margin</span> uses a spring
+          <span class="tag tag--inline">cubic-bezier(0.25, 1, 0.5, 1)</span>
+          &mdash; the card physically pops open as space is made for it. The
+          rotation lands; the spread snaps.
         </p>
         <div class="doc__example">
           <div class="reviews-wrapper">
