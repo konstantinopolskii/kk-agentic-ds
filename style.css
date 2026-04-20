@@ -444,15 +444,6 @@ body {
   padding-bottom: var(--space-2);
 }
 .comment:last-child { padding-bottom: 0; }
-.comment__draft {
-  padding-bottom: var(--space-1);
-  border-bottom: 0.5px solid var(--color-border);
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-}
-.comment__draft input { color: var(--color-text); }
-.comment__draft input::placeholder { color: var(--color-text-muted); }
 
 /* =========================================================================
    Doc example — a live component rendered inline in the manifesto
@@ -487,7 +478,7 @@ body {
 /* Inline tag — gray surface chip used in running body text */
 .tag--inline {
   display: inline;
-  padding: 1px var(--space-2);
+  padding: 2px var(--space-2) 4px;
   border-radius: 6px;
   background: var(--color-surface-overlay);
   font-size: inherit;
@@ -514,15 +505,22 @@ body {
   gap: var(--space-2);
   cursor: pointer;
   user-select: none;
+  position: relative; /* anchors the absolute input so focus never scrolls */
 }
 .switch__input {
+  appearance: none;
+  -webkit-appearance: none;
   position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;   /* same footprint as .switch__track */
+  height: 20px;
   opacity: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
   pointer-events: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 .switch__track {
   width: 36px;
@@ -565,7 +563,9 @@ body {
   flex-shrink: 0;
   width: 200px;
   min-height: 160px;
-  background: var(--color-surface-overlay);
+  background: rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   display: flex;
@@ -576,10 +576,12 @@ body {
   transform: perspective(300px) rotateY(15deg) rotateX(5deg);
   transform-origin: left center;
   scale: 0.75;
+  filter: blur(0.5px);
   transition: transform 300ms var(--ease-spring),
               scale 300ms var(--ease-spring),
               margin-right 300ms cubic-bezier(0.25, 1, 0.5, 1),
-              background-color var(--dur-base) var(--ease-out);
+              background-color var(--dur-base) var(--ease-out),
+              filter var(--dur-base) var(--ease-out);
   isolation: isolate;
 }
 
@@ -588,6 +590,9 @@ body {
   scale: 0.95;
   z-index: 2;
   background: var(--color-surface-strong);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  filter: none;
   margin-right: -1rem;
 }
 
