@@ -485,8 +485,9 @@
         </h2>
         <p class="t-body">
           A comment is a bold subtitle for the name and a caption for the
-          body. Drafts render the body as an input. Comments live inside a
-          comments card, never floating loose.
+          body. Drafts use a Field component for the reply input &mdash;
+          no new input shape. Comments live inside a comments card, never
+          floating loose.
         </p>
         <div class="doc__example">
           <div class="card card--comments">
@@ -500,8 +501,8 @@
             </div>
             <div class="comment">
               <div class="t-subtitle">You</div>
-              <label class="comment__draft t-caption">
-                <input type="text" placeholder="Reply&hellip;" />
+              <label class="field">
+                <input class="t-caption field__input" type="text" placeholder="Reply&hellip;" />
               </label>
             </div>
           </div>
@@ -787,8 +788,8 @@
         <div class="card card--comments">
           <div class="comment">
             <div class="t-subtitle">Konstantin Konstantinopolskii</div>
-            <label class="comment__draft t-caption">
-              <input type="text" placeholder="Add a comment" />
+            <label class="field">
+              <input class="t-caption field__input" type="text" placeholder="Add a comment" />
             </label>
           </div>
         </div>
