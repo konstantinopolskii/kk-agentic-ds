@@ -53,9 +53,14 @@
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Swing — Penner's easeOutExpo. Quick at the start, exponential slowdown
+     at the end. Reserve for elegant long reveals (column swaps, first
+     paint). Too dramatic for hover or focus; those stay on --ease-out. */
+  --ease-swing: cubic-bezier(0.19, 1, 0.22, 1);
   --dur-fast: 120ms;
   --dur-base: 200ms;
   --dur-slow: 320ms;
+  --dur-long: 760ms;
 
   /* Layout — app is edge-to-edge; no shell gutter */
   --sidebar-w: 260px;
@@ -72,5 +77,6 @@
     --dur-fast: 0.01ms;
     --dur-base: 0.01ms;
     --dur-slow: 0.01ms;
+    --dur-long: 0.01ms;
   }
 }

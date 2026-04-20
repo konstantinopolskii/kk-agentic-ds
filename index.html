@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Strategy — the design system, signed</title>
-  <link rel="stylesheet" href="./vars.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./vars.css?v=comments-fix">
+  <link rel="stylesheet" href="./style.css?v=comments-fix">
 </head>
 <body>
   <div class="app" data-view="doc">
@@ -14,7 +14,6 @@
     <!-- Includes a narrow-only back caption at the top.                    -->
     <!-- ================================================================= -->
     <aside class="sidebar" aria-label="Navigation">
-      <button class="column__back t-caption--bold" data-view-target="doc" type="button">Back to doc</button>
       <div class="sidebar__brand t-title">Konstantin<br />Konstantinopolskii</div>
 
       <nav class="sidebar__nav" id="toc">
@@ -40,7 +39,7 @@
             <li class="t-caption"><a href="#button">Button</a></li>
             <li class="t-caption"><a href="#tag">Tag</a></li>
             <li class="t-caption"><a href="#switch">Switch</a></li>
-            <li class="t-caption"><a href="#card-stack">Card stack</a></li>
+            <li class="t-caption"><a href="#card-stack-3d">3D card stack</a></li>
             <li class="t-caption"><a href="#nav">Navigation</a></li>
             <li class="t-caption"><a href="#comment">Comment</a></li>
             <li class="t-caption"><a href="#signoff">Signoff</a></li>
@@ -113,9 +112,10 @@
         </h2>
         <p class="t-body">
           A product is a document. A document is a conversation. I want both
-          to feel like one object &mdash; floating, quiet, responsive to
-          attention. The rest of this system exists in service of that
-          feeling.
+          to feel like <span class="highlight">one object &mdash; floating,
+          quiet, <span class="highlight">responsive to</span> attention</span>.
+          The rest of this system exists in
+          <span class="highlight">service of that feeling</span>.
         </p>
         <p class="t-body">
           Read it the way you&rsquo;d read a good memo: once, carefully, then
@@ -210,12 +210,21 @@
           it.
         </p>
         <p class="t-body">
-          Two easing functions. <span class="t-caption--bold">Functional</span>
-          elements use <span class="tag tag--inline">ease-out</span> &mdash; quick
-          settle, no bounce. <span class="t-caption--bold">Playful</span> elements
-          use <span class="tag tag--inline">ease-spring</span> &mdash; a brief
-          overshoot before landing. If an element has a job to do, it doesn&rsquo;t bounce.
-          If it&rsquo;s there to delight, let it spring.
+          Three easing functions, each with a job.
+          <span class="t-caption--bold">Functional</span> elements use
+          <span class="tag tag--inline">ease-out</span> &mdash; quick
+          settle, no bounce.
+          <span class="t-caption--bold">Playful</span> elements use
+          <span class="tag tag--inline">ease-spring</span> &mdash; a
+          brief overshoot before landing.
+          <span class="t-caption--bold">Elegant</span> reveals &mdash; a
+          column arriving, a page painting for the first time &mdash;
+          use <span class="tag tag--inline">ease-swing</span>: Penner&rsquo;s
+          <span class="tag tag--inline">easeOutExpo</span>, a long exponential
+          slowdown at the end, like a pendulum reaching its rest. If an
+          element has a job to do, it doesn&rsquo;t bounce. If it&rsquo;s
+          there to delight, let it spring. If it&rsquo;s announcing
+          itself, let it swing.
         </p>
         <p class="t-body">
           Press feedback is universal: every tappable surface scales to
@@ -262,29 +271,52 @@
           work.
         </p>
         <div class="doc__example">
-          <div class="card">
-            <div class="card__heading">
-              <h3 class="t-title">Static card</h3>
-              <p class="t-caption">Hover me. Focus any child input and the surface persists.</p>
-            </div>
-            <label class="field">
-              <input class="t-caption field__input" type="text" placeholder="Type here to hold the surface" />
-            </label>
-          </div>
-          <div class="card card--interactive">
-            <div class="card__heading">
-              <h3 class="t-title">Interactive card</h3>
-              <p class="t-caption">Click me to expand. Active is sticky; only one per stack at a time.</p>
-            </div>
-            <div class="card__collapsible">
-              <div class="card__collapsible-inner">
-                <label class="field">
-                  <input class="t-caption field__input" type="text" placeholder="Now I&rsquo;m open for business" />
-                </label>
+          <div class="card-stack">
+            <div class="card" data-state="active">
+              <div class="card__heading">
+                <h3 class="t-title">Static card</h3>
+                <p class="t-caption">First in the stack &mdash; active, its surface showing.</p>
               </div>
+              <label class="field">
+                <input class="t-caption field__input" type="text" placeholder="Type here to hold the surface" />
+              </label>
             </div>
-            <button class="button t-subtitle" data-cta="minimized">Open</button>
-            <button class="button button--primary t-subtitle" data-cta="active">Commit</button>
+            <div class="card card--interactive">
+              <div class="card__heading">
+                <h3 class="t-title">Interactive card</h3>
+                <p class="t-caption">Minimized underneath. Click to promote.</p>
+              </div>
+              <div class="card__collapsible">
+                <div class="card__collapsible-inner">
+                  <label class="field">
+                    <input class="t-caption field__input" type="text" placeholder="Now I&rsquo;m open for business" />
+                  </label>
+                </div>
+              </div>
+              <button class="button t-subtitle" data-cta="minimized">Open</button>
+              <button class="button button--primary t-subtitle" data-cta="active">Commit</button>
+            </div>
+          </div>
+        </div>
+        <p class="t-body">
+          A <span class="t-caption--bold">shout card</span> is the third
+          variant &mdash; the inverse. Black surface, white content,
+          every child component inverted with it. Reach for it when a
+          decision has to announce itself, not sit politely among the
+          others. One shout per screen; if everything shouts, nothing
+          does.
+        </p>
+        <div class="doc__example">
+          <div class="card card--shout">
+            <div class="card__heading">
+              <h3 class="t-title">Shout card</h3>
+              <p class="t-caption t-muted">Inverted for the moments that matter.</p>
+            </div>
+            <label class="field field--row">
+              <span class="t-caption--bold field__label">Action</span>
+              <input class="t-caption field__input" type="text" placeholder="Type in the dark" />
+            </label>
+            <button class="button button--primary t-subtitle">Commit the choice</button>
           </div>
         </div>
       </article>
@@ -292,12 +324,20 @@
       <article class="doc__section" id="field">
         <h2 class="t-display">
           Field<br />
-          <span class="t-display--medium t-muted">A line and a label</span>
+          <span class="t-display--medium t-muted">A row, a label, a value</span>
         </h2>
         <p class="t-body">
-          A label above, a value below, a 0.5&thinsp;px hairline between
-          this field and the next. On focus the hairline deepens from 10%
-          to 20%. No boxes around inputs. The underline is the input.
+          A label and a bold value, sharing one row. Rows stack tight
+          against each other &mdash; no gap, no outline, no box. A single
+          0.5&thinsp;px divider sits <em>between</em> consecutive fields.
+          Never above the first. Never below the last.
+        </p>
+        <p class="t-body">
+          Hover or focus fills the whole row with the 3% surface. Nothing
+          else moves: no underline, no border shift, no shadow. The cursor
+          becomes a pointer over the row and a text caret over the input
+          itself &mdash; so you always know whether the next click focuses
+          or types.
         </p>
         <div class="doc__example">
           <div class="card">
@@ -413,9 +453,9 @@
         </div>
       </article>
 
-      <article class="doc__section" id="card-stack">
+      <article class="doc__section" id="card-stack-3d">
         <h2 class="t-display">
-          Card stack<br />
+          3D card stack<br />
           <span class="t-display--medium t-muted">Two easings, one gesture</span>
         </h2>
         <p class="t-body">
@@ -461,25 +501,29 @@
         <div class="doc__example">
           <div class="reviews-wrapper">
             <div class="review-card active">
-              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="review-quote">The whole kit in one card. Hover or drag the others.</p>
-              <div class="review-author-wrapper">
-                <span class="review-author">Konstantin K.</span>
-              </div>
+              <p class="t-caption--bold">Monochrome</p>
+              <p class="t-caption">Pure black on white. Six alphas. No brand.</p>
+              <button class="tag review-card__select" type="button">Choose</button>
             </div>
             <div class="review-card">
-              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="review-quote">Two hundred lines of CSS that feel like a system.</p>
-              <div class="review-author-wrapper">
-                <span class="review-author">Sofia H.</span>
-              </div>
+              <p class="t-caption--bold">Muted warm</p>
+              <p class="t-caption">Same tokens with a 2% warm tint in neutrals.</p>
+              <button class="tag review-card__select" type="button">Choose</button>
             </div>
             <div class="review-card">
-              <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-              <p class="review-quote">Read it once. Never question spacing again.</p>
-              <div class="review-author-wrapper">
-                <span class="review-author">Anonymous</span>
-              </div>
+              <p class="t-caption--bold">Cool gray</p>
+              <p class="t-caption">Slight blue cast in the neutral scale.</p>
+              <button class="tag review-card__select" type="button">Choose</button>
+            </div>
+            <div class="review-card">
+              <p class="t-caption--bold">High contrast</p>
+              <p class="t-caption">Pure black text, borders at 20%.</p>
+              <button class="tag review-card__select" type="button">Choose</button>
+            </div>
+            <div class="review-card">
+              <p class="t-caption--bold">Ink</p>
+              <p class="t-caption">Inverted. White on black. Full system.</p>
+              <button class="tag review-card__select" type="button">Choose</button>
             </div>
           </div>
         </div>
@@ -515,26 +559,48 @@
           <span class="t-display--medium t-muted">Name and body</span>
         </h2>
         <p class="t-body">
-          A comment is a bold subtitle for the name and a caption for the
-          body. Drafts use a Field component for the reply input &mdash;
-          no new input shape. Comments live inside a comments card, never
-          floating loose.
+          Two shapes, one pattern. A
+          <span class="t-caption--bold">new-comment card</span> is a single
+          card with the author and an input &mdash; it appears at the top
+          when the reader selects text in the doc, and disappears when
+          they commit or dismiss. Below it, the
+          <span class="t-caption--bold">comment stack</span> is a column
+          of comment cards, each its own surface. Transparent at rest; the
+          3% surface fades in on hover and carries the three-dot menu.
+          Reply and delete live in that menu. When the draft is sent, it
+          becomes the first card in the stack.
         </p>
         <div class="doc__example">
-          <div class="card card--comments">
-            <div class="comment">
-              <div class="t-subtitle">Sofia Hlazunova</div>
-              <p class="t-caption">Could you add one more example?</p>
-            </div>
-            <div class="comment">
-              <div class="t-subtitle">Konstantin Konstantinopolskii</div>
-              <p class="t-caption">Already did. Look above.</p>
-            </div>
-            <div class="comment">
+          <div class="card comment-new">
+            <div class="comment__header">
               <div class="t-subtitle">You</div>
-              <label class="field">
-                <input class="t-caption field__input" type="text" placeholder="Reply&hellip;" />
-              </label>
+            </div>
+            <label class="field">
+              <input class="t-caption field__input" type="text" placeholder="Write a comment&hellip;" />
+            </label>
+          </div>
+          <div class="comment-stack">
+            <div class="card comment">
+              <div class="comment__header">
+                <div class="t-subtitle">Sofia Hlazunova</div>
+                <button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>
+              </div>
+              <p class="t-caption">Could you add one more example?</p>
+              <div class="comment__menu-popover" role="menu">
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+              </div>
+            </div>
+            <div class="card comment">
+              <div class="comment__header">
+                <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+                <button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>
+              </div>
+              <p class="t-caption">Already did. Look above.</p>
+              <div class="comment__menu-popover" role="menu">
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+              </div>
             </div>
           </div>
         </div>
@@ -617,6 +683,17 @@
           there&rsquo;s content revealed here worth staying with&rdquo;.
           Button focus is not a card state &mdash; buttons fire and forget,
           so the card fades back as soon as the mouse leaves.
+        </p>
+        <p class="t-body">
+          Interactive rows &mdash; fields, switches, tiers, review cards
+          &mdash; follow the same rule: the whole row fills with the 3%
+          surface on hover or focus. No outlines, no borders fire up. The
+          cursor is <span class="tag tag--inline">pointer</span> over
+          anything that reacts to a click and
+          <span class="tag tag--inline">text</span> over inputs where you
+          type. If a surface doesn&rsquo;t earn either of those cursors,
+          it isn&rsquo;t interactive &mdash; don&rsquo;t dress it up like
+          it is.
         </p>
         <p class="t-body">
           For interactive cards, active is sticky and exclusive: it stays
@@ -705,6 +782,48 @@
           inside whichever column is currently mounted. A phone is a
           desktop with two columns collapsed.
         </p>
+        <p class="t-body">
+          The swap has its own grammar. The outgoing column vanishes
+          instantly &mdash; nothing worth watching leave. The incoming
+          column&rsquo;s widgets fade, scale, and drift into place
+          <em>one by one</em>, each offset by
+          <span class="tag tag--inline">48ms</span> from the one above it,
+          from the direction the column lives on desktop: the nav from
+          <span class="t-caption--bold">the left</span>, the inspector
+          from <span class="t-caption--bold">the right</span>, the doc
+          from <span class="t-caption--bold">below</span>. It reads as
+          motion with memory &mdash; the column remembers where it came
+          from.
+        </p>
+        <p class="t-body">
+          The motion is a <span class="t-caption--bold">long swing</span>:
+          <span class="tag tag--inline">760ms</span> on
+          <span class="tag tag--inline">ease-swing</span> &mdash; fast
+          off the start, then an exponential slowdown as each widget
+          settles. Not a jump cut, not a casual fade. A gesture that
+          announces the column arrived.
+        </p>
+        <p class="t-body">
+          On tablet and desktop the columns themselves desync. The doc
+          leads &mdash; it&rsquo;s what the reader came for &mdash; then
+          the nav, then the inspector, each offset by
+          <span class="tag tag--inline">160ms</span> from the one before.
+          The layout rolls into place instead of flashing. On a swap,
+          only the column that just appeared animates; the columns that
+          were already here stay where they are. The system never
+          re-announces what you can already see.
+        </p>
+        <p class="t-body">
+          This is built into the system, not wired per widget. A single
+          orchestrator watches the <span class="tag tag--inline">data-view</span>
+          attribute and, whenever a column becomes visible, reveals every
+          direct child in sequence. Add a new card tomorrow and it
+          animates in on its own. You don&rsquo;t write the reveal; the
+          reveal happens to anything you put in a column. It&rsquo;s
+          the <span class="t-caption--bold">OS layer</span> of the
+          design system &mdash; content comes in the way content always
+          comes in.
+        </p>
       </article>
 
       <article class="doc__section" id="tone">
@@ -728,7 +847,6 @@
     <!-- Inspector: flexible widgets. Cards are transparent until touched.  -->
     <!-- ================================================================= -->
     <aside class="inspector" aria-label="Actions and comments">
-      <button class="column__back t-caption--bold" data-view-target="doc" type="button">Back to doc</button>
       <section class="inspector__group">
         <header class="card card--heading">
           <h2 class="t-display">Next steps</h2>
@@ -759,27 +877,27 @@
                 <div class="review-card">
                   <p class="t-caption--bold">Monochrome</p>
                   <p class="t-caption">Pure black on white. Six alphas. No brand.</p>
-                  <button class="button t-subtitle">Select</button>
+                  <button class="tag review-card__select" type="button">Choose</button>
                 </div>
                 <div class="review-card">
                   <p class="t-caption--bold">Muted warm</p>
                   <p class="t-caption">Same tokens with a 2% warm tint in neutrals.</p>
-                  <button class="button t-subtitle">Select</button>
+                  <button class="tag review-card__select" type="button">Choose</button>
                 </div>
                 <div class="review-card">
                   <p class="t-caption--bold">Cool gray</p>
                   <p class="t-caption">Slight blue cast in the neutral scale.</p>
-                  <button class="button t-subtitle">Select</button>
+                  <button class="tag review-card__select" type="button">Choose</button>
                 </div>
                 <div class="review-card">
                   <p class="t-caption--bold">High contrast</p>
                   <p class="t-caption">Pure black text, borders at 20%.</p>
-                  <button class="button t-subtitle">Select</button>
+                  <button class="tag review-card__select" type="button">Choose</button>
                 </div>
                 <div class="review-card">
                   <p class="t-caption--bold">Ink</p>
                   <p class="t-caption">Inverted. White on black. Full system.</p>
-                  <button class="button t-subtitle">Select</button>
+                  <button class="tag review-card__select" type="button">Choose</button>
                 </div>
               </div>
             </div>
@@ -833,27 +951,55 @@
           <h2 class="t-display">Comments</h2>
         </header>
 
-        <div class="card card--comments">
-          <div class="comment">
+        <!-- New comment card — appears at the top when the reader selects
+             text in the doc. Hidden by default until the selection flow
+             is wired up. -->
+        <div class="card comment-new" hidden>
+          <div class="comment__header">
             <div class="t-subtitle">Konstantin Konstantinopolskii</div>
-            <label class="field">
-              <input class="t-caption field__input" type="text" placeholder="Add a comment" />
-            </label>
           </div>
+          <label class="field">
+            <input class="t-caption field__input" type="text" placeholder="Write a comment&hellip;" />
+          </label>
         </div>
 
-        <div class="card card--comments">
-          <div class="comment">
-            <div class="t-subtitle">Sofia Hlazunova</div>
+        <!-- Comment stack — each comment is its own card in a stack.
+             Transparent at rest, the 3% surface fades in on hover and
+             carries the kebab menu. Newest comment lives at the top; the
+             active conversation grows downward. -->
+        <div class="comment-stack">
+          <div class="card comment">
+            <div class="comment__header">
+              <div class="t-subtitle">Sofia Hlazunova</div>
+              <button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>
+            </div>
             <p class="t-caption">It&rsquo;s 20/80. Let&rsquo;s ship.</p>
+            <div class="comment__menu-popover" role="menu">
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+            </div>
           </div>
-          <div class="comment">
-            <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+          <div class="card comment">
+            <div class="comment__header">
+              <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+              <button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>
+            </div>
             <p class="t-caption">I&rsquo;d reduce one more thing and sign.</p>
+            <div class="comment__menu-popover" role="menu">
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+            </div>
           </div>
-          <div class="comment">
-            <div class="t-subtitle">Sofia Hlazunova</div>
+          <div class="card comment">
+            <div class="comment__header">
+              <div class="t-subtitle">Sofia Hlazunova</div>
+              <button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>
+            </div>
             <p class="t-caption">Which one?</p>
+            <div class="comment__menu-popover" role="menu">
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+              <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+            </div>
           </div>
         </div>
       </section>
@@ -963,16 +1109,19 @@
         app.setAttribute('data-view', view);
       }
 
-      document.querySelectorAll('[data-view-target]').forEach(function (el) {
-        el.addEventListener('click', function () {
-          var target = el.getAttribute('data-view-target');
-          // Tabs toggle — tapping the active target returns to the doc.
-          // Back buttons target "doc" explicitly; toggling that is a no-op.
-          var next = (app.getAttribute('data-view') === target && target !== 'doc')
-            ? 'doc'
-            : target;
-          setView(next);
-        });
+      // Delegated on document so it catches clicks on elements parsed
+      // AFTER this script runs — notably the floating FABs, which sit
+      // outside .app at the very end of <body>.
+      document.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-view-target]');
+        if (!el) return;
+        var target = el.getAttribute('data-view-target');
+        // Tabs toggle — tapping the active target returns to the doc.
+        // Back buttons target "doc" explicitly; toggling that is a no-op.
+        var next = (app.getAttribute('data-view') === target && target !== 'doc')
+          ? 'doc'
+          : target;
+        setView(next);
       });
 
       var toc = document.getElementById('toc');
@@ -981,6 +1130,105 @@
           if (e.target.closest('a[href^="#"]')) setView('doc');
         });
       }
+    })();
+
+    // Column reveal orchestrator — the "OS level" of the design system.
+    // Any column that becomes visible (initial load, or after a data-view
+    // swap) reveals its direct children with a staggered fade + scale +
+    // slide. The direction matches the column's side of the desktop
+    // layout: nav from left, inspector from right, doc from below.
+    //
+    // Why JS and not CSS: we want this to be automatic for every widget
+    // in any column, forever. With CSS we'd have to write per-child
+    // :nth-child delays or maintain a list. Here the script reads the
+    // live DOM — any card, section, or widget added later inherits the
+    // behavior without touching CSS.
+    (function () {
+      var app = document.querySelector('.app');
+      if (!app) return;
+
+      // Columns in priority order: doc leads (it's what the reader came
+      // for), then the accents. On initial paint these are offset from
+      // each other by COLUMN_OFFSET_MS so the layout rolls into place
+      // instead of flashing all at once. Keyframes live in style.css.
+      var COLUMNS = [
+        { selector: '.doc',       keyframe: 'reveal-from-below' },
+        { selector: '.sidebar',   keyframe: 'reveal-from-left'  },
+        { selector: '.inspector', keyframe: 'reveal-from-right' },
+      ];
+
+      // Stagger within a column: each subsequent child starts 48 ms later,
+      // capped so a column with many widgets doesn't stretch forever. At
+      // 48 × 12 = 576 ms plus the swing's own 760 ms, the last child in a
+      // column finishes at ~1.3 s — deliberate, still inside grace.
+      var STAGGER_STEP_MS = 48;
+      var STAGGER_CAP = 12;
+      // Inter-column desync on initial paint (desktop/tablet). Column N
+      // starts N × this many ms after the first. Kept a touch shorter
+      // than STAGGER_CAP × STAGGER_STEP so columns overlap rather than
+      // queue end-to-end.
+      var COLUMN_OFFSET_MS = 160;
+
+      function revealColumn(col, baseDelay) {
+        var column = document.querySelector(col.selector);
+        if (!column) return;
+        if (getComputedStyle(column).display === 'none') return;
+
+        var children = column.children;
+        for (var i = 0; i < children.length; i++) {
+          var el = children[i];
+          var delay = baseDelay + Math.min(i, STAGGER_CAP) * STAGGER_STEP_MS;
+          // Cancel any in-flight animation, force a reflow, then reapply.
+          // Without the reset, a second view-swap mid-animation would not
+          // restart the keyframes — the browser keeps the original run.
+          el.style.animation = 'none';
+          void el.offsetWidth;
+          el.style.animation =
+            col.keyframe + ' var(--dur-long) var(--ease-swing) ' + delay + 'ms both';
+        }
+      }
+
+      function isVisible(selector) {
+        var el = document.querySelector(selector);
+        return !!(el && getComputedStyle(el).display !== 'none');
+      }
+
+      // Track each column's prior visibility so we only animate a column
+      // when it transitions hidden → visible. On tablet the doc stays
+      // visible across a nav toggle; without this, it would re-flash
+      // every swap.
+      var wasVisible = {};
+      COLUMNS.forEach(function (col) {
+        wasVisible[col.selector] = isVisible(col.selector);
+      });
+
+      new MutationObserver(function () {
+        COLUMNS.forEach(function (col) {
+          var now = isVisible(col.selector);
+          if (now && !wasVisible[col.selector]) {
+            // The column just appeared — reveal it from zero. No inter-
+            // column offset here: a single column arriving shouldn't
+            // wait for anyone.
+            revealColumn(col, 0);
+          }
+          wasVisible[col.selector] = now;
+        });
+      }).observe(app, {
+        attributes: true,
+        attributeFilter: ['data-view'],
+      });
+
+      // Initial paint — every visible column, in priority order, each
+      // offset by COLUMN_OFFSET_MS from the previous. On phone only the
+      // doc is visible, so the cascade collapses to one column at 0.
+      // On tablet: doc leads, inspector follows 160 ms later.
+      // On desktop: doc, then nav, then inspector — 0 / 160 / 320 ms.
+      var cascadeIndex = 0;
+      COLUMNS.forEach(function (col) {
+        if (!isVisible(col.selector)) return;
+        revealColumn(col, cascadeIndex * COLUMN_OFFSET_MS);
+        cascadeIndex++;
+      });
     })();
 
     // Inspector stack — one active per stack, sticky and exclusive.
@@ -1036,6 +1284,22 @@
         collapseAllActive();
         card.setAttribute('data-state', 'active');
 
+        // The "Try it" button the user just clicked is now display:none
+        // (the CTA-swap rule hides the minimized label once the card goes
+        // active). When a focused button disappears the browser drifts
+        // focus onto the next focusable element — which in this card is
+        // usually the first input in the collapsible. That's accidental:
+        // the user expanded a card, they didn't ask to type. Blur any
+        // focused input inside the newly-active card so the caret doesn't
+        // pop up in a field they never aimed at.
+        requestAnimationFrame(function () {
+          var focused = document.activeElement;
+          if (focused && card.contains(focused) &&
+              focused.matches('input, textarea')) {
+            focused.blur();
+          }
+        });
+
         // Start the scroll right now — don't wait for anything. We measured
         // after the instant close above, so the target is the card's
         // settled top. The scroll glides over 320 ms (--dur-slow), running
@@ -1047,6 +1311,11 @@
       }
 
       function handleTrigger(e) {
+        // Comment kebab menu and its popover are isolated surfaces —
+        // clicking them opens/closes the menu, it should not promote or
+        // demote any card in the stack.
+        if (e.target.closest('.comment__menu, .comment__menu-popover')) return;
+
         var card = e.target.closest('.card');
         if (!card) return;
         // Heading cards are decorative; they don't participate in state.
@@ -1067,6 +1336,170 @@
 
       inspector.addEventListener('click', handleTrigger);
       inspector.addEventListener('focusin', handleTrigger);
+    })();
+
+    // Doc selection → new comment — when the reader selects text in the
+    // middle document, a new-comment card pins to the top of the inspector
+    // comments group and takes focus. Enter commits: the selected text is
+    // wrapped in a yellow <span class="highlight">, a fresh comment card
+    // is prepended to the stack, and the form hides again. Escape
+    // dismisses without applying the highlight. The .comment-new card
+    // stays hidden until a selection happens, so it only surfaces when
+    // there's something to comment on.
+    (function () {
+      var doc = document.getElementById('doc');
+      var inspector = document.querySelector('.inspector');
+      if (!doc || !inspector) return;
+
+      var commentNew = inspector.querySelector('.card.comment-new');
+      var commentStack = inspector.querySelector('.comment-stack');
+      if (!commentNew || !commentStack) return;
+      var input = commentNew.querySelector('.field__input');
+      if (!input) return;
+
+      // The range we save when the selection happens, so we can wrap the
+      // right text later even after focus has moved into the input.
+      var savedRange = null;
+      var currentAuthor = 'Konstantin Konstantinopolskii';
+
+      function nodeInDoc(node) {
+        while (node && node !== document) {
+          if (node === doc) return true;
+          node = node.parentNode;
+        }
+        return false;
+      }
+
+      function showNewComment() {
+        commentNew.hidden = false;
+        input.value = '';
+        // Focus after a frame so the unhide + any reveal animation settles.
+        requestAnimationFrame(function () { input.focus(); });
+      }
+
+      function hideNewComment() {
+        commentNew.hidden = true;
+        input.value = '';
+        savedRange = null;
+      }
+
+      function wrapRangeAsHighlight(range) {
+        var span = document.createElement('span');
+        span.className = 'highlight';
+        try {
+          // surroundContents works when the range cleanly contains whole nodes.
+          range.surroundContents(span);
+        } catch (e) {
+          // Complex selection (spans multiple parents or partial nodes) —
+          // fall back to extracting and re-inserting.
+          span.appendChild(range.extractContents());
+          range.insertNode(span);
+        }
+      }
+
+      function prependComment(bodyText) {
+        var card = document.createElement('div');
+        card.className = 'card comment';
+        card.innerHTML =
+          '<div class="comment__header">' +
+            '<div class="t-subtitle"></div>' +
+            '<button class="comment__menu" type="button" aria-label="Comment actions" aria-expanded="false"><span></span></button>' +
+          '</div>' +
+          '<p class="t-caption"></p>' +
+          '<div class="comment__menu-popover" role="menu">' +
+            '<button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>' +
+            '<button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>' +
+          '</div>';
+        card.querySelector('.t-subtitle').textContent = currentAuthor;
+        card.querySelector('.t-caption').textContent = bodyText;
+        commentStack.insertBefore(card, commentStack.firstChild);
+      }
+
+      function commit() {
+        var text = input.value.trim();
+        if (!text || !savedRange) { hideNewComment(); return; }
+        wrapRangeAsHighlight(savedRange);
+        prependComment(text);
+        hideNewComment();
+        var sel = window.getSelection();
+        if (sel) sel.removeAllRanges();
+      }
+
+      // Trigger on release, not during drag. Using selectionchange would
+      // fire on every pixel the user drags across, popping the card up
+      // mid-selection and stealing focus — which interrupts the very
+      // gesture that was meant to produce the comment. mouseup covers
+      // drag-to-select; keyup covers Shift+Arrow keyboard selection.
+      function maybeOpenFromSelection() {
+        var sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+        if (!nodeInDoc(sel.anchorNode) || !nodeInDoc(sel.focusNode)) return;
+        savedRange = sel.getRangeAt(0).cloneRange();
+        showNewComment();
+      }
+      doc.addEventListener('mouseup', maybeOpenFromSelection);
+      doc.addEventListener('keyup', function (e) {
+        // Only react to keys that extend a selection; ignore arrow-
+        // without-shift, typing, etc.
+        if (e.shiftKey && (e.key.indexOf('Arrow') === 0 || e.key === 'Home' || e.key === 'End')) {
+          maybeOpenFromSelection();
+        }
+      });
+
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          commit();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          hideNewComment();
+          var sel = window.getSelection();
+          if (sel) sel.removeAllRanges();
+        }
+      });
+
+      // Don't let focus on the input count as a "card trigger" that
+      // collapses active interactive cards (the inspector has a static-
+      // card demotion path that would fire on any focusin inside it).
+      commentNew.addEventListener('focusin', function (e) { e.stopPropagation(); });
+      commentNew.addEventListener('click',   function (e) { e.stopPropagation(); });
+    })();
+
+    // Comment menus — the three-dot kebab opens a small popover with
+    // Reply / Delete. Clicking the menu button toggles; clicking outside
+    // (or pressing Escape) closes. Only one menu open at a time across
+    // the whole page, like a native context menu.
+    (function () {
+      function closeAllMenus(except) {
+        document.querySelectorAll('.comment__menu[aria-expanded="true"]').forEach(function (btn) {
+          if (btn === except) return;
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.comment__menu');
+        if (btn) {
+          var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+          closeAllMenus(btn);
+          btn.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
+          e.stopPropagation();
+          return;
+        }
+        // Click inside a menu popover — close after the item fires so
+        // actions (Reply / Delete) still bubble through, but the menu
+        // itself dismisses afterwards.
+        if (e.target.closest('.comment__menu-popover')) {
+          closeAllMenus();
+          return;
+        }
+        // Click anywhere else — close everything.
+        closeAllMenus();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAllMenus();
+      });
     })();
 
     // Card stack — hover on desktop, horizontal drag on mobile.
@@ -1136,7 +1569,54 @@
               setActiveCard(index);
             });
           });
+
+          // When the cursor leaves the stack, snap back to whatever the
+          // user chose. Hovering is just browsing; a choice outranks it.
+          // If nothing is chosen yet, we stay on the last hover — no
+          // default to fall back to, so the most recent intent wins.
+          wrapper.addEventListener('mouseleave', function () {
+            var chosenBtn = wrapper.querySelector('.review-card__select.is-chosen');
+            if (!chosenBtn) return;
+            var chosenCard = chosenBtn.closest('.review-card');
+            var idx = Array.prototype.indexOf.call(cards, chosenCard);
+            if (idx !== -1 && idx !== currentIndex) setActiveCard(idx);
+          });
         }
+
+        // Clicking anywhere on the active card (or directly on its select
+        // tag) toggles the chosen state. Clicking an inactive card promotes
+        // it first — two clicks to commit, matching the browse-without-
+        // consequence promise of the stack. Only one card in the stack can
+        // be "Chosen" at a time; selecting another replaces the previous.
+        function setChosen(card) {
+          wrapper.querySelectorAll('.review-card__select.is-chosen').forEach(function (other) {
+            if (other.closest('.review-card') === card) return;
+            other.classList.remove('is-chosen');
+            other.textContent = 'Choose';
+          });
+          var btn = card.querySelector('.review-card__select');
+          if (!btn) return;
+          if (btn.classList.contains('is-chosen')) {
+            btn.classList.remove('is-chosen');
+            btn.textContent = 'Choose';
+          } else {
+            btn.classList.add('is-chosen');
+            btn.innerHTML =
+              '<span class="review-card__check" aria-hidden="true"></span>Chosen';
+          }
+        }
+
+        wrapper.addEventListener('click', function (e) {
+          var card = e.target.closest('.review-card');
+          if (!card) return;
+          var idx = Array.prototype.indexOf.call(cards, card);
+          if (idx === -1) return;
+          if (!card.classList.contains('active')) {
+            setActiveCard(idx);
+            return;
+          }
+          setChosen(card);
+        });
       });
     })();
   </script>

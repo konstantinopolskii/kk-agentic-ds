@@ -232,7 +232,7 @@ body {
   gap: var(--space-3);
   align-items: flex-end;
   justify-content: space-between;
-  padding-top: var(--space-2);
+  padding-top: var(--space-6);
 }
 .doc__signoff-signature-img {
   width: 148px;
@@ -283,7 +283,14 @@ body {
 .card {
   background: transparent;
   border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6) var(--space-6);
+  /* Half-and-half inset: the card shell contributes 12 px of horizontal
+     padding, and every UI component inside it (headings, fields, switches,
+     card stacks) contributes another 12 px. The two halves compound to
+     24 px — the original text rail — while the component itself retains
+     a 12 px breathing zone so its hover fill never collides with the
+     card edge. One token, --card-inset-x, governs both halves. */
+  --card-inset-x: var(--space-3);
+  padding: var(--space-5) var(--card-inset-x) var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -303,7 +310,34 @@ body {
   gap: var(--space-3);
 }
 .card--heading:hover { background: transparent; } /* headings don't light up */
-.card--comments { padding: var(--space-4) var(--space-10) var(--space-4) var(--space-6); }
+
+/* =========================================================================
+   Shout card — an inverted, high-contrast variant. Active was never
+   visible enough for commit-scale moments; shout is the card turned all
+   the way up. Black surface, white content, inverted everything inside:
+   placeholders, dividers, hover fills, switch tracks, even the primary
+   button reverses polarity. Use when a card needs to announce itself as
+   THE decision, not one of many.
+
+   Implementation trick: override the color tokens as CSS custom props on
+   the card itself. Every child component already reads from these vars,
+   so they re-theme in dark mode without per-element overrides.
+
+   The background is declared after the doc/stack rules below so it wins
+   on specificity and order — see the `.card.card--shout` selector right
+   after the 2D stack definitions.
+   ========================================================================= */
+.card--shout {
+  --color-bg:              #000000;
+  --color-text:            #ffffff;
+  --color-text-muted:      rgba(255, 255, 255, 0.55);
+  --color-text-subtle:     rgba(255, 255, 255, 0.35);
+  --color-surface-overlay: rgba(255, 255, 255, 0.08);
+  --color-surface-strong:  rgba(255, 255, 255, 0.14);
+  --color-border:          rgba(255, 255, 255, 0.16);
+  --color-border-strong:   rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+}
 .card--tight { padding: var(--space-4) var(--space-5); gap: var(--space-2); }
 
 /* Interactive card — form-bearing card that runs on a sticky active /
@@ -345,30 +379,105 @@ body {
   opacity: 0;
 }
 
-.card__heading {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding-right: var(--space-6);
-}
+/* UI components inside a card each contribute their own half of the inset
+   via horizontal padding of var(--card-inset-x) = 12 px. Combined with
+   the card's own 12 px, content lands on the 24 px rail. No vertical
+   gap on card__heading — the title's line-height and the caption's
+   line-height handle the rhythm themselves, so the spacing is
+   type-driven rather than component-driven. */
+.card__heading,
 .card__body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  padding-left: var(--card-inset-x);
+  padding-right: var(--card-inset-x);
+}
+.card__body { gap: var(--space-4); }
+
+/* A nested heading (e.g. "Pick a default" inside the collapsible) needs
+   the same half-inset because its parent collapsible wrapper is flush. */
+.card__collapsible-inner > .card__heading {
+  padding-left: var(--card-inset-x);
+  padding-right: var(--card-inset-x);
+}
+
+/* Card stack inside a card is a UI component like any other — it gets the
+   same 12 px inset so the fanned deck starts on the same rail as the
+   copy and fields above it. Matches the "half + half" pattern, so the
+   stack doesn't collide with the card edge. */
+.card > .reviews-wrapper,
+.card__collapsible-inner > .reviews-wrapper {
+  padding-left: var(--card-inset-x);
+  padding-right: var(--card-inset-x);
+}
+
+/* Buttons hold their own inset as margin, not padding — their internal
+   padding is reserved for label centering. Margin of 12 px stacks with
+   the card shell's 12 px for the standard 24 px rail, so a CTA sits on
+   the same visual line as the heading above it. */
+.card > .button {
+  margin-left: var(--card-inset-x);
+  margin-right: var(--card-inset-x);
+  width: auto;
+}
+
+/* Stack fields and switches tight against each other — padding inside
+   each row does the spacing work, so the cursor is never between rows. */
+.field + .field,
+.field + .switch,
+.switch + .field,
+.switch + .switch {
+  margin-top: calc(-1 * var(--space-3));
+}
+
+/* Divider — every field and switch carries its own 0.5px hairline at the
+   bottom, even when alone. Inset to the card's content rail so the line
+   aligns with labels and paragraph copy. Adjacent rows share the look of
+   a single divider (one field's bottom meets the next's top with no
+   double-up because we only paint it once per field). The pseudo sits
+   above the hover background so it survives the highlight. */
+.field::after,
+.switch::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: var(--card-inset-x, var(--space-3));
+  right: var(--card-inset-x, var(--space-3));
+  height: 0.5px;
+  background: var(--color-border);
+  pointer-events: none;
 }
 
 /* =========================================================================
-   Field — one line, one label, one underline
+   Field — one line, one label, no box.
+   Vertical space is padding (not parent gap) so the whole row is hoverable —
+   no dead space between adjacent fields. Dividers (see below) sit BETWEEN
+   siblings only. Hover and focus just darken the row background; there are
+   no shadows or borders on the field itself.
    ========================================================================= */
 .field {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-bottom: var(--space-3);
-  border-bottom: 0.5px solid var(--color-border);
-  transition: border-color var(--dur-fast) var(--ease-out);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
 }
-.field:focus-within { border-bottom-color: var(--color-border-strong); }
+.field:hover,
+.field:focus-within {
+  background: var(--color-surface-strong);
+}
+/* Inside a typing zone the cursor becomes text, but the surrounding row
+   — label span, bold value, padding — keeps the pointer so clicking the
+   label area focuses the input instead of showing the I-beam over copy
+   that isn't editable. */
+.field,
+.field__label,
+.field__value { cursor: pointer; }
+.field input,
+.field textarea { cursor: text; }
 .field--row {
   flex-direction: row;
   align-items: baseline;
@@ -379,10 +488,15 @@ body {
   flex: 1;
   color: var(--color-text-muted);
 }
+/* Inputs render in the body weight — regular. Bold values look heavy
+   inside tight form rows; the label already carries the weight, the
+   value just reads. */
 .field__input {
   color: var(--color-text);
 }
-.field__input::placeholder { color: var(--color-text-subtle); }
+.field__input::placeholder {
+  color: var(--color-text-subtle);
+}
 
 /* =========================================================================
    Tiers — side-by-side choice cards inside an inspector card
@@ -441,13 +555,204 @@ body {
 /* =========================================================================
    Comments
    ========================================================================= */
-.comment {
+/* =========================================================================
+   Comment — one card per comment. Lives in a .comment-stack. Inherits
+   the full base card padding so every comment reads as the same sized
+   surface as the new-comment card above. Tight 6 px gap between the
+   author header and the body (they're a pair, not two separate blocks)
+   — the surface bg and gap are set further down in the comment-stack
+   block so comment and comment-new stay locked to the same rhythm.
+   ========================================================================= */
+
+.comment__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* Kebab menu — three vertical dots, top-right of the comment. Hidden at
+   rest; appears when the comment is hovered, when any child has focus,
+   or when the menu itself is open. Keyboard users keep access without
+   turning the dots into permanent visual noise on every comment. */
+.comment__menu {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;                       /* spacing between dots — wider than before */
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.comment:hover .comment__menu,
+.comment:focus-within .comment__menu,
+.comment__menu[aria-expanded="true"] {
+  opacity: 1;
+}
+.comment__menu:hover { color: var(--color-text); }
+
+/* Three dots — pseudo-element + nested span, stacked by the flex gap. */
+.comment__menu::before,
+.comment__menu::after,
+.comment__menu > span {
+  content: "";
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Popover — opens on click of the kebab. Small list of actions, anchored
+   to the kebab via absolute positioning from the comment card. */
+.comment__menu-popover {
+  position: absolute;
+  top: calc(var(--space-3) + 24px);
+  right: var(--card-inset-x);
+  z-index: 3;
+  min-width: 140px;
+  padding: var(--space-1) 0;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
+              0 0 0 0.5px var(--color-border);
+  display: none;
+  flex-direction: column;
+  transform-origin: top right;
+  animation: menu-in var(--dur-fast) var(--ease-out) both;
+}
+.comment__menu[aria-expanded="true"] ~ .comment__menu-popover {
+  display: flex;
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.comment__menu-item {
+  padding: 6px var(--space-4);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.comment__menu-item:hover { background: var(--color-surface-strong); }
+
+/* =========================================================================
+   Comment stack — a column of individual comment cards. Small gap
+   between cards so they read as distinct surfaces without floating
+   apart. Every comment card carries the active surface so sizes match
+   the new-comment card above; the whole stack reads as one stack of
+   equal cards.
+   ========================================================================= */
+.comment-stack {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-bottom: var(--space-2);
 }
-.comment:last-child { padding-bottom: 0; }
+
+.card.comment,
+.card.comment-new {
+  background: var(--color-surface-overlay);
+  gap: 6px;
+}
+
+/* =========================================================================
+   New-comment card — a single card for composing a comment. Appears at
+   the top of the inspector when the reader selects text in the doc,
+   pinned above the existing stack. Same padding / surface as every
+   other comment card so the stack has one rhythm.
+   ========================================================================= */
+.card.comment-new[hidden] { display: none; }
+
+/* =========================================================================
+   2D card stack — a column of cards where only one is active at a time.
+   Unlike the 3D stack (which fans in perspective), the 2D stack is a
+   list: first card carries the active surface, the rest sit minimized
+   underneath. Used in the doc to show static+interactive combinations,
+   and whenever a block groups related cards.
+
+   A single card inside a stack still counts as "the stack" and is
+   therefore active by default — consistent with the rule: if there's
+   only one card, it's the one.
+   ========================================================================= */
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* First card is always on: its surface is showing, its collapsible
+   (if interactive) is open. Subsequent cards are minimized. The
+   interactive-card active/minimized rules already handle the collapsible
+   toggle via data-state; for stacks we keep that contract by marking
+   the intended-active card with data-state="active" in HTML. */
+.card-stack > .card:first-child:not([data-state="active"]) {
+  background: var(--color-surface-overlay);
+}
+
+/* =========================================================================
+   Doc rule — form elements (cards, inputs) never appear without a
+   background in the middle column. The document is a read-through; a
+   floating input or transparent card reads as noise. So the doc gets a
+   stricter version of the card surface rule: always-on, unless the card
+   is explicitly minimized inside a 2D stack.
+
+   Exception 1: heading cards stay transparent — they're type, not form.
+   Exception 2: non-first cards inside a .card-stack stay transparent —
+                they're the minimized siblings of whichever card is active.
+   ========================================================================= */
+.doc .card:not(.card--heading) {
+  background: var(--color-surface-overlay);
+}
+.doc .card-stack > .card:not(:first-child):not(.card--heading) {
+  background: transparent;
+}
+
+/* Shout card background — must sit AFTER the doc rule so it wins on
+   ordering where specificity matches. The selector weight is built up
+   with .card.card--shout plus contextual selectors (doc, stack, hover,
+   focus-within) to cover every path a shout can appear in. */
+.card.card--shout,
+.card.card--shout:hover,
+.card.card--shout:has(input:focus),
+.card.card--shout:has(textarea:focus),
+.card.card--shout[data-state="active"],
+.doc .card.card--shout:not(.card--heading),
+.card-stack > .card.card--shout {
+  background: #000000;
+}
+
+/* =========================================================================
+   Inspector × shout — whichever interactive card is active wears the
+   inverted theme. "Active" already means "this is the thing right now";
+   shout raises the volume from a 3% whisper to full inversion. When the
+   user promotes a different card, the previous one reverts to light and
+   the new one shouts — no HTML changes needed, the CSS follows the
+   state. The 3D card stack inside still renders on white because
+   .review-card resets the color tokens locally.
+   ========================================================================= */
+.inspector .card--interactive[data-state="active"] {
+  --color-bg:              #000000;
+  --color-text:            #ffffff;
+  --color-text-muted:      rgba(255, 255, 255, 0.55);
+  --color-text-subtle:     rgba(255, 255, 255, 0.35);
+  --color-surface-overlay: rgba(255, 255, 255, 0.08);
+  --color-surface-strong:  rgba(255, 255, 255, 0.14);
+  --color-border:          rgba(255, 255, 255, 0.16);
+  --color-border-strong:   rgba(255, 255, 255, 0.28);
+  background: #000000;
+  color: #ffffff;
+}
+/* Hover / focus states keep the solid black; we don't want the surface
+   overlay to lift it back toward gray. */
+.inspector .card--interactive[data-state="active"]:hover,
+.inspector .card--interactive[data-state="active"]:has(input:focus),
+.inspector .card--interactive[data-state="active"]:has(textarea:focus) {
+  background: #000000;
+}
 
 /* =========================================================================
    Doc example — a live component rendered inline in the manifesto
@@ -479,7 +784,8 @@ body {
 }
 .tag--bold { color: var(--color-text); }
 
-/* Inline tag — gray surface chip used in running body text */
+/* Inline tag — gray surface chip used in running body text.
+   Uppercase + tracked to read as metadata rather than prose. */
 .tag--inline {
   display: inline;
   padding: 2px var(--space-2) 4px;
@@ -487,7 +793,28 @@ body {
   background: var(--color-surface-overlay);
   font-size: var(--fs-caption);
   font-weight: var(--fw-bold);
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
   color: inherit;
+}
+
+/* =========================================================================
+   Highlight — marker-style yellow for text the reader has commented on.
+   Semi-transparent yellow with mix-blend-mode: multiply, so overlapping
+   highlights compound into a darker yellow (the second reader's mark
+   layers on top of the first). box-decoration-break: clone lets the
+   highlight wrap cleanly across line breaks without weird gaps at the
+   line edges. Slight negative margin so the mark bleeds just past the
+   word edges — feels like a real marker stroke, not a text selection.
+   ========================================================================= */
+.highlight {
+  background: rgba(255, 221, 51, 0.5);
+  mix-blend-mode: multiply;
+  padding: 0.05em 0.15em;
+  margin: 0 -0.1em;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 /* =========================================================================
@@ -501,16 +828,23 @@ body {
 }
 
 /* =========================================================================
-   Switch — iOS-style binary toggle replacing checkboxes
+   Switch — iOS-style binary toggle replacing checkboxes.
+   Full-row target like a field: padding drives the vertical rhythm,
+   hover darkens the whole row.
    ========================================================================= */
 .switch {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--space-2);
   cursor: pointer;
   user-select: none;
   position: relative; /* anchors the absolute input so focus never scrolls */
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-fast) var(--ease-out);
 }
+.switch:hover,
+.switch:focus-within { background: var(--color-surface-strong); }
 .switch__input {
   appearance: none;
   -webkit-appearance: none;
@@ -567,34 +901,39 @@ body {
   flex-shrink: 0;
   width: 200px;
   min-height: 160px;
-  background: rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  /* 3D stack cards are always white, regardless of the theme around
+     them. The stack depth reads on a light surface; inverting would
+     collapse the perspective's legibility. We reset the color tokens
+     back to light mode locally so a shout card wrapping a 3D stack
+     still shows black text on the white cards. */
+  --color-bg:              #ffffff;
+  --color-text:            #000000;
+  --color-text-muted:      rgba(0, 0, 0, 0.55);
+  --color-text-subtle:     rgba(0, 0, 0, 0.35);
+  --color-surface-overlay: rgba(0, 0, 0, 0.03);
+  --color-surface-strong:  rgba(0, 0, 0, 0.06);
+  --color-border:          rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  color: #000000;
   border-radius: 20px;
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   cursor: pointer;
-  margin-right: -185px;
+  margin-right: -190px;
   transform: perspective(120px) rotateY(52deg) rotateX(8deg);
   transform-origin: left center;   /* cards fan from their left edge */
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   scale: 0.75;
-  filter: blur(0.5px);
   /* Two easings on one element, intentionally different:
      rotation settles (ease-out), margin springs (cubic spring).
      The tilt is functional — it lands. The spread is physical — it pops. */
   transition: transform 300ms var(--ease-out),
               scale 300ms var(--ease-out),
-              backdrop-filter 300ms ease,
-              -webkit-backdrop-filter 300ms ease,
-              margin-right 300ms cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 300ms ease,
-              filter 300ms ease,
-              background-color var(--dur-base) var(--ease-out);
-  will-change: transform, backdrop-filter;
+              margin-right 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
   isolation: isolate;
 }
 
@@ -602,39 +941,53 @@ body {
   transform: perspective(120px) rotateY(3deg) rotateX(0deg);
   scale: 0.95;
   z-index: 2;
-  background: var(--color-surface-strong);
-  filter: none;
   margin-right: 0px;
 }
 
-/* CTA inside a card stack — always rendered to keep height stable,
-   visible only on the active card so browsing is commitment-free. */
-.review-card .button {
+/* Select tag inside a card stack — reuses the plain .tag component as an
+   action. Borrowing a metadata element and giving it a click target is
+   cheaper than inventing a new button. Muted at rest, full-black when
+   chosen, with a small checkmark at the left. Visible only on the active
+   card, so browsing is still commitment-free. */
+.review-card__select {
   margin-top: auto;
+  align-self: flex-start;
+  gap: 4px;
+  cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-base) var(--ease-out);
+  transition: opacity var(--dur-base) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
 }
-.review-card.active .button {
+.review-card.active .review-card__select {
   opacity: 1;
   pointer-events: auto;
 }
+.review-card__select.is-chosen { color: var(--color-text); }
 
-.review-stars { font-size: 10px; color: #ff9100; letter-spacing: 1px; }
-.review-quote {
-  font-size: var(--fs-caption);
-  line-height: var(--lh-caption);
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--track-tight);
-  margin-top: auto;
+/* Checkmark glyph — same clip-path as the native checkbox so we don't
+   invent a second tick. Sized and colored to match caption text, so it
+   reads as a letterform, not an icon dropped into running copy. Springs
+   in on insert: the span is freshly appended each time "Chosen" is set,
+   so the keyframes run once per choice — confirmation of the gesture. */
+.review-card__check {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  flex-shrink: 0;
+  transform-origin: center;
+  animation: check-in var(--dur-base) var(--ease-spring) both;
 }
-.review-author {
-  font-size: var(--fs-micro);
-  line-height: var(--lh-micro);
-  font-weight: var(--fw-bold);
-  color: var(--color-text-muted);
+
+@keyframes check-in {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
 }
-.review-author-wrapper { display: flex; flex-direction: column; gap: 2px; }
+
+/* The whole active card is clickable — wire up the hint visually. */
+.review-card.active { cursor: pointer; }
 
 /* =========================================================================
    Quote — blockquote with a left rule
@@ -719,7 +1072,6 @@ body {
    ========================================================================= */
 
 /* Narrow-only controls are hidden on desktop. */
-.column__back,
 .fab { display: none; }
 
 /* FABs — floating circle buttons at bottom corners for narrow views.
@@ -747,23 +1099,6 @@ body {
   font-weight: var(--fw-bold);
   line-height: 1;
 }
-
-/* Back caption — sticky row at the top of a sidebar or inspector when it
-   takes over the phone viewport. Bold caption on a hairline. */
-.column__back {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  padding: var(--space-3) 0;
-  margin: 0 0 var(--space-3);
-  border-bottom: 0.5px solid var(--color-border);
-  text-align: left;
-  width: 100%;
-  transition: color var(--dur-fast) var(--ease-out);
-}
-.column__back:hover { color: var(--color-text); }
 
 /* Tablet — two columns. Sidebar is hidden by default and invoked via
    [data-view="nav"], which swaps it in at the inspector's expense. */
@@ -797,17 +1132,33 @@ body {
   .app[data-view="nav"] .sidebar { display: flex; }
   .app[data-view="inspector"] .inspector { display: flex; }
 
-  /* Both FABs visible on phone; back buttons visible in sidebar/inspector. */
+  /* Both FABs visible on phone. The view is governed by the two FABs —
+     no secondary back button inside the column; tapping the inspector FAB
+     off-state returns to the doc. */
   .fab--inspector { display: flex; }
-  .column__back { display: block; }
 
   .doc {
     padding: 0 var(--space-4) var(--space-20) var(--space-4);
   }
+
+  /* Sidebar takes the full phone viewport. Dividers (the hairline under
+     each nav-group) run edge-to-edge. Text is indented via inner padding
+     so the copy still breathes, but the line underneath doesn't. */
   .sidebar {
     width: 100%;
-    padding: 0 var(--space-4) var(--space-5) var(--space-4);
+    padding: var(--space-4) 0 var(--space-5) 0;
   }
+  .sidebar__brand,
+  .sidebar__footer {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .sidebar .nav-group > h3,
+  .sidebar .nav-group__items a {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .sidebar .nav-group__items a { padding-top: 6px; padding-bottom: 6px; }
   .inspector {
     padding: 0 var(--space-2) var(--space-20) var(--space-2);
   }
@@ -823,11 +1174,32 @@ body {
   /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
   .t-hero { font-size: 48px; line-height: 48px; }
 
-  /* Comments card is wide by default — tighten on phone. */
-  .card--comments { padding: var(--space-4) var(--space-5); }
+  /* The toc indicator rides the left edge of the phone viewport —
+     sidebar has no horizontal padding, so the indicator sits at 0. */
+  .sidebar .toc__indicator { left: 0; }
 
-  /* The toc indicator's left offset tracks sidebar padding. */
-  .sidebar .toc__indicator { left: calc(-1 * var(--space-4)); }
+}
+
+/* =========================================================================
+   Column reveal — keyframes used by the orchestrator in index.html.
+   Every direct child of a column animates from a direction that matches
+   the column's side in the desktop layout. The orchestrator attaches the
+   animation inline whenever a column becomes visible (initial load or
+   data-view swap). Nothing in this file wires columns to keyframes — the
+   script owns that, so any widget added later inherits the reveal for
+   free. Motion: 320 ms, ease-out, opacity + transform only.
+   ========================================================================= */
+@keyframes reveal-from-left {
+  from { opacity: 0; transform: translateX(-12px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+}
+@keyframes reveal-from-right {
+  from { opacity: 0; transform: translateX(12px)  scale(0.96); }
+  to   { opacity: 1; transform: translateX(0)     scale(1);    }
+}
+@keyframes reveal-from-below {
+  from { opacity: 0; transform: translateY(16px)  scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);    }
 }
 
 /* Inspector bottom spacer — any card can scroll to the very top. */
