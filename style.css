@@ -600,7 +600,7 @@ body {
   z-index: 2;
   background: var(--color-surface-strong);
   filter: none;
-  margin-right: -1rem;
+  margin-right: 0px;
 }
 
 .review-stars { font-size: 10px; color: #ff9100; letter-spacing: 1px; }
