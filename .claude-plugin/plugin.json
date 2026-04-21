@@ -1,0 +1,13 @@
+{
+  "name": "kk-design-system",
+  "version": "0.2.0",
+  "description": "KK Agentic Design System — skills, tokens, and components for the kk.consulting document pipeline.",
+  "author": "Konstantin Konstantinopolskii",
+  "skills": [
+    "skills/kk-design-system",
+    "skills/kk-ds-frontend",
+    "skills/kk-ds-supervisor"
+  ],
+  "_comment": "kk-ds-maintainer is intentionally excluded — it only applies inside this repo and is not shipped to consumers.",
+  "homepage": "https://github.com/kk-consulting/kk-design-system"
+}

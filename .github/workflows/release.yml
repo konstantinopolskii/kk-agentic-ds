@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@kk'
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+
+  notify-consumers:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch update to Wealthy
+        if: ${{ secrets.CONSUMER_DISPATCH_TOKEN != '' }}
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.CONSUMER_DISPATCH_TOKEN }}
+          repository: kk-consulting/wealthy
+          event-type: kk-design-system-updated
+          client-payload: |
+            {
+              "version": "${{ github.ref_name }}",
+              "changelog_url": "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+            }
