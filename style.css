@@ -72,6 +72,7 @@ img, svg { display: block; max-width: 100%; }
 
 html, body {
   height: 100%;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-size-adjust: 100%;
@@ -1848,9 +1849,13 @@ ol.t-list > li::before {
   }
 }
 
-/* Phone — one column at a time, governed by [data-view] on .app. */
+/* Phone — one column at a time, governed by [data-view] on .app. The
+   selector matches .app[data-view] so it beats the tablet-range rule
+   `.app[data-view="nav"] { grid-template-columns: ... }` on specificity;
+   a bare `.app` selector loses that cascade and the sidebar ends up
+   260px wide in a 390px viewport instead of filling it. */
 @media (max-width: 768px) {
-  .app {
+  .app[data-view] {
     grid-template-columns: 1fr;
   }
   .sidebar, .doc, .inspector { display: none; }
@@ -1866,29 +1871,37 @@ ol.t-list > li::before {
   .app[data-selection] .fab--comment { display: flex; }
 
   .doc {
-    padding: 0 var(--space-4) var(--space-20) var(--space-4);
+    padding: 0 var(--space-6) var(--space-20) var(--space-6);
   }
 
-  /* Sidebar takes the full phone viewport. Dividers (the hairline under
-     each nav-group) run edge-to-edge. Text is indented via inner padding
-     so the copy still breathes, but the line underneath doesn't. */
+  /* Sidebar takes the full phone viewport. Dividers run edge-to-edge
+     on the 0 rail; text sits on the 24 px rail so the copy still
+     breathes but the hairline owns the full column width. */
   .sidebar {
     width: 100%;
     padding: var(--space-4) 0 var(--space-5) 0;
   }
   .sidebar__header,
   .sidebar__footer {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
   }
   .sidebar .nav-group > h3,
   .sidebar .nav-group__items a {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
   }
   .sidebar .nav-group__items a { padding-top: 6px; padding-bottom: 6px; }
+  .sidebar .nav-group:not(:last-of-type)::after {
+    left: 0;
+    right: 0;
+  }
+
+  /* Inspector goes flush on phone. Card-internal padding (--card-inset-x,
+     12 px) is the only horizontal rhythm; the column itself takes the
+     full viewport width so shout cards own the whole screen. */
   .inspector {
-    padding: 0 var(--space-2) var(--space-20) var(--space-2);
+    padding: 0 0 var(--space-20) 0;
   }
 
   /* Signoff reflows to a single column; whitespace is the last stat. */
@@ -1902,6 +1915,11 @@ ol.t-list > li::before {
   /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
   .t-hero,
   .doc__part { font-size: 48px; line-height: 48px; }
+
+  /* Intro sits snug against the top of the doc column on phones. The
+     desktop 12 px padding creates a visible gap above the hero that
+     looks wrong at phone scale. */
+  .doc__intro { padding-top: 0; }
 
   /* Spec collapses to one column on phones — key and value stack,
      the subgrid inherits, row padding tightens a notch. */

@@ -1,11 +1,15 @@
 {
   "name": "@kk/design-system",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Agentic Design System by Konstantin Konstantinopolskii. Tokens, components, voice rules, and Claude skill for the kk.consulting document pipeline.",
   "license": "UNLICENSED",
   "private": true,
   "author": "Konstantin Konstantinopolskii <k.konstantinopolskiy@gmail.com>",
-  "homepage": "https://github.com/kk-consulting/kk-design-system",
+  "homepage": "https://github.com/konstantinopolskii/kk-agentic-ds",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konstantinopolskii/kk-agentic-ds.git"
+  },
   "main": "style.css",
   "files": [
     "vars.css",
