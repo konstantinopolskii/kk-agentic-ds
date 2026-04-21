@@ -98,6 +98,7 @@
             <li class="t-caption"><a href="#iteration">Option iteration</a></li>
             <li class="t-caption"><a href="#boost">Contrast boost</a></li>
             <li class="t-caption"><a href="#supervision">Supervision</a></li>
+            <li class="t-caption"><a href="#implementation">Implementation</a></li>
             <li class="t-caption"><a href="#magic">Magic injection</a></li>
           </ul>
         </section>
@@ -110,9 +111,17 @@
             <li class="t-caption"><a href="#dont-invent">Don&rsquo;t invent</a></li>
             <li class="t-caption"><a href="#add-new">How to add</a></li>
             <li class="t-caption"><a href="#evolve">How to evolve a rule</a></li>
-            <li class="t-caption"><a href="#install">Install and update</a></li>
-            <li class="t-caption"><a href="#guards">Guards and checks</a></li>
             <li class="t-caption"><a href="#checklist">What to think about</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Distribution</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#skill">Skill for agents</a></li>
+            <li class="t-caption"><a href="#install">Install and update</a></li>
+            <li class="t-caption"><a href="#update-flow">Update flow</a></li>
+            <li class="t-caption"><a href="#guards">Guards and checks</a></li>
           </ul>
         </section>
 
@@ -1265,7 +1274,7 @@
           <dl class="doc__spec">
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Select</dt>
-              <dd class="doc__spec-value">Range wraps in <span class="t-mono">.highlight</span> spans. A draft card pins at the top.</dd>
+              <dd class="doc__spec-value">Range wraps in <span class="t-mono">.highlight</span> spans and stays selected, so <span class="t-mono">&#8984;/Ctrl+C</span> still copies. A draft card pins at the top.</dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Draft</dt>
@@ -1445,7 +1454,7 @@
           <dl class="doc__spec">
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Nav</dt>
-              <dd class="doc__spec-value"><span class="t-mono">260px</span>. Groups, items, the sliding bar.</dd>
+              <dd class="doc__spec-value"><span class="t-mono">200&ndash;260px</span>, scales with viewport. Groups, items, the sliding bar.</dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Doc</dt>
@@ -1453,7 +1462,7 @@
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Inspector</dt>
-              <dd class="doc__spec-value"><span class="t-mono">420px</span>. Cards, threads, actions. The margin that talks back.</dd>
+              <dd class="doc__spec-value"><span class="t-mono">340&ndash;420px</span>, scales with viewport. Cards, threads, actions. The margin that talks back.</dd>
             </div>
           </dl>
         </div>
@@ -1497,6 +1506,10 @@
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Button focus</dt>
               <dd class="doc__spec-value">Not a card state. Buttons fire and forget.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Dismiss</dt>
+              <dd class="doc__spec-value">Click empty space in the inspector. Whatever&rsquo;s active collapses.</dd>
             </div>
           </dl>
         </div>
@@ -1888,8 +1901,8 @@
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Step 4</dt>
-              <dd class="doc__spec-value"><a href="#supervision">Supervision</a></dd>
-              <dd class="doc__spec-value">Supervisor agent checks logic, 80 / 20, and inventory drift.</dd>
+              <dd class="doc__spec-value"><a href="#supervision">Supervision</a> and <a href="#implementation">implementation</a></dd>
+              <dd class="doc__spec-value">Supervisor audits logic, 80 / 20, and inventory. Frontend rewrites semantics, a11y, and mobile code without moving a pixel.</dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Step 5</dt>
@@ -2035,6 +2048,46 @@
         <p class="t-body">
           Failures are not patched. They return to iteration. The
           pipeline only flows forward when every gate passes.
+        </p>
+      </article>
+
+      <article class="doc__section" id="implementation">
+        <h2 class="t-display">
+          Implementation<br />
+          <span class="t-display--medium t-muted">Step 4. Code pass</span>
+        </h2>
+        <p class="t-body">
+          Runs on the stage-three draft, before the supervisor.
+          Rewrites the code for semantics, accessibility, simple
+          logic, mobile, and cross-browser behavior. The visual is
+          frozen: kit classes stay, wrappers stay, tokens stay.
+          Only the code underneath changes.
+        </p>
+        <div class="card">
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Semantics and a11y</dt>
+              <dd class="doc__spec-value">Generic tags swap for semantic ones. Every interactive element has a label and a keyboard path. Focus rings stay visible.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Simplicity</dt>
+              <dd class="doc__spec-value">No abstractions called once. No <span class="t-mono">try/catch</span> around code that cannot throw. No framework, no build step, no polyfill. Vanilla stays vanilla.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Mobile</dt>
+              <dd class="doc__spec-value">Touch targets at 44 by 44. Every hover carries a tap equivalent. Handlers scope to the element, not the container.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Browsers</dt>
+              <dd class="doc__spec-value">Feature detection, not UA sniffing. Recent CSS ships with a <span class="t-mono">@supports</span> fallback. Reduced-motion preferences honored.</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="t-body">
+          Output passes to the supervisor. If inventory drift
+          entered during the rewrite, the supervisor returns it to
+          this stage. If composition is wrong, it returns to
+          iteration.
         </p>
       </article>
 
@@ -2312,140 +2365,6 @@
         </p>
       </article>
 
-      <article class="doc__section" id="install">
-        <h2 class="t-display">
-          Install and update<br />
-          <span class="t-display--medium t-muted">Inject the kit, pin the version</span>
-        </h2>
-        <p class="t-body">
-          The kit is three text files and a font folder. Projects
-          consume them; they do not modify them. Version the kit
-          itself; consumers pin a tag and pull updates by re-syncing.
-        </p>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Files to copy</h3>
-          </div>
-          <dl class="doc__spec doc__spec--value">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">vars.css</span></dt>
-              <dd class="doc__spec-value">tokens</dd>
-              <dd class="doc__spec-value">Color, space, radius, motion, typography. All design primitives.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">style.css</span></dt>
-              <dd class="doc__spec-value">components</dd>
-              <dd class="doc__spec-value">Every component and pattern in the kit. Nothing else.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">fonts/</span></dt>
-              <dd class="doc__spec-value">faces</dd>
-              <dd class="doc__spec-value">PP Neue Montreal in Book 400, Medium 500, Bold 700.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">index.html</span></dt>
-              <dd class="doc__spec-value">template</dd>
-              <dd class="doc__spec-value">This document, copied and adapted per product.</dd>
-            </div>
-          </dl>
-        </div>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Versioning</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Scheme</dt>
-              <dd class="doc__spec-value">Semver on the kit. Major = breaking token or component removal. Minor = additions. Patch = fixes.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Pin</dt>
-              <dd class="doc__spec-value">Consumers reference a specific tag in their cache-bust query string (<span class="t-mono">?v=1.3.0</span>) or lock file.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Changelog</dt>
-              <dd class="doc__spec-value">Every version ships a diff: what was added, what was removed, what moved. Lives in the kit repo.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Upgrade</dt>
-              <dd class="doc__spec-value">Re-copy files. Read the changelog. Re-run the <a href="#supervision">supervisor agent</a> against the project to catch drift.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="guards">
-        <h2 class="t-display">
-          Guards and checks<br />
-          <span class="t-display--medium t-muted">Who owns what, who verifies</span>
-        </h2>
-        <p class="t-body">
-          Agents draft fast and forget rules. Three guards keep the
-          system honest: a file boundary that locks the kit, a
-          linter that catches forbidden values, and the pipeline&rsquo;s
-          supervisor agent that catches semantic drift. The human
-          signs off at the end.
-        </p>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Ownership</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Kit files</dt>
-              <dd class="doc__spec-value"><span class="t-mono">vars.css</span>, <span class="t-mono">style.css</span>, <span class="t-mono">fonts/</span>. Maintainer only. PRs against the kit repo, not the consumer project.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Project code</dt>
-              <dd class="doc__spec-value">Consumer. Free to compose kit components; never modifies the kit itself.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Content</dt>
-              <dd class="doc__spec-value">Author. The words inside any instance of the document.</dd>
-            </div>
-          </dl>
-        </div>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Who checks what</h3>
-          </div>
-          <dl class="doc__spec doc__spec--value">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Linter</dt>
-              <dd class="doc__spec-value">automated</dd>
-              <dd class="doc__spec-value">Off-grid spacing, off-palette colors, forbidden radii, light weights, muted text outside metadata.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Supervisor agent</dt>
-              <dd class="doc__spec-value">automated</dd>
-              <dd class="doc__spec-value">Job-story fit, 80 / 20 at every nesting, invented components, drift from the <a href="#index">component index</a>.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">CI gate</dt>
-              <dd class="doc__spec-value">automated</dd>
-              <dd class="doc__spec-value">Blocks PRs that fail lint or supervisor. No merges past a red check.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Art director</dt>
-              <dd class="doc__spec-value">human</dd>
-              <dd class="doc__spec-value">Judgment calls, tone, magic injection. Last signoff before ship.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Maintainer</dt>
-              <dd class="doc__spec-value">human</dd>
-              <dd class="doc__spec-value">Guards the kit itself. Approves rule changes in the manifesto before code lands.</dd>
-            </div>
-          </dl>
-        </div>
-        <p class="t-caption">
-          Agents never commit to the kit repo directly. They draft
-          against a consumer project; the supervisor agent sends
-          every failure back to <a href="#iteration">iteration</a>.
-          Only the pipeline&rsquo;s final step pushes work to a
-          human.
-        </p>
-      </article>
-
       <article class="doc__section" id="checklist">
         <h2 class="t-display">
           What to think about<br />
@@ -2558,6 +2477,328 @@
         </div>
       </article>
 
+      <!-- ================== DISTRIBUTION ================================ -->
+
+      <h2 class="doc__part">Distribution</h2>
+
+      <article class="doc__section" id="skill">
+        <h2 class="t-display">
+          Skill for agents<br />
+          <span class="t-display--medium t-muted">The kit inside the agent&rsquo;s mind</span>
+        </h2>
+        <p class="t-body">
+          The kit ships two ways in one package. Humans get CSS, fonts,
+          and this document. Agents get a Claude skill that constrains
+          their output to the kit before the first character prints.
+          One source of truth, one version number, two consumers.
+        </p>
+        <p class="t-body">
+          A skill is not a reference. The agent does not read it and
+          then freestyle. The skill is loaded into context on every
+          invocation and tells the agent what it may emit, what it
+          may not, and in what order to think. Invented components
+          and off-grid values are rejected at
+          <a href="#supervision">supervision</a>.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Skill layout</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">SKILL.md</span></dt>
+              <dd class="doc__spec-value">entry</dd>
+              <dd class="doc__spec-value">Trigger description, hard rules, pipeline protocol. Claude loads this automatically when a UI or document task matches.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">tokens.json</span></dt>
+              <dd class="doc__spec-value">machine-readable</dd>
+              <dd class="doc__spec-value">Every legal color, space, radius, type size. The agent consults this without parsing CSS.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">manifesto.md</span></dt>
+              <dd class="doc__spec-value">principles</dd>
+              <dd class="doc__spec-value">Philosophy, 80/20, chunking, contrast, foundations. The why behind the tokens.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">components.md</span></dt>
+              <dd class="doc__spec-value">inventory</dd>
+              <dd class="doc__spec-value">Every kit component with its class contract and a copy-pasteable HTML snippet.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">voice.md</span></dt>
+              <dd class="doc__spec-value">tone</dd>
+              <dd class="doc__spec-value">Shape rules, label rules, the full AI-tells inventory. Applied to every word the agent writes.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">pipeline.md</span></dt>
+              <dd class="doc__spec-value">protocol</dd>
+              <dd class="doc__spec-value">The five-stage agentic flow documented in <a href="#pipeline">Pipeline</a>, expanded for agent use.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">patterns/</span></dt>
+              <dd class="doc__spec-value">recipes</dd>
+              <dd class="doc__spec-value">Canonical use-case layouts. <span class="t-mono">strategy-doc.md</span> covers the Wealthy pipeline&rsquo;s output.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Skill as pipeline</h3>
+          </div>
+          <p class="t-body">
+            Three skills ship in the package. The main one owns
+            stages one through three. Stage four runs in two roles:
+            the frontend rewrites, the supervisor audits. The human
+            owns stage five.
+          </p>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">kk-design-system</span></dt>
+              <dd class="doc__spec-value">stages 1&ndash;3</dd>
+              <dd class="doc__spec-value">Analyst, UX, UI. Invoked on any doc or UI task. Runs hypothesis defense, iteration, and contrast boost.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">kk-ds-frontend</span></dt>
+              <dd class="doc__spec-value">stage 4, rewrite</dd>
+              <dd class="doc__spec-value">Runs on the stage-three draft. Rewrites semantics, accessibility, JS, mobile, and cross-browser code without moving a pixel.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">kk-ds-supervisor</span></dt>
+              <dd class="doc__spec-value">stage 4, audit</dd>
+              <dd class="doc__spec-value">Runs on the rewritten draft. Audits logic, 80/20, and inventory. Returns failures to the stage that owns them.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Human</dt>
+              <dd class="doc__spec-value">stage 5</dd>
+              <dd class="doc__spec-value">Magic injection and signoff. The agent stops; the author lands.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Three delivery channels, one package</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">npm postinstall</dt>
+              <dd class="doc__spec-value">symlink</dd>
+              <dd class="doc__spec-value"><span class="t-mono">@kk/design-system</span> installs its CSS and skills together. Postinstall links <span class="t-mono">skills/</span> into the consumer&rsquo;s <span class="t-mono">.claude/skills/</span>.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Claude plugin</dt>
+              <dd class="doc__spec-value">marketplace</dd>
+              <dd class="doc__spec-value"><span class="t-mono">.claude-plugin/plugin.json</span> lets consumers install via <span class="t-mono">/plugin install</span> without npm.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Manual copy</dt>
+              <dd class="doc__spec-value">cowork</dd>
+              <dd class="doc__spec-value">The skill folder works in any tool that reads SKILL.md (Claude.ai Cowork, Codex, Cursor). Drop <span class="t-mono">skills/kk-design-system/</span> into the tool&rsquo;s skill directory.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="install">
+        <h2 class="t-display">
+          Install and update<br />
+          <span class="t-display--medium t-muted">One package, two consumers</span>
+        </h2>
+        <p class="t-body">
+          The kit ships as <span class="t-mono">@kk/design-system</span>.
+          One package carries tokens, components, fonts, and the
+          Claude skills. Humans import the CSS; agents load the skill.
+          Both share one version.
+        </p>
+        <p class="t-body">
+          Consumers pin a version; they never edit the kit in place.
+          Local edits in <span class="t-mono">node_modules</span> or a
+          submodule get wiped on the next install. All changes return
+          to this repo as PRs.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Install in a project</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">npm</dt>
+              <dd class="doc__spec-value">primary</dd>
+              <dd class="doc__spec-value"><span class="t-mono">npm install @kk/design-system</span>. CSS imports from the package; postinstall symlinks <span class="t-mono">skills/</span> into <span class="t-mono">.claude/skills/</span>. One command, both consumers wired.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Claude plugin</dt>
+              <dd class="doc__spec-value">skill-only</dd>
+              <dd class="doc__spec-value"><span class="t-mono">/plugin install kk-design-system</span>. For projects that want the agent rules without the runtime CSS (docs, chat adapters).</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Git submodule</dt>
+              <dd class="doc__spec-value">escape hatch</dd>
+              <dd class="doc__spec-value">Last resort. Works when npm is not an option. Painful at month three &mdash; use only if the other two fail.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Versioning</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Scheme</dt>
+              <dd class="doc__spec-value">Semver. Major: breaking token or component removal, trigger-phrase change in SKILL.md. Minor: additive components, tokens, skill recipes. Patch: fixes, copy edits.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Pin</dt>
+              <dd class="doc__spec-value">Lockfile (<span class="t-mono">package-lock.json</span>) or <span class="t-mono">version</span> field in plugin manifest. Never float.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Changelog</dt>
+              <dd class="doc__spec-value">Every release names what was added, what was removed, what moved. Lives at <span class="t-mono">CHANGELOG.md</span> and in the GitHub release body.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Trigger phrases</dt>
+              <dd class="doc__spec-value">Changes to a skill&rsquo;s <span class="t-mono">description</span> are breaking even if no classes move &mdash; the agent may stop invoking the skill. Treat as major.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="update-flow">
+        <h2 class="t-display">
+          Update flow<br />
+          <span class="t-display--medium t-muted">Tag, publish, PR, merge</span>
+        </h2>
+        <p class="t-body">
+          Updates travel in one direction: this repo, then out.
+          Consumer repos do not edit the kit; they receive it. A
+          tagged release here triggers a PR in every consumer repo
+          that depends on the package.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Release in this repo</h3>
+          </div>
+          <ol class="t-list">
+            <li>Edit tokens, components, skill files. Commit to a branch.</li>
+            <li>Update <span class="t-mono">CHANGELOG.md</span> with the diff: added, removed, moved.</li>
+            <li>Bump <span class="t-mono">package.json</span> and the version in <span class="t-mono">.claude-plugin/plugin.json</span> in lockstep.</li>
+            <li>Merge. Tag <span class="t-mono">vX.Y.Z</span> on <span class="t-mono">main</span>.</li>
+            <li>GitHub Actions runs <span class="t-mono">.github/workflows/release.yml</span>: publishes to the registry, creates a GitHub release with the changelog, dispatches an event to every consumer.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Consumer picks up the release</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Renovate / Dependabot</dt>
+              <dd class="doc__spec-value">automated</dd>
+              <dd class="doc__spec-value">Watches <span class="t-mono">@kk/design-system</span>. Opens a version-bump PR in the consumer with the changelog pasted into the body.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">repository_dispatch</dt>
+              <dd class="doc__spec-value">automated</dd>
+              <dd class="doc__spec-value">Release workflow fires a <span class="t-mono">kk-design-system-updated</span> event. The consumer repo listens, runs a Claude agent with the changelog as input, and drafts call-site edits before opening the PR.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Human review</dt>
+              <dd class="doc__spec-value">mandatory</dd>
+              <dd class="doc__spec-value">No auto-merge. The author reads the diff, runs <a href="#supervision">supervision</a>, ships.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Why not auto-merge</h3>
+          </div>
+          <p class="t-body">
+            A skill update can change trigger phrasing, component
+            names, or voice rules. The agent will adapt the consumer
+            code, but judgment &mdash; is the new label right for
+            this product? &mdash; belongs to the maintainer. Bots
+            open the PR. Humans merge it.
+          </p>
+        </div>
+        <p class="t-caption">
+          Never hand-edit the kit inside
+          <span class="t-mono">node_modules</span> or a submodule.
+          The next install wipes it. Land changes here, tag, release.
+        </p>
+      </article>
+
+      <article class="doc__section" id="guards">
+        <h2 class="t-display">
+          Guards and checks<br />
+          <span class="t-display--medium t-muted">Who owns what, who verifies</span>
+        </h2>
+        <p class="t-body">
+          Agents draft fast and forget rules. Three guards keep the
+          system honest: a file boundary that locks the kit, a
+          linter that catches forbidden values, and the pipeline&rsquo;s
+          supervisor agent that catches semantic drift. The human
+          signs off at the end.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Ownership</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Kit files</dt>
+              <dd class="doc__spec-value"><span class="t-mono">vars.css</span>, <span class="t-mono">style.css</span>, <span class="t-mono">fonts/</span>. Maintainer only. PRs against the kit repo, not the consumer project.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Project code</dt>
+              <dd class="doc__spec-value">Consumer. Free to compose kit components; never modifies the kit itself.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Content</dt>
+              <dd class="doc__spec-value">Author. The words inside any instance of the document.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Who checks what</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Linter</dt>
+              <dd class="doc__spec-value">automated</dd>
+              <dd class="doc__spec-value">Off-grid spacing, off-palette colors, forbidden radii, light weights, muted text outside metadata.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Supervisor agent</dt>
+              <dd class="doc__spec-value">automated</dd>
+              <dd class="doc__spec-value">Job-story fit, 80 / 20 at every nesting, invented components, drift from the <a href="#index">component index</a>.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">CI gate</dt>
+              <dd class="doc__spec-value">automated</dd>
+              <dd class="doc__spec-value">Blocks PRs that fail lint or supervisor. No merges past a red check.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Art director</dt>
+              <dd class="doc__spec-value">human</dd>
+              <dd class="doc__spec-value">Judgment calls, tone, magic injection. Last signoff before ship.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Maintainer</dt>
+              <dd class="doc__spec-value">human</dd>
+              <dd class="doc__spec-value">Guards the kit itself. Approves rule changes in the manifesto before code lands.</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="t-caption">
+          Agents never commit to the kit repo directly. They draft
+          against a consumer project; the supervisor agent sends
+          every failure back to <a href="#iteration">iteration</a>.
+          Only the pipeline&rsquo;s final step pushes work to a
+          human.
+        </p>
+      </article>
+
       <!-- ================== AUDIT ======================================= -->
 
       <h2 class="doc__part">Audit</h2>
@@ -2576,34 +2817,9 @@
         <div class="card">
           <dl class="doc__spec doc__spec--value">
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Comments</dt>
-              <dd class="doc__spec-value">Copy blocked</dd>
-              <dd class="doc__spec-value">The fake-caret and auto-lit comment field read well, but <span class="t-mono">&#8984;/Ctrl+C</span> on a selection no longer copies. The selection renders; the clipboard stays empty.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Inspector</dt>
-              <dd class="doc__spec-value">No empty click</dd>
-              <dd class="doc__spec-value">Clicking empty space inside the inspector should deactivate the active card. Currently nothing happens.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Inspector scroll</dt>
-              <dd class="doc__spec-value">Breaks on cross-click</dd>
-              <dd class="doc__spec-value">While a selection exists and the comment draft is active, clicking any other inspector card breaks the glide scroll. The target card lands off-screen.</dd>
-            </div>
-            <div class="doc__spec-row">
               <dt class="doc__spec-key">Mobile layout</dt>
               <dd class="doc__spec-value">Padding drift</dd>
-              <dd class="doc__spec-value">Layout paddings on phone viewports are off in several cards. Known; unaudited.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Tablet layout</dt>
-              <dd class="doc__spec-value">Column resize at ~1100px</dd>
-              <dd class="doc__spec-value">Around <span class="t-mono">1100px</span> viewport, columns resize incorrectly before hitting the tablet breakpoint. Transition feels broken.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">3D card stack</dt>
-              <dd class="doc__spec-value">Tap selects all</dd>
-              <dd class="doc__spec-value">On mobile, the Choose tap on the deck applies its selected state to every card instead of only the active one. JS handler is too broad.</dd>
+              <dd class="doc__spec-value">Phone <span class="t-mono">.doc</span> holds a <span class="t-mono">16px</span> horizontal rail; <span class="t-mono">.inspector</span> holds <span class="t-mono">8px</span>. Cards in the two columns land on different content edges (<span class="t-mono">28px</span> vs <span class="t-mono">20px</span> from the viewport). Open: unify the rail, or is the asymmetry deliberate because inspector cards are denser?</dd>
             </div>
           </dl>
         </div>
@@ -3313,14 +3529,20 @@
           });
         }
 
-        // Scroll — always. Start right now, don't wait for the open
-        // animation. The collapse above has already committed instantly,
-        // so cardRect.top is the card's settled position. Glide runs
-        // over 320 ms (--dur-slow) in parallel with the 200 ms open.
-        var inspectorRect = inspector.getBoundingClientRect();
-        var cardRect = card.getBoundingClientRect();
-        var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
-        glideInspectorScroll(Math.max(0, target), 320);
+        // Defer the measurement one frame so any MutationObserver that
+        // dismisses an empty draft (demoted by collapseAllActive above)
+        // has flushed before we read cardRect.top. Measuring in the
+        // same task leaves the draft in the layout for one extra beat,
+        // and the glide lands the target off-screen by the draft's
+        // height. Glide still runs over 320 ms in parallel with the
+        // 200 ms open.
+        requestAnimationFrame(function () {
+          if (!card.isConnected) return;
+          var inspectorRect = inspector.getBoundingClientRect();
+          var cardRect = card.getBoundingClientRect();
+          var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
+          glideInspectorScroll(Math.max(0, target), 320);
+        });
       }
 
       function handleTrigger(e) {
@@ -3330,7 +3552,14 @@
         if (e.target.closest('.comment__menu, .comment__menu-popover')) return;
 
         var card = e.target.closest('.card');
-        if (!card) return;
+        // Empty space inside the inspector deactivates whatever's
+        // promoted. focusin can't land outside a card (no focusable
+        // elements live between them), so this path is click-only in
+        // practice.
+        if (!card) {
+          if (e.type === 'click') collapseAllActive();
+          return;
+        }
         // Heading cards are decorative; they don't participate in state.
         if (card.classList.contains('card--heading')) return;
 
@@ -3446,11 +3675,6 @@
           parent.removeChild(span);
           parent.normalize();
         });
-      }
-
-      function clearDomSelection() {
-        var sel = window.getSelection();
-        if (sel) sel.removeAllRanges();
       }
 
       // Toggle the app-level flag that governs the Add-a-comment FAB's
@@ -3606,7 +3830,22 @@
         var range = sel.getRangeAt(0).cloneRange();
         var spans = wrapRangeAsHighlight(range);
         if (!spans.length) return;
-        clearDomSelection();
+
+        // Re-anchor the native selection onto the freshly-wrapped spans.
+        // wrapRangeAsHighlight detaches the original text nodes, which
+        // orphans the browser's range and leaves ⌘/Ctrl+C with nothing
+        // to copy. Restoring a range across the new span content keeps
+        // the native clipboard path alive; ::selection paints it as the
+        // inverted preview of the mark-to-be.
+        var first = spans[0].firstChild;
+        var last  = spans[spans.length - 1].firstChild;
+        if (first && last) {
+          var restored = document.createRange();
+          restored.setStart(first, 0);
+          restored.setEnd(last, last.data.length);
+          sel.removeAllRanges();
+          sel.addRange(restored);
+        }
 
         var threadId = 'c' + Date.now() + '-' + Math.floor(Math.random() * 1000);
         spans.forEach(function (span) {
@@ -3914,32 +4153,48 @@
           currentIndex = index;
         }
 
+        function setChosen(card) {
+          wrapper.querySelectorAll('.deck-card__select.is-chosen').forEach(function (other) {
+            if (other.closest('.deck-card') === card) return;
+            other.classList.remove('is-chosen');
+            other.textContent = 'Choose';
+          });
+          var btn = card.querySelector('.deck-card__select');
+          if (!btn) return;
+          if (btn.classList.contains('is-chosen')) {
+            btn.classList.remove('is-chosen');
+            btn.textContent = 'Choose';
+          } else {
+            btn.classList.add('is-chosen');
+            btn.innerHTML =
+              '<span class="deck-card__check" aria-hidden="true"></span>Chosen';
+          }
+        }
+
         setActiveCard(0);
 
         if (isMobileStack) {
-          var overlay = document.createElement('div');
-          overlay.style.cssText = 'position:absolute;top:0;left:0;right:0;bottom:0;z-index:10;touch-action:pan-y;-webkit-tap-highlight-color:transparent;';
-          wrapper.style.position = 'relative';
-          wrapper.appendChild(overlay);
+          // Touch handlers live on the wrapper, not on an overlay —
+          // an overlay would sit above the cards and swallow every tap,
+          // starving the Choose button and routing the synthesized click
+          // to a non-card target.
+          wrapper.style.touchAction = 'pan-y';
 
           var touchStartX = 0, touchStartY = 0, lastSwitchX = 0, isHSwipe = false;
 
-          overlay.addEventListener('touchstart', function (e) {
+          wrapper.addEventListener('touchstart', function (e) {
             touchStartX = e.changedTouches[0].clientX;
             touchStartY = e.changedTouches[0].clientY;
             lastSwitchX = touchStartX;
             isHSwipe = false;
           }, { passive: true });
 
-          overlay.addEventListener('touchmove', function (e) {
+          wrapper.addEventListener('touchmove', function (e) {
             var cx = e.changedTouches[0].clientX;
             var cy = e.changedTouches[0].clientY;
             var dx = Math.abs(cx - touchStartX);
             var dy = Math.abs(cy - touchStartY);
-            if (!isHSwipe && (dx > 10 || dy > 10)) {
-              isHSwipe = dx > dy;
-              if (isHSwipe) overlay.style.touchAction = 'pan-x';
-            }
+            if (!isHSwipe && (dx > 10 || dy > 10)) isHSwipe = dx > dy;
             if (isHSwipe) {
               e.preventDefault();
               var drag = cx - lastSwitchX;
@@ -3952,11 +4207,16 @@
             }
           }, { passive: false });
 
-          overlay.addEventListener('touchend', function () {
-            overlay.style.touchAction = 'pan-y';
-            isHSwipe = false;
-          }, { passive: true });
-
+          // Suppress the click that a horizontal swipe synthesizes on
+          // touchend, so a swipe-to-advance doesn't accidentally toggle
+          // "Chosen" on the card that happens to be under the finger.
+          wrapper.addEventListener('click', function (e) {
+            if (isHSwipe) {
+              e.stopPropagation();
+              e.preventDefault();
+              isHSwipe = false;
+            }
+          }, true);
         } else {
           cards.forEach(function (card, index) {
             card.addEventListener('mouseenter', function () {
@@ -3977,39 +4237,19 @@
           });
         }
 
-        // Clicking anywhere on the active card (or directly on its select
-        // tag) toggles the chosen state. Clicking an inactive card promotes
-        // it first — two clicks to commit, matching the browse-without-
-        // consequence promise of the stack. Only one card in the stack can
-        // be "Chosen" at a time; selecting another replaces the previous.
-        function setChosen(card) {
-          wrapper.querySelectorAll('.deck-card__select.is-chosen').forEach(function (other) {
-            if (other.closest('.deck-card') === card) return;
-            other.classList.remove('is-chosen');
-            other.textContent = 'Choose';
+        // Per-card click handlers. A wrapper-level listener would have
+        // to resolve e.target against a closest('.deck-card'), which is
+        // correct only when the tap hit a card descendant; a stray tap
+        // on a sibling inside the wrapper would never resolve to the
+        // active card, and the user sees nothing change.
+        cards.forEach(function (card, index) {
+          card.addEventListener('click', function () {
+            if (!card.classList.contains('active')) {
+              setActiveCard(index);
+              return;
+            }
+            setChosen(card);
           });
-          var btn = card.querySelector('.deck-card__select');
-          if (!btn) return;
-          if (btn.classList.contains('is-chosen')) {
-            btn.classList.remove('is-chosen');
-            btn.textContent = 'Choose';
-          } else {
-            btn.classList.add('is-chosen');
-            btn.innerHTML =
-              '<span class="deck-card__check" aria-hidden="true"></span>Chosen';
-          }
-        }
-
-        wrapper.addEventListener('click', function (e) {
-          var card = e.target.closest('.deck-card');
-          if (!card) return;
-          var idx = Array.prototype.indexOf.call(cards, card);
-          if (idx === -1) return;
-          if (!card.classList.contains('active')) {
-            setActiveCard(idx);
-            return;
-          }
-          setChosen(card);
         });
       });
     })();

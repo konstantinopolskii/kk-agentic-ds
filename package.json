@@ -1,6 +1,6 @@
 {
   "name": "@kk/design-system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Agentic Design System by Konstantin Konstantinopolskii. Tokens, components, voice rules, and Claude skill for the kk.consulting document pipeline.",
   "license": "UNLICENSED",
   "private": true,

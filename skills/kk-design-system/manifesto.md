@@ -57,6 +57,8 @@ Forbidden: gradients, drop shadows, glass/translucency, blur. Depth comes from h
 
 Nine tokens only: two backgrounds, two surface tints, two hairlines, three text alphas. No brand, no status colors, no accent. Text is black by default. Muted and subtle are metadata-only. If text is ambiguous without color, rewrite the text, not the palette.
 
+Selection renders inverted — `--color-text` background, `--color-bg` text. No native blue, no custom color. A live selection previews the mark it is about to become.
+
 ## Foundations — type
 
 PP Neue Montreal. Three weights (regular 500, medium 500, bold 700), seven sizes (66 → 14 px). No italics outside quotes. Regular sits on Medium — Book (400) reads too thin on screen.
