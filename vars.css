@@ -30,17 +30,16 @@
   --space-15: 60px;
   --space-20: 80px;
 
-  /* Type family — PP Neue Montreal, self-hosted from fonts/montreal.
-     @font-face declarations live at the top of style.css. System
-     fallbacks stay in place so the page still renders if the webfont
-     fails (or during the tiny window before font-display: swap
-     swaps in the real face). */
-  --font-body: "PP Neue Montreal", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  /* Type family — Manrope, self-hosted from fonts/manrope. SIL OFL 1.1,
+     so the kit ships the .woff2 files directly. @font-face declarations
+     live at the top of style.css. System fallbacks stay in place so the
+     page still renders if the webfont fails (or during the tiny window
+     before font-display: swap swaps in the real face). */
+  --font-body: "Manrope", system-ui, -apple-system, "Helvetica Neue", sans-serif;
 
-  /* Type scale — every step +2 px from the previous scale so Montreal
-     reads at the same visual weight as Inter used to. Line-heights
-     bumped in lockstep so the existing per-size leading ratios stay
-     intact (no cramped body, no lonely titles). */
+  /* Type scale — each step is tuned for Manrope's x-height and
+     proportion. Line-heights sit in lockstep so the existing per-size
+     leading ratios stay intact (no cramped body, no lonely titles). */
   --fs-hero: 66px;      --lh-hero: 66px;
   --fs-display: 38px;   --lh-display: 38px;
   --fs-body: 22px;      --lh-body: 32px;

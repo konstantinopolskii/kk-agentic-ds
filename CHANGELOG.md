@@ -2,6 +2,29 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.4.0 — 2026-04-21
+
+Typeface swap. PP Neue Montreal was never licensed for redistribution inside an npm package — Pangram Pangram's EULA §3.7 prohibits distributing copies or uploading the font publicly. The kit now ships Manrope, a variable font under SIL OFL 1.1.
+
+### Added
+- `fonts/manrope/Manrope-Latin.woff2` — weights 200–800, Latin + Western European script coverage.
+- `fonts/manrope/Manrope-Cyrillic.woff2` — weights 200–800, Russian, Ukrainian, Belarusian, and allied scripts.
+- `fonts/manrope/OFL.txt` — SIL OFL 1.1 license for the Manrope files.
+- Single `<link rel="preload">` in `index.html` pointing at the Latin subset; Cyrillic lazy-loads via `unicode-range`.
+
+### Removed
+- `fonts/montreal/` and every PP Neue Montreal `.woff` / `.woff2` binary. Purged from the entire git history with `git filter-repo --path fonts/ --invert-paths`; all prior commits and tags rewritten. Old commit SHAs are dead.
+- The legacy `.woff` fallback. Manrope ships `.woff2` only — evergreen browsers cover it, IE11 is not a support floor.
+
+### Moved
+- `--font-body` in `vars.css` and `type.family` in `tokens.json` now resolve to `Manrope`, falling back to the system stack.
+- `style.css` `@font-face` blocks collapsed from three weight-specific declarations to two subset-specific declarations. Variable-weight axis (`font-weight: 200 800`) covers the full range per subset.
+- Typography rule in `manifesto.md` names Manrope and explains why the 400 axis is still skipped at body size.
+- `kk-design-system` skill `description` (in `SKILL.md` frontmatter) now reads "Manrope typography" instead of "PP Neue Montreal". The skill `homepage` field updated to the real repo URL.
+
+### Open
+- Nothing carried over. Backlog is empty.
+
 ## 0.3.1 — 2026-04-21
 
 Resolves the mobile padding drift open item from 0.3.0.
