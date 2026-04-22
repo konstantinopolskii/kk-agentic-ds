@@ -18,6 +18,7 @@ You do not pick. You do not rank. You clarify. Ranking the three hand-offs colla
 - `../kk-design-system/components.md` — full file
 - `../kk-design-system/voice.md` — §Shape, §Labels and interface text
 - `../kk-design-system/pipeline.md` — §Protocols → Revolutionary protocol
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Inputs:
   - `documentation/<session>/04-conservative.md`

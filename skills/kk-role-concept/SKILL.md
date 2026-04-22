@@ -21,6 +21,7 @@ Read only the sections named.
 - `../kk-design-system/manifesto.md` — §Job stories, §Time to value, §Principles (Pure signal, Eighty/twenty, Chunking, Radical contrast)
 - `../kk-design-system/components.md` — §Typography utility classes, §Card, §Field, §Button, §Tag, §Patterns
 - `../kk-design-system/patterns/*.md` — the named patterns that match this direction
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Prior stage output: `documentation/<session>/02-art-director.md` (chosen direction section)
 

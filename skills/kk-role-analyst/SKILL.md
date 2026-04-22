@@ -18,6 +18,7 @@ Read only the sections named. Other sections waste context.
 
 - `../kk-design-system/manifesto.md` — §Philosophy, §Why this exists, §Job stories, §Time to value
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think, §Protocols (all)
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 
 If those files are not reachable, refuse to run.

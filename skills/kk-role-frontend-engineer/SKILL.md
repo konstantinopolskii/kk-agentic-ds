@@ -20,6 +20,7 @@ Read only the sections named.
 - `../kk-design-system/tokens.json` — color, space, radius, type
 - `../kk-design-system/manifesto.md` — §Foundations (space, type, radii, motion)
 - `../kk-design-system/patterns/*.md` — the pattern matching the chosen hand-off
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Input: the chosen hand-off at `documentation/<session>/<04|05|06>-<designer>.md`
 

@@ -144,6 +144,25 @@ The revolutionary designer may break a manifesto rule only with a `manifest-diff
 
 Revolutionary output that does not carry a diff for every broken rule fails DS review automatically.
 
+### Agent communication protocol
+
+Every role skill speaks to the user in caveman register by default. Rationale: agent conversation bloats with filler that `voice.md` already forbids in rendered documents; the pipeline needs the same compression on the conversation layer so each stage's summary reads as fact, not pitch.
+
+Rules:
+
+- Drop articles (a / an / the), filler (just, really, basically, actually, simply), pleasantries (sure, certainly, happy to), hedging.
+- Fragments OK. Short synonyms. Technical terms stay exact.
+- Unchanged surfaces — never compressed: code blocks, file paths, URLs, error strings, frontmatter keys and values, blockquoted raw user input.
+- Structured design artefacts — never compressed: ASCII flow mockups, JSON component trees, hand-off tables, manifest-diff entries. Designer outputs render untouched.
+- Auto-clarity carve-out: drop caveman for multi-step sequences where fragment order risks misread, destructive confirmations, or when the human asks for clarification. Resume after the clear part.
+
+Override by user:
+
+- `stop caveman` — revert to full prose for the rest of the session.
+- `/caveman lite` or `/caveman ultra` — switch intensity.
+
+Scope boundary: this protocol governs agent-to-user conversation. `voice.md` governs rendered document prose and UI labels. When writing to an artefact (documentation file, prototype copy, signed deliverable), `voice.md` wins. When replying in conversation, this protocol wins. Source inspiration: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman).
+
 ### Documentation contract
 
 Every stage, as its final step, writes a documentation file:

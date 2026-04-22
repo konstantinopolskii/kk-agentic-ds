@@ -2,6 +2,23 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.12.0 — 2026-04-22
+
+Agent communication protocol lands. Every role skill in the pipeline now speaks to the user in caveman register by default: articles, filler, pleasantries, and hedging dropped from conversation output. Structured artefacts (code, file paths, frontmatter, ASCII mockups, JSON component trees, manifest-diff entries, blockquoted user input) render untouched. Auto-clarity carve-out drops caveman for multi-step sequences, destructive confirmations, and clarification requests. User override: `stop caveman` reverts; `/caveman lite` or `/caveman ultra` switches intensity. Source inspiration: JuliusBrussee/caveman.
+
+Scope boundary called out inside the protocol itself: this governs agent-to-user conversation. `voice.md` continues to govern rendered document prose and UI labels. When writing to an artefact, voice.md wins; when replying in conversation, the new protocol wins.
+
+### Added
+- `skills/kk-design-system/pipeline.md § Protocols → Agent communication protocol` — new subsection placed between Revolutionary protocol and Documentation contract. Carries the five rule bullets (drop articles / filler / pleasantries / hedging; fragments OK; unchanged surfaces; unchanged structured artefacts; auto-clarity carve-out), the two override commands, and the voice.md boundary.
+- Cross-reference line `- ../kk-design-system/pipeline.md — §Agent communication protocol` added to the canon-load block of every role skill: `kk-role-analyst`, `kk-role-art-director`, `kk-role-concept`, `kk-role-designer-conservative`, `kk-role-designer-ux`, `kk-role-designer-revolutionary`, `kk-role-ds-reviewer`, `kk-role-frontend-engineer`, `kk-role-ux-copywriter`, `kk-role-ux-copy-reviewer`, `kk-role-meta-retro` (noted inline since meta-retro loads the full file), `kk-ds-frontend`, `kk-ds-supervisor`. Thirteen skills total.
+
+### Moved
+- `package.json` version `0.11.1` → `0.12.0`. Minor bump: additive behavioural rule across every pipeline role.
+- Eleven `skills/kk-role-*/SKILL.md` hardlinks into `.claude/skills/` re-linked after the Edit tool's atomic-rename broke them mid-session. Verified via `stat -f "%i"` parity on both paths after re-link. Second session in a row with this failure mode — the maintainer skill's hidden-failure-mode entry continues to earn its place.
+
+### Open
+- Nothing carried.
+
 ## 0.11.1 — 2026-04-22
 
 Propagation patch. The integration-doc convention established in 0.11.0 now lives as system rule in the skills that would otherwise not know about it. Also captures one hardlink drift issue that surfaced during the 0.11.1 edits themselves.

@@ -20,6 +20,7 @@ Read only the sections named.
 - `../kk-design-system/components.md` — full file
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/patterns/*.md` — all patterns, with focus on the one that matches the concept
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Prior stage output: chosen concept at `documentation/<session>/03-concept-<N>.md`
 - Parallel reference (for awareness): you cannot see stages 4 and 6 while running, but write so the DS reviewer can compare.

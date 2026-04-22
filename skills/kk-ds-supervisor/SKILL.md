@@ -20,6 +20,7 @@ Read these before judging:
 - `../kk-design-system/tokens.json` — every legal color, spacing, radius, type size.
 - `../kk-design-system/components.md` — the component inventory.
 - `../kk-design-system/voice.md` — voice + AI-tells inventory.
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 
 If those files are not reachable, refuse to audit. The supervisor without the canon is worse than no supervisor.
 

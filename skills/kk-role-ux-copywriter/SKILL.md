@@ -19,6 +19,7 @@ Read the voice canon in full — the whole skill is voice.
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/manifesto.md` — §Job stories (to know what the copy serves)
 - `../kk-design-system/components.md` — §Button (for button label rules)
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Inputs:
   - The prototype files at their repo paths (listed in `08-frontend-engineer.md`)

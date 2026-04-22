@@ -19,6 +19,7 @@ The whole skill is voice. Read it all.
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/components.md` — §Button
 - `../kk-design-system/manifesto.md` — §Job stories
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Inputs:
   - The copy-complete prototype files

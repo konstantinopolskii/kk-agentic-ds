@@ -23,6 +23,7 @@ Read only the sections named — but in more depth than the other designers, bec
 - `../kk-design-system/tokens.json` — full file, including colorForbidden
 - `../kk-design-system/voice.md` — full file (you may break voice too, with a diff)
 - `../kk-design-system/pipeline.md` — §Protocols → Revolutionary protocol
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/patterns/*.md` — all patterns
 - `../kk-design-system/doc-format.md` — full file
 - Prior stage output: chosen concept at `documentation/<session>/03-concept-<N>.md`

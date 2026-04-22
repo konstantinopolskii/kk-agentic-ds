@@ -17,7 +17,7 @@ Your job: read session documentation, find patterns that suggest canon needs to 
 Everything. A retro can recommend changes to any canon file, so you need to know what each one says today.
 
 - `../kk-design-system/manifesto.md` — full file
-- `../kk-design-system/pipeline.md` — full file
+- `../kk-design-system/pipeline.md` — full file (includes §Agent communication protocol)
 - `../kk-design-system/components.md` — full file
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/tokens.json` — full file

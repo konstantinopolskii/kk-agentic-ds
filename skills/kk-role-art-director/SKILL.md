@@ -22,6 +22,7 @@ Read only the sections named.
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/components.md` — §Typography utility classes, §Card, §Patterns (Three columns, Card stack, Narrow)
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Prior stage output: `documentation/<session>/01-analyst.md`
 

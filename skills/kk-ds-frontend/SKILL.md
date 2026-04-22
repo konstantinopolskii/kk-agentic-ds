@@ -20,6 +20,7 @@ Read these before touching the draft:
 - `../kk-design-system/tokens.json` — every legal token.
 - `../kk-design-system/components.md` — the kit inventory. You must not introduce a class outside it.
 - `../kk-design-system/voice.md` — voice rules for any label or attribute text you touch.
+- `../kk-design-system/pipeline.md` — §Agent communication protocol
 
 If those files are not reachable, refuse to run. A rewrite without the canon drifts the kit.
 
