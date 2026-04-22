@@ -2,6 +2,20 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.9.1 — 2026-04-22
+
+Maintainer skill patch. Prompted by a real incident where four kit versions (0.6, 0.7, 0.8, 0.9) shipped to disk and to CHANGELOG but never reached origin because the maintainer skill did not mandate commit + tag + push explicitly. A sibling agent fetched the repo, saw v0.4.0, and flagged it.
+
+### Added
+- `Ship protocol` section in `skills/kk-ds-maintainer/SKILL.md`. Four mandatory steps: commit with explicit paths, annotated tag (`vX.Y.Z`), push main, push tag. Requires human OK before the push step. Naming-matches the existing `v0.2.0`–`v0.5.0` tag convention.
+- Two new hidden failure modes in the maintainer skill: **Unshipped versions** (version bump without a pushed tag) and **Role skills under `.claude/skills/` instead of `skills/`** (local runtime cache vs canonical shipping path; hardlink from one into the other inside this repo).
+
+### Moved
+- `package.json` version `0.9.0` → `0.9.1`.
+
+### Open
+- Nothing carried.
+
 ## 0.9.0 — 2026-04-22
 
 `KK.refresh()` is real now. Consumers that inject new DOM after the initial load (SPA-style swaps, lazy-loaded sections, route-driven content) call `KK.refresh()` to wire up new elements without teardown or a page reload. Closes the last open item from 0.7.0.

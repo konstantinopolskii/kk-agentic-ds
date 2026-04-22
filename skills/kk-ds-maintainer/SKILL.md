@@ -65,6 +65,21 @@ Any edit that touches what consumers see must ship with this set. If one is miss
    - **Patch** — fix, typo, clarification, non-breaking internal refactor.
 6. **Skill SKILL.md** — if the change affects agent behavior, update the skill's hard rules too.
 
+## Ship protocol — mandatory, not optional
+
+A version bump without a pushed tag is vapourware. Consumers cannot see work that lives only in the maintainer's working tree. Every kit change ends with these four steps, in order, or the session is not done.
+
+1. **Commit.** Stage explicit paths (never `git add -A` — risk of leaking `.env`, `node_modules`, screenshots). Commit message follows the repo's existing pattern: `UI kit X.Y.Z: short description`. Body names what changed using the CHANGELOG's own Added / Removed / Moved breakdown.
+2. **Tag.** `git tag -a vX.Y.Z -m "UI kit X.Y.Z — <one-line>"`. Annotated tags only (not lightweight). Tag prefix is `v` — matches the existing `v0.2.0`, `v0.3.0`, `v0.4.0`, `v0.5.0` history.
+3. **Push main.** `git push origin main`. Consumer repos and CI pipelines pull from origin, not the maintainer's disk.
+4. **Push the tag.** `git push origin vX.Y.Z`. Tags do not auto-push with commits. A missing tag on origin is the single most common reason a consumer "can't see the new version" after a supposedly-shipped release.
+
+Before step 3, confirm with the human that the push is wanted — push is shared-state and cannot be undone quickly. After human OK, push both main and the tag.
+
+If the ship protocol fails at any step (commit hook rejects, push is denied, tag conflicts), do not leave the working tree in a half-shipped state. Either resolve the block and complete all four steps, or revert the version bump and CHANGELOG entry so the repo is honest about what actually shipped.
+
+Untracked or unpushed kit work accumulates silently. A second session opens, the maintainer assumes the first shipped, and the gap compounds. Close every session with `git status -sb` showing a clean tree on a pushed tag, or flag what is still pending.
+
 ## Supervision still runs
 
 After any visual or component change, invoke `kk-ds-supervisor` against the affected demo or doc section. The supervisor does not know you are the maintainer — that's the point. If it rejects your addition, that means the new thing does not yet justify itself. Return to step 2 of evolve and decide whether to reshape it or drop it.
@@ -86,6 +101,8 @@ After any visual or component change, invoke `kk-ds-supervisor` against the affe
 - **Version bump without CHANGELOG.** The GitHub release body reads from `CHANGELOG.md`. Silent bumps ship empty release notes and Renovate PRs with no context.
 - **Local edits inside a consumer's `node_modules` or git submodule.** Never. Land changes here, tag, release.
 - **Renaming without a deprecation path.** If a class or token is renamed, the old name either stays as an alias for one minor version, or the bump is major. Never silently drop a name consumers depend on.
+- **Unshipped versions.** A version bump without a pushed tag is vapourware — consumers and sibling agents cannot see it. A session that ends with `git status` showing uncommitted CHANGELOG + `package.json` bumps is not done, regardless of how polished the code is. Follow the Ship protocol section above every time.
+- **Role skills under `.claude/skills/` instead of `skills/`.** The kit ships skills from the top-level `skills/` directory via the npm `files` array. `.claude/skills/` is a local runtime cache, populated by the postinstall symlink for consumers. Inside the kit repo, `.claude/skills/*` is hardlinked to `skills/*` for the four original skills. A new skill created under `.claude/skills/` alone does not ship. Create the file under `skills/kk-role-<name>/SKILL.md`, then hardlink back into `.claude/skills/` for the local runtime.
 
 ## Voice — for maintainer output
 
