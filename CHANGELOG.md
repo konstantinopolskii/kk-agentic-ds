@@ -2,6 +2,25 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.11.1 — 2026-04-22
+
+Propagation patch. The integration-doc convention established in 0.11.0 now lives as system rule in the skills that would otherwise not know about it. Also captures one hardlink drift issue that surfaced during the 0.11.1 edits themselves.
+
+### Added
+- `kk-ds-maintainer` SKILL.md bundle rule gains item 7: integration doc at `docs/integration/<component>.md` required when a change touches a component's consumer-facing API. If the doc does not exist yet and the change creates the first public API for the component, the doc is created in the same PR.
+- `kk-ds-maintainer` hidden failure modes gain two entries:
+  - **Public API change without integration-doc update.** Events, config keys, and data attributes are public API; shipping them without updating the doc leaves consumers to read source.
+  - **Hardlink drift between `skills/` and `.claude/skills/` after edits.** Some editors (Claude Code's Edit tool included) break hardlinks via atomic write-and-rename. Verify with `stat -f "%i %N"` on both paths; re-link with `rm + ln` if inodes diverge.
+- `kk-role-frontend-engineer` SKILL.md DS-engineer mode gains a bullet: flag integration-doc impact when a refactor adds or changes a component's consumer-facing API. If the doc exists, update inline; if not and the change creates the first public API, propose creating it.
+- `manifesto.md § Runtime` gains a general integration-docs paragraph under Comment lifecycle events, generalising from "here's the Comment doc" to "here's the convention, today only Comment qualifies".
+
+### Moved
+- `package.json` version `0.11.0` → `0.11.1`.
+- One hardlink between `skills/kk-role-frontend-engineer/SKILL.md` and its `.claude/skills/` sibling went stale mid-session because the Edit tool rewrote via atomic rename. Re-linked before ship.
+
+### Open
+- Nothing carried.
+
 ## 0.11.0 — 2026-04-22
 
 Third `kk:comment` action lands: `delete`. Every `.comment-msg` gets a stable `data-message-id` so deletes address messages by identity, not DOM position. New `docs/integration/comment.md` carries the full consumer-facing surface (the three actions, config, data attributes, three framework patterns, anti-patterns) — first file under the integration-docs convention, written while the API is fresh.

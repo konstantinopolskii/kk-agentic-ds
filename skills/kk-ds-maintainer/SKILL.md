@@ -64,6 +64,7 @@ Any edit that touches what consumers see must ship with this set. If one is miss
    - **Minor** — added a component, added a token, added a skill recipe, additive only.
    - **Patch** — fix, typo, clarification, non-breaking internal refactor.
 6. **Skill SKILL.md** — if the change affects agent behavior, update the skill's hard rules too.
+7. **Integration doc** at `docs/integration/<component>.md` — required when the change touches a component's consumer-facing API: CustomEvents dispatched on kit classes, `KK.config` keys, `data-*` attributes consumers set, exported helpers. A component earns an integration doc the first time it has a public API surface; once the doc exists, it must be kept current in every PR that touches that surface. Today: `docs/integration/comment.md` exists. Deck is the next candidate; other components have no public hooks.
 
 ## Ship protocol — mandatory, not optional
 
@@ -102,7 +103,9 @@ After any visual or component change, invoke `kk-ds-supervisor` against the affe
 - **Local edits inside a consumer's `node_modules` or git submodule.** Never. Land changes here, tag, release.
 - **Renaming without a deprecation path.** If a class or token is renamed, the old name either stays as an alias for one minor version, or the bump is major. Never silently drop a name consumers depend on.
 - **Unshipped versions.** A version bump without a pushed tag is vapourware — consumers and sibling agents cannot see it. A session that ends with `git status` showing uncommitted CHANGELOG + `package.json` bumps is not done, regardless of how polished the code is. Follow the Ship protocol section above every time.
+- **Public API change without integration-doc update.** A new CustomEvent, a new `KK.config` key, a new `data-*` attribute consumers are expected to set — all are public API. Shipping any of these without updating the component's `docs/integration/<name>.md` leaves consumers to discover the change by reading source, and future docs lag silently. If the component does not have an integration doc yet but the change creates a public API surface, the doc is created in the same PR as the code.
 - **Role skills under `.claude/skills/` instead of `skills/`.** The kit ships skills from the top-level `skills/` directory via the npm `files` array. `.claude/skills/` is a local runtime cache, populated by the postinstall symlink for consumers. Inside the kit repo, `.claude/skills/*` is hardlinked to `skills/*` for the four original skills. A new skill created under `.claude/skills/` alone does not ship. Create the file under `skills/kk-role-<name>/SKILL.md`, then hardlink back into `.claude/skills/` for the local runtime.
+- **Hardlink drift between `skills/` and `.claude/skills/` after edits.** Some text editors (including the Edit tool Claude Code uses) do "write to temp + rename over target" atomic writes. That breaks hardlinks: the target path gets a new inode, the sibling path keeps the old inode, content diverges. Always verify after editing a skill file: `stat -f "%i %N" skills/<path> .claude/skills/<path>`. If the inodes differ, re-link with `rm .claude/skills/<path> && ln skills/<path> .claude/skills/<path>`. Drift between these two paths silently breaks agent behaviour at runtime (runtime reads stale content) while tests against `skills/` look fine.
 
 ## Voice — for maintainer output
 

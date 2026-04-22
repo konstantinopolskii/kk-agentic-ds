@@ -80,6 +80,7 @@ What changes:
 - **Prune dead code.** Inline blocks in `index.html` accumulated across versions. Remove demo-only triggers that no consumer needs. Every prune gets an explicit note in `08-frontend-engineer.md` under a `## Pruned` section naming the block, what it did, and why the kit no longer needs it.
 - **Simplify structure.** Collapse duplicate closures, inline single-call helpers, rename ambiguous identifiers. Same behaviour, clearer code.
 - **Propose maintainer changes inline.** Additions that belong to `kk-ds-maintainer` (CHANGELOG entries, manifesto references, canon file additions, `<script>` insertions in `index.html` / prototypes) appear as a `## Maintainer proposals` section in the artifact. The maintainer picks these up in the next pass.
+- **Flag integration-doc impact.** A refactor that adds or changes a component's consumer-facing API (CustomEvent names or detail shape, `KK.config` keys, `data-*` attributes consumers set, exported helpers) belongs in `docs/integration/<component>.md`. If the doc exists, update it inline or flag the update in Maintainer proposals. If the doc does not exist yet and this change creates the first public API surface for the component, propose creating it — do not ship the API without the doc.
 - **Behaviour parity with the manifesto page is non-negotiable.** The showcase page must still demonstrate every kit behaviour after the refactor. Regression here fails stage 10.
 
 What stays the same:

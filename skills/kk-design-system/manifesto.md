@@ -147,6 +147,12 @@ document.addEventListener('kk:comment', function (e) {
 
 Full consumer-facing integration surface (Flask, Next.js, Rails snippets; anti-patterns; the enable-or-own decision tree) lives in `docs/integration/comment.md`. `resolve` and edit actions deferred until a consumer asks.
 
+### Integration docs convention
+
+A component earns a file under `docs/integration/<component>.md` the first time it ships a consumer-facing API — events, config keys, data attributes consumers set, exported helpers. The doc carries every API surface in one place plus patterns for the main backend languages. Today only the Comment component qualifies; other components are delegation-based and have no public hooks to document.
+
+Once the doc exists, it is a required part of every bundle that changes its component's API. Maintainers update it in the same PR as the code; frontend engineers flag changes during refactors. The doc stays in the repo under `docs/` so humans browsing on GitHub find it naturally, and it ships in the npm package so consumers read the version they are pinned to.
+
 Text strings that kit.js injects into the DOM are overridable via `KK.config.i18n`, set before the script loads:
 
 ```html
