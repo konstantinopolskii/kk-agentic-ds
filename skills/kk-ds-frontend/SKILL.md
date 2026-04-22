@@ -1,6 +1,6 @@
 ---
 name: kk-ds-frontend
-description: Stage 4 code pass for the KK Agentic Design System. Runs on a stage-three draft, before the supervisor audit. Rewrites markup for semantics and accessibility, collapses overengineered JS, enforces touch-target minimums, and gates on cross-browser behavior. Visual is frozen — kit classes, tokens, and layout structure stay untouched. Invoke when the user says "clean the frontend", "run the frontend pass", "check a11y", or after kk-design-system has produced output.
+description: Stage 10 frontend reviewer for the KK Agentic Design System pipeline. Runs after kk-role-frontend-engineer has shipped a prototype, before the consistency reviewer. Rewrites markup for semantics and accessibility, collapses overengineered JS, enforces touch-target minimums, gates on cross-browser behavior. Visual is frozen — kit classes, tokens, and layout structure stay untouched. Invoke when the user says "clean the frontend", "run the frontend pass", "check a11y", or after the frontend engineer has produced output.
 metadata:
   version: 0.1.0
   parent: kk-design-system

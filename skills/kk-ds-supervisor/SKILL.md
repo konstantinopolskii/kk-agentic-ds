@@ -1,6 +1,6 @@
 ---
 name: kk-ds-supervisor
-description: Stage 4 supervisor for the KK Agentic Design System. Use after any UI/document has been drafted in the KK system and before the human signs off. Audits three vectors (logic, 80/20, inventory), rejects drift, returns work to iteration with specific failures named. Invoke when the user says "check the draft", "audit this layout", "run the supervisor", or after kk-design-system has produced output.
+description: Stage 10 consistency reviewer for the KK Agentic Design System pipeline. Also runs as the stage 7 DS reviewer when invoked comparatively on three hand-offs. Audits three vectors (logic, 80/20, inventory), rejects drift, returns work to the stage that owns the failure. Invoke when the user says "check the draft", "audit this layout", "run the supervisor", or after any role skill has produced output.
 metadata:
   version: 0.1.0
   parent: kk-design-system

@@ -1,0 +1,114 @@
+/* Prototype composition rules. Attribute-scoped only. No new classes.
+   Everything references kit tokens; every visible element uses a kit
+   class (t-, card, field, button, tag, switch, sidebar, doc, nav-group,
+   inspector, comment, stat, swatch, app). */
+
+/* ------------------------------------------------------------------ */
+/* Role gating                                                         */
+/* ------------------------------------------------------------------ */
+
+.app[data-role="operator"] [data-view-only="client"],
+.app[data-role="client"]   [data-view-only="operator"] { display: none; }
+
+/* ------------------------------------------------------------------ */
+/* Stage gating — seven workflow cards share one slot in stage-4 order */
+/* ------------------------------------------------------------------ */
+
+[data-stage-card] { display: none; }
+.app[data-stage="1"] [data-stage-card="1"],
+.app[data-stage="2"] [data-stage-card="2"],
+.app[data-stage="3"] [data-stage-card="3"],
+.app[data-stage="4"] [data-stage-card="4"],
+.app[data-stage="5"] [data-stage-card="5"],
+.app[data-stage="6"] [data-stage-card="6"],
+.app[data-stage="7"] [data-stage-card="7"] { display: flex; }
+
+/* ------------------------------------------------------------------ */
+/* Dev block in sidebar footer — attribute-scoped, not a class         */
+/* ------------------------------------------------------------------ */
+
+[data-dev-block] {
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+[data-dev-block] [data-dev-label] {
+  color: var(--color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+[data-dev-block] [data-dev-pills] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+[data-dev-block] a { color: inherit; text-decoration: none; }
+[data-dev-block] a:hover { color: var(--color-text); }
+
+/* Stage pills use the kit's .tag class. Active stage gets .tag--bold
+   via JS. Here we add the padding + min touch target that a dev tool
+   needs without introducing a new class. */
+.tag[data-stage-pill] {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  padding: var(--space-2) var(--space-3);
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+.tag[data-stage-pill]:hover { color: var(--color-text); }
+
+/* ------------------------------------------------------------------ */
+/* Review stars — kit .tag elements, filled stars carry .tag--bold     */
+/* ------------------------------------------------------------------ */
+
+[data-stars] {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+}
+.tag[data-star] {
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 0;
+  font: var(--fw-bold) 22px/1 var(--font-body);
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+.tag[data-star]::before { content: "★"; }
+.tag[data-star]:hover { color: var(--color-text); }
+
+/* ------------------------------------------------------------------ */
+/* Hint gating — show/hide hints per review + sign state               */
+/* ------------------------------------------------------------------ */
+
+.app[data-reviewed="false"]          [data-show-when="reviewed"] { display: none; }
+.app[data-reviewed="true"]           [data-show-when="locked"]   { display: none; }
+.app[data-transcript-signed="true"]  [data-show-when="unsigned"] { display: none; }
+
+/* ------------------------------------------------------------------ */
+/* Price gating — tier prices dim and append hint until review shared  */
+/* ------------------------------------------------------------------ */
+
+.app[data-reviewed="false"] [data-price-gated="true"] {
+  color: var(--color-text-subtle);
+}
+.app[data-reviewed="false"] [data-price-gated="true"]::after {
+  content: " · после отзыва";
+  color: var(--color-text-subtle);
+}
+
+/* Tier row layout — price sits to the right of the title.
+   Scoped to the tier card heading via attribute, no class. */
+.card[data-tier] .card__heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}

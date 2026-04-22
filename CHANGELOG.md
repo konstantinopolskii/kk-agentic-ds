@@ -2,6 +2,113 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.9.0 — 2026-04-22
+
+`KK.refresh()` is real now. Consumers that inject new DOM after the initial load (SPA-style swaps, lazy-loaded sections, route-driven content) call `KK.refresh()` to wire up new elements without teardown or a page reload. Closes the last open item from 0.7.0.
+
+### Added
+- Idempotent re-scan inside every auto-init module. Each module tracks whether its global listeners are bound; subsequent calls only pick up new iterable elements.
+- Per-wrapper `data-kk-deck-bound="true"` marker on `.deck` elements. Bound wrappers skip re-init; new wrappers bind on `KK.refresh()`.
+- `bound` state map inside kit.js covering scroll-spy, narrow-view toggle, column reveal, inspector stack, comment menus. Delegation-based modules (narrow-view, inspector stack, comment menus) already picked up new children for free; the sentinel prevents redundant listener re-attachment.
+- Scroll-spy now queries `.doc__section` live on every callback, so SPA-added sections participate in the "first visible" calculation without a teardown. Nav links also live-queried so new links get `.is-active` state.
+
+### Moved
+- `KK.refresh()` from no-op stub to a real function that calls each auto-init in sequence. Safe to over-call. Bound elements are skipped; unbound elements get wired.
+- Scroll-spy internal `sections` / `links` closures replaced with live queries at call sites. Small perf cost on every callback, acceptable given the call rate.
+- `package.json` version: `0.8.0` → `0.9.0`.
+
+### Open
+- Nothing carried. Backlog is empty.
+
+## 0.8.0 — 2026-04-22
+
+Kit polish. Four baked-in English strings in `js/kit.js` move to overridable config. Doc-spec tables cap their first two columns at 30% each so prose-heavy value columns get room to breathe. Prototype-alpha's Russian deck labels come back — the 0.7.0 regression is resolved.
+
+### Added
+- `window.KK.config.i18n` — overridable text strings for kit.js-generated DOM. Four keys: `addComment`, `reply`, `deckChoose`, `deckChosen`. Defaults ship in English. Consumers set the object before loading `js/kit.js` to change them.
+- `attrEscape` helper inside `kit.js` — minimal HTML-attribute escape used when injecting i18n strings into innerHTML placeholder contexts.
+- Config override pattern documented in `manifesto.md § Runtime` with a Russian example.
+- `prototype-alpha/index.html` now sets `KK.config.i18n` to Russian before loading kit.js.
+
+### Removed
+- Hardcoded strings `"Add a comment"`, `"Reply…"`, `"Choose"`, `"Chosen"` inside kit.js module bodies. All four read from `KK.config.i18n` now.
+
+### Moved
+- `.doc__spec` grid columns: `minmax(140px, max-content) 1fr` → `minmax(140px, 30%) 1fr`. Key column caps at 30%.
+- `.doc__spec--value` grid columns: now `minmax(120px, 30%) minmax(60px, 30%) 1fr`. Key and middle-value each cap at 30%; prose gets the rest.
+- `.doc__spec--triple` grid columns: `1fr 1fr 1fr` → `minmax(0, 30%) minmax(0, 30%) 1fr`. First two cap at 30%; third takes the remainder. Affects Claim/Reality/Resolution-style tables where the third column carries the prose.
+- `package.json` version: `0.7.0` → `0.8.0`.
+
+### Open
+- **`KK.refresh()` still a stub.** Carried over from 0.7.0. SPA re-bind support remains a 0.9.0 concern.
+- Deck's initial button text lives in consumer HTML, not config. If a consumer sets `deckChoose: 'Выбрать'` but writes `<button>Choose</button>` in the HTML, the first paint mismatches. Documented in manifesto; no code-level enforcement yet.
+
+## 0.7.0 — 2026-04-22
+
+Kit behaviour extracted. Seven JS modules that used to live inline in `index.html` now ship as a shared `js/kit.js`. Any consumer that loads the file gets scroll-spy, deck controller, card stack, column reveal, narrow-view toggle, and comment kebab menus for free. The selection-to-draft comment flow is opt-in via `KK.enableCommentSelectionFlow()` to avoid colliding with prototypes that own a localized selection handler. First pipeline-v2 run — analyst at stage 1, frontend engineer in DS-engineer mode at stage 8, reviewers at stage 10, no design phase.
+
+### Added
+- `js/kit.js` — 979 lines. Six auto-init modules (scroll-spy, narrow-view toggle, column reveal, inspector card stack, comment menus, deck) plus one opt-in module (selection-to-draft comment flow). Public API on `window.KK`: `init`, `refresh`, `enableCommentSelectionFlow`.
+- `documentation/2026-04-22-kit-js-extraction/` — session artifacts. First session produced under pipeline-v2.
+- `## Runtime` section in `manifesto.md` naming `js/kit.js` and the public API surface.
+- `js/kit.js` reference in `index.html` across `#skill` (kit ships two ways), `#install` (package contents), and `#ownership` (kit files list).
+
+### Removed
+- Inline `<script>` block at the bottom of `index.html` (lines 3218-4306 in 0.6.0, ~1088 lines). Content moved verbatim to `js/kit.js` with one rename for clarity (`setActive` → `promoteCard` inside the inspector stack module).
+- Duplicate deck controller in `prototype-alpha/app.js` (102 lines). Kit.js owns the deck; prototype-alpha trusts it.
+
+### Moved
+- `index.html` now loads `./js/kit.js` via `<script src>`. A second inline `<script>` calls `KK.enableCommentSelectionFlow()` so the manifesto page keeps its live comment demo.
+- `prototype-alpha/index.html` loads `../js/kit.js` before `data.js` + `app.js`. No call to `enableCommentSelectionFlow` — the prototype owns its own Russian-labeled selection flow.
+- `prototype-alpha/app.js` line count: 618 → 516.
+- `index.html` line count: 4326 → 3243.
+- `package.json` `files` array: added `js/` directory.
+- `kk-role-frontend-engineer` SKILL.md: `../kit.js` → `../js/kit.js`. Added a note on when to call `KK.enableCommentSelectionFlow()`.
+
+### Open
+- **i18n config deferred to 0.8.0.** Three strings bake in English inside `js/kit.js`: `"Add a comment"` (draft placeholder), `"Choose"` / `"Chosen"` (deck button label swap), `"Reply…"` (thread reply placeholder). Prototypes that need other locales currently must either fork the kit (anti-pattern) or avoid the opt-in comment flow. 0.8.0 adds `KK.config.i18n` for these.
+- **`KK.refresh()` is a stub.** SPA consumers that mount content after load need a re-query path. Real behaviour lands in 0.8.0.
+- **One known regression:** `prototype-alpha` deck labels revert from Russian «Выбрать» / «Выбрано» to English "Choose" / "Chosen". Resolves when 0.8.0 ships i18n config.
+
+## 0.6.0 — 2026-04-22
+
+Pipeline overhaul. The five-stage pipeline (hypothesis, iteration, contrast, supervision, magic) is replaced by a ten-stage pipeline organised into three phases: think (stages 1-3), hand-off (stages 4-7), build (stages 8-10), plus an on-demand meta-retro. Nine new role skills ship. Documentation contract and revolutionary protocol formalised.
+
+### Added
+- `skills/kk-design-system/doc-format.md` — shared output contract for every role skill. Frontmatter spec, disk artifact body structure, conversation return shape, README template.
+- Eleven new role skills under `skills/kk-role-*/`:
+  - `kk-role-analyst` — stage 1. Decomposes the brief, produces job stories and open questions.
+  - `kk-role-art-director` — stage 2. Produces five or more directions with intent and guardrails.
+  - `kk-role-concept` — stage 3. Spawned 3-5 in parallel. ASCII flows, JSON component trees, shape-up framing.
+  - `kk-role-designer-conservative` — stage 4. Strict kit inventory, no inventions.
+  - `kk-role-designer-ux` — stage 5. Reorganises within kit rules, no inventions.
+  - `kk-role-designer-revolutionary` — stage 6. May break rules with a matching `manifest-diff.md` entry.
+  - `kk-role-ds-reviewer` — stage 7. Comparative review of three hand-offs, no ranking.
+  - `kk-role-frontend-engineer` — stage 8. Ships prototype structure with placeholder copy comments.
+  - `kk-role-ux-copywriter` — stage 9. Fills every placeholder, enforces voice consistency.
+  - `kk-role-ux-copy-reviewer` — stage 10 (parallel). Voice, AI-tells, button discipline.
+  - `kk-role-meta-retro` — on-demand. Reads session documentation, proposes canon updates.
+- `documentation/2026-04-22-wealthy-alpha/` — twelve files from the alpha session that triggered the pipeline redesign. Reference material for every role skill.
+- `prototype-alpha/` — the alpha build (renamed from `prototype/`) preserved as voice and content reference.
+- `manifesto.md` § Pipeline — short section pointing at `pipeline.md`.
+- `manifesto.md` § Documentation contract — short section pointing at `doc-format.md`.
+- `manifesto.md` § Revolutionary protocol — short section with the diff shape.
+- `index.html` mirrored sections: `#think`, `#handoff`, `#build`, `#meta-retro`, `#doc-contract`, `#revolutionary`. Sidebar Pipeline nav group updated to match.
+
+### Removed
+- `index.html` articles `#hypothesis`, `#iteration`, `#boost`, `#supervision`, `#implementation`, `#magic`. Content replaced by the three-phase structure.
+
+### Moved
+- `skills/kk-design-system/pipeline.md` rewritten end to end. Ten stages, three phases, gates, inputs, outputs, canon-load per role.
+- `skills/kk-ds-supervisor/SKILL.md` frontmatter description: stage 4 supervisor becomes stage 10 consistency reviewer, also runs as stage 7 DS reviewer when invoked comparatively.
+- `skills/kk-ds-frontend/SKILL.md` frontmatter description: stage 4 code pass becomes stage 10 frontend reviewer.
+- `skills/kk-design-system/SKILL.md` frontmatter description: names the ten-stage pipeline and the nine role skills.
+- `package.json` `files` array: added eleven `skills/kk-role-*/` entries plus `skills/kk-ds-maintainer/`.
+- `prototype-alpha/index.html` font preload reference: `fonts/manrope/Manrope-Latin.woff2` → `fonts/commissioner/Commissioner-Latin.woff2`. Carryover from the 0.5.0 font swap.
+
+### Open
+- `kit.js` extraction is deferred to 0.7.0. The shared behavioural JS (scroll-spy, deck controller, card stack, comment menu, FABs, selection-to-highlight) still lives inline in `index.html` and is not reachable by prototypes. The next release dogfoods the new pipeline by running the extraction through `kk-role-analyst` plus `kk-role-frontend-engineer`.
+
 ## 0.5.0 — 2026-04-22
 
 Typeface swap. Commissioner replaces Manrope. Both ship under SIL OFL 1.1, so this is a visual call, not a license fix. Commissioner's humanist letterforms read warmer at hero (66 px) and display (38 px) sizes than Manrope's grotesque, which suits the signed-deliverable tone of the kit.

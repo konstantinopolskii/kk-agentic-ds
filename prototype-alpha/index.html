@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Стратегия для Нелли Кам — kk.consulting</title>
+  <link rel="preload" href="../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../vars.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+  <div class="app" data-view="doc" data-role="operator" data-stage="4" data-reviewed="false" data-transcript-signed="false">
+
+    <!-- ==================================================================== -->
+    <!-- Sidebar                                                              -->
+    <!-- ==================================================================== -->
+    <aside class="sidebar" aria-label="Навигация">
+      <div class="sidebar__header t-title">Нелли<br />Кам</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Разговор</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#call-digest">Что обсудили</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Гипотезы</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#point-a">Точка А</a></li>
+            <li class="t-caption"><a href="#point-b">Точка Б</a></li>
+            <li class="t-caption"><a href="#vision-model">Видение и бизнес-модель</a></li>
+            <li class="t-caption"><a href="#positioning">Позиционирование</a></li>
+            <li class="t-caption"><a href="#hypotheses-channels">Гипотезы и каналы</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Валидация</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#market-findings">Рынок</a></li>
+            <li class="t-caption"><a href="#next-steps">Ближайшие шаги</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Дальше</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#how-we-work">Как мы работаем</a></li>
+            <li class="t-caption" data-view-only="client"><a href="#review">Отзыв</a></li>
+            <li class="t-caption" data-view-only="client"><a href="#sign-transcript">Транскрипция</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        <div>2026, kk.consulting<br />Ранап #142, 22 апреля</div>
+        <div data-dev-block data-view-only="operator" aria-label="Стадия пайплайна">
+          <span class="t-micro" data-dev-label>Стадия</span>
+          <div data-dev-pills>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="1" aria-label="Стадия 1, бриф" title="Бриф, Shift+1">1</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="2" aria-label="Стадия 2, промпт" title="Промпт, Shift+2">2</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="3" aria-label="Стадия 3, ресерч" title="Ресерч, Shift+3">3</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="4" aria-label="Стадия 4, ревью стратегии" title="Драфт, Shift+4">4</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="5" aria-label="Стадия 5, ответы агента" title="Ревью, Shift+5">5</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="6" aria-label="Стадия 6, подпись" title="Подпись, Shift+6">6</button>
+            <button type="button" class="tag t-micro" data-stage-pill data-stage="7" aria-label="Стадия 7, доставлено" title="Доставлено, Shift+7">7</button>
+          </div>
+        </div>
+        <div data-dev-block>
+          <span class="t-micro"><a href="?role=operator">Оператор</a> · <a href="?role=client">Клиент</a></span>
+        </div>
+      </footer>
+    </aside>
+
+    <!-- ==================================================================== -->
+    <!-- Document                                                              -->
+    <!-- ==================================================================== -->
+    <main class="doc" id="doc">
+      <h1 class="t-hero">Стратегия для Нелли&nbsp;Кам</h1>
+
+      <p class="doc__intro t-body">
+        Переход от Lead Product Designer к Founding Designer в AI-стартапах США. Цель дохода 10 000 USD в месяц через сплит контрактов и ретейнер. Параллельный трек — виза Passeport Talent во Францию через артистическое направление.
+      </p>
+      <p class="doc__intro t-body">
+        Стратегия собрана после 32-минутного интро-звонка 21 апреля 2026. Подписывается Konstantin Konstantinopolskii после ревью.
+      </p>
+
+      <div class="doc__signoff">
+        <div class="doc__signoff-stats">
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold" data-proto="reviewCount">4</span> цикла ревью закрыто перед подписью.</div>
+            <div><span class="t-caption--bold" data-proto="researchCount">2</span> ресерча: Deep Research и беглый по LinkedIn.</div>
+          </div>
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold" data-proto="sourceCount">27</span> источников в разделе «Рынок».</div>
+            <div><span class="t-caption--bold" data-proto="threadsResolved">1</span> тред закрыт, <span class="t-caption--bold" data-proto="threadsOpen">3</span> открытых.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================== РАЗГОВОР ===================================== -->
+      <h2 class="doc__part">Разговор</h2>
+
+      <article class="doc__section" id="call-digest">
+        <h2 class="t-display">
+          Что обсудили<br />
+          <span class="t-display--medium t-muted">Восемь тезисов из 32 минут</span>
+        </h2>
+        <p class="t-body">
+          Звонок 21 апреля 2026. Формат интро, без домашнего задания. Цель — зафиксировать текущую точку и вектор, не решение.
+        </p>
+        <div class="card">
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">04:10</dt>
+              <dd class="doc__spec-value">Ассистентка забирает рутину. Дизайн-крафт в доставке и LinkedIn-общение уходят ей. Нелли остаётся на стратегии.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">07:21</dt>
+              <dd class="doc__spec-value">Внимание фрагментировано. «Ничего не заканчивается до успешного успеха» — дословно.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">10:19</dt>
+              <dd class="doc__spec-value">Диагноза нет, но проблема с концентрацией есть. Решается делегированием и снятием перфекционизма.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">12:54</dt>
+              <dd class="doc__spec-value">Full-time, 5 000 USD net. Много работы «в стол» — микроменеджмент без выхода в прод.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">16:17</dt>
+              <dd class="doc__spec-value">Дополнительный доход на плакатах не масштабируется. Путь — лингвистический продукт или AI-ниша.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">25:00</dt>
+              <dd class="doc__spec-value">Работа с США уже идёт. Главная цель — виза Passeport Talent через артистическую категорию.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">27:30</dt>
+              <dd class="doc__spec-value">Интроверт, большое количество коммуникаций выматывает. Воронка через ассистентку — обязательна.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">29:14</dt>
+              <dd class="doc__spec-value">Ход через фаундеров. Прямые диалоги, без рекрутёрской воронки.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- =================== ГИПОТЕЗЫ ===================================== -->
+      <h2 class="doc__part">Гипотезы</h2>
+
+      <article class="doc__section" id="point-a">
+        <h2 class="t-display">
+          Точка А<br />
+          <span class="t-display--medium t-muted">Где стоит сейчас</span>
+        </h2>
+        <p class="t-body">
+          Опытный дизайнер на full-time с ощущением потолка. Сильный бэкграунд в AI-интерфейсах, слабая переговорная позиция из-за самоописания.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Роль</dt>
+              <dd class="doc__spec-value">Lead Innovation Product Designer</dd>
+              <dd class="doc__spec-value">Full-time, внешняя компания</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Доход</dt>
+              <dd class="doc__spec-value">5 000 USD net в месяц</dd>
+              <dd class="doc__spec-value">Плюс нерегулярный фриланс</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Опыт</dt>
+              <dd class="doc__spec-value">7 лет, в CV 10</dd>
+              <dd class="doc__spec-value">SaaS, B2B, AI (Alan AI), MedTech, FinTech</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Ресурсы</dt>
+              <dd class="doc__spec-value">Ассистентка, портфолио, нетворк</dd>
+              <dd class="doc__spec-value">60 кейсов плакатов, недвижимость под сдачу</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Локации</dt>
+              <dd class="doc__spec-value">Дубай, Санкт-Петербург, Белград</dd>
+              <dd class="doc__spec-value">Целевая — Франция</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Блок</dt>
+              <dd class="doc__spec-value">Микроменеджмент, работа в стол</dd>
+              <dd class="doc__spec-value">«Ничего не заканчивается до успешного успеха»</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="point-b">
+        <h2 class="t-display">
+          Точка Б<br />
+          <span class="t-display--medium t-muted">Куда идём в горизонте года</span>
+        </h2>
+        <p class="t-body">
+          Founding Designer или Design Partner в одном AI-стартапе США плюс второй короткий контракт. Параллельно — пакет документов на визу Passeport Talent.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Роли</dt>
+              <dd class="doc__spec-value">Founding Designer, Design Partner, Head of Design</dd>
+              <dd class="doc__spec-value">Одна основная, одна вторая на сплит</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Доход</dt>
+              <dd class="doc__spec-value">10 000 USD в месяц</dd>
+              <dd class="doc__spec-value">Ретейнер 5-12k, сверху один короткий контракт</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Анти-цели</dt>
+              <dd class="doc__spec-value">Маркетинг-дизайн, «вылизывание» UI</dd>
+              <dd class="doc__spec-value">Полная занятость у одного работодателя</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Рынок</dt>
+              <dd class="doc__spec-value">AI-стартапы Pre-Seed и Seed</dd>
+              <dd class="doc__spec-value">США, Кремниевая долина</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Переезд</dt>
+              <dd class="doc__spec-value">Франция, Passeport Talent</dd>
+              <dd class="doc__spec-value">Категория «Artistique» или «Renommée»</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="vision-model">
+        <h2 class="t-display">
+          Видение и бизнес-модель<br />
+          <span class="t-display--medium t-muted">Салфетка на полугодие</span>
+        </h2>
+        <p class="t-body">
+          Одна роль — якорь, второй контракт — воздух. Артистическая линия идёт параллельно и питает визу. Крафт делегируется, Нелли держит стратегический слой.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Расчёт на салфетке</h3>
+            <p class="t-caption">Состав 10 000 USD в месяц без одного большого работодателя.</p>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Ретейнер</dt>
+              <dd class="doc__spec-value">6 000 USD, AI-стартап, Founding Designer</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Второй контракт</dt>
+              <dd class="doc__spec-value">3 500 USD, короткий 2-3 месяца</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Артистическая линия</dt>
+              <dd class="doc__spec-value">Плакаты, зины, лингвистика: 500 USD плюс материалы для визы</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Время</dt>
+              <dd class="doc__spec-value">30% крафт, 70% стратегия и коммуникация</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="positioning">
+        <h2 class="t-display">
+          Позиционирование<br />
+          <span class="t-display--medium t-muted">Что мы говорим и что убираем</span>
+        </h2>
+        <p class="t-body">
+          Три смены — в профиле, в письмах, в первом звонке. Каждая закрывает конкретную переговорную дыру, которая всплыла на интро.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--triple">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Lead Product Designer</dt>
+              <dd class="doc__spec-value">Исполнительский фрейм. Ограничивает гонорар потолком найма.</dd>
+              <dd class="doc__spec-value">Founding Designer или Design Partner. Отвечает за весь дизайн и процесс.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">«Не шарю в UI»</dt>
+              <dd class="doc__spec-value">Прекратить транслировать неуверенность. Это невыгодная переговорная позиция.</dd>
+              <dd class="doc__spec-value">«AI-интерфейсы и Conversational UX — моя основная ниша с Alan AI».</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Crafter на полном цикле</dt>
+              <dd class="doc__spec-value">Съедает время и внимание. Мешает стратегической части работы.</dd>
+              <dd class="doc__spec-value">Делегирование двум проверенным спецам. Нелли держит архитектуру и ревью.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="hypotheses-channels">
+        <h2 class="t-display">
+          Гипотезы и каналы<br />
+          <span class="t-display--medium t-muted">Что проверяем и через кого</span>
+        </h2>
+        <p class="t-body">
+          Две гипотезы, три канала. Валидируются в блоке «Рынок» ниже.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Гипотезы</h3>
+          </div>
+          <ol class="t-list">
+            <li>AI pre-seed и seed нуждается в единственном дизайнере, который закрывает и продукт, и процесс. Роль «Founding Designer».</li>
+            <li>Фаундеры читают прямые сообщения в LinkedIn, если первое предложение релевантно их последнему релизу или питчу.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Каналы</h3>
+          </div>
+          <ol class="t-list">
+            <li>LinkedIn: актуализация профиля под роль Founding, ассистентка ведёт первый контакт.</li>
+            <li>Личный нетворк: контакты из Facebook и Alan AI, прямые диалоги.</li>
+            <li>Дизайн-сообщество: Чин-Чи, Арутюнов, референсы через общих знакомых.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- =================== ВАЛИДАЦИЯ ===================================== -->
+      <h2 class="doc__part">Валидация</h2>
+
+      <article class="doc__section" id="market-findings">
+        <h2 class="t-display">
+          Рынок<br />
+          <span class="t-display--medium t-muted">Ресерч против гипотез</span>
+        </h2>
+        <p class="t-body">
+          Deep Research по рынку США и беглый по Passeport Talent. Пять находок, прямо относящихся к стратегии. Промпт ресерча прикреплён — редактируется при пере-запуске.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Промпт ресерча</h3>
+            <p class="t-caption">Запускался 21 апреля, 14:06. Для пере-запуска отредактируйте текст и подтвердите.</p>
+          </div>
+          <label class="field">
+            <textarea class="t-caption field__input" rows="3" readonly>Найди свежие данные по рынку Founding Designer в AI-стартапах США: объём вакансий, медианные ретейнеры Fractional Head of Design, статистика по Passeport Talent для артистической категории, trade-off автоматизации LinkedIn.</textarea>
+          </label>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Находки</h3>
+            <p class="t-caption">Пять строк, отсортированы по влиянию на стратегию.</p>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Founding Designer, США</dt>
+              <dd class="doc__spec-value">1 200 открытых вакансий, 40% связаны с AI или ML</dd>
+              <dd class="doc__spec-value">LinkedIn Jobs, апрель 2026</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Ставки Fractional</dt>
+              <dd class="doc__spec-value">150-300 USD в час, ретейнер 5 000-12 000 в месяц</dd>
+              <dd class="doc__spec-value">Hired, Glassdoor, Levels.fyi</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">AI в дизайне</dt>
+              <dd class="doc__spec-value">73% дизайнеров применяют generative AI в продакшне</dd>
+              <dd class="doc__spec-value">Adobe Strategy Report 2024</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Passeport Talent</dt>
+              <dd class="doc__spec-value">«Artistique»: доход 1 237 €/мес. «Renommée»: международные выставки</dd>
+              <dd class="doc__spec-value">Service-Public.fr, март 2026</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">LinkedIn автоматизация</dt>
+              <dd class="doc__spec-value">Taplio, Dripify работают, но есть риск блокировки при агрессивном режиме</dd>
+              <dd class="doc__spec-value">Гипотеза, требует проверки в части безопасности</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="next-steps">
+        <h2 class="t-display">
+          Ближайшие шаги<br />
+          <span class="t-display--medium t-muted">Месяц работы</span>
+        </h2>
+        <p class="t-body">
+          Пять шагов, каждый с ожидаемым результатом. Только то, что прозвучало на звонке. Новые строки добавляются агентом по комментарию.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--triple">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Перепозиционирование</dt>
+              <dd class="doc__spec-value">Убрать «не шарю в UI» из CV, сайта, первых писем</dd>
+              <dd class="doc__spec-value">Профиль читается как Founding Designer, не Lead</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Делегирование крафта</dt>
+              <dd class="doc__spec-value">Выбрать двух специалистов на UI, передать один проект</dd>
+              <dd class="doc__spec-value">Десять часов в неделю освобождены под стратегию</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">LinkedIn воронка</dt>
+              <dd class="doc__spec-value">Ассистентка и 25 инвайтов в день целевым ролям</dd>
+              <dd class="doc__spec-value">30 разговоров в месяц к концу июня</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Французский сайт</dt>
+              <dd class="doc__spec-value">Профессиональный, FR по умолчанию, EN-свитчер</dd>
+              <dd class="doc__spec-value">Готов до подачи документов на визу</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Пакет визы</dt>
+              <dd class="doc__spec-value">Собрать плакаты, зины, подтверждения выставок</dd>
+              <dd class="doc__spec-value">Досье для Passeport Talent готово к сентябрю</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- =================== ДАЛЬШЕ ======================================== -->
+      <h2 class="doc__part">Дальше</h2>
+
+      <article class="doc__section" id="how-we-work">
+        <h2 class="t-display">
+          Как мы работаем<br />
+          <span class="t-display--medium t-muted">Формат и сообщество</span>
+        </h2>
+        <p class="t-body">
+          Еженедельные звонки, асинхронная поддержка, закрытый чат менти. Ниже — что стоит за этим форматом и какие данные мы копим.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Формат работы</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Синхрон</dt>
+              <dd class="doc__spec-value">Один звонок 30 минут в неделю. Фиксированный слот.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Асинхрон</dt>
+              <dd class="doc__spec-value">Текст в мессенджере. Ответ в течение суток, при офферах быстрее.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Подготовка</dt>
+              <dd class="doc__spec-value">Перед каждым звонком — одна страница по текущему блоку.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Сообщество</h3>
+            <p class="t-caption">23 менти в активной работе. Закрытый чат, обмен контактами, взаимные ревью.</p>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Прошлый год</dt>
+              <dd class="doc__spec-value">47 стратегий собрано. 12 менти сменили роль, 9 закрыли первый контракт в новой нише.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">База данных</dt>
+              <dd class="doc__spec-value">2 200+ тредов комментариев. Решённые возражения переиспользуются пайплайном для следующих стратегий.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Планы</dt>
+              <dd class="doc__spec-value">Автоматизация CV-парсера, библиотека похожих менти, групповые сессии по доменам.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Опции</dt>
+              <dd class="doc__spec-value">От асинхронного консультирования до партнёрства на квартал. Подробности открываются после отзыва.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- =================== ОТЗЫВ (client-only) =========================== -->
+      <article class="doc__section" data-view-only="client" id="review">
+        <h2 class="t-display">
+          Отзыв<br />
+          <span class="t-display--medium t-muted">Пара минут, влияет на следующий цикл</span>
+        </h2>
+        <p class="t-body">
+          Отзыв получает Konstantin в течение 24 часов. Комментарии к тексту стратегии прилетают вместе с отзывом и разбираются в том же окне.
+        </p>
+        <form class="card" id="reviewForm">
+          <div class="card__heading">
+            <h3 class="t-title">Ваш отзыв</h3>
+            <p class="t-caption">Оценка документа и короткий комментарий.</p>
+          </div>
+
+          <div data-stars role="radiogroup" aria-label="Оценка">
+            <button type="button" class="tag" data-star data-rating="1" role="radio" aria-checked="false" aria-label="1 звезда"></button>
+            <button type="button" class="tag" data-star data-rating="2" role="radio" aria-checked="false" aria-label="2 звезды"></button>
+            <button type="button" class="tag" data-star data-rating="3" role="radio" aria-checked="false" aria-label="3 звезды"></button>
+            <button type="button" class="tag" data-star data-rating="4" role="radio" aria-checked="false" aria-label="4 звезды"></button>
+            <button type="button" class="tag" data-star data-rating="5" role="radio" aria-checked="false" aria-label="5 звёзд"></button>
+          </div>
+
+          <label class="field">
+            <textarea class="t-caption field__input" name="text" rows="3" placeholder="Что было полезно, что нет, что стоит дописать" required></textarea>
+          </label>
+
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" name="public" />
+            <span class="switch__track"></span>
+            Разрешаю показать этот отзыв публично с моим именем
+          </label>
+
+          <p class="t-caption t-muted">
+            Вы прикрепили <span class="t-caption--bold" data-proto="clientCommentCount">0</span> комментариев к тексту. Konstantin прочтёт их в течение 24 часов.
+          </p>
+
+          <p class="t-caption t-muted" hidden data-review-error>Поставьте оценку и напишите короткий комментарий.</p>
+
+          <button class="button button--primary t-subtitle" type="submit">Отправить отзыв</button>
+        </form>
+      </article>
+
+      <!-- =================== ТРАНСКРИПЦИЯ (client-only) ===================== -->
+      <article class="doc__section" data-view-only="client" id="sign-transcript">
+        <h2 class="t-display">
+          Транскрипция<br />
+          <span class="t-display--medium t-muted">Доступна после отзыва</span>
+        </h2>
+        <p class="t-body" data-show-when="locked">
+          Сначала отзыв, потом транскрипция. Скролл к блоку «Отзыв» выше.
+        </p>
+        <p class="t-body" data-show-when="reviewed">
+          Транскрипция разговора 21 апреля на 32 минуты. Подписывая, вы подтверждаете согласие на хранение записи и её использование для улучшения пайплайна.
+        </p>
+        <form class="card" id="signForm" data-show-when="reviewed">
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Имя</span>
+            <input class="t-caption field__input" type="text" name="name" value="Нелли Кам" />
+          </label>
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Email</span>
+            <input class="t-caption field__input" type="email" name="email" placeholder="nelly@example.com" />
+          </label>
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" name="consent" required />
+            <span class="switch__track"></span>
+            Согласен на хранение записи и цитирование без имени в аналитике
+          </label>
+          <button class="button button--primary t-subtitle" type="submit">Подписать и скачать</button>
+        </form>
+      </article>
+
+      <!-- =================== ПОДПИСЬ (always last) ========================= -->
+      <div class="doc__signoff">
+        <div class="doc__signoff-stats">
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">4</span> цикла ревью закрыто перед подписью.</div>
+            <div><span class="t-caption--bold">11</span> комментариев закрыто.</div>
+          </div>
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">2</span> ресерча проведено, Deep плюс беглый.</div>
+            <div><span class="t-caption--bold">27</span> источников в блоке рынка.</div>
+          </div>
+        </div>
+
+        <div class="doc__signoff-signature">
+          <p class="t-caption">
+            Подписал
+            <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
+            основатель
+            <span class="t-caption--bold">kk.consulting<br /></span>
+            <span class="t-muted">22 апреля 2026, 14:30, Tbilisi Time.</span>
+          </p>
+          <img class="doc__signoff-signature-img" src="../signature.svg" alt="Подпись Konstantin Konstantinopolskii" />
+        </div>
+      </div>
+    </main>
+
+    <!-- ==================================================================== -->
+    <!-- Inspector                                                             -->
+    <!-- ==================================================================== -->
+    <aside class="inspector" aria-label="Действия и комментарии">
+
+      <!-- =============== OPERATOR inspector ================================ -->
+      <section class="inspector__group" data-view-only="operator">
+        <header class="card card--heading">
+          <h2 class="t-display">Пайплайн</h2>
+        </header>
+
+        <!-- Stage 1 — Бриф -->
+        <div class="card card--interactive card--shout" data-stage-card="1" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title">Бриф</h3>
+            <p class="t-caption">Выберите менти, проверьте транскрипцию, запустите пайплайн.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <div class="deck">
+                <div class="deck-card active">
+                  <p class="t-caption--bold">Нелли Кам</p>
+                  <p class="t-caption">Lead Innovation Product Designer · 21 апр 26</p>
+                  <button class="tag deck-card__select" type="button">Выбрать</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Анастасия Арановская</p>
+                  <p class="t-caption">Head of Project Office · 12 апр 26</p>
+                  <button class="tag deck-card__select" type="button">Выбрать</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Влад Осипов</p>
+                  <p class="t-caption">Pre-press, 20 лет · 05 апр 26</p>
+                  <button class="tag deck-card__select" type="button">Выбрать</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Борис Сергеев</p>
+                  <p class="t-caption">PM, FinTech · 29 мар 26</p>
+                  <button class="tag deck-card__select" type="button">Выбрать</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Катерина Лыс</p>
+                  <p class="t-caption">Founder, B2B SaaS · 18 мар 26</p>
+                  <button class="tag deck-card__select" type="button">Выбрать</button>
+                </div>
+              </div>
+
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Глубина</span>
+                <span class="t-caption field__value">Deep Research, 20 USD</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">CV</span>
+                <span class="t-caption field__value">Nelly-Kam-CV.pdf, распарсен</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Заметки</span>
+                <span class="t-caption field__value">Telegram, 4 сообщения</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Транскрипция</span>
+                <span class="t-caption field__value">KK-Nelly-Kam-2d99cc63, 32 мин</span>
+              </label>
+              <label class="field">
+                <input class="t-caption field__input" type="text" value="Founding Designer для AI стартапов США плюс Passeport Talent" />
+              </label>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Бриф готов</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Запустить</button>
+        </div>
+
+        <!-- Stage 2 — Промпт -->
+        <div class="card card--interactive card--shout" data-stage-card="2">
+          <div class="card__heading">
+            <h3 class="t-title">Промпт для ресерча</h3>
+            <p class="t-caption">Агент собрал промпт. Отредактируйте, если нужно, и подтвердите.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <label class="field">
+                <textarea class="t-caption field__input" rows="5">Найди свежие данные по рынку Founding Designer в AI-стартапах США: объём вакансий, медианные ретейнеры Fractional Head of Design, статистика по Passeport Talent для артистической категории, trade-off автоматизации LinkedIn.</textarea>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Регион</span>
+                <span class="t-caption field__value">США, ЕС, СНГ</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Источники</span>
+                <span class="t-caption field__value">Google Search плюс Deep Research</span>
+              </label>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Открыть промпт</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Отправить в ресерч</button>
+        </div>
+
+        <!-- Stage 3 — Ресерч -->
+        <div class="card card--interactive card--shout" data-stage-card="3">
+          <div class="card__heading">
+            <h3 class="t-title">Ресерч</h3>
+            <p class="t-caption">27 источников собрано. Скан ключевых строк.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <dl class="doc__spec">
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Founding Designer US</dt>
+                  <dd class="doc__spec-value">1 200 вакансий, 40% в AI</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Ставки Fractional</dt>
+                  <dd class="doc__spec-value">150-300 USD/час, ретейнер 5-12k</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Passeport Talent</dt>
+                  <dd class="doc__spec-value">Artistique: 1237 €/мес минимум</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">AI в дизайне</dt>
+                  <dd class="doc__spec-value">73% применяют generative</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">LinkedIn автоматизация</dt>
+                  <dd class="doc__spec-value">Работает, риск блока при 50+ действий в день</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Расширить scope</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Принять и писать стратегию</button>
+        </div>
+
+        <!-- Stage 4 — Ревью -->
+        <div class="card card--interactive card--shout" data-stage-card="4">
+          <div class="card__heading">
+            <h3 class="t-title">Ревью стратегии</h3>
+            <p class="t-caption">Стратегия собрана. Выделите текст в документе, чтобы оставить коммент агенту.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <dl class="doc__spec">
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Открытых тредов</dt>
+                  <dd class="doc__spec-value" data-proto="threadsOpenInline">3</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Закрытых</dt>
+                  <dd class="doc__spec-value" data-proto="threadsResolvedInline">1</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Последний правка</dt>
+                  <dd class="doc__spec-value">21 апр 14:15, «Ближайшие шаги»</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Ещё ревью</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Собрать правки агентом</button>
+        </div>
+
+        <!-- Stage 5 — Ответы агента -->
+        <div class="card card--interactive card--shout" data-stage-card="5">
+          <div class="card__heading">
+            <h3 class="t-title">Агент ответил</h3>
+            <p class="t-caption">Агент положил замену в каждый открытый тред. Подтвердите или отклоните с причиной.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <dl class="doc__spec">
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Замены ждут</dt>
+                  <dd class="doc__spec-value">3</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Подсвечены</dt>
+                  <dd class="doc__spec-value">Клик по треду — промотка к якорю в документе</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Пройтись по тредам</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Принять все</button>
+        </div>
+
+        <!-- Stage 6 — Подпись -->
+        <div class="card card--interactive card--shout" data-stage-card="6">
+          <div class="card__heading">
+            <h3 class="t-title">Подпись</h3>
+            <p class="t-caption">Все треды закрыты. Замок стратегии и выдача ссылки клиенту.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <dl class="doc__spec">
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Автор</dt>
+                  <dd class="doc__spec-value">Konstantin Konstantinopolskii</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Циклов ревью</dt>
+                  <dd class="doc__spec-value">4</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Ресерчей</dt>
+                  <dd class="doc__spec-value">2, Deep плюс беглый</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Посмотреть ещё раз</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Подписать и отправить</button>
+        </div>
+
+        <!-- Stage 7 — Доставлено -->
+        <div class="card card--interactive card--shout" data-stage-card="7">
+          <div class="card__heading">
+            <h3 class="t-title">Отправлено</h3>
+            <p class="t-caption">Ссылка отдана Нелли. Правки текста доступны через патч-маршрут.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Ссылка</span>
+                <input class="t-caption field__input" type="text" value="kk.consulting/s/nelly-kam-a39f" readonly />
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Открыта</span>
+                <span class="t-caption field__value">3 раза, последний — 22 апр 11:40</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Комментов клиента</span>
+                <span class="t-caption field__value">2 ждут ответа</span>
+              </label>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Посмотреть документ</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Ответить клиенту</button>
+        </div>
+      </section>
+
+      <section class="inspector__group" data-view-only="operator">
+        <header class="card card--heading">
+          <h2 class="t-display">Комментарии</h2>
+        </header>
+        <div class="comment-stack" id="commentStackOperator"></div>
+      </section>
+
+      <!-- =============== CLIENT inspector ================================= -->
+      <section class="inspector__group" data-view-only="client">
+        <header class="card card--heading">
+          <h2 class="t-display">Как читать</h2>
+        </header>
+
+        <div class="card card--interactive card--shout" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title" data-proto="clientShoutTitle">Документ открыт</h3>
+            <p class="t-caption" data-proto="clientShoutBody">Читайте стратегию сверху вниз. Выделяйте куски, чтобы оставить комментарий. Комментарии придут Konstantin вместе с отзывом.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <dl class="doc__spec">
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Доступ</dt>
+                  <dd class="doc__spec-value" data-proto="accessLabel">Бесплатный, полный текст стратегии</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Транскрипция</dt>
+                  <dd class="doc__spec-value" data-proto="transcriptLabel">Откроется после отзыва</dd>
+                </div>
+                <div class="doc__spec-row">
+                  <dt class="doc__spec-key">Тарифы</dt>
+                  <dd class="doc__spec-value" data-proto="pricesLabel">Цены раскроются после отзыва</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized" data-proto="clientShoutCta">Как читать</button>
+          <button class="button button--primary t-subtitle" data-cta="active" id="clientShoutPrimary" data-proto="clientShoutPrimary">Оставить отзыв</button>
+        </div>
+      </section>
+
+      <section class="inspector__group" data-view-only="client">
+        <header class="card card--heading">
+          <h2 class="t-display">Мои комментарии</h2>
+        </header>
+        <div class="comment-stack" id="commentStackClient">
+          <div class="card">
+            <p class="t-caption t-muted">Пока пусто. Выделите абзац в документе, чтобы оставить первый коммент.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="inspector__group" data-view-only="client">
+        <header class="card card--heading">
+          <h2 class="t-display">Тарифы</h2>
+        </header>
+        <div id="tierStack"></div>
+      </section>
+
+    </aside>
+  </div>
+
+  <!-- Localize kit.js strings. Must run BEFORE kit.js loads. -->
+  <script>
+    window.KK = { config: { i18n: {
+      addComment: 'Ваш комментарий',
+      reply: 'Ответить…',
+      deckChoose: 'Выбрать',
+      deckChosen: 'Выбрано'
+    } } };
+  </script>
+  <script src="../js/kit.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1693,7 +1693,7 @@ ol.t-list > li::before {
    semantics stay honest. */
 .doc__spec {
   display: grid;
-  grid-template-columns: minmax(140px, max-content) 1fr;
+  grid-template-columns: minmax(140px, 30%) 1fr;
   column-gap: var(--space-6);
   padding: 0;
   margin: 0;
@@ -1741,19 +1741,19 @@ ol.t-list > li::before {
   min-width: 0;
 }
 
-/* Three-column spec — equal split. Used by Contradictions table
-   where all three columns carry similar-length sentences. */
+/* Three-column spec — first two columns cap at 30% of the table width
+   each; the third takes the remainder. Prose-heavy third columns (plan
+   tables, claim/reality/resolution) get room to breathe. */
 .doc__spec--triple {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 30%) minmax(0, 30%) 1fr;
 }
 
 /* Token / value / use — the scale tables (Space, Radii, Type sizes,
    Weights, Durations) all share one shape: a token name, a concrete
-   value, and what the thing is for. When a repeating pattern shows
-   up across rows, it becomes its own column. Both the key and the
-   value shrink-to-fit; the use-column gets the rest. */
+   value, and what the thing is for. Key and middle-value each cap at
+   30% of the table width; the use-column gets the rest. */
 .doc__spec--value {
-  grid-template-columns: minmax(120px, max-content) minmax(60px, max-content) 1fr;
+  grid-template-columns: minmax(120px, 30%) minmax(60px, 30%) 1fr;
 }
 
 /* Inside the doc, spec rows sit on the card's content rail — the card

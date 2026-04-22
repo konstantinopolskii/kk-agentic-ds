@@ -92,12 +92,12 @@
           <h3 class="t-subtitle">Pipeline</h3>
           <ul class="nav-group__items">
             <li class="t-caption"><a href="#pipeline">Why a pipeline</a></li>
-            <li class="t-caption"><a href="#hypothesis">Hypothesis defense</a></li>
-            <li class="t-caption"><a href="#iteration">Option iteration</a></li>
-            <li class="t-caption"><a href="#boost">Contrast boost</a></li>
-            <li class="t-caption"><a href="#supervision">Supervision</a></li>
-            <li class="t-caption"><a href="#implementation">Implementation</a></li>
-            <li class="t-caption"><a href="#magic">Magic injection</a></li>
+            <li class="t-caption"><a href="#think">Think</a></li>
+            <li class="t-caption"><a href="#handoff">Hand-off</a></li>
+            <li class="t-caption"><a href="#build">Build</a></li>
+            <li class="t-caption"><a href="#meta-retro">Meta retro</a></li>
+            <li class="t-caption"><a href="#doc-contract">Documentation contract</a></li>
+            <li class="t-caption"><a href="#revolutionary">Revolutionary protocol</a></li>
           </ul>
         </section>
 
@@ -1877,230 +1877,287 @@
         </h2>
         <p class="t-body">
           AI agents draft most of our work. Without gates they
-          produce gray mush and invent components. A five-stage
-          pipeline enforces business logic, contrast, and inventory
-          discipline before the human art-directs.
+          produce gray mush, invent components, and ship the first
+          plausible draft. Ten stages across three phases enforce
+          breadth at the think phase, honesty at the hand-off phase,
+          discipline at the build phase.
+        </p>
+        <p class="t-body">
+          Nine role skills own the stages. Entry point matches scope
+          &mdash; a typo enters at stage 9, a kit refactor enters at
+          stage 1 plus 8, a new page walks all ten.
         </p>
         <div class="card">
           <dl class="doc__spec doc__spec--value">
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Step 1</dt>
-              <dd class="doc__spec-value"><a href="#hypothesis">Hypothesis defense</a></dd>
-              <dd class="doc__spec-value">Analyst agent decomposes the brief. Human approves the logic.</dd>
+              <dt class="doc__spec-key"><a href="#think">Think</a></dt>
+              <dd class="doc__spec-value">Stages 1&ndash;3</dd>
+              <dd class="doc__spec-value">Analyst, art-director, concept agents. Produces approved intent.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Step 2</dt>
-              <dd class="doc__spec-value"><a href="#iteration">Option iteration</a></dd>
-              <dd class="doc__spec-value">UX/CX agents produce flow alternatives. Structure only, no visuals.</dd>
+              <dt class="doc__spec-key"><a href="#handoff">Hand-off</a></dt>
+              <dd class="doc__spec-value">Stages 4&ndash;7</dd>
+              <dd class="doc__spec-value">Three designer archetypes plus DS reviewer. Produces one human pick.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Step 3</dt>
-              <dd class="doc__spec-value"><a href="#boost">Contrast boost</a></dd>
-              <dd class="doc__spec-value">UI agent applies visual hierarchy. Signal hypertrophied.</dd>
+              <dt class="doc__spec-key"><a href="#build">Build</a></dt>
+              <dd class="doc__spec-value">Stages 8&ndash;10</dd>
+              <dd class="doc__spec-value">Frontend engineer, UX copywriter, three parallel reviewers. Produces shipping prototype.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Step 4</dt>
-              <dd class="doc__spec-value"><a href="#supervision">Supervision</a> and <a href="#implementation">implementation</a></dd>
-              <dd class="doc__spec-value">Supervisor audits logic, 80 / 20, and inventory. Frontend rewrites semantics, a11y, and mobile code without moving a pixel.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Step 5</dt>
-              <dd class="doc__spec-value"><a href="#magic">Magic injection</a></dd>
-              <dd class="doc__spec-value">Human art directs. Emotional accents land on a verified frame.</dd>
+              <dt class="doc__spec-key"><a href="#meta-retro">Meta retro</a></dt>
+              <dd class="doc__spec-value">On demand</dd>
+              <dd class="doc__spec-value">Reads session documentation, proposes canon updates. Never edits directly.</dd>
             </div>
           </dl>
         </div>
       </article>
 
-      <article class="doc__section" id="hypothesis">
+      <article class="doc__section" id="think">
         <h2 class="t-display">
-          Hypothesis defense<br />
-          <span class="t-display--medium t-muted">Step 1. Logic before pixels</span>
+          Think<br />
+          <span class="t-display--medium t-muted">Phase 1. Breadth before pixels</span>
         </h2>
         <p class="t-body">
-          Analyst agent decomposes the brief into user, job stories,
-          and scenarios. Human approves or pushes back. Iteration
-          does not start until the logic holds.
+          Three stages. The analyst decomposes the brief. The
+          art-director opens the solution space. Concept agents
+          produce low-fi options the human picks from.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 1. Analyst</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-analyst</span></dd>
+              <dd class="doc__spec-value">Users, job stories, priority scenarios, open questions. Gates on human approval. No design until the brief holds.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 2. Art-director</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-art-director</span></dd>
+              <dd class="doc__spec-value">Five or more directions, each with intent and guardrails. One direction is a fail. The human picks one direction; the rest archive.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 3. Concept agents</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-concept</span> &times; 3&ndash;5</dd>
+              <dd class="doc__spec-value">Parallel. Each produces ASCII flow mockups, a JSON component tree, and a shape-up framing. No code. The human picks one concept.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="handoff">
+        <h2 class="t-display">
+          Hand-off<br />
+          <span class="t-display--medium t-muted">Phase 2. Three competing packages</span>
+        </h2>
+        <p class="t-body">
+          Three designers run on the chosen concept in parallel. A
+          DS reviewer writes a comparative analysis &mdash; not a
+          ranking. The human picks the hand-off that goes to build.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 4. Conservative</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-designer-conservative</span></dd>
+              <dd class="doc__spec-value">Strict kit inventory. No inventions, no reorganizations the kit's own patterns do not already contain. The safe floor the other two are measured against.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 5. UX-driven</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-designer-ux</span></dd>
+              <dd class="doc__spec-value">Rearranges existing components to serve the job better. Layout frame stays kit-standard. No inventions.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 6. Revolutionary</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-designer-revolutionary</span></dd>
+              <dd class="doc__spec-value">May break a rule with a matching diff. See <a href="#revolutionary">revolutionary protocol</a>.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 7. DS reviewer</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-ds-reviewer</span></dd>
+              <dd class="doc__spec-value">Reads the three hand-offs. Writes a matrix plus one paragraph per hand-off: what each optimizes for, what it costs. Does not pick.</dd>
+            </div>
+          </dl>
+        </div>
+        <p class="t-body">
+          Accessibility floors are not negotiable inside the
+          hand-off. Every package hits the 44 by 44 touch target,
+          semantic HTML, contrast minimums.
+        </p>
+      </article>
+
+      <article class="doc__section" id="build">
+        <h2 class="t-display">
+          Build<br />
+          <span class="t-display--medium t-muted">Phase 3. Structure, words, three reviewers</span>
+        </h2>
+        <p class="t-body">
+          Build splits structure from voice so each gets its own
+          pass. Three parallel reviewers gate the ship &mdash; code,
+          words, system.
+        </p>
+        <div class="card">
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 8. Frontend engineer</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-frontend-engineer</span></dd>
+              <dd class="doc__spec-value">Writes HTML, CSS, JS with kit classes and shared <span class="t-mono">kit.js</span>. Copy is placeholder comments &mdash; no real strings.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 9. UX copywriter</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-ux-copywriter</span></dd>
+              <dd class="doc__spec-value">Fills every placeholder. Voice consistent across the prototype. Does not touch structure.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 10. Frontend reviewer</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-ds-frontend</span></dd>
+              <dd class="doc__spec-value">Semantics, a11y, mobile, cross-browser, JS simplicity. Fails return to stage 8.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 10. UX copy reviewer</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-ux-copy-reviewer</span></dd>
+              <dd class="doc__spec-value">Voice rules, AI-tells, button discipline, empty-state shapes. Fails return to stage 9.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Stage 10. Consistency reviewer</dt>
+              <dd class="doc__spec-value"><span class="t-mono">kk-ds-supervisor</span></dd>
+              <dd class="doc__spec-value">Logic, 80 / 20, inventory. Fails return to the hand-off stage that owns the failure, not to the build.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="meta-retro">
+        <h2 class="t-display">
+          Meta retro<br />
+          <span class="t-display--medium t-muted">On demand, not scheduled</span>
+        </h2>
+        <p class="t-body">
+          Fires when the human calls a retro. Reads every
+          <span class="t-mono">NN-role.md</span> in the audited
+          sessions, looks for patterns that suggest canon needs to
+          evolve.
         </p>
         <div class="card">
           <dl class="doc__spec">
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Agent</dt>
-              <dd class="doc__spec-value">Analyst.</dd>
+              <dd class="doc__spec-value"><span class="t-mono">kk-role-meta-retro</span></dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Output</dt>
-              <dd class="doc__spec-value">Decomposed brief, job stories, priority scenarios, open questions.</dd>
+              <dd class="doc__spec-value">Proposals at <span class="t-mono">proposals/YYYY-MM-DD-retro.md</span>. One proposal per canon change. Never edits directly.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Gate</dt>
-              <dd class="doc__spec-value">Human approval. No iteration starts until the brief holds up.</dd>
+              <dt class="doc__spec-key">Signal floor</dt>
+              <dd class="doc__spec-value">Two occurrences across sessions minimum. One-offs are not retro material.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Trigger</dt>
+              <dd class="doc__spec-value">On demand only. No schedule, no automatic fire.</dd>
             </div>
           </dl>
         </div>
+        <p class="t-body">
+          Accepted proposals route to <span class="t-mono">kk-ds-maintainer</span>.
+          Rejected proposals archive in the proposal file with the
+          rejection reason.
+        </p>
       </article>
 
-      <article class="doc__section" id="iteration">
+      <article class="doc__section" id="doc-contract">
         <h2 class="t-display">
-          Option iteration<br />
-          <span class="t-display--medium t-muted">Step 2. UX and CX, no visual polish</span>
+          Documentation contract<br />
+          <span class="t-display--medium t-muted">Every stage self-documents</span>
         </h2>
         <p class="t-body">
-          UX/CX agents produce 3&ndash;5 flow alternatives using kit
-          components. Mock data. Structural choices only: what
-          appears where, in what order, under which state. Visual
-          polish happens in step 3.
+          Each stage, as its final step, writes
+          <span class="t-mono">documentation/&lt;session&gt;/NN-role.md</span>.
+          A retro reads these files in order and reconstructs the
+          entire decision arc without replaying the conversation.
         </p>
         <div class="card">
           <dl class="doc__spec">
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Agent</dt>
-              <dd class="doc__spec-value">UX/CX (parallel).</dd>
+              <dt class="doc__spec-key">Frontmatter</dt>
+              <dd class="doc__spec-value"><span class="t-mono">session</span>, <span class="t-mono">stage</span>, <span class="t-mono">role</span>, <span class="t-mono">input</span>, <span class="t-mono">output</span>, <span class="t-mono">gate</span>. One line each.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Input</dt>
-              <dd class="doc__spec-value">Approved brief and job story from step 1.</dd>
+              <dt class="doc__spec-key">Raw input</dt>
+              <dd class="doc__spec-value">Verbatim user message where the stage received one. Not summarized, not restyled.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Output</dt>
-              <dd class="doc__spec-value">3&ndash;5 flow alternatives through existing components.</dd>
+              <dt class="doc__spec-key">Artifacts</dt>
+              <dd class="doc__spec-value">Pointers, not copies. Build files stay at their repo location; the doc links.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Forbidden</dt>
-              <dd class="doc__spec-value">New components. Custom colors. Off-grid values. Typography or visual choices.</dd>
+              <dt class="doc__spec-key">Rejected options</dt>
+              <dd class="doc__spec-value">Archive in the session folder. Never delete. A retro often learns more from the rejected branch.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">README</dt>
+              <dd class="doc__spec-value">The analyst creates it at stage 1. Each subsequent stage appends its row to the file index.</dd>
             </div>
           </dl>
         </div>
+        <p class="t-body">
+          Full template and frontmatter spec live in
+          <span class="t-mono">doc-format.md</span>.
+        </p>
       </article>
 
-      <article class="doc__section" id="boost">
+      <article class="doc__section" id="revolutionary">
         <h2 class="t-display">
-          Contrast boost<br />
-          <span class="t-display--medium t-muted">Step 3. UI, hypertrophied</span>
+          Revolutionary protocol<br />
+          <span class="t-display--medium t-muted">Break a rule only with a diff</span>
         </h2>
         <p class="t-body">
-          UI agent takes the selected UX flow and applies visual
-          hierarchy. The prompt asks for a hypertrophied version
-          deliberately: hero at 3&ndash;4&times; body, primary
-          action dominating the frame, secondary shrunk or hidden.
-          Easier to dial contrast down from 100 than up from 20.
+          The revolutionary designer at stage 6 may break a
+          manifesto rule. Every broken rule ships with an entry in
+          <span class="t-mono">manifest-diff.md</span>. Missing diff
+          means the hand-off fails DS review automatically.
         </p>
         <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Diff entry shape</h3>
+          </div>
           <dl class="doc__spec">
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Agent</dt>
-              <dd class="doc__spec-value">UI.</dd>
+              <dt class="doc__spec-key">Canon source</dt>
+              <dd class="doc__spec-value">File and section, e.g. <span class="t-mono">components.md &sect; What's forbidden</span>.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Input</dt>
-              <dd class="doc__spec-value">Selected flow from step 2.</dd>
+              <dt class="doc__spec-key">Rule as written</dt>
+              <dd class="doc__spec-value">Quoted verbatim from the canon file.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Output</dt>
-              <dd class="doc__spec-value">The same flow with visual hierarchy applied, contrast turned up past the target.</dd>
+              <dt class="doc__spec-key">Proposed change</dt>
+              <dd class="doc__spec-value">Specific replacement text ready to land in the canon file.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Hero</dt>
-              <dd class="doc__spec-value"><span class="t-mono">3&ndash;4&times;</span> body.</dd>
+              <dt class="doc__spec-key">Reason</dt>
+              <dd class="doc__spec-value">Tied to the job. Not aesthetics.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Primary</dt>
-              <dd class="doc__spec-value">Dominates the frame.</dd>
+              <dt class="doc__spec-key">Blast radius</dt>
+              <dd class="doc__spec-value">Other canon files and live prototypes the change touches.</dd>
             </div>
             <div class="doc__spec-row">
-              <dt class="doc__spec-key">Secondary</dt>
-              <dd class="doc__spec-value">Shrunk or hidden.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Rule</dt>
-              <dd class="doc__spec-value">No gray mush. Every adjacent pair carries one clear distinction step.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="supervision">
-        <h2 class="t-display">
-          Supervision<br />
-          <span class="t-display--medium t-muted">Step 4. Three vectors</span>
-        </h2>
-        <p class="t-body">
-          Supervisor agent checks every layout against three
-          vectors, in order.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Logic</dt>
-              <dd class="doc__spec-value">Does the layout still serve the job story from step 1?</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Eighty / twenty</dt>
-              <dd class="doc__spec-value">Is one primary signal actually holding 80% of the weight, at every nesting?</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Inventory</dt>
-              <dd class="doc__spec-value">Did a junior agent invent a new component? If yes, it gets rejected and the layout is rebuilt from kit parts.</dd>
+              <dt class="doc__spec-key">Rollback</dt>
+              <dd class="doc__spec-value">What reverting looks like.</dd>
             </div>
           </dl>
         </div>
         <p class="t-body">
-          Failures are not patched. They return to iteration. The
-          pipeline only flows forward when every gate passes.
+          Two human paths at stage 7. Reject the diff &mdash; the
+          revolutionary hand-off falls back to the UX-driven variant.
+          Accept the diff &mdash; <span class="t-mono">kk-ds-maintainer</span>
+          runs before stage 8, updates the canon, bumps the kit,
+          then the build proceeds.
         </p>
-      </article>
-
-      <article class="doc__section" id="implementation">
-        <h2 class="t-display">
-          Implementation<br />
-          <span class="t-display--medium t-muted">Step 4. Code pass</span>
-        </h2>
         <p class="t-body">
-          Runs on the stage-three draft, before the supervisor.
-          Rewrites the code for semantics, accessibility, simple
-          logic, mobile, and cross-browser behavior. The visual is
-          frozen: kit classes stay, wrappers stay, tokens stay.
-          Only the code underneath changes.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Semantics and a11y</dt>
-              <dd class="doc__spec-value">Generic tags swap for semantic ones. Every interactive element has a label and a keyboard path. Focus rings stay visible.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Simplicity</dt>
-              <dd class="doc__spec-value">No abstractions called once. No <span class="t-mono">try/catch</span> around code that cannot throw. No framework, no build step, no polyfill. Vanilla stays vanilla.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Mobile</dt>
-              <dd class="doc__spec-value">Touch targets at 44 by 44. Every hover carries a tap equivalent. Handlers scope to the element, not the container.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Browsers</dt>
-              <dd class="doc__spec-value">Feature detection, not UA sniffing. Recent CSS ships with a <span class="t-mono">@supports</span> fallback. Reduced-motion preferences honored.</dd>
-            </div>
-          </dl>
-        </div>
-        <p class="t-body">
-          Output passes to the supervisor. If inventory drift
-          entered during the rewrite, the supervisor returns it to
-          this stage. If composition is wrong, it returns to
-          iteration.
-        </p>
-      </article>
-
-      <article class="doc__section" id="magic">
-        <h2 class="t-display">
-          Magic injection<br />
-          <span class="t-display--medium t-muted">Step 5. The human lands</span>
-        </h2>
-        <p class="t-body">
-          The layout arriving here is verified: logic holds, signal
-          is loud, inventory is honest. Human picks the direction
-          and adds emotional accents &mdash; a specific
-          illustration, a rewarding hover, a better label. Magic
-          lands on a verified frame. It never replaces one.
+          Accessibility floors (44 by 44 targets, semantic HTML,
+          contrast) are outside the protocol. The revolutionary
+          cannot trade those away.
         </p>
       </article>
 
@@ -2487,9 +2544,10 @@
         </h2>
         <p class="t-body">
           The kit ships two ways in one package. Humans get CSS, fonts,
-          and this document. Agents get a Claude skill that constrains
-          their output to the kit before the first character prints.
-          One source of truth, one version number, two consumers.
+          behavioural JS, and this document. Agents get a Claude skill
+          that constrains their output to the kit before the first
+          character prints. One source of truth, one version number,
+          two consumers.
         </p>
         <p class="t-body">
           A skill is not a reference. The agent does not read it and
@@ -2605,9 +2663,10 @@
         </h2>
         <p class="t-body">
           The kit ships as <span class="t-mono">@kk/design-system</span>.
-          One package carries tokens, components, fonts, and the
-          Claude skills. Humans import the CSS; agents load the skill.
-          Both share one version.
+          One package carries tokens, components, fonts, behavioural JS
+          (<span class="t-mono">js/kit.js</span>), and the Claude skills.
+          Humans import the CSS and include the script; agents load the
+          skill. Both share one version.
         </p>
         <p class="t-body">
           Consumers pin a version; they never edit the kit in place.
@@ -2745,7 +2804,7 @@
           <dl class="doc__spec">
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Kit files</dt>
-              <dd class="doc__spec-value"><span class="t-mono">vars.css</span>, <span class="t-mono">style.css</span>, <span class="t-mono">fonts/</span>. Maintainer only. PRs against the kit repo, not the consumer project.</dd>
+              <dd class="doc__spec-value"><span class="t-mono">vars.css</span>, <span class="t-mono">style.css</span>, <span class="t-mono">js/kit.js</span>, <span class="t-mono">fonts/</span>. Maintainer only. PRs against the kit repo, not the consumer project.</dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Project code</dt>
@@ -3157,1096 +3216,13 @@
     </aside>
   </div>
 
-  <!-- Minimal scroll-spy: highlight the nav item for the section on screen -->
-  <script>
-    (function () {
-      var nav = document.getElementById('toc');
-      var doc = document.getElementById('doc');
-      if (!nav || !doc || !('IntersectionObserver' in window)) return;
-
-      var indicator = nav.querySelector('.toc__indicator');
-      var sections = doc.querySelectorAll('.doc__section');
-      var links = {};
-      nav.querySelectorAll('a[href^="#"]').forEach(function (a) {
-        links[a.getAttribute('href').slice(1)] = a.parentElement;
-      });
-
-      var firstId = sections[0] && sections[0].id;
-
-      function setActive(id) {
-        var activeLi = null;
-        Object.keys(links).forEach(function (key) {
-          var li = links[key];
-          var on = key === id;
-          li.classList.toggle('is-active', on);
-          if (on) activeLi = li;
-        });
-        // Mark the owning group as active (heading + items go full color).
-        nav.querySelectorAll('.nav-group').forEach(function (group) {
-          group.classList.toggle('is-active', activeLi && group.contains(activeLi));
-        });
-        moveIndicator(activeLi);
-        scrollActiveIntoView(activeLi);
-      }
-
-      // Keep the active nav group inside the sidebar's viewport as the
-      // reader scrolls the doc. We scroll by whole .nav-group, not by
-      // individual <li>: line-by-line scrolling jitters every few
-      // sections; group-at-a-time gives larger, readable jumps. If
-      // the group is taller than the sidebar, align its top; otherwise
-      // prefer the nearest edge that needs to move. Only the sidebar
-      // scrolls (not the window) — we walk up to the .sidebar ancestor
-      // and skip when it's display:none (phone view).
-      function scrollActiveIntoView(activeLi) {
-        if (!activeLi) return;
-        var sidebar = activeLi.closest('.sidebar');
-        if (!sidebar || getComputedStyle(sidebar).display === 'none') return;
-        var group = activeLi.closest('.nav-group') || activeLi;
-        var sRect = sidebar.getBoundingClientRect();
-        var gRect = group.getBoundingClientRect();
-        if (gRect.top >= sRect.top && gRect.bottom <= sRect.bottom) return;
-        var delta;
-        if (gRect.top < sRect.top || gRect.height > sRect.height) {
-          delta = gRect.top - sRect.top;
-        } else {
-          delta = gRect.bottom - sRect.bottom;
-        }
-        sidebar.scrollTo({ top: sidebar.scrollTop + delta, behavior: 'smooth' });
-      }
-
-      function moveIndicator(activeLi) {
-        if (!indicator) return;
-        if (!activeLi) {
-          indicator.classList.remove('is-positioned');
-          return;
-        }
-        var navRect = nav.getBoundingClientRect();
-        var liRect = activeLi.getBoundingClientRect();
-        var top = liRect.top - navRect.top;
-        indicator.style.transform = 'translate3d(0,' + top + 'px,0)';
-        indicator.style.height = liRect.height + 'px';
-        if (!indicator.classList.contains('is-positioned')) {
-          indicator.classList.add('is-positioned');
-          // One frame later, turn on the sliding transitions so the first
-          // placement doesn't animate in from the origin.
-          requestAnimationFrame(function () {
-            indicator.classList.add('is-tracking');
-          });
-        }
-      }
-
-      var visible = new Set();
-      // When the reader clicks a nav item we pin the indicator to that
-      // target immediately and suppress the scroll-spy until either
-      // the programmatic smooth-scroll lands (scrollend) or the reader
-      // interrupts it by scrolling manually (wheel / touchstart). The
-      // flag guards the observer callback so it doesn't chase sections
-      // the browser is merely passing through on its way to the click
-      // target.
-      var scrollLocked = false;
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) visible.add(entry.target.id);
-          else visible.delete(entry.target.id);
-        });
-        if (scrollLocked) return;
-        var best = null;
-        for (var i = 0; i < sections.length; i++) {
-          if (visible.has(sections[i].id)) { best = sections[i].id; break; }
-        }
-        setActive(best || firstId);
-      }, { root: doc, rootMargin: '0px 0px -60% 0px', threshold: 0 });
-
-      sections.forEach(function (s) { observer.observe(s); });
-      setActive(firstId);
-
-      // Keep the indicator aligned when the sidebar resizes.
-      window.addEventListener('resize', function () {
-        var active = nav.querySelector('.nav-group__items li.is-active');
-        if (active) moveIndicator(active);
-      });
-
-      // Smooth-scroll clicks inside the doc column (not the whole window).
-      // The indicator snaps to the click's target first thing — the
-      // scroll-spy is temporarily locked so it doesn't drag the
-      // indicator through every section the smooth-scroll passes on
-      // its way. We unlock on scroll-end (browser finished the ride)
-      // OR on any wheel/touchstart (the reader grabbed the scroll),
-      // whichever comes first, and then re-sync to whatever section
-      // is visible now. A 1.5 s timeout fallback covers engines that
-      // don't ship scrollend yet.
-      nav.addEventListener('click', function (e) {
-        var a = e.target.closest('a[href^="#"]');
-        if (!a) return;
-        var id = a.getAttribute('href').slice(1);
-        var target = document.getElementById(id);
-        if (!target) return;
-        e.preventDefault();
-
-        setActive(id);
-        history.replaceState(null, '', '#' + id);
-
-        scrollLocked = true;
-        var release = function () {
-          clearTimeout(timeoutId);
-          scrollLocked = false;
-          doc.removeEventListener('scrollend', release);
-          doc.removeEventListener('wheel', release);
-          doc.removeEventListener('touchstart', release);
-          var best = null;
-          for (var i = 0; i < sections.length; i++) {
-            if (visible.has(sections[i].id)) { best = sections[i].id; break; }
-          }
-          setActive(best || firstId);
-        };
-        doc.addEventListener('scrollend', release, { once: true });
-        doc.addEventListener('wheel', release, { once: true, passive: true });
-        doc.addEventListener('touchstart', release, { once: true, passive: true });
-        var timeoutId = setTimeout(release, 1500);
-
-        var top = Math.max(0, target.offsetTop - 20);
-        doc.scrollTo({ top: top, behavior: 'smooth' });
-      });
-    })();
-
-    // Narrow views — show the column where the change is happening.
-    // The app carries a [data-view] attribute: "doc" (default), "nav", or
-    // "inspector". CSS hides the other columns on phone and swaps the
-    // sidebar for the inspector on tablet. Desktop ignores the attribute.
-    // Buttons with [data-view-target] set the view; nav-item clicks pull
-    // the user back to the doc, because the change they just triggered
-    // (a scroll) lives in the doc.
-    (function () {
-      var app = document.querySelector('.app');
-      if (!app) return;
-
-      function setView(view) {
-        app.setAttribute('data-view', view);
-      }
-
-      // Delegated on document so it catches clicks on elements parsed
-      // AFTER this script runs — notably the floating FABs, which sit
-      // outside .app at the very end of <body>.
-      document.addEventListener('click', function (e) {
-        var el = e.target.closest('[data-view-target]');
-        if (!el) return;
-        var target = el.getAttribute('data-view-target');
-        // Tabs toggle — tapping the active target returns to the doc.
-        // Back buttons target "doc" explicitly; toggling that is a no-op.
-        var next = (app.getAttribute('data-view') === target && target !== 'doc')
-          ? 'doc'
-          : target;
-        setView(next);
-      });
-
-      var toc = document.getElementById('toc');
-      if (toc) {
-        toc.addEventListener('click', function (e) {
-          if (e.target.closest('a[href^="#"]')) setView('doc');
-        });
-      }
-    })();
-
-    // Column reveal orchestrator — the "OS level" of the design system.
-    // Any column that becomes visible (initial load, or after a data-view
-    // swap) reveals its direct children with a staggered fade + scale +
-    // slide. The direction matches the column's side of the desktop
-    // layout: nav from left, inspector from right, doc from below.
-    //
-    // Why JS and not CSS: we want this to be automatic for every widget
-    // in any column, forever. With CSS we'd have to write per-child
-    // :nth-child delays or maintain a list. Here the script reads the
-    // live DOM — any card, section, or widget added later inherits the
-    // behavior without touching CSS.
-    (function () {
-      var app = document.querySelector('.app');
-      if (!app) return;
-
-      // Columns in priority order: doc leads (it's what the reader came
-      // for), then the accents. On initial paint these are offset from
-      // each other by COLUMN_OFFSET_MS so the layout rolls into place
-      // instead of flashing all at once. Keyframes live in style.css.
-      var COLUMNS = [
-        { selector: '.doc',       keyframe: 'reveal-from-below' },
-        { selector: '.sidebar',   keyframe: 'reveal-from-left'  },
-        { selector: '.inspector', keyframe: 'reveal-from-right' },
-      ];
-
-      // Stagger within a column: each subsequent child starts 48 ms later,
-      // capped so a column with many widgets doesn't stretch forever. At
-      // 48 × 12 = 576 ms plus the swing's own 760 ms, the last child in a
-      // column finishes at ~1.3 s — deliberate, still inside grace.
-      var STAGGER_STEP_MS = 48;
-      var STAGGER_CAP = 12;
-      // Inter-column desync on initial paint (desktop/tablet). Column N
-      // starts N × this many ms after the first. Kept a touch shorter
-      // than STAGGER_CAP × STAGGER_STEP so columns overlap rather than
-      // queue end-to-end.
-      var COLUMN_OFFSET_MS = 160;
-
-      function revealColumn(col, baseDelay) {
-        var column = document.querySelector(col.selector);
-        if (!column) return;
-        if (getComputedStyle(column).display === 'none') return;
-
-        var children = column.children;
-        for (var i = 0; i < children.length; i++) {
-          var el = children[i];
-          var delay = baseDelay + Math.min(i, STAGGER_CAP) * STAGGER_STEP_MS;
-          // Cancel any in-flight animation, force a reflow, then reapply.
-          // Without the reset, a second view-swap mid-animation would not
-          // restart the keyframes — the browser keeps the original run.
-          el.style.animation = 'none';
-          void el.offsetWidth;
-          el.style.animation =
-            col.keyframe + ' var(--dur-long) var(--ease-swing) ' + delay + 'ms both';
-        }
-      }
-
-      function isVisible(selector) {
-        var el = document.querySelector(selector);
-        return !!(el && getComputedStyle(el).display !== 'none');
-      }
-
-      // Track each column's prior visibility so we only animate a column
-      // when it transitions hidden → visible. On tablet the doc stays
-      // visible across a nav toggle; without this, it would re-flash
-      // every swap.
-      var wasVisible = {};
-      COLUMNS.forEach(function (col) {
-        wasVisible[col.selector] = isVisible(col.selector);
-      });
-
-      new MutationObserver(function () {
-        COLUMNS.forEach(function (col) {
-          var now = isVisible(col.selector);
-          if (now && !wasVisible[col.selector]) {
-            // The column just appeared — reveal it from zero. No inter-
-            // column offset here: a single column arriving shouldn't
-            // wait for anyone.
-            revealColumn(col, 0);
-          }
-          wasVisible[col.selector] = now;
-        });
-      }).observe(app, {
-        attributes: true,
-        attributeFilter: ['data-view'],
-      });
-
-      // Initial paint — every visible column, in priority order, each
-      // offset by COLUMN_OFFSET_MS from the previous. On phone only the
-      // doc is visible, so the cascade collapses to one column at 0.
-      // On tablet: doc leads, inspector follows 160 ms later.
-      // On desktop: doc, then nav, then inspector — 0 / 160 / 320 ms.
-      var cascadeIndex = 0;
-      COLUMNS.forEach(function (col) {
-        if (!isVisible(col.selector)) return;
-        revealColumn(col, cascadeIndex * COLUMN_OFFSET_MS);
-        cascadeIndex++;
-      });
-    })();
-
-    // Inspector stack — one active per stack, sticky and exclusive.
-    // The rule (from the manifesto): active holds until another card in
-    // the stack is triggered. A trigger is a click or a focus landing in
-    // any card — interactive or static. Interactive cards promote; static
-    // cards (comments, headings-as-cards) just demote the currently-
-    // active interactive card, because attention has moved elsewhere in
-    // the stack.
-    (function () {
-      var inspector = document.querySelector('.inspector');
-      if (!inspector) return;
-
-      // JS-driven tween of inspector.scrollTop. We roll our own because CSS
-      // scroll-behavior: smooth fights the collapsible's height animation
-      // on the same element tree. Uses rAF so it runs at display rate and
-      // cooperates with the collapsible's transition.
-      var _inspectorScrollAnim = 0;
-      function glideInspectorScroll(target, duration) {
-        var startTop = inspector.scrollTop;
-        var distance = target - startTop;
-        if (Math.abs(distance) < 1) return;
-        var startTime = performance.now();
-        var myId = ++_inspectorScrollAnim;
-        function step(now) {
-          if (myId !== _inspectorScrollAnim) return; // a newer trigger superseded us
-          var elapsed = now - startTime;
-          var progress = Math.min(elapsed / duration, 1);
-          var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-          inspector.scrollTop = startTop + distance * eased;
-          if (progress < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      function collapseAllActive() {
-        inspector.querySelectorAll('.card--interactive[data-state="active"]').forEach(function (c) {
-          var collapsible = c.querySelector('.card__collapsible');
-          if (collapsible) collapsible.style.transition = 'none';
-          c.removeAttribute('data-state');
-          if (collapsible) {
-            // Force the browser to commit the closed layout with no
-            // animation, then restore the transition for future opens.
-            collapsible.offsetHeight; // eslint-disable-line no-unused-expressions
-            collapsible.style.transition = '';
-          }
-        });
-      }
-
-      function setActive(card) {
-        // State changes only when this card isn't already active —
-        // collapseAllActive + data-state flip + input-blur dance run
-        // once per promotion. Scroll, however, runs every time: the
-        // rule from the manifesto is that any trigger should bring the
-        // triggered card into view, even if the user clicks the mark
-        // for a thread that's already active (they scrolled away and
-        // want to see it again).
-        if (card.getAttribute('data-state') !== 'active') {
-          collapseAllActive();
-          card.setAttribute('data-state', 'active');
-
-          // The "Try it" button the user just clicked is now display:none
-          // (the CTA-swap rule hides the minimized label once the card goes
-          // active). When a focused button disappears the browser drifts
-          // focus onto the next focusable element — which in this card is
-          // usually the first input in the collapsible. That's accidental:
-          // the user expanded a card, they didn't ask to type. Blur any
-          // focused input inside the newly-active card so the caret doesn't
-          // pop up in a field they never aimed at.
-          requestAnimationFrame(function () {
-            var focused = document.activeElement;
-            if (focused && card.contains(focused) &&
-                focused.matches('input, textarea')) {
-              focused.blur();
-            }
-          });
-        }
-
-        // Defer the measurement one frame so any MutationObserver that
-        // dismisses an empty draft (demoted by collapseAllActive above)
-        // has flushed before we read cardRect.top. Measuring in the
-        // same task leaves the draft in the layout for one extra beat,
-        // and the glide lands the target off-screen by the draft's
-        // height. Glide still runs over 320 ms in parallel with the
-        // 200 ms open.
-        requestAnimationFrame(function () {
-          if (!card.isConnected) return;
-          var inspectorRect = inspector.getBoundingClientRect();
-          var cardRect = card.getBoundingClientRect();
-          var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
-          glideInspectorScroll(Math.max(0, target), 320);
-        });
-      }
-
-      function handleTrigger(e) {
-        // Comment kebab menu and its popover are isolated surfaces —
-        // clicking them opens/closes the menu, it should not promote or
-        // demote any card in the stack.
-        if (e.target.closest('.comment__menu, .comment__menu-popover')) return;
-
-        var card = e.target.closest('.card');
-        // Empty space inside the inspector deactivates whatever's
-        // promoted. focusin can't land outside a card (no focusable
-        // elements live between them), so this path is click-only in
-        // practice.
-        if (!card) {
-          if (e.type === 'click') collapseAllActive();
-          return;
-        }
-        // Heading cards are decorative; they don't participate in state.
-        if (card.classList.contains('card--heading')) return;
-
-        if (card.classList.contains('card--interactive')) {
-          setActive(card);
-        } else {
-          // Static card touched — demote any active interactive card and
-          // glide this card to the top so the user sees what they tapped.
-          collapseAllActive();
-          var inspectorRect = inspector.getBoundingClientRect();
-          var cardRect = card.getBoundingClientRect();
-          var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
-          glideInspectorScroll(Math.max(0, target), 320);
-        }
-      }
-
-      inspector.addEventListener('click', handleTrigger);
-      inspector.addEventListener('focusin', handleTrigger);
-    })();
-
-    // Doc selection → draft card → thread. Drafts are .card--interactive
-    // members of the comment stack: when a new selection comes in we
-    // build a fresh draft, prepend it to the stack, and let the
-    // existing stack JS promote it. The draft owns a thread-id; the
-    // highlight spans in the body are tagged with that same id as
-    // data-comment-id. A MutationObserver at the bottom of this IIFE
-    // watches every interactive card's data-state: active → highlights
-    // get .highlight--active (inverted black/white); minimized →
-    // highlights drop back to the 3% overlay. Empty drafts that go
-    // inactive are dismissed outright. Committing a draft swaps it
-    // in-place for a thread card carrying the same id, so the marks
-    // in the body stay anchored without any rewiring.
-    (function () {
-      var doc = document.getElementById('doc');
-      var inspector = document.querySelector('.inspector');
-      if (!doc || !inspector) return;
-
-      var commentStack = inspector.querySelector('.comment-stack');
-      if (!commentStack) return;
-
-      var currentAuthor = 'Konstantin Konstantinopolskii';
-
-      function nodeInDoc(node) {
-        while (node && node !== document) {
-          if (node === doc) return true;
-          node = node.parentNode;
-        }
-        return false;
-      }
-
-      // Highlight the selection as one span per text node it touches —
-      // never as one wrapper around the whole range. surroundContents
-      // (and the extractContents fallback) would promote the span up to
-      // the range's common ancestor when the selection crosses block
-      // elements, painting yellow across the whole rectangle including
-      // padding and inter-paragraph gaps. Walking text nodes keeps the
-      // highlight strictly inline; block structure is preserved.
-      function wrapRangeAsHighlight(range) {
-        var spans = [];
-        var startContainer = range.startContainer;
-        var startOffset    = range.startOffset;
-        var endContainer   = range.endContainer;
-        var endOffset      = range.endOffset;
-        var root           = range.commonAncestorContainer;
-
-        // Gather every text node the range touches. For a text-node
-        // common ancestor (selection within one node), that's just it.
-        var textNodes = [];
-        if (root.nodeType === Node.TEXT_NODE) {
-          textNodes.push(root);
-        } else {
-          var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
-          var n;
-          while ((n = walker.nextNode())) {
-            if (range.intersectsNode(n)) textNodes.push(n);
-          }
-        }
-
-        textNodes.forEach(function (tn) {
-          var so = (tn === startContainer) ? startOffset : 0;
-          var eo = (tn === endContainer)   ? endOffset   : tn.data.length;
-          if (so >= eo) return;
-          var mid = tn.data.slice(so, eo);
-          // Collapsed-whitespace text nodes (the formatting whitespace
-          // between block elements) would otherwise produce invisible
-          // spans — skip any slice that's pure whitespace.
-          if (!mid.trim()) return;
-          var before = tn.data.slice(0, so);
-          var after  = tn.data.slice(eo);
-
-          var span = document.createElement('span');
-          span.className = 'highlight';
-          span.appendChild(document.createTextNode(mid));
-
-          var parent = tn.parentNode;
-          if (before) parent.insertBefore(document.createTextNode(before), tn);
-          parent.insertBefore(span, tn);
-          if (after) parent.insertBefore(document.createTextNode(after), tn);
-          parent.removeChild(tn);
-          spans.push(span);
-        });
-
-        return spans;
-      }
-
-      function unwrapHighlight(spans) {
-        if (!spans) return;
-        if (!Array.isArray(spans)) spans = [spans];
-        spans.forEach(function (span) {
-          if (!span || !span.parentNode) return;
-          var parent = span.parentNode;
-          while (span.firstChild) parent.insertBefore(span.firstChild, span);
-          parent.removeChild(span);
-          parent.normalize();
-        });
-      }
-
-      // Toggle the app-level flag that governs the Add-a-comment FAB's
-      // visibility on narrow viewports. The attribute is pure state; the
-      // CSS does the show / hide.
-      function setAppSelection(on) {
-        var app = document.querySelector('.app');
-        if (!app) return;
-        if (on) app.setAttribute('data-selection', 'true');
-        else app.removeAttribute('data-selection');
-      }
-
-      // Build a fresh draft card. Participates in the stack as a
-      // .card--interactive; owns its own thread-id so the highlight
-      // spans anchored to its selection follow its state via the
-      // MutationObserver. No minimized-state CTA — the whole card is
-      // the click target to reopen, per the user's spec ("don't keep
-      // the button in minimised, just show it if user clicked again").
-      function buildDraft(author, threadId) {
-        var d = document.createElement('div');
-        d.className = 'card card--interactive comment-new';
-        d.dataset.threadId = threadId;
-        d.innerHTML =
-          '<div class="comment-new__header">' +
-            '<div class="t-subtitle"></div>' +
-            '<p class="t-caption comment-new__preview"></p>' +
-          '</div>' +
-          '<div class="card__collapsible">' +
-            '<div class="card__collapsible-inner">' +
-              '<label class="field comment-new__field">' +
-                '<input class="t-caption field__input" type="text" placeholder="Add a comment" />' +
-                '<span class="field__fake-caret" aria-hidden="true"></span>' +
-              '</label>' +
-            '</div>' +
-          '</div>';
-        d.querySelector('.t-subtitle').textContent = author;
-        return d;
-      }
-
-      // Remove a draft and unwrap every highlight span that points at
-      // it. Used for empty-draft auto-dismissal on demote and for
-      // explicit Escape-to-discard.
-      function removeDraftAndUnwrapMarks(draft) {
-        if (!draft) return;
-        var tid = draft.dataset.threadId;
-        if (tid) {
-          doc.querySelectorAll('.highlight[data-comment-id="' + tid + '"]').forEach(function (span) {
-            unwrapHighlight([span]);
-          });
-        }
-        draft.remove();
-        if (!inspector.querySelector('.card.comment-new')) setAppSelection(false);
-      }
-
-      // Commit a draft: replace its card in place with a thread card
-      // carrying the same thread-id. Highlight spans already tagged
-      // with that id carry over seamlessly — no rewiring, no flicker.
-      function commitDraft(draft) {
-        var inp = draft.querySelector('.comment-new__field .field__input');
-        if (!inp) return;
-        var text = inp.value.trim();
-        if (!text) return;
-        var tid = draft.dataset.threadId;
-        var thread = buildThread(currentAuthor, text, tid);
-        draft.replaceWith(thread);
-        // Promote via synthetic click — the stack JS handles the
-        // state flip, blur dance, and scroll. The observer sees the
-        // new data-state="active" and flips matching highlights to
-        // --active.
-        requestAnimationFrame(function () { thread.click(); });
-        if (!inspector.querySelector('.card.comment-new')) setAppSelection(false);
-      }
-
-      // Build one message node — author header, body, kebab + popover.
-      function buildMessage(author, body) {
-        var msg = document.createElement('div');
-        msg.className = 'comment-msg';
-        msg.innerHTML =
-          '<div class="comment-msg__header">' +
-            '<div class="t-subtitle"></div>' +
-            '<button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>' +
-          '</div>' +
-          '<p class="t-caption"></p>' +
-          '<div class="comment__menu-popover" role="menu">' +
-            '<button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>' +
-            '<button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>' +
-          '</div>';
-        msg.querySelector('.t-subtitle').textContent = author;
-        msg.querySelector('.t-caption').textContent = body;
-        return msg;
-      }
-
-      // Re-render the preview from the full list. 1 msg → that one;
-      // 2 msgs → both, no ellipsis; 3+ → first + 3-hairline ellipsis +
-      // last. The list is the source of truth; preview is derived.
-      function renderPreview(thread) {
-        var list = thread.querySelector('.comment-thread__list');
-        var preview = thread.querySelector('.comment-thread__preview');
-        if (!list || !preview) return;
-        var msgs = list.querySelectorAll(':scope > .comment-msg');
-        preview.innerHTML = '';
-        if (msgs.length === 0) return;
-        preview.appendChild(msgs[0].cloneNode(true));
-        if (msgs.length > 2) {
-          var dots = document.createElement('div');
-          dots.className = 'comment-thread__ellipsis';
-          dots.setAttribute('aria-hidden', 'true');
-          dots.innerHTML = '<span></span><span></span><span></span>';
-          preview.appendChild(dots);
-        }
-        if (msgs.length > 1) {
-          preview.appendChild(msgs[msgs.length - 1].cloneNode(true));
-        }
-      }
-
-      // Build a brand-new thread card with a single seed message. The
-      // thread carries its own id so the saved mark spans in the body
-      // can point back to it (clicking a yellow mark promotes the owning
-      // thread).
-      function buildThread(author, body, threadId) {
-        var thread = document.createElement('div');
-        thread.className = 'card card--interactive comment-thread';
-        if (threadId) thread.dataset.threadId = threadId;
-        thread.innerHTML =
-          '<div class="comment-thread__preview"></div>' +
-          '<div class="card__collapsible">' +
-            '<div class="card__collapsible-inner">' +
-              '<div class="comment-thread__list"></div>' +
-              '<label class="field comment-thread__reply">' +
-                '<input class="t-caption field__input" type="text" placeholder="Reply&hellip;" />' +
-                '<span class="field__fake-caret" aria-hidden="true"></span>' +
-              '</label>' +
-            '</div>' +
-          '</div>';
-        thread.querySelector('.comment-thread__list').appendChild(buildMessage(author, body));
-        renderPreview(thread);
-        return thread;
-      }
-
-      // Selection → new draft. A selection-release builds a fresh
-      // draft card, tags the wrapped highlight spans with that card's
-      // thread-id, and prepends the card to the stack. A synthetic
-      // click on the new card then goes through the stack JS, which
-      // demotes any previously active card (committed thread OR older
-      // draft) and scrolls the new one into view. The demote side
-      // effect is how the "trigger kills the old draft if empty, keeps
-      // it if it has content" rule is enforced — the MutationObserver
-      // at the bottom of this IIFE handles both branches.
-      function maybeOpenFromSelection() {
-        var sel = window.getSelection();
-        if (!sel || sel.isCollapsed) return;
-        if (!nodeInDoc(sel.anchorNode) || !nodeInDoc(sel.focusNode)) return;
-        var range = sel.getRangeAt(0).cloneRange();
-        var spans = wrapRangeAsHighlight(range);
-        if (!spans.length) return;
-
-        // Re-anchor the native selection onto the freshly-wrapped spans.
-        // wrapRangeAsHighlight detaches the original text nodes, which
-        // orphans the browser's range and leaves ⌘/Ctrl+C with nothing
-        // to copy. Restoring a range across the new span content keeps
-        // the native clipboard path alive; ::selection paints it as the
-        // inverted preview of the mark-to-be.
-        var first = spans[0].firstChild;
-        var last  = spans[spans.length - 1].firstChild;
-        if (first && last) {
-          var restored = document.createRange();
-          restored.setStart(first, 0);
-          restored.setEnd(last, last.data.length);
-          sel.removeAllRanges();
-          sel.addRange(restored);
-        }
-
-        var threadId = 'c' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-        spans.forEach(function (span) {
-          span.setAttribute('data-comment-id', threadId);
-        });
-
-        var draft = buildDraft(currentAuthor, threadId);
-        commentStack.insertBefore(draft, commentStack.firstChild);
-        setAppSelection(true);
-
-        // Promote via synthetic click — the stack JS handles demotion
-        // of previously active cards and scrolls this draft into
-        // view. Defer one frame so the DOM insertion is laid out
-        // before the scroll measurement.
-        requestAnimationFrame(function () { draft.click(); });
-      }
-      doc.addEventListener('mouseup', maybeOpenFromSelection);
-      doc.addEventListener('keyup', function (e) {
-        if (e.shiftKey && (e.key.indexOf('Arrow') === 0 || e.key === 'Home' || e.key === 'End')) {
-          maybeOpenFromSelection();
-        }
-      });
-
-      // Commit action, wired via delegation on the stack since drafts
-      // are dynamic. Stop propagation so the CTA click doesn't also
-      // trigger the generic stack handler (which would try to re-promote
-      // the card that's about to be replaced).
-      commentStack.addEventListener('click', function (e) {
-        var trigger = e.target.closest('[data-action="commit"]');
-        if (!trigger) return;
-        var draft = trigger.closest('.card.comment-new');
-        if (!draft) return;
-        e.stopPropagation();
-        commitDraft(draft);
-      });
-
-      // Keyboard wiring on the stack — Enter commits from a draft input,
-      // Enter inside a thread's reply input appends a message, Escape
-      // on a draft input discards the whole draft.
-      commentStack.addEventListener('keydown', function (e) {
-        var draftInput = e.target.closest('.card.comment-new .comment-new__field .field__input');
-        if (draftInput) {
-          if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            commitDraft(draftInput.closest('.card.comment-new'));
-            return;
-          }
-          if (e.key === 'Escape') {
-            e.preventDefault();
-            removeDraftAndUnwrapMarks(draftInput.closest('.card.comment-new'));
-            return;
-          }
-        }
-        var replyInput = e.target.closest('.comment-thread__reply .field__input');
-        if (replyInput && e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          var body = replyInput.value.trim();
-          if (!body) return;
-          var thread = replyInput.closest('.comment-thread');
-          var list = thread.querySelector('.comment-thread__list');
-          list.appendChild(buildMessage(currentAuthor, body));
-          replyInput.value = '';
-          renderPreview(thread);
-        }
-      });
-
-      // Live-update the draft's preview line as the reader types — so
-      // the one-liner shown in the minimized state always reflects
-      // what was in the input at the moment of minimization.
-      commentStack.addEventListener('input', function (e) {
-        var di = e.target.closest('.card.comment-new .comment-new__field .field__input');
-        if (!di) return;
-        var draft = di.closest('.card.comment-new');
-        var preview = draft && draft.querySelector('.comment-new__preview');
-        if (preview) preview.textContent = di.value;
-      });
-
-      // Global Escape — kill the active draft (if any) from anywhere on
-      // the page. If the caret is inside the draft input, the local
-      // listener above handles it; otherwise fall through to here.
-      document.addEventListener('keydown', function (e) {
-        if (e.key !== 'Escape') return;
-        var activeDraft = inspector.querySelector('.card.comment-new[data-state="active"]');
-        if (!activeDraft) return;
-        if (activeDraft.contains(document.activeElement)) return;
-        e.preventDefault();
-        removeDraftAndUnwrapMarks(activeDraft);
-      });
-
-      // Type-anywhere-to-focus — if there's an active comment card
-      // (draft OR thread) and the caret isn't already editable, the
-      // first printable key hands focus to that card's input or reply
-      // field. Preserves the "show card, don't steal focus; but just
-      // start typing and it works" contract, and extends it from
-      // drafts-only to any active comment-stack card so replying to
-      // an open thread is a single keypress.
-      document.addEventListener('keydown', function (e) {
-        if (e.key.length !== 1) return;
-        if (e.ctrlKey || e.metaKey || e.altKey) return;
-        var activeCard = inspector.querySelector('.comment-stack .card--interactive[data-state="active"]');
-        if (!activeCard) return;
-        var inp = activeCard.querySelector('.comment-new__field .field__input, .comment-thread__reply .field__input');
-        if (!inp || document.activeElement === inp) return;
-        var ae = document.activeElement;
-        if (ae && ae.tagName) {
-          var t = ae.tagName;
-          if (t === 'INPUT' || t === 'TEXTAREA' || ae.isContentEditable) return;
-          if (t === 'BUTTON' || t === 'A' || t === 'SELECT') return;
-        }
-        inp.focus();
-      });
-
-      // Click any highlight in the doc → promote its owning card (draft
-      // or committed thread) to the top of the inspector. On narrow
-      // viewports also swap the view to the inspector column so the
-      // card lands in sight. After a view swap we defer the synthetic
-      // click one frame so layout has settled before the scroll logic
-      // measures rects.
-      doc.addEventListener('click', function (e) {
-        var mark = e.target.closest('.highlight');
-        if (!mark) return;
-        var id = mark.getAttribute('data-comment-id');
-        if (!id) return;
-        var card = commentStack.querySelector('[data-thread-id="' + id + '"]');
-        if (!card) return;
-        var app = document.querySelector('.app');
-        var swapped = false;
-        if (app && window.matchMedia('(max-width: 768px)').matches) {
-          if (app.getAttribute('data-view') !== 'inspector') {
-            app.setAttribute('data-view', 'inspector');
-            swapped = true;
-          }
-        }
-        if (swapped) requestAnimationFrame(function () { card.click(); });
-        else card.click();
-      });
-
-      // Add-a-comment FAB (mobile/tablet) — tapping opens the inspector
-      // column. The new draft is already in the stack; swapping the
-      // view is all that's left.
-      var fabComment = document.querySelector('.fab--comment');
-      if (fabComment) {
-        fabComment.addEventListener('click', function () {
-          var app = document.querySelector('.app');
-          if (app) app.setAttribute('data-view', 'inspector');
-        });
-      }
-
-      // MutationObserver — the single source of truth for highlight
-      // state. Any .card--interactive with a data-thread-id is tracked:
-      // whenever its data-state flips, every .highlight span in the
-      // doc carrying the matching data-comment-id gets .highlight--active
-      // added or removed. For draft cards specifically, going inactive
-      // with an empty input = abandon outright (remove card, unwrap
-      // spans); with content it minimizes like a normal card, and the
-      // observer also ensures the preview line reflects the current
-      // input value.
-      var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (m) {
-          if (m.type !== 'attributes' || m.attributeName !== 'data-state') return;
-          var card = m.target;
-          if (!card.classList || !card.classList.contains('card--interactive')) return;
-          var tid = card.getAttribute('data-thread-id');
-          if (!tid) return;
-          var isActive = card.getAttribute('data-state') === 'active';
-
-          var marks = doc.querySelectorAll('.highlight[data-comment-id="' + tid + '"]');
-          marks.forEach(function (span) {
-            if (isActive) span.classList.add('highlight--active');
-            else span.classList.remove('highlight--active');
-          });
-
-          // On activation, scroll the doc so the anchor text lands in
-          // view. Clicking a comment / thread in the inspector should
-          // always show the reader where it's attached in the body.
-          // scrollIntoView with block:center snaps the first mark to
-          // the middle of the viewport — if it's already centred, no
-          // scroll happens.
-          if (isActive && marks.length) {
-            marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-
-          if (!isActive && card.classList.contains('comment-new')) {
-            var inp = card.querySelector('.comment-new__field .field__input');
-            var val = inp ? inp.value.trim() : '';
-            if (!val) {
-              removeDraftAndUnwrapMarks(card);
-            } else {
-              // Snapshot the input value into the preview one more
-              // time, in case the reader demoted without triggering a
-              // final 'input' event.
-              var preview = card.querySelector('.comment-new__preview');
-              if (preview) preview.textContent = inp.value;
-            }
-          }
-        });
-      });
-      observer.observe(inspector, {
-        attributes: true,
-        attributeFilter: ['data-state'],
-        subtree: true,
-      });
-
-      // Kebab actions — Reply focuses the thread's reply field (and
-      // promotes the thread if still minimized). Delete removes the
-      // message; if the thread empties, it goes too. Preview kebabs map
-      // to their list-source counterpart (first or last).
-      commentStack.addEventListener('click', function (e) {
-        var item = e.target.closest('.comment__menu-item');
-        if (!item) return;
-        var thread = item.closest('.comment-thread');
-        if (!thread) return;
-        var msg = item.closest('.comment-msg');
-        var label = (item.textContent || '').trim();
-
-        if (label === 'Reply') {
-          if (thread.getAttribute('data-state') !== 'active') {
-            // Promote via a synthetic click on the thread body so the
-            // generic inspector handler handles scroll + collapse.
-            thread.click();
-          }
-          var reply = thread.querySelector('.comment-thread__reply .field__input');
-          if (reply) requestAnimationFrame(function () { reply.focus(); });
-          return;
-        }
-
-        if (label === 'Delete') {
-          if (!msg) return;
-          var list = thread.querySelector('.comment-thread__list');
-          var listMsgs = list.querySelectorAll(':scope > .comment-msg');
-          if (msg.closest('.comment-thread__preview')) {
-            // Preview kebab — resolve to first or last of the list.
-            var previewMsgs = thread.querySelectorAll('.comment-thread__preview > .comment-msg');
-            var idx = Array.prototype.indexOf.call(previewMsgs, msg);
-            if (idx === 0 && listMsgs.length) {
-              listMsgs[0].remove();
-            } else if (idx === 1 && listMsgs.length > 1) {
-              listMsgs[listMsgs.length - 1].remove();
-            }
-          } else {
-            msg.remove();
-          }
-          var remaining = list.querySelectorAll(':scope > .comment-msg');
-          if (remaining.length === 0) {
-            thread.remove();
-          } else {
-            renderPreview(thread);
-          }
-        }
-      });
-    })();
-
-    // Comment menus — the three-dot kebab opens a small popover with
-    // Reply / Delete. Clicking the menu button toggles; clicking outside
-    // (or pressing Escape) closes. Only one menu open at a time across
-    // the whole page, like a native context menu.
-    (function () {
-      function closeAllMenus(except) {
-        document.querySelectorAll('.comment__menu[aria-expanded="true"]').forEach(function (btn) {
-          if (btn === except) return;
-          btn.setAttribute('aria-expanded', 'false');
-        });
-      }
-
-      document.addEventListener('click', function (e) {
-        var btn = e.target.closest('.comment__menu');
-        if (btn) {
-          var wasOpen = btn.getAttribute('aria-expanded') === 'true';
-          closeAllMenus(btn);
-          btn.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
-          e.stopPropagation();
-          return;
-        }
-        // Click inside a menu popover — close after the item fires so
-        // actions (Reply / Delete) still bubble through, but the menu
-        // itself dismisses afterwards.
-        if (e.target.closest('.comment__menu-popover')) {
-          closeAllMenus();
-          return;
-        }
-        // Click anywhere else — close everything.
-        closeAllMenus();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeAllMenus();
-      });
-    })();
-
-    // Card stack — hover on desktop, horizontal drag on mobile.
-    // Adapted from coin hero-reviews interaction (new.fuckgrechka.ru/coin).
-    (function () {
-      var stacks = document.querySelectorAll('.deck');
-      var isMobileStack = window.matchMedia('(max-width: 1024px)').matches;
-
-      stacks.forEach(function (wrapper) {
-        var cards = wrapper.querySelectorAll('.deck-card');
-        if (cards.length === 0) return;
-
-        var currentIndex = 0;
-
-        function setActiveCard(index) {
-          cards.forEach(function (c) { c.classList.remove('active'); });
-          cards[index].classList.add('active');
-          currentIndex = index;
-        }
-
-        function setChosen(card) {
-          wrapper.querySelectorAll('.deck-card__select.is-chosen').forEach(function (other) {
-            if (other.closest('.deck-card') === card) return;
-            other.classList.remove('is-chosen');
-            other.textContent = 'Choose';
-          });
-          var btn = card.querySelector('.deck-card__select');
-          if (!btn) return;
-          if (btn.classList.contains('is-chosen')) {
-            btn.classList.remove('is-chosen');
-            btn.textContent = 'Choose';
-          } else {
-            btn.classList.add('is-chosen');
-            btn.innerHTML =
-              '<span class="deck-card__check" aria-hidden="true"></span>Chosen';
-          }
-        }
-
-        setActiveCard(0);
-
-        if (isMobileStack) {
-          // Touch handlers live on the wrapper, not on an overlay —
-          // an overlay would sit above the cards and swallow every tap,
-          // starving the Choose button and routing the synthesized click
-          // to a non-card target.
-          wrapper.style.touchAction = 'pan-y';
-
-          var touchStartX = 0, touchStartY = 0, lastSwitchX = 0, isHSwipe = false;
-
-          wrapper.addEventListener('touchstart', function (e) {
-            touchStartX = e.changedTouches[0].clientX;
-            touchStartY = e.changedTouches[0].clientY;
-            lastSwitchX = touchStartX;
-            isHSwipe = false;
-          }, { passive: true });
-
-          wrapper.addEventListener('touchmove', function (e) {
-            var cx = e.changedTouches[0].clientX;
-            var cy = e.changedTouches[0].clientY;
-            var dx = Math.abs(cx - touchStartX);
-            var dy = Math.abs(cy - touchStartY);
-            if (!isHSwipe && (dx > 10 || dy > 10)) isHSwipe = dx > dy;
-            if (isHSwipe) {
-              e.preventDefault();
-              var drag = cx - lastSwitchX;
-              if (Math.abs(drag) >= 30) {
-                setActiveCard(drag > 0
-                  ? (currentIndex > 0 ? currentIndex - 1 : cards.length - 1)
-                  : (currentIndex + 1) % cards.length);
-                lastSwitchX = cx;
-              }
-            }
-          }, { passive: false });
-
-          // Suppress the click that a horizontal swipe synthesizes on
-          // touchend, so a swipe-to-advance doesn't accidentally toggle
-          // "Chosen" on the card that happens to be under the finger.
-          wrapper.addEventListener('click', function (e) {
-            if (isHSwipe) {
-              e.stopPropagation();
-              e.preventDefault();
-              isHSwipe = false;
-            }
-          }, true);
-        } else {
-          cards.forEach(function (card, index) {
-            card.addEventListener('mouseenter', function () {
-              setActiveCard(index);
-            });
-          });
-
-          // When the cursor leaves the stack, snap back to whatever the
-          // user chose. Hovering is just browsing; a choice outranks it.
-          // If nothing is chosen yet, we stay on the last hover — no
-          // default to fall back to, so the most recent intent wins.
-          wrapper.addEventListener('mouseleave', function () {
-            var chosenBtn = wrapper.querySelector('.deck-card__select.is-chosen');
-            if (!chosenBtn) return;
-            var chosenCard = chosenBtn.closest('.deck-card');
-            var idx = Array.prototype.indexOf.call(cards, chosenCard);
-            if (idx !== -1 && idx !== currentIndex) setActiveCard(idx);
-          });
-        }
-
-        // Per-card click handlers. A wrapper-level listener would have
-        // to resolve e.target against a closest('.deck-card'), which is
-        // correct only when the tap hit a card descendant; a stray tap
-        // on a sibling inside the wrapper would never resolve to the
-        // active card, and the user sees nothing change.
-        cards.forEach(function (card, index) {
-          card.addEventListener('click', function () {
-            if (!card.classList.contains('active')) {
-              setActiveCard(index);
-              return;
-            }
-            setChosen(card);
-          });
-        });
-      });
-    })();
-  </script>
+  <!-- Behavioural kit extracted to js/kit.js in 0.7.0. The manifesto
+       page opts into the full comment selection flow (drafts from
+       selections, kebab actions, highlight-active observer). Consumers
+       that ship their own selection handler load kit.js without calling
+       enableCommentSelectionFlow — see prototype-alpha/index.html. -->
+  <script src="./js/kit.js"></script>
+  <script>KK.enableCommentSelectionFlow();</script>
 
   <!-- FABs — floating action buttons for narrow views (tablet + phone).
        Sit outside .app to escape overflow:hidden. data-view-target wires

@@ -74,3 +74,55 @@ Commissioner. Variable font, SIL OFL 1.1. Three kit weights (regular 500, medium
 ## Foundations — motion
 
 Four easings, four durations. `--ease-out` for hover/focus, `--ease-swing` for elegant long reveals, `--ease-spring` for confirmation, `--ease-in-out` everywhere else. Reduced-motion collapses all durations to near-zero.
+
+## Runtime
+
+The kit's behavioural JS ships in `js/kit.js`. One file. Plain script, no build step, no framework. Auto-inits on `DOMContentLoaded`. Six modules auto-wire: scroll-spy, narrow-view toggle, column reveal, inspector card stack, comment kebab menus, 3D deck. A seventh — the selection-to-draft comment flow — is opt-in via `KK.enableCommentSelectionFlow()` because pages with their own localized selection handler would collide with the kit's English default.
+
+Public surface on `window.KK`: `KK.init()`, `KK.refresh()`, `KK.enableCommentSelectionFlow()`. Everything else is private. Consumers that need a deeper API wait for the next release — forcing the minimal surface keeps upgrade paths clean.
+
+`KK.refresh()` re-scans the DOM after the consumer injects new elements (SPA-style swaps, lazy-loaded sections, route-driven content). Each module skips work already done and picks up new iterable elements — new decks, new doc sections, new inspector cards. Global listeners bind once; subsequent calls are near-free. Safe to over-call.
+
+Text strings that kit.js injects into the DOM are overridable via `KK.config.i18n`, set before the script loads:
+
+```html
+<script>
+  window.KK = { config: { i18n: {
+    addComment: 'Ваш комментарий',
+    reply: 'Ответить…',
+    deckChoose: 'Выбрать',
+    deckChosen: 'Выбрано'
+  } } };
+</script>
+<script src="../js/kit.js"></script>
+```
+
+Four strings today: the draft input placeholder, the reply input placeholder, the deck's reset and chosen labels. Defaults are English. The consumer's HTML for deck buttons should match `deckChoose` so the reset path stays consistent.
+
+Every consumer loads the same `kit.js` as the manifesto page. Fragments are not copied. Forking the behaviour is a maintainer change; copy-paste is not.
+
+## Pipeline
+
+Work moves through ten stages across three phases. Think (stages 1-3) produces approved intent. Hand-off (stages 4-7) produces three competing design packages and one human pick. Build (stages 8-10) produces a shipping prototype. A meta-retro runs on demand.
+
+Nine role skills own the stages. Two existing review skills (`kk-ds-supervisor`, `kk-ds-frontend`) run as the consistency reviewer and frontend reviewer at stage 10.
+
+Pipeline entry matches scope. A typo enters at stage 9. A kit refactor enters at stage 1 plus stage 8. A new page walks all ten. Nothing forces the full walk on work that does not need it.
+
+Full stage list, gates, inputs, outputs, and canon-load per role live in `pipeline.md`.
+
+## Documentation contract
+
+Every stage writes its own file to `documentation/<session>/NN-<role>.md` as its final step. Each file carries frontmatter (`session`, `stage`, `role`, `input`, `output`, `gate`), preserves the raw user input verbatim where the stage received one, names the agent's output, and closes with the gate result.
+
+Raw input is not summarized. Artifacts are linked by pointer, not copied. Rejected options stay in the session folder — a retro often learns more from the rejected branch than the shipped one.
+
+Full contract, template, and README structure in `doc-format.md`.
+
+## Revolutionary protocol
+
+The revolutionary designer may break a manifesto rule only with a matching diff. Each broken rule ships as an entry in `manifest-diff.md` naming: the rule, the source file and section, the proposed replacement text, the reason tied to the job, the blast radius, and the rollback path.
+
+Two human paths at stage 7. Reject the diff — the revolutionary hand-off falls back to the UX-driven variant and the build proceeds without the change. Accept the diff — `kk-ds-maintainer` runs before stage 8, updates the canon file, bumps the kit version, and then the build proceeds.
+
+Accessibility floors (44×44 touch targets, semantic HTML, contrast) are not subject to the protocol. The revolutionary cannot trade those away.

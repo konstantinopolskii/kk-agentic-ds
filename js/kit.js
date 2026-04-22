@@ -1,0 +1,1083 @@
+/* kit.js — behavioural layer for the KK Agentic Design System kit.
+ *
+ * Extracted from the inline <script> at the bottom of index.html in 0.7.0.
+ * Plain script, no build step, no framework. Auto-inits on DOMContentLoaded.
+ *
+ * Public API on window.KK:
+ *   KK.init()                       — idempotent, called by auto-init.
+ *   KK.refresh()                    — re-scan the DOM. Each module skips
+ *                                     elements it has already bound and
+ *                                     binds new ones. Call this after
+ *                                     injecting new decks, new doc
+ *                                     sections, or new inspector cards
+ *                                     into the page (SPA-style swaps).
+ *                                     Global handlers are bound once;
+ *                                     subsequent calls only pick up new
+ *                                     iterable elements.
+ *   KK.enableCommentSelectionFlow() — opt-in. Wires selection-to-draft +
+ *                                     highlight-active observer + kebab
+ *                                     actions + add-comment FAB + click-
+ *                                     highlight-promote-thread. Required
+ *                                     for pages that demo the full comment
+ *                                     loop (the manifesto). Prototypes
+ *                                     that own their own selection handler
+ *                                     should NOT call this — it would
+ *                                     create duplicate drafts.
+ *
+ * Config on window.KK.config.i18n (0.8.0):
+ *   Consumers set their own strings BEFORE this script loads. Example:
+ *     <script>
+ *       window.KK = { config: { i18n: {
+ *         addComment: 'Ваш комментарий',
+ *         reply: 'Ответить…',
+ *         deckChoose: 'Выбрать',
+ *         deckChosen: 'Выбрано'
+ *       } } };
+ *     </script>
+ *     <script src="../js/kit.js"></script>
+ *   Defaults ship in English so a consumer that sets nothing still works.
+ *
+ * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
+ * inspector card stack, comment kebab menus, 3D card stack deck.
+ */
+(function (global) {
+  'use strict';
+
+  // Preserve any KK object the consumer set before we loaded. Their
+  // config wins; our defaults fill the gaps. Same pattern as every
+  // config-merge kit that ships a default dictionary.
+  var existing = global.KK || {};
+  var KK = { version: '0.9.0', initialized: false };
+  Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
+  KK.config = KK.config || {};
+  KK.config.i18n = Object.assign({
+    addComment: 'Add a comment',
+    reply: 'Reply…',
+    deckChoose: 'Choose',
+    deckChosen: 'Chosen'
+  }, KK.config.i18n || {});
+
+  // Minimal HTML-attribute escape. Used when injecting user-provided
+  // i18n strings into innerHTML attribute contexts. textContent paths
+  // do not need this.
+  function attrEscape(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;');
+  }
+
+  // Module-level sentinels. Each auto-init module sets its flag the
+  // first time it binds global handlers. Subsequent calls (via
+  // KK.refresh) skip re-binding but still pick up new iterable
+  // elements (new sections for scroll-spy, new decks for the deck
+  // module, new cards for the inspector stack via delegation).
+  var bound = {
+    scrollSpy: false,
+    narrowView: false,
+    columnReveal: false,
+    inspectorStack: false,
+    commentMenus: false
+  };
+  var scrollSpyObserver = null;
+
+  // ================================================================
+  // Scroll-spy — sidebar indicator tracks the visible section in .doc
+  //
+  // Refresh-friendly: on re-entry, observes any new .doc__section
+  // since the last init. IntersectionObserver.observe is idempotent
+  // for already-observed elements. Nav links and sections are queried
+  // live on each callback so SPA-style content swaps (new sections,
+  // new nav links) are picked up without teardown.
+  // ================================================================
+  function initScrollSpy() {
+    var nav = document.getElementById('toc');
+    var doc = document.getElementById('doc');
+    if (!nav || !doc || !('IntersectionObserver' in global)) return;
+
+    // Refresh path — observer already exists, just observe new sections.
+    if (bound.scrollSpy) {
+      doc.querySelectorAll('.doc__section').forEach(function (s) {
+        scrollSpyObserver.observe(s);
+      });
+      return;
+    }
+
+    var indicator = nav.querySelector('.toc__indicator');
+    var firstSections = doc.querySelectorAll('.doc__section');
+    var firstId = firstSections[0] && firstSections[0].id;
+
+    function setActive(id) {
+      var activeLi = null;
+      // Live query so SPA-added nav links pick up state.
+      nav.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        var key = a.getAttribute('href').slice(1);
+        var li = a.parentElement;
+        var on = key === id;
+        li.classList.toggle('is-active', on);
+        if (on) activeLi = li;
+      });
+      nav.querySelectorAll('.nav-group').forEach(function (group) {
+        group.classList.toggle('is-active', activeLi && group.contains(activeLi));
+      });
+      moveIndicator(activeLi);
+      scrollActiveIntoView(activeLi);
+    }
+
+    // Keep the active nav group inside the sidebar's viewport as the
+    // reader scrolls the doc. Scroll by whole .nav-group, not by
+    // individual <li>: line-by-line scrolling jitters; group-at-a-time
+    // gives larger, readable jumps.
+    function scrollActiveIntoView(activeLi) {
+      if (!activeLi) return;
+      var sidebar = activeLi.closest('.sidebar');
+      if (!sidebar || getComputedStyle(sidebar).display === 'none') return;
+      var group = activeLi.closest('.nav-group') || activeLi;
+      var sRect = sidebar.getBoundingClientRect();
+      var gRect = group.getBoundingClientRect();
+      if (gRect.top >= sRect.top && gRect.bottom <= sRect.bottom) return;
+      var delta;
+      if (gRect.top < sRect.top || gRect.height > sRect.height) {
+        delta = gRect.top - sRect.top;
+      } else {
+        delta = gRect.bottom - sRect.bottom;
+      }
+      sidebar.scrollTo({ top: sidebar.scrollTop + delta, behavior: 'smooth' });
+    }
+
+    function moveIndicator(activeLi) {
+      if (!indicator) return;
+      if (!activeLi) {
+        indicator.classList.remove('is-positioned');
+        return;
+      }
+      var navRect = nav.getBoundingClientRect();
+      var liRect = activeLi.getBoundingClientRect();
+      var top = liRect.top - navRect.top;
+      indicator.style.transform = 'translate3d(0,' + top + 'px,0)';
+      indicator.style.height = liRect.height + 'px';
+      if (!indicator.classList.contains('is-positioned')) {
+        indicator.classList.add('is-positioned');
+        // One frame later, turn on sliding transitions so the first
+        // placement doesn't animate in from the origin.
+        requestAnimationFrame(function () {
+          indicator.classList.add('is-tracking');
+        });
+      }
+    }
+
+    var visible = new Set();
+    // When the reader clicks a nav item we pin the indicator to that
+    // target immediately and suppress scroll-spy until scrollend OR the
+    // reader interrupts with wheel/touchstart. Prevents the indicator
+    // chasing every section the smooth-scroll passes through.
+    var scrollLocked = false;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) visible.add(entry.target.id);
+        else visible.delete(entry.target.id);
+      });
+      if (scrollLocked) return;
+      // Live query so SPA-added sections participate in best-visible.
+      var liveSections = doc.querySelectorAll('.doc__section');
+      var best = null;
+      for (var i = 0; i < liveSections.length; i++) {
+        if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
+      }
+      setActive(best || (liveSections[0] && liveSections[0].id));
+    }, { root: doc, rootMargin: '0px 0px -60% 0px', threshold: 0 });
+
+    firstSections.forEach(function (s) { observer.observe(s); });
+    setActive(firstId);
+    scrollSpyObserver = observer;
+
+    global.addEventListener('resize', function () {
+      var active = nav.querySelector('.nav-group__items li.is-active');
+      if (active) moveIndicator(active);
+    });
+
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+
+      setActive(id);
+      history.replaceState(null, '', '#' + id);
+
+      scrollLocked = true;
+      var release = function () {
+        clearTimeout(timeoutId);
+        scrollLocked = false;
+        doc.removeEventListener('scrollend', release);
+        doc.removeEventListener('wheel', release);
+        doc.removeEventListener('touchstart', release);
+        var liveSections = doc.querySelectorAll('.doc__section');
+        var best = null;
+        for (var i = 0; i < liveSections.length; i++) {
+          if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
+        }
+        setActive(best || (liveSections[0] && liveSections[0].id));
+      };
+      doc.addEventListener('scrollend', release, { once: true });
+      doc.addEventListener('wheel', release, { once: true, passive: true });
+      doc.addEventListener('touchstart', release, { once: true, passive: true });
+      var timeoutId = setTimeout(release, 1500);
+
+      var top = Math.max(0, target.offsetTop - 20);
+      doc.scrollTo({ top: top, behavior: 'smooth' });
+    });
+
+    bound.scrollSpy = true;
+  }
+
+  // ================================================================
+  // Narrow view — [data-view] toggle on .app
+  // "doc" (default), "nav", or "inspector". CSS hides other columns
+  // on phone and swaps sidebar for inspector on tablet. Desktop
+  // ignores. Buttons with [data-view-target] set the view.
+  // ================================================================
+  function initNarrowView() {
+    if (bound.narrowView) return;
+    var app = document.querySelector('.app');
+    if (!app) return;
+
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('[data-view-target]');
+      if (!el) return;
+      var target = el.getAttribute('data-view-target');
+      // Tapping the active target returns to doc. Back buttons that
+      // target doc explicitly do not toggle.
+      var next = (app.getAttribute('data-view') === target && target !== 'doc')
+        ? 'doc'
+        : target;
+      app.setAttribute('data-view', next);
+    });
+
+    var toc = document.getElementById('toc');
+    if (toc) {
+      toc.addEventListener('click', function (e) {
+        if (e.target.closest('a[href^="#"]')) app.setAttribute('data-view', 'doc');
+      });
+    }
+
+    bound.narrowView = true;
+  }
+
+  // ================================================================
+  // Column reveal orchestrator — staggered fade + scale + slide
+  // whenever a column becomes visible. Columns cascade on initial
+  // paint; individual columns re-reveal when a data-view swap
+  // toggles their visibility.
+  // ================================================================
+  function initColumnReveal() {
+    if (bound.columnReveal) return;
+    var app = document.querySelector('.app');
+    if (!app) return;
+
+    var COLUMNS = [
+      { selector: '.doc',       keyframe: 'reveal-from-below' },
+      { selector: '.sidebar',   keyframe: 'reveal-from-left'  },
+      { selector: '.inspector', keyframe: 'reveal-from-right' }
+    ];
+
+    var STAGGER_STEP_MS = 48;
+    var STAGGER_CAP = 12;
+    var COLUMN_OFFSET_MS = 160;
+
+    function revealColumn(col, baseDelay) {
+      var column = document.querySelector(col.selector);
+      if (!column) return;
+      if (getComputedStyle(column).display === 'none') return;
+
+      var children = column.children;
+      for (var i = 0; i < children.length; i++) {
+        var el = children[i];
+        var delay = baseDelay + Math.min(i, STAGGER_CAP) * STAGGER_STEP_MS;
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation =
+          col.keyframe + ' var(--dur-long) var(--ease-swing) ' + delay + 'ms both';
+      }
+    }
+
+    function isVisible(selector) {
+      var el = document.querySelector(selector);
+      return !!(el && getComputedStyle(el).display !== 'none');
+    }
+
+    // Track prior visibility so we only animate on hidden → visible
+    // transitions. Keeps the doc from re-flashing on tablet nav toggle.
+    var wasVisible = {};
+    COLUMNS.forEach(function (col) {
+      wasVisible[col.selector] = isVisible(col.selector);
+    });
+
+    new MutationObserver(function () {
+      COLUMNS.forEach(function (col) {
+        var now = isVisible(col.selector);
+        if (now && !wasVisible[col.selector]) {
+          revealColumn(col, 0);
+        }
+        wasVisible[col.selector] = now;
+      });
+    }).observe(app, {
+      attributes: true,
+      attributeFilter: ['data-view']
+    });
+
+    var cascadeIndex = 0;
+    COLUMNS.forEach(function (col) {
+      if (!isVisible(col.selector)) return;
+      revealColumn(col, cascadeIndex * COLUMN_OFFSET_MS);
+      cascadeIndex++;
+    });
+
+    bound.columnReveal = true;
+  }
+
+  // ================================================================
+  // Inspector card stack — one active per group, exclusive
+  // ================================================================
+  function initInspectorStack() {
+    if (bound.inspectorStack) return;
+    var inspector = document.querySelector('.inspector');
+    if (!inspector) return;
+
+    // JS-driven tween of inspector.scrollTop. CSS scroll-behavior:smooth
+    // fights the collapsible's height animation on the same element
+    // tree. rAF keeps the glide at display rate.
+    var scrollAnimId = 0;
+    function glideInspectorScroll(target, duration) {
+      var startTop = inspector.scrollTop;
+      var distance = target - startTop;
+      if (Math.abs(distance) < 1) return;
+      var startTime = performance.now();
+      var myId = ++scrollAnimId;
+      function step(now) {
+        if (myId !== scrollAnimId) return;
+        var elapsed = now - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        inspector.scrollTop = startTop + distance * eased;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function collapseAllActive() {
+      inspector.querySelectorAll('.card--interactive[data-state="active"]').forEach(function (c) {
+        var collapsible = c.querySelector('.card__collapsible');
+        if (collapsible) collapsible.style.transition = 'none';
+        c.removeAttribute('data-state');
+        if (collapsible) {
+          collapsible.offsetHeight; // force layout commit
+          collapsible.style.transition = '';
+        }
+      });
+    }
+
+    function promoteCard(card) {
+      if (card.getAttribute('data-state') !== 'active') {
+        collapseAllActive();
+        card.setAttribute('data-state', 'active');
+
+        // Blur any input that accidentally caught focus when the
+        // minimized-label button was hidden by the CTA-swap rule.
+        requestAnimationFrame(function () {
+          var focused = document.activeElement;
+          if (focused && card.contains(focused) &&
+              focused.matches('input, textarea')) {
+            focused.blur();
+          }
+        });
+      }
+
+      // Defer the scroll measurement one frame so any MutationObserver
+      // that dismisses an empty draft has flushed before we read
+      // cardRect.top.
+      requestAnimationFrame(function () {
+        if (!card.isConnected) return;
+        var inspectorRect = inspector.getBoundingClientRect();
+        var cardRect = card.getBoundingClientRect();
+        var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
+        glideInspectorScroll(Math.max(0, target), 320);
+      });
+    }
+
+    function handleTrigger(e) {
+      // Kebab menu + popover are isolated surfaces — they open/close
+      // without promoting or demoting any card in the stack.
+      if (e.target.closest('.comment__menu, .comment__menu-popover')) return;
+
+      var card = e.target.closest('.card');
+      // Empty space inside the inspector deactivates whatever is
+      // promoted. focusin never lands outside a card in practice.
+      if (!card) {
+        if (e.type === 'click') collapseAllActive();
+        return;
+      }
+      if (card.classList.contains('card--heading')) return;
+
+      if (card.classList.contains('card--interactive')) {
+        promoteCard(card);
+      } else {
+        // Static card touched — demote active, glide the tapped card
+        // to the top.
+        collapseAllActive();
+        var inspectorRect = inspector.getBoundingClientRect();
+        var cardRect = card.getBoundingClientRect();
+        var target = inspector.scrollTop + (cardRect.top - inspectorRect.top);
+        glideInspectorScroll(Math.max(0, target), 320);
+      }
+    }
+
+    inspector.addEventListener('click', handleTrigger);
+    inspector.addEventListener('focusin', handleTrigger);
+
+    bound.inspectorStack = true;
+  }
+
+  // ================================================================
+  // Comment menus — kebab opens a popover, click outside closes
+  // ================================================================
+  function initCommentMenus() {
+    if (bound.commentMenus) return;
+
+    function closeAllMenus(except) {
+      document.querySelectorAll('.comment__menu[aria-expanded="true"]').forEach(function (btn) {
+        if (btn === except) return;
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.comment__menu');
+      if (btn) {
+        var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+        closeAllMenus(btn);
+        btn.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
+        e.stopPropagation();
+        return;
+      }
+      if (e.target.closest('.comment__menu-popover')) {
+        closeAllMenus();
+        return;
+      }
+      closeAllMenus();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAllMenus();
+    });
+
+    bound.commentMenus = true;
+  }
+
+  // ================================================================
+  // Deck — hover on desktop, horizontal drag on mobile
+  // Adapted from the coin hero-reviews interaction.
+  //
+  // "Choose" / "Chosen" labels honour KK.config.i18n.deckChoose /
+  // deckChosen. Consumer HTML should write the initial label to match
+  // KK.config.i18n.deckChoose so the reset path stays consistent.
+  // ================================================================
+  function initDeck() {
+    var stacks = document.querySelectorAll('.deck');
+    var isMobileStack = global.matchMedia('(max-width: 1024px)').matches;
+
+    stacks.forEach(function (wrapper) {
+      if (wrapper.getAttribute('data-kk-deck-bound') === 'true') return;
+      var cards = wrapper.querySelectorAll('.deck-card');
+      if (cards.length === 0) return;
+
+      var currentIndex = 0;
+
+      function setActiveCard(index) {
+        cards.forEach(function (c) { c.classList.remove('active'); });
+        cards[index].classList.add('active');
+        currentIndex = index;
+      }
+
+      function setChosen(card) {
+        wrapper.querySelectorAll('.deck-card__select.is-chosen').forEach(function (other) {
+          if (other.closest('.deck-card') === card) return;
+          other.classList.remove('is-chosen');
+          other.textContent = KK.config.i18n.deckChoose;
+        });
+        var btn = card.querySelector('.deck-card__select');
+        if (!btn) return;
+        if (btn.classList.contains('is-chosen')) {
+          btn.classList.remove('is-chosen');
+          btn.textContent = KK.config.i18n.deckChoose;
+        } else {
+          btn.classList.add('is-chosen');
+          btn.innerHTML =
+            '<span class="deck-card__check" aria-hidden="true"></span>' + attrEscape(KK.config.i18n.deckChosen);
+        }
+      }
+
+      setActiveCard(0);
+
+      if (isMobileStack) {
+        // Touch handlers live on the wrapper, not on an overlay — an
+        // overlay would swallow every tap and route the synthesized
+        // click to a non-card target.
+        wrapper.style.touchAction = 'pan-y';
+
+        var touchStartX = 0, touchStartY = 0, lastSwitchX = 0, isHSwipe = false;
+
+        wrapper.addEventListener('touchstart', function (e) {
+          touchStartX = e.changedTouches[0].clientX;
+          touchStartY = e.changedTouches[0].clientY;
+          lastSwitchX = touchStartX;
+          isHSwipe = false;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchmove', function (e) {
+          var cx = e.changedTouches[0].clientX;
+          var cy = e.changedTouches[0].clientY;
+          var dx = Math.abs(cx - touchStartX);
+          var dy = Math.abs(cy - touchStartY);
+          if (!isHSwipe && (dx > 10 || dy > 10)) isHSwipe = dx > dy;
+          if (isHSwipe) {
+            e.preventDefault();
+            var drag = cx - lastSwitchX;
+            if (Math.abs(drag) >= 30) {
+              setActiveCard(drag > 0
+                ? (currentIndex > 0 ? currentIndex - 1 : cards.length - 1)
+                : (currentIndex + 1) % cards.length);
+              lastSwitchX = cx;
+            }
+          }
+        }, { passive: false });
+
+        // Suppress the click that a horizontal swipe synthesizes on
+        // touchend, so a swipe-to-advance doesn't accidentally toggle
+        // "Chosen" on the card under the finger.
+        wrapper.addEventListener('click', function (e) {
+          if (isHSwipe) {
+            e.stopPropagation();
+            e.preventDefault();
+            isHSwipe = false;
+          }
+        }, true);
+      } else {
+        cards.forEach(function (card, index) {
+          card.addEventListener('mouseenter', function () {
+            setActiveCard(index);
+          });
+        });
+
+        // When the cursor leaves the stack, snap back to the chosen
+        // card. Hovering is browsing; a choice outranks it.
+        wrapper.addEventListener('mouseleave', function () {
+          var chosenBtn = wrapper.querySelector('.deck-card__select.is-chosen');
+          if (!chosenBtn) return;
+          var chosenCard = chosenBtn.closest('.deck-card');
+          var idx = Array.prototype.indexOf.call(cards, chosenCard);
+          if (idx !== -1 && idx !== currentIndex) setActiveCard(idx);
+        });
+      }
+
+      // Per-card click. A wrapper-level listener would resolve against
+      // closest('.deck-card'), which fails when a sibling inside the
+      // wrapper catches the tap.
+      cards.forEach(function (card, index) {
+        card.addEventListener('click', function () {
+          if (!card.classList.contains('active')) {
+            setActiveCard(index);
+            return;
+          }
+          setChosen(card);
+        });
+      });
+
+      wrapper.setAttribute('data-kk-deck-bound', 'true');
+    });
+  }
+
+  // ================================================================
+  // Comment selection flow — OPT-IN via KK.enableCommentSelectionFlow()
+  //
+  // Covers: selection-to-draft, draft → thread commit, highlight-active
+  // MutationObserver, kebab Reply/Delete, add-comment FAB, click-
+  // highlight-promote-thread.
+  //
+  // Opt-in because prototypes with their own localized selection
+  // handlers (prototype-alpha) would conflict with the kit's English
+  // draft builder. The manifesto page calls enableCommentSelectionFlow
+  // to preserve its live demo.
+  //
+  // Note for 0.8.0: "Add a comment" and "Reply…" placeholders are
+  // hardcoded English. Same i18n story as the deck labels.
+  // ================================================================
+  var commentFlowEnabled = false;
+  function initCommentSelectionFlow() {
+    if (commentFlowEnabled) return;
+
+    var doc = document.getElementById('doc');
+    var inspector = document.querySelector('.inspector');
+    if (!doc || !inspector) return;
+
+    var commentStack = inspector.querySelector('.comment-stack');
+    if (!commentStack) return;
+
+    commentFlowEnabled = true;
+
+    var currentAuthor = 'Konstantin Konstantinopolskii';
+
+    function nodeInDoc(node) {
+      while (node && node !== document) {
+        if (node === doc) return true;
+        node = node.parentNode;
+      }
+      return false;
+    }
+
+    // Highlight a selection as one span per text node — never one
+    // wrapper around the whole range. surroundContents would promote
+    // the span up to the common ancestor when the selection crosses
+    // block elements, painting across padding and gaps.
+    function wrapRangeAsHighlight(range) {
+      var spans = [];
+      var startContainer = range.startContainer;
+      var startOffset    = range.startOffset;
+      var endContainer   = range.endContainer;
+      var endOffset      = range.endOffset;
+      var root           = range.commonAncestorContainer;
+
+      var textNodes = [];
+      if (root.nodeType === Node.TEXT_NODE) {
+        textNodes.push(root);
+      } else {
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+        var n;
+        while ((n = walker.nextNode())) {
+          if (range.intersectsNode(n)) textNodes.push(n);
+        }
+      }
+
+      textNodes.forEach(function (tn) {
+        var so = (tn === startContainer) ? startOffset : 0;
+        var eo = (tn === endContainer)   ? endOffset   : tn.data.length;
+        if (so >= eo) return;
+        var mid = tn.data.slice(so, eo);
+        // Skip pure-whitespace slices — they would produce invisible
+        // spans from formatting whitespace between block elements.
+        if (!mid.trim()) return;
+        var before = tn.data.slice(0, so);
+        var after  = tn.data.slice(eo);
+
+        var span = document.createElement('span');
+        span.className = 'highlight';
+        span.appendChild(document.createTextNode(mid));
+
+        var parent = tn.parentNode;
+        if (before) parent.insertBefore(document.createTextNode(before), tn);
+        parent.insertBefore(span, tn);
+        if (after) parent.insertBefore(document.createTextNode(after), tn);
+        parent.removeChild(tn);
+        spans.push(span);
+      });
+
+      return spans;
+    }
+
+    function unwrapHighlight(spans) {
+      if (!spans) return;
+      if (!Array.isArray(spans)) spans = [spans];
+      spans.forEach(function (span) {
+        if (!span || !span.parentNode) return;
+        var parent = span.parentNode;
+        while (span.firstChild) parent.insertBefore(span.firstChild, span);
+        parent.removeChild(span);
+        parent.normalize();
+      });
+    }
+
+    function setAppSelection(on) {
+      var app = document.querySelector('.app');
+      if (!app) return;
+      if (on) app.setAttribute('data-selection', 'true');
+      else app.removeAttribute('data-selection');
+    }
+
+    function buildDraft(author, threadId) {
+      var d = document.createElement('div');
+      d.className = 'card card--interactive comment-new';
+      d.dataset.threadId = threadId;
+      d.innerHTML =
+        '<div class="comment-new__header">' +
+          '<div class="t-subtitle"></div>' +
+          '<p class="t-caption comment-new__preview"></p>' +
+        '</div>' +
+        '<div class="card__collapsible">' +
+          '<div class="card__collapsible-inner">' +
+            '<label class="field comment-new__field">' +
+              '<input class="t-caption field__input" type="text" placeholder="' + attrEscape(KK.config.i18n.addComment) + '" />' +
+              '<span class="field__fake-caret" aria-hidden="true"></span>' +
+            '</label>' +
+          '</div>' +
+        '</div>';
+      d.querySelector('.t-subtitle').textContent = author;
+      return d;
+    }
+
+    function removeDraftAndUnwrapMarks(draft) {
+      if (!draft) return;
+      var tid = draft.dataset.threadId;
+      if (tid) {
+        doc.querySelectorAll('.highlight[data-comment-id="' + tid + '"]').forEach(function (span) {
+          unwrapHighlight([span]);
+        });
+      }
+      draft.remove();
+      if (!inspector.querySelector('.card.comment-new')) setAppSelection(false);
+    }
+
+    function commitDraft(draft) {
+      var inp = draft.querySelector('.comment-new__field .field__input');
+      if (!inp) return;
+      var text = inp.value.trim();
+      if (!text) return;
+      var tid = draft.dataset.threadId;
+      var thread = buildThread(currentAuthor, text, tid);
+      draft.replaceWith(thread);
+      // Promote via synthetic click — the stack JS flips data-state,
+      // runs the blur dance, scrolls. The observer sees the new
+      // data-state="active" and flips matching highlights to --active.
+      requestAnimationFrame(function () { thread.click(); });
+      if (!inspector.querySelector('.card.comment-new')) setAppSelection(false);
+    }
+
+    function buildMessage(author, body) {
+      var msg = document.createElement('div');
+      msg.className = 'comment-msg';
+      msg.innerHTML =
+        '<div class="comment-msg__header">' +
+          '<div class="t-subtitle"></div>' +
+          '<button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>' +
+        '</div>' +
+        '<p class="t-caption"></p>' +
+        '<div class="comment__menu-popover" role="menu">' +
+          '<button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>' +
+          '<button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>' +
+        '</div>';
+      msg.querySelector('.t-subtitle').textContent = author;
+      msg.querySelector('.t-caption').textContent = body;
+      return msg;
+    }
+
+    // Re-render preview from the full list. 1 msg → that one;
+    // 2 msgs → both, no ellipsis; 3+ → first + 3-dot ellipsis + last.
+    function renderPreview(thread) {
+      var list = thread.querySelector('.comment-thread__list');
+      var preview = thread.querySelector('.comment-thread__preview');
+      if (!list || !preview) return;
+      var msgs = list.querySelectorAll(':scope > .comment-msg');
+      preview.innerHTML = '';
+      if (msgs.length === 0) return;
+      preview.appendChild(msgs[0].cloneNode(true));
+      if (msgs.length > 2) {
+        var dots = document.createElement('div');
+        dots.className = 'comment-thread__ellipsis';
+        dots.setAttribute('aria-hidden', 'true');
+        dots.innerHTML = '<span></span><span></span><span></span>';
+        preview.appendChild(dots);
+      }
+      if (msgs.length > 1) {
+        preview.appendChild(msgs[msgs.length - 1].cloneNode(true));
+      }
+    }
+
+    function buildThread(author, body, threadId) {
+      var thread = document.createElement('div');
+      thread.className = 'card card--interactive comment-thread';
+      if (threadId) thread.dataset.threadId = threadId;
+      thread.innerHTML =
+        '<div class="comment-thread__preview"></div>' +
+        '<div class="card__collapsible">' +
+          '<div class="card__collapsible-inner">' +
+            '<div class="comment-thread__list"></div>' +
+            '<label class="field comment-thread__reply">' +
+              '<input class="t-caption field__input" type="text" placeholder="' + attrEscape(KK.config.i18n.reply) + '" />' +
+              '<span class="field__fake-caret" aria-hidden="true"></span>' +
+            '</label>' +
+          '</div>' +
+        '</div>';
+      thread.querySelector('.comment-thread__list').appendChild(buildMessage(author, body));
+      renderPreview(thread);
+      return thread;
+    }
+
+    function maybeOpenFromSelection() {
+      var sel = global.getSelection();
+      if (!sel || sel.isCollapsed) return;
+      if (!nodeInDoc(sel.anchorNode) || !nodeInDoc(sel.focusNode)) return;
+      var range = sel.getRangeAt(0).cloneRange();
+      var spans = wrapRangeAsHighlight(range);
+      if (!spans.length) return;
+
+      // Re-anchor the native selection onto the freshly-wrapped spans
+      // so ⌘/Ctrl+C still copies.
+      var first = spans[0].firstChild;
+      var last  = spans[spans.length - 1].firstChild;
+      if (first && last) {
+        var restored = document.createRange();
+        restored.setStart(first, 0);
+        restored.setEnd(last, last.data.length);
+        sel.removeAllRanges();
+        sel.addRange(restored);
+      }
+
+      var threadId = 'c' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+      spans.forEach(function (span) {
+        span.setAttribute('data-comment-id', threadId);
+      });
+
+      var draft = buildDraft(currentAuthor, threadId);
+      commentStack.insertBefore(draft, commentStack.firstChild);
+      setAppSelection(true);
+
+      requestAnimationFrame(function () { draft.click(); });
+    }
+    doc.addEventListener('mouseup', maybeOpenFromSelection);
+    doc.addEventListener('keyup', function (e) {
+      if (e.shiftKey && (e.key.indexOf('Arrow') === 0 || e.key === 'Home' || e.key === 'End')) {
+        maybeOpenFromSelection();
+      }
+    });
+
+    commentStack.addEventListener('click', function (e) {
+      var trigger = e.target.closest('[data-action="commit"]');
+      if (!trigger) return;
+      var draft = trigger.closest('.card.comment-new');
+      if (!draft) return;
+      e.stopPropagation();
+      commitDraft(draft);
+    });
+
+    commentStack.addEventListener('keydown', function (e) {
+      var draftInput = e.target.closest('.card.comment-new .comment-new__field .field__input');
+      if (draftInput) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          commitDraft(draftInput.closest('.card.comment-new'));
+          return;
+        }
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          removeDraftAndUnwrapMarks(draftInput.closest('.card.comment-new'));
+          return;
+        }
+      }
+      var replyInput = e.target.closest('.comment-thread__reply .field__input');
+      if (replyInput && e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        var body = replyInput.value.trim();
+        if (!body) return;
+        var thread = replyInput.closest('.comment-thread');
+        var list = thread.querySelector('.comment-thread__list');
+        list.appendChild(buildMessage(currentAuthor, body));
+        replyInput.value = '';
+        renderPreview(thread);
+      }
+    });
+
+    commentStack.addEventListener('input', function (e) {
+      var di = e.target.closest('.card.comment-new .comment-new__field .field__input');
+      if (!di) return;
+      var draft = di.closest('.card.comment-new');
+      var preview = draft && draft.querySelector('.comment-new__preview');
+      if (preview) preview.textContent = di.value;
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var activeDraft = inspector.querySelector('.card.comment-new[data-state="active"]');
+      if (!activeDraft) return;
+      if (activeDraft.contains(document.activeElement)) return;
+      e.preventDefault();
+      removeDraftAndUnwrapMarks(activeDraft);
+    });
+
+    // Type-anywhere-to-focus the active comment card's input.
+    document.addEventListener('keydown', function (e) {
+      if (e.key.length !== 1) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      var activeCard = inspector.querySelector('.comment-stack .card--interactive[data-state="active"]');
+      if (!activeCard) return;
+      var inp = activeCard.querySelector('.comment-new__field .field__input, .comment-thread__reply .field__input');
+      if (!inp || document.activeElement === inp) return;
+      var ae = document.activeElement;
+      if (ae && ae.tagName) {
+        var t = ae.tagName;
+        if (t === 'INPUT' || t === 'TEXTAREA' || ae.isContentEditable) return;
+        if (t === 'BUTTON' || t === 'A' || t === 'SELECT') return;
+      }
+      inp.focus();
+    });
+
+    doc.addEventListener('click', function (e) {
+      var mark = e.target.closest('.highlight');
+      if (!mark) return;
+      var id = mark.getAttribute('data-comment-id');
+      if (!id) return;
+      var card = commentStack.querySelector('[data-thread-id="' + id + '"]');
+      if (!card) return;
+      var app = document.querySelector('.app');
+      var swapped = false;
+      if (app && global.matchMedia('(max-width: 768px)').matches) {
+        if (app.getAttribute('data-view') !== 'inspector') {
+          app.setAttribute('data-view', 'inspector');
+          swapped = true;
+        }
+      }
+      if (swapped) requestAnimationFrame(function () { card.click(); });
+      else card.click();
+    });
+
+    var fabComment = document.querySelector('.fab--comment');
+    if (fabComment) {
+      fabComment.addEventListener('click', function () {
+        var app = document.querySelector('.app');
+        if (app) app.setAttribute('data-view', 'inspector');
+      });
+    }
+
+    // Highlight-active observer — single source of truth for mark state.
+    // Any .card--interactive[data-thread-id] with data-state="active"
+    // inverts its marks; minimized drops them back to 3% overlay.
+    // Empty drafts that demote get auto-dismissed.
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.type !== 'attributes' || m.attributeName !== 'data-state') return;
+        var card = m.target;
+        if (!card.classList || !card.classList.contains('card--interactive')) return;
+        var tid = card.getAttribute('data-thread-id');
+        if (!tid) return;
+        var isActive = card.getAttribute('data-state') === 'active';
+
+        var marks = doc.querySelectorAll('.highlight[data-comment-id="' + tid + '"]');
+        marks.forEach(function (span) {
+          if (isActive) span.classList.add('highlight--active');
+          else span.classList.remove('highlight--active');
+        });
+
+        if (isActive && marks.length) {
+          marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        if (!isActive && card.classList.contains('comment-new')) {
+          var inp = card.querySelector('.comment-new__field .field__input');
+          var val = inp ? inp.value.trim() : '';
+          if (!val) {
+            removeDraftAndUnwrapMarks(card);
+          } else {
+            // Snapshot input value into preview in case demote missed
+            // a final 'input' event.
+            var preview = card.querySelector('.comment-new__preview');
+            if (preview) preview.textContent = inp.value;
+          }
+        }
+      });
+    });
+    observer.observe(inspector, {
+      attributes: true,
+      attributeFilter: ['data-state'],
+      subtree: true
+    });
+
+    // Kebab actions — Reply focuses the thread reply field and promotes
+    // the thread; Delete removes the message (preview kebab maps to
+    // first/last of the list). Threads that empty are removed.
+    commentStack.addEventListener('click', function (e) {
+      var item = e.target.closest('.comment__menu-item');
+      if (!item) return;
+      var thread = item.closest('.comment-thread');
+      if (!thread) return;
+      var msg = item.closest('.comment-msg');
+      var label = (item.textContent || '').trim();
+
+      if (label === 'Reply') {
+        if (thread.getAttribute('data-state') !== 'active') {
+          thread.click();
+        }
+        var reply = thread.querySelector('.comment-thread__reply .field__input');
+        if (reply) requestAnimationFrame(function () { reply.focus(); });
+        return;
+      }
+
+      if (label === 'Delete') {
+        if (!msg) return;
+        var list = thread.querySelector('.comment-thread__list');
+        var listMsgs = list.querySelectorAll(':scope > .comment-msg');
+        if (msg.closest('.comment-thread__preview')) {
+          var previewMsgs = thread.querySelectorAll('.comment-thread__preview > .comment-msg');
+          var idx = Array.prototype.indexOf.call(previewMsgs, msg);
+          if (idx === 0 && listMsgs.length) {
+            listMsgs[0].remove();
+          } else if (idx === 1 && listMsgs.length > 1) {
+            listMsgs[listMsgs.length - 1].remove();
+          }
+        } else {
+          msg.remove();
+        }
+        var remaining = list.querySelectorAll(':scope > .comment-msg');
+        if (remaining.length === 0) {
+          thread.remove();
+        } else {
+          renderPreview(thread);
+        }
+      }
+    });
+  }
+
+  // ================================================================
+  // Public API
+  // ================================================================
+  KK.init = function () {
+    if (KK.initialized) return;
+    initScrollSpy();
+    initNarrowView();
+    initColumnReveal();
+    initInspectorStack();
+    initCommentMenus();
+    initDeck();
+    KK.initialized = true;
+  };
+
+  // Re-scan the DOM for new iterable elements and wire them up. Safe
+  // to call any time — modules skip work they have already done.
+  // Global listeners bound once (on .inspector, .app, document, window,
+  // #toc) keep working through DOM mutations because they are delegated
+  // or watch stable ancestors. Per-instance bindings (each .deck wrapper,
+  // each observed .doc__section) get picked up by this call.
+  //
+  // Call after injecting new decks, new doc sections, new inspector
+  // cards, new nav items, or new comment threads into the page. Safe to
+  // over-call; there is no teardown and no double-binding.
+  KK.refresh = function () {
+    initScrollSpy();
+    initNarrowView();
+    initColumnReveal();
+    initInspectorStack();
+    initCommentMenus();
+    initDeck();
+  };
+
+  KK.enableCommentSelectionFlow = function () {
+    initCommentSelectionFlow();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', KK.init);
+  } else {
+    KK.init();
+  }
+
+  global.KK = KK;
+})(window);
