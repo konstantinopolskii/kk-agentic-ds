@@ -1,6 +1,6 @@
 {
   "name": "@kk/design-system",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Agentic Design System by Konstantin Konstantinopolskii. Tokens, components, voice rules, shared kit.js behaviour (scroll-spy, deck, card stack, comment menus, column reveal), and the ten-stage pipeline (nine role skills plus meta-retro) for the kk.consulting document pipeline.",
   "license": "UNLICENSED",
   "private": true,

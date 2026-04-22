@@ -39,6 +39,19 @@
  *
  * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
  * inspector card stack, comment kebab menus, 3D card stack deck.
+ *
+ * Events (0.10.0):
+ *   kk:comment — CustomEvent dispatched on .comment-stack, bubbles.
+ *                Fires only when the consumer has called
+ *                enableCommentSelectionFlow. Detail:
+ *                  { action: 'new', threadId, anchorQuote, anchorPrefix,
+ *                    anchorSuffix, cluster, sectionSlug, text }
+ *                  { action: 'reply', threadId, text }
+ *                Consumers listen once, branch on action, and persist to
+ *                their own backend. Kit does not know about authentication
+ *                or server ids; name your mapping table and transform the
+ *                payload on your side. See manifesto.md § Runtime for the
+ *                universal consumer snippet.
  */
 (function (global) {
   'use strict';
@@ -47,7 +60,7 @@
   // config wins; our defaults fill the gaps. Same pattern as every
   // config-merge kit that ships a default dictionary.
   var existing = global.KK || {};
-  var KK = { version: '0.9.0', initialized: false };
+  var KK = { version: '0.10.0', initialized: false };
   Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
   KK.config = KK.config || {};
   KK.config.i18n = Object.assign({
@@ -745,12 +758,40 @@
       if (!text) return;
       var tid = draft.dataset.threadId;
       var thread = buildThread(currentAuthor, text, tid);
+
+      // Snapshot anchor metadata before the draft's dataset is lost on
+      // replaceWith. This feeds the kk:comment event consumers listen
+      // for to persist the comment on their own backend.
+      var anchorQuote  = draft.dataset.kkAnchorQuote  || '';
+      var anchorPrefix = draft.dataset.kkAnchorPrefix || '';
+      var anchorSuffix = draft.dataset.kkAnchorSuffix || '';
+      var sectionSlug  = draft.dataset.kkSectionSlug  || '';
+      var cluster      = draft.dataset.kkCluster      || null;
+
       draft.replaceWith(thread);
       // Promote via synthetic click — the stack JS flips data-state,
       // runs the blur dance, scrolls. The observer sees the new
       // data-state="active" and flips matching highlights to --active.
       requestAnimationFrame(function () { thread.click(); });
       if (!inspector.querySelector('.card.comment-new')) setAppSelection(false);
+
+      // Emit kk:comment for consumers to persist. Bubbles to document so
+      // listeners can attach anywhere. Fire-and-forget — a throwing
+      // listener must not destabilize the kit's own state, so handlers
+      // run inside the browser's own try/catch per the CustomEvent spec.
+      commentStack.dispatchEvent(new CustomEvent('kk:comment', {
+        bubbles: true,
+        detail: {
+          action:       'new',
+          threadId:     tid,
+          anchorQuote:  anchorQuote,
+          anchorPrefix: anchorPrefix,
+          anchorSuffix: anchorSuffix,
+          cluster:      cluster || null,
+          sectionSlug:  sectionSlug,
+          text:         text
+        }
+      }));
     }
 
     function buildMessage(author, body) {
@@ -813,11 +854,31 @@
       return thread;
     }
 
+    // Collect the ±20-char context around the first occurrence of `quote`
+    // inside the nearest .doc__section. Consumers use this for fuzzy
+    // re-anchoring on the server side — quote + prefix + suffix survives
+    // DOM rebuilds where numeric offsets would not. Falls back to the
+    // anchor's nearest paragraph-like parent if the section is missing.
+    function captureAnchorContext(quote, anchorEl) {
+      if (!anchorEl || !anchorEl.closest) return { prefix: '', suffix: '' };
+      var scope = anchorEl.closest('.doc__section')
+               || anchorEl.closest('p, dd, li')
+               || anchorEl.parentNode;
+      var full = (scope && scope.textContent) || '';
+      var idx = full.indexOf(quote);
+      if (idx === -1) return { prefix: '', suffix: '' };
+      return {
+        prefix: full.slice(Math.max(0, idx - 20), idx),
+        suffix: full.slice(idx + quote.length, idx + quote.length + 20)
+      };
+    }
+
     function maybeOpenFromSelection() {
       var sel = global.getSelection();
       if (!sel || sel.isCollapsed) return;
       if (!nodeInDoc(sel.anchorNode) || !nodeInDoc(sel.focusNode)) return;
       var range = sel.getRangeAt(0).cloneRange();
+      var quoteText = sel.toString();
       var spans = wrapRangeAsHighlight(range);
       if (!spans.length) return;
 
@@ -838,7 +899,20 @@
         span.setAttribute('data-comment-id', threadId);
       });
 
+      // Capture anchor metadata on the draft for the kk:comment event
+      // to emit at commit time. Stored on the draft's dataset so empty-
+      // draft dismissal discards it automatically.
+      var ctx = captureAnchorContext(quoteText, spans[0]);
+      var sectionEl = spans[0].closest('.doc__section');
+      var clusterEl = spans[0].closest('[data-cluster]');
+
       var draft = buildDraft(currentAuthor, threadId);
+      draft.dataset.kkAnchorQuote  = quoteText;
+      draft.dataset.kkAnchorPrefix = ctx.prefix;
+      draft.dataset.kkAnchorSuffix = ctx.suffix;
+      draft.dataset.kkSectionSlug  = sectionEl ? sectionEl.id : '';
+      draft.dataset.kkCluster      = clusterEl ? clusterEl.getAttribute('data-cluster') : '';
+
       commentStack.insertBefore(draft, commentStack.firstChild);
       setAppSelection(true);
 
@@ -884,6 +958,17 @@
         list.appendChild(buildMessage(currentAuthor, body));
         replyInput.value = '';
         renderPreview(thread);
+
+        // Emit kk:comment for reply. Consumers map threadId → server
+        // parent_comment_id through their own local state.
+        commentStack.dispatchEvent(new CustomEvent('kk:comment', {
+          bubbles: true,
+          detail: {
+            action:   'reply',
+            threadId: thread.dataset.threadId || '',
+            text:     body
+          }
+        }));
       }
     });
 

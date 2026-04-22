@@ -2,6 +2,25 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.10.0 — 2026-04-22
+
+Comment lifecycle events. Consumers that use `KK.enableCommentSelectionFlow()` and need to persist comments to a backend (Flask portal, Next.js API, Rails controller) now listen for `kk:comment` — a `CustomEvent` dispatched on `.comment-stack` — instead of re-implementing the selection flow or observing DOM mutations. Framework-neutral JS event shape (camelCase) keeps the universal consumer story clean; Python/Ruby/PHP backends rename on their POST body.
+
+### Added
+- `kk:comment` `CustomEvent` on `.comment-stack`, bubbles to `document`. Two actions in 0.10.0:
+  - `action: 'new'` — draft committed, thread card created. Detail: `{ action, threadId, anchorQuote, anchorPrefix, anchorSuffix, cluster, sectionSlug, text }`.
+  - `action: 'reply'` — message appended to an existing thread. Detail: `{ action, threadId, text }`.
+- Anchor prefix/suffix capture in the selection flow. Pulls the ±20 chars around the first occurrence of the selected text inside the nearest `.doc__section` (falls back to the nearest paragraph-like parent). Feeds fuzzy re-anchoring on the consumer's server side; no numeric offsets, no hash fingerprints.
+- `[data-cluster]` ancestor read at anchor time. Consumers annotate top-level sections with `data-cluster="strategy"` / `"call"` / `"research"` / etc., and kit reports it in the event. `null` if the attribute isn't set.
+- `§ Runtime → Comment lifecycle events` in `manifesto.md`. Payload spec + a universal consumer snippet.
+
+### Moved
+- Kit ships `version: '0.10.0'` in its `window.KK` object as well as `package.json`, kept in lockstep.
+- Selection flow's `captureAnchorContext()` helper is internal to `initCommentSelectionFlow`; not part of the public API surface, which stays at four entries (`init`, `refresh`, `enableCommentSelectionFlow`, `config`).
+
+### Open
+- `action: 'delete'` and `action: 'resolve'`. Both blocked on adding per-message stable ids inside kit (messages currently tracked by DOM position). Not in scope for 0.10.0; landed when a consumer needs them.
+
 ## 0.9.1 — 2026-04-22
 
 Maintainer skill patch. Prompted by a real incident where four kit versions (0.6, 0.7, 0.8, 0.9) shipped to disk and to CHANGELOG but never reached origin because the maintainer skill did not mandate commit + tag + push explicitly. A sibling agent fetched the repo, saw v0.4.0, and flagged it.

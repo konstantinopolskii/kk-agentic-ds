@@ -83,6 +83,55 @@ Public surface on `window.KK`: `KK.init()`, `KK.refresh()`, `KK.enableCommentSel
 
 `KK.refresh()` re-scans the DOM after the consumer injects new elements (SPA-style swaps, lazy-loaded sections, route-driven content). Each module skips work already done and picks up new iterable elements — new decks, new doc sections, new inspector cards. Global listeners bind once; subsequent calls are near-free. Safe to over-call.
 
+### Comment lifecycle events
+
+Consumers that call `KK.enableCommentSelectionFlow()` and need to persist comments to their own backend listen for `kk:comment`, a `CustomEvent` dispatched on `.comment-stack` (bubbles to document). Two actions in 0.10.0:
+
+- `new` — a draft was committed and a thread card was created.
+- `reply` — a message was appended to an existing thread.
+
+Payload for `action === 'new'`:
+
+```js
+{
+  action:       'new',
+  threadId:     'c1735012345-123', // local DOM id, for client-side mapping; do not send to server
+  anchorQuote:  'selected text',
+  anchorPrefix: '…up to 20 chars before',
+  anchorSuffix: '20 chars after…',
+  cluster:      'strategy',        // from nearest [data-cluster] ancestor, null if none
+  sectionSlug:  'targeting',       // from nearest .doc__section id
+  text:         'comment body'
+}
+```
+
+Payload for `action === 'reply'`:
+
+```js
+{
+  action:   'reply',
+  threadId: 'c1735012345-123', // local id of the parent thread
+  text:     'reply body'
+}
+```
+
+Field names follow JS convention (camelCase). Kit does not know about authentication — servers set the author from session context, not a client-declared field. Kit does not send the thread id to the wire; consumers map local `threadId` to server-issued ids through their own state when a persist call returns.
+
+Universal consumer pattern:
+
+```js
+document.addEventListener('kk:comment', function (e) {
+  if (e.detail.action === 'new') {
+    // fetch('/api/comment', { method: 'POST', body: JSON.stringify(e.detail) })
+    // for Python/Ruby/PHP backends that expect snake_case, rename on the way out
+  } else if (e.detail.action === 'reply') {
+    // fetch('/api/comment', { method: 'POST', body: JSON.stringify({ parent_comment_id: map.get(e.detail.threadId), text: e.detail.text }) })
+  }
+});
+```
+
+Future actions (`delete`, `resolve`) blocked on per-message stable ids inside kit; deferred.
+
 Text strings that kit.js injects into the DOM are overridable via `KK.config.i18n`, set before the script loads:
 
 ```html
