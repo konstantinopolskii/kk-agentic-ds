@@ -63,6 +63,12 @@ Three variants, one HTML shape.
   </div>
   <button class="button button--primary t-subtitle">Commit the choice</button>
 </div>
+
+<!-- Raw text or list children of the card get the 24px rail
+     without a card__body wrapper. -->
+<div class="card">
+  <p class="t-caption t-muted">Empty for now.</p>
+</div>
 ```
 
 Rules:
@@ -70,6 +76,7 @@ Rules:
 - One active per stack.
 - One shout per column. If everything shouts, nothing does.
 - Primary and minimized button labels never match.
+- A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12px half-inset on its own. No `card__body` wrapper needed.
 
 ## Field
 

@@ -2,6 +2,27 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.12.1 — 2026-04-22
+
+Card rail patch. The "half + half" inset contract now covers raw prose direct-children. Before, kit components paid their 12px half and landed on the 24px rail; a bare `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped inside `.card` paid nothing and sat at the 12px shell. Six call sites in `index.html` exhibited the drift, including the "Empty right now" backlog card and the "Why not auto-merge" caveat card under the iteration section.
+
+The fix is kit-side: the rail contract absorbs raw text and list children. Authors do not wrap a one-line empty state in `card__body` just to get on the rail.
+
+### Added
+- `style.css` — new rule `.card > p, .card > ol, .card > ul, .card > dl { padding-left/right: var(--card-inset-x); }` placed alongside the existing `.card > .deck` and `.card > .button` direct-child inset rules. Comment block names the failure mode it closes and the older selector it supersedes.
+- `index.html § Card` — two-sentence addition under the variants intro, naming the rail as the default and calling out raw paragraphs and lists.
+- `skills/kk-design-system/components.md § Card` — raw-prose code example plus a Rules bullet covering `<p>`/`<ol>`/`<ul>`/`<dl>`.
+
+### Removed
+- `style.css` — old rule `.doc .card > .doc__spec { padding-left/right: var(--card-inset-x); }`. `.doc__spec` is always a `<dl>`, so the new `.card > dl` selector covers it in every context. Removing the duplicate leaves one rail path with one owning comment.
+
+### Moved
+- `package.json` version `0.12.0` → `0.12.1`. Patch bump: card layout fix, no consumer-visible API change beyond previously off-rail prose now landing on the rail.
+- The six existing off-rail call sites in `index.html` (raw `<p>`/`<ol>` direct children of `.card` at lines 2376, 2409, 2606, 2739, 2773, 2876) now render on the 24px rail without any HTML edit. No call-site churn.
+
+### Open
+- `.claude-plugin/plugin.json` still reads `0.4.0`; package.json sits at `0.12.1` after this bump. The two have drifted since the 0.4.0 ship and the maintainer skill's lockstep rule is honored only in the breach. Resyncing is its own decision and is not bundled here.
+
 ## 0.12.0 — 2026-04-22
 
 Agent communication protocol lands. Every role skill in the pipeline now speaks to the user in caveman register by default: articles, filler, pleasantries, and hedging dropped from conversation output. Structured artefacts (code, file paths, frontmatter, ASCII mockups, JSON component trees, manifest-diff entries, blockquoted user input) render untouched. Auto-clarity carve-out drops caveman for multi-step sequences, destructive confirmations, and clarification requests. User override: `stop caveman` reverts; `/caveman lite` or `/caveman ultra` switches intensity. Source inspiration: JuliusBrussee/caveman.

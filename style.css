@@ -561,6 +561,21 @@ body {
   padding-right: var(--card-inset-x);
 }
 
+/* Raw prose direct-children of a card pay their half too. A bare <p>,
+   <ol>, <ul>, or <dl> dropped inside a card used to sit at the 12 px
+   shell padding and miss the 24 px rail every other child lands on.
+   Picking up the inset here keeps authors from wrapping a single
+   paragraph in card__body just to land on the rail. This rule also
+   supersedes the former `.doc .card > .doc__spec` selector: doc__spec
+   is always a <dl>, so .card > dl covers it in every context. */
+.card > p,
+.card > ol,
+.card > ul,
+.card > dl {
+  padding-left: var(--card-inset-x);
+  padding-right: var(--card-inset-x);
+}
+
 /* Buttons hold their own inset as margin, not padding — their internal
    padding is reserved for label centering. Margin of 12 px stacks with
    the card shell's 12 px for the standard 24 px rail, so a CTA sits on
@@ -1754,14 +1769,6 @@ ol.t-list > li::before {
    30% of the table width; the use-column gets the rest. */
 .doc__spec--value {
   grid-template-columns: minmax(120px, 30%) minmax(60px, 30%) 1fr;
-}
-
-/* Inside the doc, spec rows sit on the card's content rail — the card
-   already contributes 12 px padding, so we add another 12 px here to
-   land on the 24 px rail that paragraphs use. */
-.doc .card > .doc__spec {
-  padding-left: var(--card-inset-x);
-  padding-right: var(--card-inset-x);
 }
 
 /* =========================================================================
