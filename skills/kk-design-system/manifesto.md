@@ -95,7 +95,8 @@ Payload for `action === 'new'`:
 ```js
 {
   action:       'new',
-  threadId:     'c1735012345-123', // local DOM id, for client-side mapping; do not send to server
+  threadId:     'c1735012345-123', // local DOM id; do not send to server
+  messageId:    'm1735012346-456', // local id of the seed message
   anchorQuote:  'selected text',
   anchorPrefix: '…up to 20 chars before',
   anchorSuffix: '20 chars after…',
@@ -109,13 +110,27 @@ Payload for `action === 'reply'`:
 
 ```js
 {
-  action:   'reply',
-  threadId: 'c1735012345-123', // local id of the parent thread
-  text:     'reply body'
+  action:    'reply',
+  threadId:  'c1735012345-123',
+  messageId: 'm1735012789-012', // local id of the new reply message
+  text:      'reply body'
 }
 ```
 
-Field names follow JS convention (camelCase). Kit does not know about authentication — servers set the author from session context, not a client-declared field. Kit does not send the thread id to the wire; consumers map local `threadId` to server-issued ids through their own state when a persist call returns.
+Payload for `action === 'delete'`:
+
+```js
+{
+  action:        'delete',
+  threadId:      'c1735012345-123',
+  messageId:     'm1735012789-012',
+  threadRemoved: true              // true if deleting this message emptied the thread
+}
+```
+
+Every `.comment-msg` carries `data-message-id`. Kit stamps it at creation time; consumers pre-rendering server-side HTML can set the attribute to the server's real id and skip the local-to-server mapping layer for seeded threads.
+
+Field names follow JS convention (camelCase). Kit does not know about authentication — servers set the author from session context, not a client-declared field. Kit does not send thread or message ids to the wire; consumers map local ids to server-issued ids through their own state when a persist call returns.
 
 Universal consumer pattern:
 
@@ -130,7 +145,7 @@ document.addEventListener('kk:comment', function (e) {
 });
 ```
 
-Future actions (`delete`, `resolve`) blocked on per-message stable ids inside kit; deferred.
+Full consumer-facing integration surface (Flask, Next.js, Rails snippets; anti-patterns; the enable-or-own decision tree) lives in `docs/integration/comment.md`. `resolve` and edit actions deferred until a consumer asks.
 
 Text strings that kit.js injects into the DOM are overridable via `KK.config.i18n`, set before the script loads:
 

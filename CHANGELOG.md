@@ -2,6 +2,25 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.11.0 — 2026-04-22
+
+Third `kk:comment` action lands: `delete`. Every `.comment-msg` gets a stable `data-message-id` so deletes address messages by identity, not DOM position. New `docs/integration/comment.md` carries the full consumer-facing surface (the three actions, config, data attributes, three framework patterns, anti-patterns) — first file under the integration-docs convention, written while the API is fresh.
+
+### Added
+- `action: 'delete'` in the `kk:comment` event. Detail: `{ action, threadId, messageId, threadRemoved }`. `threadRemoved` is true when deleting the last message drops the whole thread card; consumer picks whether to delete the server-side thread too or just the one message.
+- `data-message-id` on every `.comment-msg`. Kit stamps it at creation time; server-rendered pre-existing messages can set their own (server ids) and kit respects them.
+- `ensureMessageId` helper inside `initCommentSelectionFlow`; one-time scan stamps any pre-rendered message missing an id.
+- `messageId` field added to existing `action: 'new'` and `action: 'reply'` event payloads. Additive — consumers that did not destructure it keep working; consumers that need delete tracking now have the handle.
+- `docs/integration/comment.md` — full integration doc for the comment component. Sections: enable-or-own decision, events (all three actions), data attributes, config, Flask + Next.js + Rails patterns, anti-patterns, per-component version history.
+- Cross-link from `components.md` § Comment → `docs/integration/comment.md`.
+
+### Moved
+- Manifesto § Runtime → Comment lifecycle events updated to include the delete action, the `messageId` field on all three actions, and a pointer to the integration doc.
+- `package.json` version `0.10.0` → `0.11.0`. Kit's `window.KK.version` bumped in lockstep.
+
+### Open
+- `action: 'resolve'` and an edit action. Neither has a real consumer request; deferred.
+
 ## 0.10.0 — 2026-04-22
 
 Comment lifecycle events. Consumers that use `KK.enableCommentSelectionFlow()` and need to persist comments to a backend (Flask portal, Next.js API, Rails controller) now listen for `kk:comment` — a `CustomEvent` dispatched on `.comment-stack` — instead of re-implementing the selection flow or observing DOM mutations. Framework-neutral JS event shape (camelCase) keeps the universal consumer story clean; Python/Ruby/PHP backends rename on their POST body.

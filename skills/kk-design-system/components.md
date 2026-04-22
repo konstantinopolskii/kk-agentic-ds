@@ -123,6 +123,8 @@ Binary toggle. See `index.html` → `#switch` for the full markup.
 
 Two shapes, one pattern. Draft (shout) and thread (interactive card with collapsible reveal). Lives in the inspector. See `index.html` → `#comment` for the complete markup including `comment-new`, `comment-thread`, `comment-msg`, `comment__menu`.
 
+Consumer integration (events, config, delete, persistence patterns per framework) lives in `docs/integration/comment.md`. The `kk:comment` CustomEvent is how a backend hooks in.
+
 ## Navigation
 
 Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections; `toc__indicator` animates between active items.
