@@ -130,6 +130,8 @@ Binary toggle. See `index.html` → `#switch` for the full markup.
 
 Two shapes, one pattern. Draft (shout) and thread (interactive card with collapsible reveal). Lives in the inspector. See `index.html` → `#comment` for the complete markup including `comment-new`, `comment-thread`, `comment-msg`, `comment__menu`.
 
+Each message's kebab carries four actions in 0.13.0: `Approve`, `Reply`, `Archive thread`, `Delete`. Approve is gated on the thread's last list message having `data-author-role="agent"` (consumer sets this at render time); the kit hides the item otherwise. Approve collapses the thread to a single resolved row (`data-resolved="true"`), emits the approved text as a replacement for the anchored quote, and the consumer rewrites the doc body. Archive sets `data-archived="true"` on the thread — DOM retained, hidden from the stack via CSS.
+
 Consumer integration (events, config, delete, persistence patterns per framework) lives in `docs/integration/comment.md`. The `kk:comment` CustomEvent is how a backend hooks in.
 
 ## Navigation

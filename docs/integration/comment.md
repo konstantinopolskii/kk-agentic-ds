@@ -37,7 +37,7 @@ Path B consumers reimplement ~200 lines of kit code. Treat as a last resort.
 
 ## Events
 
-All three actions dispatch the same `kk:comment` CustomEvent on `.comment-stack`. Bubbles to `document`. Payload shape per `detail.action`:
+All five actions dispatch the same `kk:comment` CustomEvent on `.comment-stack`. Bubbles to `document`. Payload shape per `detail.action`:
 
 ### `action: 'new'`
 
@@ -85,6 +85,42 @@ Fires when a user clicks a kebab's Delete item.
 
 When `threadRemoved` is true, the whole `.comment-thread` card is gone from the DOM. Consumer decides whether that means the server-side thread dies too, or just the single message.
 
+### `action: 'approve'`
+
+Fires when a user clicks a kebab's Approve item. Approve is only shown when the thread's last list message carries `data-author-role="agent"` — a hook consumers stamp on agent-authored messages at render time.
+
+```js
+{
+  action:          'approve',
+  threadId:        'c1735012345-123',
+  messageId:       'm1735012789-012',  // the agent-reply message whose text is approved
+  replacementText: 'approved replacement',
+  anchorQuote:     'the original anchored quote',
+  anchorPrefix:    '…up to 20 chars before',
+  anchorSuffix:    '20 chars after…',
+  cluster:         'strategy',         // from the thread's stored anchor; null if none
+  sectionSlug:     'targeting'
+}
+```
+
+The consumer takes `anchorQuote` + `anchorPrefix` + `anchorSuffix` and locates the original span inside `sectionSlug`, then rewrites its text to `replacementText`, then persists the resolution. Kit already collapses the thread to the resolved row; no UI work on the consumer side.
+
+The thread keeps its DOM at `data-resolved="true"`. Consumers re-rendering on subsequent paints can ship the same attribute to skip the interactive form entirely.
+
+### `action: 'archive'`
+
+Fires when a user clicks a kebab's Archive thread item.
+
+```js
+{
+  action:        'archive',
+  threadId:      'c1735012345-123',
+  threadRemoved: false               // thread kept; data-archived="true" hides it from the stack
+}
+```
+
+`threadRemoved: false` is the signal to persist "archived" rather than "deleted". The thread's DOM stays with `data-archived="true"` and `display: none`. A future version will add a re-surface UI; the data is already in place for it.
+
 ## Data attributes consumers set
 
 These are the kit's extension surface for per-consumer metadata. Set them in your HTML at render time; kit reads them at event time.
@@ -94,6 +130,9 @@ These are the kit's extension surface for per-consumer metadata. Set them in you
 | `data-cluster` | Any ancestor of the doc section | Anchor creation (selection) | Reports which top-level region the anchor lives in. Flask uses `strategy`/`call`/`research`/`notes`/`cv`. Arbitrary strings work. |
 | `data-message-id` | `.comment-msg` | Init scan + delete dispatch | Stable message id. Pre-rendered server HTML can ship the server's real id here, skipping the local-to-server mapping layer entirely for seeded threads. |
 | `data-thread-id` | `.comment-thread` | Init + delete dispatch | Same pattern for threads, for consumers that render pre-existing threads on initial paint. |
+| `data-author-role` | `.comment-msg` | Kebab open | Consumer stamps `"agent"` on agent-authored messages. Kit shows the Approve item only when the thread's last list message carries the attribute. No value means human-authored. |
+| `data-resolved` | `.comment-thread` | CSS + init | Kit sets this to `"true"` when Approve fires. Pre-rendered threads already resolved on the server can ship the attribute directly; the collapsible stays hidden. |
+| `data-archived` | `.comment-thread` | CSS | Kit sets this to `"true"` when Archive fires. Thread stays in the DOM; CSS hides it from `.comment-stack`. Pre-rendered archived threads can ship the attribute directly. |
 
 ## Config
 
@@ -111,7 +150,7 @@ Overrides go on `window.KK.config`. Set **before** `js/kit.js` loads.
 <script src="../js/kit.js"></script>
 ```
 
-Four i18n keys in 0.11.0. Kit merges with English defaults — partial overrides work.
+Four i18n keys in 0.13.0. Kit merges with English defaults — partial overrides work.
 
 ## Consumer patterns
 
@@ -171,6 +210,34 @@ document.addEventListener('kk:comment', async (e) => {
     if (d.threadRemoved) {
       threadToServer.delete(d.threadId);
     }
+    return;
+  }
+
+  if (d.action === 'approve') {
+    const parentId = threadToServer.get(d.threadId);
+    if (!parentId) return;
+    await fetch(`${commentUrl}/${parentId}/approve`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        replacement_text: d.replacementText,
+        anchor_quote:     d.anchorQuote,
+        anchor_prefix:    d.anchorPrefix,
+        anchor_suffix:    d.anchorSuffix,
+        cluster:          d.cluster,
+        section_slug:     d.sectionSlug
+      })
+    });
+    // Flask rewrites the doc body server-side using the anchor triple
+    // and persists the resolution. On the next render, the thread ships
+    // with data-resolved="true" and the body already carries the new text.
+    return;
+  }
+
+  if (d.action === 'archive') {
+    const parentId = threadToServer.get(d.threadId);
+    if (!parentId) return;
+    await fetch(`${commentUrl}/${parentId}/archive`, { method: 'POST' });
   }
 });
 ```
@@ -196,6 +263,16 @@ export function useCommentPersistence(commentUrl) {
         });
       } else if (d.action === 'delete') {
         await fetch(`${commentUrl}/${d.messageId}`, { method: 'DELETE' });
+      } else if (d.action === 'approve') {
+        await fetch(`${commentUrl}/${d.threadId}/approve`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(d)
+        });
+        // Server rewrites the body using d.anchorQuote + prefix/suffix
+        // and returns the new HTML, or the client reconciles in place.
+      } else if (d.action === 'archive') {
+        await fetch(`${commentUrl}/${d.threadId}/archive`, { method: 'POST' });
       }
     };
     document.addEventListener('kk:comment', handler);
@@ -221,6 +298,19 @@ export default class extends Controller {
           data: new URLSearchParams(d).toString() });
       } else if (d.action === 'delete') {
         Rails.ajax({ url: `${this.urlValue}/${d.messageId}`, type: 'DELETE' });
+      } else if (d.action === 'approve') {
+        Rails.ajax({ url: `${this.urlValue}/${d.threadId}/approve`,
+          type: 'POST',
+          data: new URLSearchParams({
+            replacement_text: d.replacementText,
+            anchor_quote:     d.anchorQuote,
+            anchor_prefix:    d.anchorPrefix,
+            anchor_suffix:    d.anchorSuffix,
+            cluster:          d.cluster || '',
+            section_slug:     d.sectionSlug
+          }).toString() });
+      } else if (d.action === 'archive') {
+        Rails.ajax({ url: `${this.urlValue}/${d.threadId}/archive`, type: 'POST' });
       }
     };
     document.addEventListener('kk:comment', this.handler);
@@ -251,14 +341,15 @@ Mount the controller once at the app shell:
 
 | Version | Change |
 |---|---|
+| 0.13.0 | Added `action: 'approve'` and `action: 'archive'`. Kebab menu now carries Approve / Reply / Archive thread / Delete. Approve reads the thread's last list message as the replacement and is gated on `data-author-role="agent"`. Archive sets `data-archived="true"`; thread retained, hidden from the stack. Approved thread collapses to a single resolved row under `data-resolved="true"`. Anchor triple + cluster + sectionSlug mirrored onto `.comment-thread` dataset so Approve re-emits the full payload. |
 | 0.11.0 | Added `action: 'delete'`. All three actions now carry `messageId`. `buildMessage` stamps `data-message-id`; init scan assigns ids to any pre-rendered messages. |
 | 0.10.0 | Added `kk:comment` event with `new` and `reply` actions. `anchorPrefix`/`anchorSuffix` capture. `[data-cluster]` ancestor read. |
 | 0.8.0  | `KK.config.i18n.addComment` and `reply` overridable. |
 | 0.7.0  | Kit behaviour extracted from `index.html` into `js/kit.js`. `enableCommentSelectionFlow()` exposed. |
 
-## Future additions — not in 0.11.0
+## Future additions — not in 0.13.0
 
-- `action: 'resolve'` — when a thread is marked resolved (UX not yet designed).
+- Re-surface UI for archived threads. Data is preserved under `data-archived="true"`; a future release will add the inspector toggle that un-hides them.
 - `action: 'update'` — when a message's text is edited (edit UX not shipped).
 
 Will land when a consumer needs them. Not pre-built.

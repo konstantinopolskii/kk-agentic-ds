@@ -1271,6 +1271,14 @@
           phone, the view swaps to the inspector so the thread lands
           in sight.
         </p>
+        <p class="t-body">
+          Every message&rsquo;s kebab carries four actions. Reply and
+          Delete are universal. Approve is gated on the thread&rsquo;s
+          last list message being agent-authored, and accepts that
+          text as the replacement for the anchored quote; the thread
+          collapses to a single checkmark row. Archive thread keeps
+          the data, hides the card.
+        </p>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Lifecycle</h3>
@@ -1295,6 +1303,14 @@
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Active thread</dt>
               <dd class="doc__spec-value">Shout. Every message plus a reply field.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Approve</dt>
+              <dd class="doc__spec-value">Kebab item on any message. Available only when the thread&rsquo;s last list message carries <span class="t-mono">data-author-role="agent"</span>. Takes the agent text as the replacement for the anchored quote; thread collapses to a checkmark + snippet row.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Archive thread</dt>
+              <dd class="doc__spec-value">Kebab item. Sets <span class="t-mono">data-archived="true"</span> on the thread; DOM retained, hidden from the stack. Distinct from Delete: data stays for future retrieval.</dd>
             </div>
             <div class="doc__spec-row">
               <dt class="doc__spec-key">Discard</dt>
@@ -1328,7 +1344,9 @@
                   </div>
                   <p class="t-caption">Could you add one more example?</p>
                   <div class="comment__menu-popover" role="menu">
+                    <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                     <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                    <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                     <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                   </div>
                 </div>
@@ -1342,7 +1360,9 @@
                   </div>
                   <p class="t-caption">Perfect. Ship it.</p>
                   <div class="comment__menu-popover" role="menu">
+                    <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                     <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                    <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                     <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                   </div>
                 </div>
@@ -1357,7 +1377,9 @@
                       </div>
                       <p class="t-caption">Could you add one more example?</p>
                       <div class="comment__menu-popover" role="menu">
+                        <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                        <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                       </div>
                     </div>
@@ -1368,7 +1390,9 @@
                       </div>
                       <p class="t-caption">Added. Take another look.</p>
                       <div class="comment__menu-popover" role="menu">
+                        <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                        <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                       </div>
                     </div>
@@ -1379,7 +1403,9 @@
                       </div>
                       <p class="t-caption">Perfect. Ship it.</p>
                       <div class="comment__menu-popover" role="menu">
+                        <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                        <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                         <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                       </div>
                     </div>
@@ -1388,6 +1414,16 @@
                     <input class="t-caption field__input" type="text" placeholder="Reply&hellip;" />
                     <span class="field__fake-caret" aria-hidden="true"></span>
                   </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="card card--interactive comment-thread" data-resolved="true" data-state="minimized">
+              <div class="comment-thread__preview">
+                <div class="comment-thread__resolved">
+                  <span class="comment-thread__resolved-stamp t-caption" aria-hidden="true">&check;</span>
+                  <span class="comment-thread__resolved-snippet t-caption">Kit stamps data-message-id at creation time.</span>
+                  <span class="comment-thread__resolved-byline t-caption t-muted">Konstantin Konstantinopolskii</span>
                 </div>
               </div>
             </div>
@@ -3093,7 +3129,9 @@
                 </div>
                 <p class="t-caption">It&rsquo;s 20/80. Let&rsquo;s ship.</p>
                 <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                 </div>
               </div>
@@ -3107,7 +3145,9 @@
                 </div>
                 <p class="t-caption">The spacing one. Tiers feel crowded.</p>
                 <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                 </div>
               </div>
@@ -3122,7 +3162,9 @@
                     </div>
                     <p class="t-caption">It&rsquo;s 20/80. Let&rsquo;s ship.</p>
                     <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                     </div>
                   </div>
@@ -3133,7 +3175,9 @@
                     </div>
                     <p class="t-caption">I&rsquo;d reduce one more thing and sign.</p>
                     <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                     </div>
                   </div>
@@ -3144,7 +3188,9 @@
                     </div>
                     <p class="t-caption">The spacing one. Tiers feel crowded.</p>
                     <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                     </div>
                   </div>
@@ -3166,7 +3212,9 @@
                 </div>
                 <p class="t-caption">Think the shout card is too loud here.</p>
                 <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                 </div>
               </div>
@@ -3177,7 +3225,9 @@
                 </div>
                 <p class="t-caption">Loud is the point. It&rsquo;s a decision.</p>
                 <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                   <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                 </div>
               </div>
@@ -3192,7 +3242,9 @@
                     </div>
                     <p class="t-caption">Think the shout card is too loud here.</p>
                     <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                     </div>
                   </div>
@@ -3203,7 +3255,9 @@
                     </div>
                     <p class="t-caption">Loud is the point. It&rsquo;s a decision.</p>
                     <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
                       <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
                     </div>
                   </div>

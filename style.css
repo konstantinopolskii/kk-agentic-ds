@@ -832,6 +832,43 @@ body {
   padding: var(--space-2) var(--card-inset-x);
 }
 
+/* Archived thread — retained in the DOM so consumers keep the data,
+   hidden from the inspector stack. A future UI will re-surface archived
+   threads; in 0.13.0 archive is a one-way dismiss. */
+.comment-stack > .comment-thread[data-archived="true"] {
+  display: none;
+}
+
+/* Resolved thread — collapsed single-row card. Approve replaces the
+   preview and hides the collapsible entirely; the stamp + snippet +
+   byline sit on one line on the 24 px rail. Stays in place in the
+   stack so the reader sees which anchor this thread resolved. */
+.comment-thread[data-resolved="true"] .card__collapsible {
+  display: none;
+}
+.comment-thread[data-resolved="true"] .comment-thread__preview {
+  display: flex;
+}
+.comment-thread__resolved {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--card-inset-x);
+}
+.comment-thread__resolved-stamp {
+  flex: 0 0 auto;
+}
+.comment-thread__resolved-snippet {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.comment-thread__resolved-byline {
+  flex: 0 0 auto;
+}
+
 /* One message — author header + body. Position relative so the kebab
    popover anchors to it, and so the ::before divider on the next
    sibling can sit on the message's top edge. */
@@ -1035,6 +1072,14 @@ body {
   transition: background-color var(--dur-fast) var(--ease-out);
 }
 .comment__menu-item:hover { background: var(--color-surface-strong); }
+
+/* Approve — only visible when the owning thread carries
+   data-can-approve="true", set by the kebab-open handler when the last
+   list message was authored by an agent. Hidden otherwise so the item
+   never shows on user-authored threads. */
+.comment-thread:not([data-can-approve="true"]) .comment__menu-item--approve {
+  display: none;
+}
 
 /* Popover lives on a white surface even when the thread card is shouting
    (active inspector card). Pin the light-mode tokens so dots, separators

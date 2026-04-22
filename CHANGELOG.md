@@ -2,6 +2,33 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 0.13.0 — 2026-04-22
+
+Comment: `Approve` + `Archive thread` actions in kebab menu. Resolved threads collapse to checkmark + replacement snippet. Archived threads hidden via `data-archived` (data preserved for future UI). `kk:comment` event gains `approve` (carries `replacementText` + anchor for doc-body sync) and `archive` (thread kept, not removed) action types.
+
+### Added
+- `js/kit.js` — two new menu items (`Approve`, `Archive thread`) in `buildMessage`. New kebab branches in the selection-flow click handler: `Approve` validates the thread's last list message carries `data-author-role="agent"`, collapses the thread to a resolved row, and emits `action: 'approve'` with `replacementText` + full anchor triple + `cluster` + `sectionSlug`. `Archive thread` sets `data-archived="true"` and emits `action: 'archive'` with `threadRemoved: false`.
+- `js/kit.js` — `commitDraft` now mirrors the draft's anchor metadata (`kkAnchorQuote`, `kkAnchorPrefix`, `kkAnchorSuffix`, `kkSectionSlug`, `kkCluster`) onto the new thread's dataset. Approve re-reads from the thread at action time.
+- `js/kit.js` — `refreshApproveAvailability` runs on every kebab open and toggles `data-can-approve="true"` on the thread based on the last list message's `data-author-role`. CSS hides the Approve item when the attribute is absent.
+- `style.css` — archived-thread hide rule (`.comment-stack > .comment-thread[data-archived="true"] { display: none; }`). Resolved-thread layout (`.comment-thread__resolved` flexbox row: stamp + snippet + byline). Approve-gating rule (`.comment-thread:not([data-can-approve="true"]) .comment__menu-item--approve { display: none; }`).
+- `index.html § Comment` — Lifecycle spec list gains Approve and Archive thread rows. Intro body gains a paragraph naming the four kebab actions. Example stack gains a static resolved-thread card under the existing interactive thread.
+- `index.html` — every existing `.comment__menu-popover` (14 total across the doc) updated to carry the four menu items in the new order.
+- `skills/kk-design-system/components.md § Comment` — added a paragraph on the 0.13.0 menu surface: four actions, Approve gating on `data-author-role="agent"`, Archive's `data-archived` hide.
+- `skills/kk-design-system/manifesto.md` — `action: 'approve'` and `action: 'archive'` payload shapes. Note on `data-author-role` as consumer-owned classification. Total action list updated to five.
+- `docs/integration/comment.md` — `approve` and `archive` event sections, full Flask / Next.js / Rails snippets for both, new data-attribute rows (`data-author-role`, `data-resolved`, `data-archived`), and a 0.13.0 row in the version-history table.
+
+### Removed
+- Nothing. Additive release.
+
+### Moved
+- `package.json` version `0.12.1` → `0.13.0`. Minor bump: two new public action types on the `kk:comment` event, one new `data-*` attribute consumers may set (`data-author-role`), two new CSS state attributes kit writes (`data-resolved`, `data-archived`). Backward-compatible.
+- `js/kit.js` `KK.version` string `0.11.0` → `0.13.0` (had been stale since 0.12.0).
+- Role SKILL.md `metadata.version` unchanged per precedent.
+
+### Open
+- `.claude-plugin/plugin.json` still reads `0.4.0`; `package.json` sits at `0.13.0`. Drift flagged in 0.12.1. Resync remains its own decision, not bundled here.
+- Archived threads have no re-surface UI. Data is preserved; the toggle lands when a consumer asks for it.
+
 ## 0.12.1 — 2026-04-22
 
 Card rail patch. The "half + half" inset contract now covers raw prose direct-children. Before, kit components paid their 12px half and landed on the 24px rail; a bare `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped inside `.card` paid nothing and sat at the 12px shell. Six call sites in `index.html` exhibited the drift, including the "Empty right now" backlog card and the "Why not auto-merge" caveat card under the iteration section.

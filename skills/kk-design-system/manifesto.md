@@ -128,6 +128,34 @@ Payload for `action === 'delete'`:
 }
 ```
 
+Payload for `action === 'approve'`:
+
+```js
+{
+  action:          'approve',
+  threadId:        'c1735012345-123',
+  messageId:       'm1735012789-012',   // the agent-reply message whose text is approved
+  replacementText: 'approved replacement text',
+  anchorQuote:     'the original quote',
+  anchorPrefix:    '…up to 20 chars before',
+  anchorSuffix:    '20 chars after…',
+  cluster:         'strategy',
+  sectionSlug:     'targeting'
+}
+```
+
+Payload for `action === 'archive'`:
+
+```js
+{
+  action:        'archive',
+  threadId:      'c1735012345-123',
+  threadRemoved: false              // thread kept under data-archived="true", not removed
+}
+```
+
+Approve is gated at the UI level: the kebab's Approve item is hidden unless the thread's last list message carries `data-author-role="agent"`. Consumers set `data-author-role="agent"` on agent-authored `.comment-msg` nodes at render time; kit never classifies messages by itself. The full list of actions in 0.13.0 is `new`, `reply`, `delete`, `approve`, `archive`.
+
 Every `.comment-msg` carries `data-message-id`. Kit stamps it at creation time; consumers pre-rendering server-side HTML can set the attribute to the server's real id and skip the local-to-server mapping layer for seeded threads.
 
 Field names follow JS convention (camelCase). Kit does not know about authentication — servers set the author from session context, not a client-declared field. Kit does not send thread or message ids to the wire; consumers map local ids to server-issued ids through their own state when a persist call returns.
@@ -145,7 +173,7 @@ document.addEventListener('kk:comment', function (e) {
 });
 ```
 
-Full consumer-facing integration surface (Flask, Next.js, Rails snippets; anti-patterns; the enable-or-own decision tree) lives in `docs/integration/comment.md`. `resolve` and edit actions deferred until a consumer asks.
+Full consumer-facing integration surface (Flask, Next.js, Rails snippets; anti-patterns; the enable-or-own decision tree) lives in `docs/integration/comment.md`. Edit actions and re-surface-archived UI deferred until a consumer asks.
 
 ### Integration docs convention
 
