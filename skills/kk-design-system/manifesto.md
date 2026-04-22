@@ -61,7 +61,7 @@ Selection renders inverted — `--color-text` background, `--color-bg` text. No 
 
 ## Foundations — type
 
-Manrope. Variable font, SIL OFL 1.1. Three kit weights (regular 500, medium 500, bold 700), seven sizes (66 → 14 px). No italics outside quotes. Regular sits on Medium — the 400 axis reads too thin on screen at body size.
+Commissioner. Variable font, SIL OFL 1.1. Three kit weights (regular 500, medium 500, bold 700), seven sizes (66 → 14 px). No italics outside quotes. Regular sits on Medium — the 400 axis reads too thin on screen at body size.
 
 ## Foundations — space
 

@@ -1,6 +1,6 @@
 ---
 name: kk-design-system
-description: Agentic Design System by Konstantin Konstantinopolskii. Use when rendering any document, strategy, audit, or UI in the KK system (kk.consulting, Wealthy pipeline, signed deliverables). Enforces the 5-stage pipeline (hypothesis, iteration, contrast, supervision, magic), nine-token palette, Manrope typography, card/field/button inventory, and no-AI-tells voice. Forbidden to invent components or off-grid values.
+description: Agentic Design System by Konstantin Konstantinopolskii. Use when rendering any document, strategy, audit, or UI in the KK system (kk.consulting, Wealthy pipeline, signed deliverables). Enforces the 5-stage pipeline (hypothesis, iteration, contrast, supervision, magic), nine-token palette, Commissioner typography, card/field/button inventory, and no-AI-tells voice. Forbidden to invent components or off-grid values.
 metadata:
   version: 0.1.0
   homepage: https://github.com/konstantinopolskii/kk-agentic-ds

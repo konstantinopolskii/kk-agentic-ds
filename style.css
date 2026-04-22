@@ -1,23 +1,23 @@
 /* =========================================================================
-   Fonts — Manrope, a variable font (SIL OFL 1.1). The kit ships two
+   Fonts — Commissioner, a variable font (SIL OFL 1.1). The kit ships two
    subsetted .woff2 files: Latin covers Western European scripts, Cyrillic
    covers Russian, Ukrainian, Belarusian, and allied scripts. Both files
    carry the full weight axis (200–800); the browser picks the right
    weight per element. font-display: swap keeps the page readable in the
    system fallback while the webfont loads — no invisible text on a
-   cold cache. License ships at fonts/manrope/OFL.txt.
+   cold cache. License ships at fonts/commissioner/OFL.txt.
    ========================================================================= */
 @font-face {
-  font-family: "Manrope";
-  src: url("./fonts/manrope/Manrope-Latin.woff2") format("woff2");
+  font-family: "Commissioner";
+  src: url("./fonts/commissioner/Commissioner-Latin.woff2") format("woff2");
   font-weight: 200 800;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Manrope";
-  src: url("./fonts/manrope/Manrope-Cyrillic.woff2") format("woff2");
+  font-family: "Commissioner";
+  src: url("./fonts/commissioner/Commissioner-Cyrillic.woff2") format("woff2");
   font-weight: 200 800;
   font-style: normal;
   font-display: swap;
