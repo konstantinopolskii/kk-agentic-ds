@@ -142,6 +142,8 @@ Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections
 
 Canonical document ending. Stats + byline + handwritten signature SVG.
 
+`doc__signoff-stats` grids into three columns: two `.stat` blocks, one empty column on the right for asymmetric breathing room. Ship two stats, never three.
+
 ```html
 <div class="doc__signoff-stats">
   <div class="stat t-caption">

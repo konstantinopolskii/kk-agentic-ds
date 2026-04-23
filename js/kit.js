@@ -1121,9 +1121,27 @@
         if (m.type !== 'attributes' || m.attributeName !== 'data-state') return;
         var card = m.target;
         if (!card.classList || !card.classList.contains('card--interactive')) return;
+        var isActive = card.getAttribute('data-state') === 'active';
+
+        // Empty-draft dismiss runs first and independent of thread id.
+        // The demo ships a static .card.comment-new without a
+        // data-thread-id, so a tid gate would skip the only path that
+        // removes the zombie preview on demote.
+        if (!isActive && card.classList.contains('comment-new')) {
+          var inp = card.querySelector('.comment-new__field .field__input');
+          var val = inp ? inp.value.trim() : '';
+          if (!val) {
+            removeDraftAndUnwrapMarks(card);
+            return;
+          }
+          // Snapshot input value into preview in case demote missed
+          // a final 'input' event.
+          var preview = card.querySelector('.comment-new__preview');
+          if (preview) preview.textContent = inp.value;
+        }
+
         var tid = card.getAttribute('data-thread-id');
         if (!tid) return;
-        var isActive = card.getAttribute('data-state') === 'active';
 
         var marks = doc.querySelectorAll('.highlight[data-comment-id="' + tid + '"]');
         marks.forEach(function (span) {
@@ -1133,19 +1151,6 @@
 
         if (isActive && marks.length) {
           marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        if (!isActive && card.classList.contains('comment-new')) {
-          var inp = card.querySelector('.comment-new__field .field__input');
-          var val = inp ? inp.value.trim() : '';
-          if (!val) {
-            removeDraftAndUnwrapMarks(card);
-          } else {
-            // Snapshot input value into preview in case demote missed
-            // a final 'input' event.
-            var preview = card.querySelector('.comment-new__preview');
-            if (preview) preview.textContent = inp.value;
-          }
         }
       });
     });

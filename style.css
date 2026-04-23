@@ -1058,7 +1058,10 @@ body {
   transform-origin: top right;
   animation: menu-in var(--dur-fast) var(--ease-out) both;
 }
-.comment__menu[aria-expanded="true"] ~ .comment__menu-popover {
+/* Button lives inside .comment-msg__header; popover sits one level up as
+   a child of .comment-msg. They are not siblings, so the selector walks
+   through the message and down to the popover. */
+.comment-msg:has(.comment__menu[aria-expanded="true"]) > .comment__menu-popover {
   display: flex;
 }
 @keyframes menu-in {

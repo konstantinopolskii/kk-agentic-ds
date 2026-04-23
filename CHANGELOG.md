@@ -4,13 +4,19 @@ Every release names: what was added, what was removed, what moved. Consumers rea
 
 ## 1.2.0 — 2026-04-23
 
-Pattern discoverer role. The 2026-04-23 patterns-library initiative split kit work into a canon track (atoms and elements in `index.html`) and a pattern registry track (`patterns.html` at repo root, thin index over `demos/<slug>--accepted/`). A discovery pass was missing from the pipeline — stage 7 meta-reviewer ends the product-shaped walk, but no role owns the post-acceptance pattern catalogue. This release adds `kk-role-pattern-discoverer`, wires it into the roster as a post-pipeline pass, and bakes the kit-internal review adaptation (skip 6a, keep 6b + 6c, adjusted 7 rubric) into `pipeline.md` so future kit-internal artefacts route through the right sweep.
+Pattern discoverer role, plus four canon-kit defects surfaced during the first fundamental build. The 2026-04-23 patterns-library initiative split kit work into a canon track (atoms and elements in `index.html`) and a pattern registry track (`patterns.html` at repo root, thin index over `demos/<slug>--accepted/`). A discovery pass was missing from the pipeline — stage 7 meta-reviewer ends the product-shaped walk, but no role owns the post-acceptance pattern catalogue. This release adds `kk-role-pattern-discoverer`, wires it into the roster as a post-pipeline pass, and bakes the kit-internal review adaptation (skip 6a, keep 6b + 6c, adjusted 7 rubric) into `pipeline.md` so future kit-internal artefacts route through the right sweep. The fundamental build also exposed two kit.js behaviour bugs, one canon-doc drift on the signoff pattern, and one token-drift on the color swatches in `index.html`. All four ship in the same bundle.
 
 ### Added
 - `skills/kk-role-pattern-discoverer/SKILL.md` — Sonnet, Jina Anne. Triggered by the `--accepted` suffix on a prototype folder. Slices qualifying compositions to `demos/<slug>--accepted/patterns/<pattern-slug>.html` and appends entries to `patterns.html`. First-accepted wins on cross-prototype dedup. Never edits canon. Full pattern-eligibility rubric (five must-clauses plus disqualifiers) carried in the skill body.
 - `skills/kk-design-system/pipeline.md § Role roster` — pattern-discoverer row (stage column `— (post)`, Jina Anne, Design Systems Conference + W3C Design Tokens citation).
 - `skills/kk-design-system/pipeline.md § Post-pipeline pattern discovery` — new subsection placing the pass outside the eight-stage walk, trigger by `--accepted` stamp, dedup rule, canon read-only constraint.
 - `skills/kk-design-system/pipeline.md § Kit-internal review adaptation` — new subsection. 6a skipped for kit-internal artifacts, 6b and 6c universal, 7 runs on an adjusted rubric that drops the 6a-vs-analyst comparison and adds an artifact-specific completeness item declared at walk start.
+- `skills/kk-design-system/components.md § Signoff` — one-line rule that `doc__signoff-stats` grids into three columns, two `.stat` children plus a trailing empty column for asymmetric breathing room. Ship two stats, never three.
+
+### Fixed
+- `js/kit.js` — empty `comment-new` now dismisses on demote. The MutationObserver bailed on `!tid` before reaching the dismiss branch, so the pre-rendered static demo draft (no `data-thread-id`) became a zombie preview card on blur. Reordered: the empty-draft dismiss runs first and independent of thread id; the highlight-mark branch keeps its tid gate.
+- `style.css` — `.comment__menu-popover` now opens on dots-button click. The old selector `.comment__menu[aria-expanded="true"] ~ .comment__menu-popover` required siblings, but the button sits inside `.comment-msg__header` while the popover is a child of `.comment-msg`. Rewrote as `.comment-msg:has(.comment__menu[aria-expanded="true"]) > .comment__menu-popover`, matching the `:has()` usage already in the file.
+- `index.html § Color` — six swatches (`--color-surface-overlay`, `--color-surface-strong`, `--color-border`, `--color-border-strong`, `--color-text-muted`, `--color-text-subtle`) were emitting raw `rgba(0,0,0,0.X)` inline. Swapped to `var(--color-*)` to match the first two swatches in the list and the fundamental demo.
 
 ### Removed
 - Nothing. Additive release.
@@ -21,7 +27,6 @@ Pattern discoverer role. The 2026-04-23 patterns-library initiative split kit wo
 - `.claude-plugin/plugin.json` version `0.4.0` → `1.2.0`. Bump in lockstep with `package.json` after a drift window across the 1.0.x and 1.1.0 cycles. Plugin `skills` array unchanged — the discoverer is kit-internal, matching the precedent that no `kk-role-*` skill is listed there.
 
 ### Open
-- `plugin.json` version lagged `package.json` from 1.0.0 through 1.1.0. This release re-aligns them; future bumps should move them together per the maintainer skill §Bundle.
 - `patterns.html` not created in this release. Phase 3 of the initiative deploys the discoverer against `demos/fundamental--accepted/`, which creates the file and populates the first entry set.
 
 ## 1.1.0 — 2026-04-23
