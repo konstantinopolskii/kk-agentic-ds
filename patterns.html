@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Patterns — registry of atoms, elements, and patterns</title>
+  <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./vars.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <!-- ================================================================= -->
+    <!-- Sidebar                                                            -->
+    <!-- ================================================================= -->
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Patterns</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Registry</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#atoms">Atoms</a></li>
+            <li class="t-caption"><a href="#elements">Elements</a></li>
+            <li class="t-caption"><a href="#patterns">Patterns</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Sources</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="./index.html">Kit canon</a></li>
+            <li class="t-caption"><a href="./demos/fundamental--accepted/index.html">Fundamental</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        Patterns registry
+      </footer>
+    </aside>
+
+    <!-- ================================================================= -->
+    <!-- Doc                                                                -->
+    <!-- ================================================================= -->
+    <main class="doc" id="doc">
+      <h1 class="t-hero">Patterns</h1>
+
+      <p class="doc__intro t-body">
+        The registry points at real patterns living in real prototypes.
+        Atoms and elements link to their instance in the source demo.
+        Patterns add a sliced fragment behind a disclosure.
+      </p>
+      <p class="doc__intro t-body">
+        Source of truth for every entry is the demo it points to. The
+        registry stores no markup, only references.
+      </p>
+
+      <!-- ================== ATOMS ======================================= -->
+
+      <article class="doc__section" id="atoms">
+        <h2 class="t-display">
+          Atoms<br />
+          <span class="t-display--medium t-muted">Single-purpose primitives</span>
+        </h2>
+        <p class="t-body">
+          An atom is the smallest part the kit owns. One token, one
+          utility, one control. Atoms compose into elements and
+          patterns; they do not stand as patterns themselves.
+        </p>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Type utilities</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#opening"><span class="t-mono">.t-hero</span></a></dt>
+              <dd class="doc__spec-value">Document title. 66 / 66.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#opening"><span class="t-mono">.t-display</span></a></dt>
+              <dd class="doc__spec-value">Section heading. 38 / 38.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.t-title</span></a></dt>
+              <dd class="doc__spec-value">Card heading. 22 / 28.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#reading"><span class="t-mono">.t-subtitle</span></a></dt>
+              <dd class="doc__spec-value">Nav header, spec key. 18 / 24.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#reading"><span class="t-mono">.t-body</span></a></dt>
+              <dd class="doc__spec-value">Long-form reading text. 22 / 32.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#reading"><span class="t-mono">.t-caption</span></a></dt>
+              <dd class="doc__spec-value">UI label, body inside cards. 16 / 24.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#reading"><span class="t-mono">.t-micro</span></a></dt>
+              <dd class="doc__spec-value">Caption, citation, metadata. 14 / 20.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#opening"><span class="t-mono">.t-mono</span></a></dt>
+              <dd class="doc__spec-value">Inline tokens, numeric values, code.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#opening"><span class="t-mono">.t-muted</span></a></dt>
+              <dd class="doc__spec-value">Metadata color for bylines, captions, subheads.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#lists"><span class="t-mono">.t-list</span></a></dt>
+              <dd class="doc__spec-value">Ordered or unordered list body type.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#lists"><span class="t-mono">.aside</span></a></dt>
+              <dd class="doc__spec-value">Softer inline beat, one notch smaller.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Color tokens</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-bg</span></a></dt>
+              <dd class="doc__spec-value">Primary background.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-bg-muted</span></a></dt>
+              <dd class="doc__spec-value">Soft frame outside the app.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-surface-overlay</span></a></dt>
+              <dd class="doc__spec-value">3% overlay. Hover, focus, active.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-surface-strong</span></a></dt>
+              <dd class="doc__spec-value">Row hover, button rest.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-border</span></a></dt>
+              <dd class="doc__spec-value">Hairline divider.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-border-strong</span></a></dt>
+              <dd class="doc__spec-value">Focus ring, deeper rule.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-text</span></a></dt>
+              <dd class="doc__spec-value">Primary text. Pure black.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-text-muted</span></a></dt>
+              <dd class="doc__spec-value">Byline, caption, hairline.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">--color-text-subtle</span></a></dt>
+              <dd class="doc__spec-value">Placeholder, softest label.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Space tokens</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#space"><span class="t-mono">--space-1 … --space-20</span></a></dt>
+              <dd class="doc__spec-value">Twelve steps on a 4px grid, from tag gaps to end-of-document margins.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Motion tokens</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#motion"><span class="t-mono">--ease-out</span></a></dt>
+              <dd class="doc__spec-value">Hover, focus, state flip.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#motion"><span class="t-mono">--ease-spring</span></a></dt>
+              <dd class="doc__spec-value">Switch thumb, small confirmation.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#motion"><span class="t-mono">--ease-swing</span></a></dt>
+              <dd class="doc__spec-value">Long reveal, column arrival.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#motion"><span class="t-mono">--ease-in-out</span></a></dt>
+              <dd class="doc__spec-value">Motion that continues past the frame.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Controls</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#buttons"><span class="t-mono">.button</span></a></dt>
+              <dd class="doc__spec-value">Secondary default, primary for commit.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#tags"><span class="t-mono">.tag</span></a></dt>
+              <dd class="doc__spec-value">Metadata label. Inline or block.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#switches"><span class="t-mono">.switch</span></a></dt>
+              <dd class="doc__spec-value">Binary toggle for instant commits.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#fields"><span class="t-mono">.field__input</span></a></dt>
+              <dd class="doc__spec-value">Text input, rest and focus.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#deck"><span class="t-mono">.deck-card</span></a></dt>
+              <dd class="doc__spec-value">Single card in a deck.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">.comment-msg</span></dt>
+              <dd class="doc__spec-value">Author, body, kebab. One message.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">.fab</span></dt>
+              <dd class="doc__spec-value">Floating action button. Narrow-view trigger.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Prose primitives</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#figures"><span class="t-mono">.quote</span></a></dt>
+              <dd class="doc__spec-value">Blockquote with italic body and cite line.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#figures"><span class="t-mono">.figure</span></a></dt>
+              <dd class="doc__spec-value">Image with figcaption.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#signoff"><span class="t-mono">.doc__signoff-signature-img</span></a></dt>
+              <dd class="doc__spec-value">Handwritten signature, right-hand rail.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- ================== ELEMENTS ==================================== -->
+
+      <article class="doc__section" id="elements">
+        <h2 class="t-display">
+          Elements<br />
+          <span class="t-display--medium t-muted">Atoms composed into single-purpose units</span>
+        </h2>
+        <p class="t-body">
+          An element binds two or three atoms into one unit with one
+          job. A card with a heading. A field with a label. A stat
+          that pairs a number with a sentence.
+        </p>
+
+        <div class="card">
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.card</span></a></dt>
+              <dd class="doc__spec-value">Static surface. Transparent at rest, 3% on touch.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.card--tight</span></a></dt>
+              <dd class="doc__spec-value">Smaller inset. For dense stacks.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.card--shout</span></a></dt>
+              <dd class="doc__spec-value">Inverted surface. Black ground, white content.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.card--heading</span></a></dt>
+              <dd class="doc__spec-value">Display title sitting above a group of cards.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#stack"><span class="t-mono">.card--interactive</span></a></dt>
+              <dd class="doc__spec-value">Card with a collapsible body and two CTAs.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#cards"><span class="t-mono">.card__heading</span></a></dt>
+              <dd class="doc__spec-value">Title plus optional caption inside a card.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#fields"><span class="t-mono">.field--row</span></a></dt>
+              <dd class="doc__spec-value">Label on the left, value on the right. One row.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#color"><span class="t-mono">.swatch</span></a></dt>
+              <dd class="doc__spec-value">Color dot paired with its token name.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><a href="./demos/fundamental--accepted/index.html#signoff"><span class="t-mono">.stat</span></a></dt>
+              <dd class="doc__spec-value">Bold number followed by a one-line fact.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- ================== PATTERNS ==================================== -->
+
+      <article class="doc__section" id="patterns">
+        <h2 class="t-display">
+          Patterns<br />
+          <span class="t-display--medium t-muted">Reusable compositions with a nameable function</span>
+        </h2>
+        <p class="t-body">
+          A pattern composes two or more atoms or elements into one
+          reusable shape. Each entry links to the source demo and
+          opens a sliced fragment in the disclosure below.
+        </p>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Three-column shell</h3>
+            <p class="t-caption">Sidebar on the left, doc in the middle, inspector on the right.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/three-column-shell.html"><span class="t-mono">patterns/three-column-shell.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/three-column-shell.html" title="Three-column shell preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Sidebar nav</h3>
+            <p class="t-caption">Grouped nav items with a scroll-spy indicator tracking the active section.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/sidebar-nav.html"><span class="t-mono">patterns/sidebar-nav.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/sidebar-nav.html" title="Sidebar nav preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Doc section</h3>
+            <p class="t-caption">Display heading, body paragraph, one example card.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html#buttons">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/doc-section.html"><span class="t-mono">patterns/doc-section.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame" src="./demos/fundamental--accepted/patterns/doc-section.html" title="Doc section preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Spec list</h3>
+            <p class="t-caption">Key and description rows. Three variants: plain, value, triple.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html#space">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/spec-list.html"><span class="t-mono">patterns/spec-list.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/spec-list.html" title="Spec list preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Card stack</h3>
+            <p class="t-caption">Interactive cards stacked vertically. One active, the rest minimized.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html#stack">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/card-stack.html"><span class="t-mono">patterns/card-stack.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/card-stack.html" title="Card stack preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Deck in shout</h3>
+            <p class="t-caption">Horizontal deck of cards fanned back in perspective, set on a shout surface.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html#deck">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/deck-in-shout.html"><span class="t-mono">patterns/deck-in-shout.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame" src="./demos/fundamental--accepted/patterns/deck-in-shout.html" title="Deck in shout preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Inspector group</h3>
+            <p class="t-caption">Heading card above a stack of interactive cards inside the right-hand column.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/inspector-group.html"><span class="t-mono">patterns/inspector-group.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/inspector-group.html" title="Inspector group preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Comment thread</h3>
+            <p class="t-caption">Preview of first and last messages, full thread and reply field in the collapsible.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/comment-thread.html"><span class="t-mono">patterns/comment-thread.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/comment-thread.html" title="Comment thread preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Resolved comment thread</h3>
+            <p class="t-caption">Minimized preview with a check stamp, snippet, and byline.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/comment-thread-resolved.html"><span class="t-mono">patterns/comment-thread-resolved.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame" src="./demos/fundamental--accepted/patterns/comment-thread-resolved.html" title="Resolved comment thread preview" loading="lazy"></iframe>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Signoff</h3>
+            <p class="t-caption">Stat pairs on the left rail, byline and signature on the right.</p>
+          </div>
+          <p class="t-caption">
+            Source: <a href="./demos/fundamental--accepted/index.html#signoff">fundamental</a>.
+            Slice: <a href="./demos/fundamental--accepted/patterns/signoff.html"><span class="t-mono">patterns/signoff.html</span></a>.
+          </p>
+          <details class="registry-disclosure">
+            <summary class="t-caption--bold">Preview</summary>
+            <iframe class="registry-frame" src="./demos/fundamental--accepted/patterns/signoff.html" title="Signoff preview" loading="lazy"></iframe>
+          </details>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <script src="./js/kit.js"></script>
+</body>
+</html>

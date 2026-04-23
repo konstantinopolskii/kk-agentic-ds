@@ -393,6 +393,30 @@ body {
 }
 
 /* =========================================================================
+   Registry surfaces — iframe previews and disclosure wrappers used on
+   patterns.html and any kit doc that embeds component or pattern slices.
+   Document-surface primitives, not component variants.
+   ========================================================================= */
+.registry-frame {
+  width: 100%;
+  height: 480px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  margin-top: var(--space-4);
+}
+.registry-frame--tall { height: 640px; }
+
+/* Disclosure — minimal styling for <details> wrappers in kit docs.
+   Hides the default browser marker and adds a consistent top margin. */
+.registry-disclosure { margin-top: var(--space-3); }
+.registry-disclosure > summary {
+  cursor: pointer;
+  list-style: none;
+}
+.registry-disclosure > summary::-webkit-details-marker { display: none; }
+
+/* =========================================================================
    Inspector — right panel, card-based, content is flexible
    ========================================================================= */
 .inspector {

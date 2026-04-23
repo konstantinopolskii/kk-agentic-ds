@@ -12,6 +12,8 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 - `skills/kk-design-system/pipeline.md § Post-pipeline pattern discovery` — new subsection placing the pass outside the eight-stage walk, trigger by `--accepted` stamp, dedup rule, canon read-only constraint.
 - `skills/kk-design-system/pipeline.md § Kit-internal review adaptation` — new subsection. 6a skipped for kit-internal artifacts, 6b and 6c universal, 7 runs on an adjusted rubric that drops the 6a-vs-analyst comparison and adds an artifact-specific completeness item declared at walk start.
 - `skills/kk-design-system/components.md § Signoff` — one-line rule that `doc__signoff-stats` grids into three columns, two `.stat` children plus a trailing empty column for asymmetric breathing room. Ship two stats, never three.
+- `style.css § Registry surfaces` — `.registry-frame` + `.registry-frame--tall` + `.registry-disclosure` primitives for iframe pattern previews and collapsed-by-default disclosures in kit docs.
+- `skills/kk-design-system/components.md § Registry surfaces` — new section documenting the three classes + modifier.
 
 ### Fixed
 - `js/kit.js` — empty `comment-new` now dismisses on demote. The MutationObserver bailed on `!tid` before reaching the dismiss branch, so the pre-rendered static demo draft (no `data-thread-id`) became a zombie preview card on blur. Reordered: the empty-draft dismiss runs first and independent of thread id; the highlight-mark branch keeps its tid gate.

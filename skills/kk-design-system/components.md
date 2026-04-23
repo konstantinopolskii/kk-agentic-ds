@@ -191,6 +191,30 @@ The workhorse for key/value rows inside a card. Three shapes:
 <dl class="doc__spec doc__spec--triple">...</dl>
 ```
 
+## Registry surfaces
+
+Document-surface primitives for kit docs that embed component or pattern slices. Used on `patterns.html` and any future registry page.
+
+```html
+<!-- Iframe preview of a kit slice. -->
+<iframe class="registry-frame" src="./demos/fundamental--accepted/patterns/some-slice.html" title="Slice preview"></iframe>
+
+<!-- Taller preview for patterns that need more vertical room. -->
+<iframe class="registry-frame registry-frame--tall" src="./demos/fundamental--accepted/patterns/tall-slice.html" title="Tall slice preview"></iframe>
+
+<!-- Collapsed-by-default disclosure. No browser marker. -->
+<details class="registry-disclosure">
+  <summary class="t-caption">Show markup</summary>
+  <pre class="t-micro"><code>...</code></pre>
+</details>
+```
+
+Rules:
+- `.registry-frame` carries its own top margin, border, and radius. No wrapping card needed.
+- `--tall` is the only height modifier. If a slice still overflows, split it, do not invent a taller frame.
+- `.registry-disclosure` hides the default `<details>` marker. The summary owns its own affordance via copy.
+- Kit docs only. Product prose does not render iframes.
+
 ## Patterns
 
 ### Three columns (default shell)
@@ -215,7 +239,7 @@ Below ~800px: doc becomes the single column, inspector slides over, sidebar coll
 
 ## What's forbidden
 
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `doc`, `nav-group`, `inspector`, `comment`, `stat`, `tag`, `swatch`, `app`.
+- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `doc`, `nav-group`, `inspector`, `comment`, `stat`, `tag`, `swatch`, `app`, `registry`.
 - Inline styles for tokens. Use `var(--token-name)`.
 - New color, spacing, or radius values outside `tokens.json`.
 - Drop shadows, glass, blur, gradients.
