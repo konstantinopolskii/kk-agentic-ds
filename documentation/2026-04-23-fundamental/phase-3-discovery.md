@@ -3,7 +3,7 @@ session: 2026-04-23-fundamental
 stage: post-pipeline
 role: pattern-discoverer
 input: demos/fundamental--accepted/index.html
-output: patterns.html + 10 slices
+output: patterns.html + 11 slices
 gate: no gate (post-pipeline)
 ---
 
@@ -61,6 +61,7 @@ First run of the discoverer. `fundamental` is the first accepted prototype, so e
 - Inspector group — `demos/fundamental--accepted/index.html:739` → `demos/fundamental--accepted/patterns/inspector-group.html`.
 - Comment thread — `demos/fundamental--accepted/index.html:834` → `demos/fundamental--accepted/patterns/comment-thread.html`.
 - Resolved comment thread — `demos/fundamental--accepted/index.html:918` → `demos/fundamental--accepted/patterns/comment-thread-resolved.html`.
+- Comments group — `demos/fundamental--accepted/index.html:826` → `demos/fundamental--accepted/patterns/comments-group.html`. Full inspector section: `.card--heading` titled "Comments" above the `comment-stack` with open, resolved, and archived threads side by side. Distinct from the single-thread patterns because the heading plus the tri-state stack is the composition a consumer reuses; picking `comment-thread` alone ships one state and loses the section frame.
 - Signoff — `demos/fundamental--accepted/index.html:709` → `demos/fundamental--accepted/patterns/signoff.html`.
 
 ## Rejected candidates

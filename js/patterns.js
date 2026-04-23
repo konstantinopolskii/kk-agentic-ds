@@ -1,11 +1,11 @@
 /* patterns.js — local behavioural layer for patterns.html only.
  *
  * Wires the pattern registry's click-to-preview flow:
- *   - any element with [data-preview-src] becomes a trigger
+ *   - scoped to [data-preview-src] under #patterns — atoms + elements
+ *     live in tables and navigate via target="_blank", not the inspector
  *   - clicking a trigger sets src on the inspector's
  *     <iframe data-preview-target> and flips data-state="active" on
- *     the trigger, demoting any sibling trigger inside the same
- *     doc__section to nothing.
+ *     the trigger, demoting any sibling trigger to nothing.
  *
  * This file is loaded only by patterns.html. The maintainer may
  * promote the handler into kit.js as a generic [data-preview-src]
@@ -19,7 +19,10 @@
     var frame = document.querySelector('iframe[data-preview-target]');
     if (!frame) return;
 
-    var triggers = document.querySelectorAll('[data-preview-src]');
+    var scope = document.querySelector('#patterns');
+    if (!scope) return;
+
+    var triggers = scope.querySelectorAll('[data-preview-src]');
     if (!triggers.length) return;
 
     function setActive(el) {
@@ -36,13 +39,13 @@
       if (label) frame.setAttribute('title', label + ' preview');
     }
 
-    document.addEventListener('click', function (e) {
+    scope.addEventListener('click', function (e) {
       // Escape hatch — the "Open in new tab" link inside a card must
       // not drive the inspector; let the native anchor behaviour win.
       if (e.target.closest('[data-preview-escape]')) return;
 
       var trigger = e.target.closest('[data-preview-src]');
-      if (!trigger) return;
+      if (!trigger || !scope.contains(trigger)) return;
       e.preventDefault();
       var src = trigger.getAttribute('data-preview-src');
       var label = trigger.getAttribute('data-preview-label') || '';
@@ -53,8 +56,7 @@
     // Default preview on first paint. The first [data-preview-default]
     // trigger wins; fall back to the first [data-preview-src] in the
     // patterns section if no default is flagged.
-    var initial = document.querySelector('[data-preview-default]')
-               || document.querySelector('#patterns [data-preview-src]')
+    var initial = scope.querySelector('[data-preview-default]')
                || triggers[0];
     if (initial) {
       load(
