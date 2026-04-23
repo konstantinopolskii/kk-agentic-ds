@@ -10,9 +10,7 @@ A body paragraph. The renderer wraps it in `<p class="t-body">`. The surrounding
 
 Short body under a card-level heading. Links render inline: the [fundamental demo](../fundamental--accepted/index.html) lives next door, and the [patterns registry](../../patterns.html) sits at the repo root.
 
-#### Subtitle-level heading
-
-Inline code uses backticks. The class map sends `h1` to `t-hero`, `h2` to `t-display`, `h3` to `t-title`, and `h4` to `t-subtitle`.
+Inline code uses backticks. Under the article's `data-md-heading-offset="2"` contract, source `#` lands at t-title, `##` at t-subtitle, and `###` demotes to caption-bold because the kit has no rank below subtitle.
 
 ## Lists
 
