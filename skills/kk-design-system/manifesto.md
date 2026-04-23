@@ -112,6 +112,12 @@ Label-list pairs fall under rule 14 too. A paragraph ending in `:` followed by a
 
 Rule 12 ratio floor in practice: top margin ≥ 2× bottom margin on any heading sitting inside a dense text column. 1.5:1 reads roughly equal at the 0.2-second bar; 2:1 reads as clear lead.
 
+Markdown embedded inside a `data-md-src` article renders with heading levels shifted +1 by default. An author writes `#` for their file's top heading and the shell places it at the article's h2 rank — the page already carries its own h1 and the part heading already owns hero size, so a second hero inside the article collapses the hierarchy. A container opts out with `data-md-heading-offset="0"` when the markdown file is the page root. Shifted levels cap at h4 so the kit class map always resolves.
+
+Quotes render black, Medium 500, italic. The italic face carries the citation. Muting the colour would bury the quote against surrounding body and contradict the no-muted-by-default rule. A quote is content, not metadata.
+
+Raw HTML blocks embedded in prose carry a muted caption line above naming what the block is, for example `<p class="t-caption t-muted">Example</p>`. Without the caption the embedded block competes with section headings for attention and reads as a standalone callout rather than an illustration of what the pattern looks like.
+
 ### Radii
 
 Two radii plus one pill alias. 12px for buttons, tiers, switches, fields. 24px for cards and anything that holds content. 9999px for pills: switch thumbs, avatars, scrollbars. A third canonical radius is forbidden.

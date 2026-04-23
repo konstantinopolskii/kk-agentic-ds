@@ -1,4 +1,4 @@
-# Sample B
+# Dense blocks
 
 Exercises the denser block types. Tables render with `registry-table`. Blockquotes render with `quote`. Code fences render `pre > code` with `t-mono`.
 
@@ -30,4 +30,4 @@ KK.enableCommentSelectionFlow();
 
 A paragraph below a horizontal rule. The rule above renders from `---` on its own line.
 
-> A second blockquote. Renders with the kit's `quote` class — hairline rule on the left, muted colour, italic face.
+> A second blockquote. Renders with the kit's `quote` class: hairline rule on the left, black body colour, italic face.

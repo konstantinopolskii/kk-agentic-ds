@@ -1,4 +1,4 @@
-# Sample A
+# Core prose path
 
 Exercises the core prose path. Every heading level, body paragraphs, unordered and ordered lists, internal and external links, and inline code spans.
 

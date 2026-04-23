@@ -74,6 +74,8 @@ One page or one flow per session. If the direction doc covers more, build only t
 
 Every new doc surface honours Lebedev's fourteen rules — core principle **inner ≤ outer**. Headings sit closer to the paragraph they lead than to the paragraph they trail (rule 12). Heading-to-paragraph spacing equals or exceeds the heading's own line-height (rule 13). Page outer margins stay at or above the body line-height (rule 9). List item padding exceeds body line-height (rule 10). Full canon lives in `../kk-design-system/manifesto.md § Typography rhythm`. Read it before building; measure before shipping.
 
+Three kit contracts sit alongside the fourteen rules. Markdown rendered inside a `data-md-src` article shifts heading levels by +1 so the article's top heading lands at h2 rank, not h1 — the page hierarchy owns one hero per scroll. Quotes render black, Medium 500, italic; muting a quote buries it against its own citation. Raw HTML embedded in prose carries a `t-caption t-muted` caption line above (e.g. `Example`) so the block reads as illustration, not as a standalone callout competing with section headings.
+
 ## What you do not do
 
 - Paraphrase or rewrite designer copy. It ships as typed.

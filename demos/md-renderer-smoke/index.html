@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>md.js smoke test — kit shell</title>
+  <title>Markdown renderer smoke test</title>
   <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../vars.css">
   <link rel="stylesheet" href="../../style.css">
@@ -12,7 +12,7 @@
   <div class="app" data-view="doc">
 
     <aside class="sidebar" aria-label="Navigation">
-      <div class="sidebar__header t-title">Smoke</div>
+      <div class="sidebar__header t-title">Renderer</div>
 
       <nav class="sidebar__nav" id="toc">
         <span class="toc__indicator" aria-hidden="true"></span>
@@ -20,21 +20,20 @@
         <section class="nav-group">
           <h3 class="t-subtitle">Samples</h3>
           <ul class="nav-group__items">
-            <li class="t-caption"><a href="#sample-a">Sample A</a></li>
-            <li class="t-caption"><a href="#sample-b">Sample B</a></li>
-            <li class="t-caption"><a href="#sample-c">Sample C</a></li>
+            <li class="t-caption"><a href="#sample-a">Core prose path</a></li>
+            <li class="t-caption"><a href="#sample-b">Dense blocks</a></li>
+            <li class="t-caption"><a href="#sample-c">Raw HTML passthrough</a></li>
           </ul>
         </section>
       </nav>
 
       <footer class="sidebar__footer t-caption">
-        md.js renderer<br />
-        real kit shell preview
+        md.js renderer
       </footer>
     </aside>
 
     <main class="doc" id="doc">
-      <h1 class="t-hero">md.js smoke test</h1>
+      <h1 class="t-hero">Markdown renderer smoke test</h1>
 
       <p class="doc__intro t-body">
         Three articles below, each fed by a different <code class="t-mono">data-md-src</code>.
@@ -69,7 +68,7 @@
         </div>
         <div class="card">
           <div class="card__heading">
-            <h3 class="t-title">Console</h3>
+            <h3 class="t-title">Watch for errors</h3>
             <p class="t-caption">Open devtools. <code class="t-mono">kk:md-rendered</code> fires once per article. Zero errors.</p>
           </div>
         </div>

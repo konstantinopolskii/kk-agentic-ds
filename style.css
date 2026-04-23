@@ -424,6 +424,40 @@ body {
   margin-top: var(--space-2);
 }
 
+/* Subtitle (h4) below-gap lifted from 40 to 48 to clear the cramped
+   read flagged by Jobs round 2. Subtitle line-height 24; 40 meets
+   rule 13 at the floor, 48 reads as breathing room. Top gap on the
+   next rule steps up to 96 (80 + 16) so rule 12's 2:1 floor still
+   holds (96/48 = 2:1). Targeted to h4 + * pairs inside .doc__section
+   so other headings keep the baseline 80/40 rhythm. */
+.doc__section > .t-subtitle + *,
+.doc__section > h4 + * {
+  margin-top: var(--space-12);
+}
+.doc__section > * + .t-subtitle,
+.doc__section > * + h4 {
+  margin-top: calc(var(--space-20) + var(--space-4));
+}
+
+/* Horizontal rule — pure separator. Rule 14: outer breathing on both
+   sides clears inner section rhythm so the line reads as "end of
+   block, start of block", not as lead-in to the heading beneath.
+   Symmetric 60 above + 60 below overrides both `* + *` (20 above)
+   and `* + h2` (80 below next heading) so the HR owns its own space.
+   Border drops the browser default inset shading; the hairline matches
+   other kit separators. */
+.doc__section > hr,
+.doc__section > * + hr {
+  margin-top: var(--space-15);
+  margin-bottom: 0;
+  border: 0;
+  border-top: 0.5px solid var(--color-border);
+  height: 0;
+}
+.doc__section > hr + * {
+  margin-top: var(--space-15);
+}
+
 
 /* Part heading — separates one major part from the next. Hero
    size, same as the document's own title. Sections underneath sit
@@ -1720,15 +1754,18 @@ body {
 .deck-card.active { cursor: pointer; }
 
 /* =========================================================================
-   Quote — italic, muted, a 0.5px hairline on the left. Same weight as
-   every other hairline in the system. A quote is a quiet citation of
-   someone else's voice, not a display banner.
+   Quote — italic, black, Medium 500. A 0.5px hairline on the left, same
+   weight as every other hairline in the system. The italic face carries
+   the citation; muting the colour would contradict the no-muted-by-
+   default rule and bury a quote against its surrounding body. A quote
+   is content, not metadata.
    ========================================================================= */
 .quote {
   padding: 0 0 0 var(--space-3);
   border-left: 0.5px solid var(--color-border-strong);
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-style: italic;
+  font-weight: var(--fw-regular);
   margin: 0;
 }
 .quote > cite {
