@@ -304,7 +304,11 @@ body {
    ========================================================================= */
 .doc {
   background: var(--color-bg);
-  padding: var(--space-4) var(--doc-pad-right) var(--space-20) var(--doc-pad-left);
+  /* Top padding rides the body line-height (32 px) per Lebedev's rule 9:
+     outer page margin ≥ body line-height. `--doc-pad-left` clamp floors
+     at 32 px too, so the text block breathes symmetrically at minimum
+     viewport. Bottom holds at 80 px for a long final rest. */
+  padding: var(--space-8) var(--doc-pad-right) var(--space-20) var(--doc-pad-left);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -320,7 +324,9 @@ body {
 }
 .doc__intro {
   max-width: 612px;
-  padding-top: var(--space-3);
+  /* Hero-to-intro distance must clear the hero's line-height (66 px) per
+     Lebedev rule 13. `.doc` gap (12) + this padding (60) = 72 ≥ 66. */
+  padding-top: var(--space-15);
 }
 .doc__signoff {
   padding-top: var(--space-3);
@@ -357,9 +363,34 @@ body {
   border-top: 0.5px solid var(--color-border);
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
   max-width: 612px;
   scroll-margin-top: var(--space-5);
+}
+/* Internal rhythm — asymmetric per Lebedev's rules 12, 13, 14.
+   Paragraph-to-paragraph (inner): 20 px. Heading-to-following-paragraph
+   (rule 13): matches or exceeds the heading's line-height. Preceding-
+   paragraph-to-heading (rule 12): visibly greater than the space below,
+   so the heading groups with what it introduces, not what it trails.
+   Outer section-to-section: 52 px (margin 20 + padding 32) > 20 px inner
+   — rule 14 holds. */
+.doc__section > * + * {
+  margin-top: var(--space-5);
+}
+.doc__section > .t-hero + * {
+  margin-top: var(--space-20);
+}
+.doc__section > .t-display + *,
+.doc__section > .t-title + *,
+.doc__section > .t-subtitle + * {
+  margin-top: var(--space-10);
+}
+.doc__section > * + .t-hero {
+  margin-top: var(--space-20);
+}
+.doc__section > * + .t-display,
+.doc__section > * + .t-title,
+.doc__section > * + .t-subtitle {
+  margin-top: var(--space-15);
 }
 
 /* Part heading — separates one major part from the next. Hero
@@ -383,7 +414,11 @@ body {
 .doc__part + .doc__section {
   border-top: none;
   margin-top: 0;
-  padding-top: var(--space-6);
+  /* Part heading is hero-sized (66 px line-height). Rule 13 demands the
+     first section content sits ≥ 66 px below. 80 px padding + 12 px
+     parent flex gap = 92 px. Hairline is intentionally suppressed so
+     the section sits under the part without a second divider. */
+  padding-top: var(--space-20);
 }
 .stat {
   display: flex;

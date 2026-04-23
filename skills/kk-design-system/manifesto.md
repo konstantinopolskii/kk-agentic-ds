@@ -79,6 +79,35 @@ Regular sits on Medium 500 because the 400 axis reads too thin on screen at body
 
 All gaps, padding, margins snap to multiples of 4. Larger jumps mean larger semantic distance. A 13 px gap means we need a different component. Off-grid fails the linter.
 
+### Typography rhythm
+
+Source: Artemy Lebedev, Bureau, "Rule of Inner and Outer" (bureau.ru/soviet/20140818/).
+
+Core principle: **inner ≤ outer**. Space inside a group never exceeds space between groups. When that relation inverts, the eye mis-parses structure and the page reads wrong.
+
+Fourteen rules. Each is canonical on every doc surface rendered in the kit.
+
+1. Capitals require letter-spacing.
+2. Lowercase never carries letter-spacing.
+3. Vertical strokes align at equal intervals.
+4. Letter-spacing of capitals stays below their line-height.
+5. Line-spacing between capital lines equals or exceeds cap height.
+6. Line-height exceeds word-spacing.
+7. Descenders nearly touch ascenders at minimum line-height.
+8. Longer lines require greater line-height.
+9. Line-height stays at or below outer page margins.
+10. List item spacing exceeds line-height.
+11. Page numbers sit closer to the text block than to the page edge.
+12. Headings sit closer to the following paragraph than to the previous.
+13. Heading-to-paragraph spacing equals or exceeds the heading's own line-height.
+14. Inner spacing stays at or below outer spacing. The core relation, restated.
+
+Rule 12 bites hardest in practice. A heading with equal top and bottom margins visually groups with the wrong paragraph. Fix: top margin greater than bottom, so the heading visibly leads what follows.
+
+Rule 13 is the second most-broken: a heading whose next line sits closer than its own line-height reads as cramped. Measure the heading's line-height, set the space below to at least that value.
+
+Rule 14 audits any vertical list of values. If the padding inside a card exceeds the space between cards, the cards fail to group. Same for section body versus section separator.
+
 ### Radii
 
 Two radii plus one pill alias. 12px for buttons, tiers, switches, fields. 24px for cards and anything that holds content. 9999px for pills: switch thumbs, avatars, scrollbars. A third canonical radius is forbidden.

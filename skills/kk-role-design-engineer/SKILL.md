@@ -28,7 +28,7 @@ Read only the sections named.
 
 - `../kk-design-system/components.md` — full file
 - `../kk-design-system/tokens.json` — color, space, radius, type
-- `../kk-design-system/manifesto.md` — §Foundations (space, type, radii, motion), §Runtime
+- `../kk-design-system/manifesto.md` — §Foundations (space, type, typography rhythm, radii, motion), §Runtime
 - `../kk-design-system/patterns/*.md` — patterns matching the assigned blocks
 - `../kk-design-system/voice.md` — full file (verify every copy string you carry passes, and every dummy string you write passes)
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Role roster, §Agent communication protocol
@@ -69,6 +69,10 @@ Build one pattern block, save the file, move to the next. The prototype grows bl
 ### 7. Vertical slice
 
 One page or one flow per session. If the direction doc covers more, build only the page or flow the session opened with. Additional pages run as separate sessions.
+
+### 8. Typography rhythm
+
+Every new doc surface honours Lebedev's fourteen rules — core principle **inner ≤ outer**. Headings sit closer to the paragraph they lead than to the paragraph they trail (rule 12). Heading-to-paragraph spacing equals or exceeds the heading's own line-height (rule 13). Page outer margins stay at or above the body line-height (rule 9). List item padding exceeds body line-height (rule 10). Full canon lives in `../kk-design-system/manifesto.md § Typography rhythm`. Read it before building; measure before shipping.
 
 ## What you do not do
 
