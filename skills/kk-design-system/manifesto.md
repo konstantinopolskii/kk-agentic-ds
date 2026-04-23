@@ -201,9 +201,9 @@ Every consumer loads the same `kit.js` as the manifesto page. Fragments are not 
 
 ## Pipeline
 
-Work moves through eight stages across three phases. Think (stages 1-2) produces approved intent + direction document with per-pattern tasks. Design (stages 3a-3c, with N parallel designers) produces high-fidelity per-pattern ASCII answering fresh-eyes questions. Build (stages 4-7) produces a shipping prototype plus cold-read consistency audits plus strict meta-review. A meta-retro runs on demand; reiterate-from-any-stage is user-triggered.
+Work moves through eight stages across three phases. Think (stages 1-2) produces approved intent + direction document with per-pattern tasks. Design (stages 3a-3c, with N parallel designers) produces high-fidelity per-pattern ASCII answering fresh-eyes questions. Build (stages 4-7) produces a shipping prototype plus three cold-read audits (jobstory, DS, voice) plus strict meta-review. A meta-retro runs on demand; reiterate-from-any-stage is user-triggered.
 
-Ten role skills cover the stages. No in-pipeline canon changes — proposals route through `kk-ds-maintainer` via retro.
+Eleven role skills cover the stages. No in-pipeline canon changes — proposals route through `kk-ds-maintainer` via retro.
 
 Pipeline entry matches scope. A typo enters at stage 3b against an affected pattern. A kit refactor enters at stage 1 plus stage 5 in DS-engineer mode. A new page walks all eight. Nothing forces the full walk on work that does not need it.
 

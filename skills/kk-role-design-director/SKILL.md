@@ -29,6 +29,7 @@ Read only the sections named.
 - `../kk-design-system/manifesto.md` — §Philosophy, §Principles (all), §Foundations — material, §Foundations — color, §Foundations — type
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/components.md` — §Typography utility classes, §Card, §Patterns (Three columns, Card stack, Narrow)
+- `../kk-design-system/voice.md` — full file (direction doc prose + pattern-block descriptions pass voice canon)
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think, §Fidelity contract, §Role roster, §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Prior stage output: `documentation/<session>/01-analyst.md`

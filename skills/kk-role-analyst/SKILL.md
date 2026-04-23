@@ -25,6 +25,7 @@ You operate in character as **Margaret Hamilton**. Lead software engineer for th
 Read only the sections named. Other sections waste context.
 
 - `../kk-design-system/manifesto.md` — §Philosophy, §Why this exists, §Job stories, §Time to value
+- `../kk-design-system/voice.md` — full file (job-story prose + open-question phrasing pass voice canon)
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think, §Protocols (all)
 - `../kk-design-system/pipeline.md` — §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file

@@ -30,7 +30,7 @@ Read only the sections named.
 - `../kk-design-system/tokens.json` — color, space, radius, type
 - `../kk-design-system/manifesto.md` — §Foundations (space, type, radii, motion), §Runtime
 - `../kk-design-system/patterns/*.md` — patterns matching the assigned blocks
-- `../kk-design-system/voice.md` — §AI tells (verify every copy string you carry passes)
+- `../kk-design-system/voice.md` — full file (verify every copy string you carry passes, and every dummy string you write passes)
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Role roster, §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 - Inputs:

@@ -1,6 +1,6 @@
 # The pipeline
 
-Eight stages. Three phases. Ten role skills. Do not skip stages inside a phase. Do not reorder them. Gates are either human approval, a peer-agent pass, or a rubric-gated verdict.
+Eight stages. Three phases. Eleven role skills. Do not skip stages inside a phase. Do not reorder them. Gates are either human approval, a peer-agent pass, or a rubric-gated verdict.
 
 Entry point matches scope. A new page walks all eight stages. A copy tweak enters at stage 3b against an existing block. Kit refactoring enters at stage 5 in DS-engineer mode. Nothing forces the full walk on work that does not need it.
 
@@ -122,11 +122,23 @@ Cold means cold. Reading the brief or direction doc would pollute the read — t
 
 Dumb-about-layout, strict-about-inventory.
 
+### Stage 6c — Voice
+
+- **Role skill:** `kk-role-voice-reviewer`
+- **Model:** Haiku. **Character:** George Orwell.
+- **Input:** Built prototype files + `voice.md`. No brief, no direction, no hand-off.
+- **Output:** Per-block voice audit across AI-tells, button-label discipline, empty-state shape, error shape, sentence case, em-dash and italics rules, muted and light-weight rules. Evidence carries file:line + string + rule.
+- **Canon load:** `voice.md` full, `manifesto.md` §Philosophy and §Why this exists.
+- **Gate:** No direct gate. Output feeds stage 7.
+- **Self-doc:** `documentation/<session>/06c-voice.md`
+
+Cold-reads strings against canon. Does not rewrite; names the defect.
+
 ### Stage 7 — Meta-reviewer
 
 - **Role skill:** `kk-role-meta-reviewer`
 - **Model:** Opus. **Character:** Anna Wintour.
-- **Input:** Full chain — 01 + 02 + every 03b + 05 + 06a + 06b + the built prototype.
+- **Input:** Full chain — 01 + 02 + every 03b + 05 + 06a + 06b + 06c + the built prototype.
 - **Output:** Rubric-gated issue list. PASS or FAIL verdict with per-item evidence.
 - **Canon load:** `manifesto.md`, `voice.md`, `pipeline.md` §Meta-reviewer rubric + §Reiterate protocol + §Fidelity contract.
 - **Gate:** PASS ships. FAIL routes user to §Reiterate protocol.
@@ -172,7 +184,7 @@ Stage 7 meta-reviewer fails a build when ANY rubric item is unanswered or contra
 2. **Every direction-doc pattern named at stage 2 has an implementation in the built prototype.** Pattern without impl = stage-3b or stage-5 gap.
 3. **Every consistency-jobstory guess (stage 6a) either matches the analyst's stated intent OR names a real ambiguity.** Guesses that do not track intent are UX failures, not OK-reads.
 4. **Zero off-inventory components.** Every class resolves to `components.md`. User-agreed exceptions allowed only if recorded in direction doc + CHANGELOG.
-5. **Zero AI-tells.** Full `voice.md` §No AI tells inventory applies.
+5. **Zero AI-tells.** Full `voice.md` §No AI tells inventory applies. Evidence source: stage 6c voice reviewer's flag list. Each flag must be either fixed in copy or stamped as a user-approved exception in the direction doc. Unaddressed 6c flags fail this item.
 6. **User-agreed exceptions and new components carry paper trail.** Each lives in the direction doc under §Exceptions with reason + user stamp.
 
 Meta-reviewer rejects "it's fine" replies. A rubric item is either answered with evidence (file:line citation) or left open. Open items fail the build until the user acts via reiterate protocol.
@@ -191,7 +203,7 @@ Every Haiku "dumb" reviewer operates in character as **Steve Jobs himself**. Exp
 
 Reviewer never defers. If a block feels unclear, it says unclear. If a mechanic is hidden, it says hidden. If the job or flow is ambiguous at 0.2s, the guess will reveal the ambiguity — that's the point. Silence on a block = confirmed clarity.
 
-Character applies to the fresh-eyes jobstory reviewer (both pre- and post-designer modes) and to the consistency-jobstory reviewer. The consistency-DS reviewer wears a different character — Dieter Rams — but shares the 0.2s-self-evidence instinct for anything that lands outside the kit's established pattern language.
+Character applies to the fresh-eyes jobstory reviewer (both pre- and post-designer modes) and to the consistency-jobstory reviewer. Two other Haiku reviewers wear different characters tied to their domain lenses — **Dieter Rams** for consistency-DS (kit-pattern conformance) and **George Orwell** for voice (voice conformance). Both share the strict-when-canon-breaks instinct of Jobs but apply it through their own canonical frame, not the 0.2-second user-clarity frame.
 
 ### Role roster
 
@@ -207,6 +219,7 @@ Each role operates in character as a specific person. Gender codes tier: women f
 | 5 | Design Engineer | Sonnet | **Sara Soueidan** | Front-end craft writer. Ships accessible components piece by piece, state by state, honors the platform before reaching for abstractions. |
 | 6a | Consistency — jobstory | Haiku | **Steve Jobs** | Same 0.2s bar as 3a/3c — read cold, report what a Steve Jobs reads upfront. |
 | 6b | Consistency — DS | Haiku | **Dieter Rams** | Braun designer. Ten Principles of Good Design. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
+| 6c | Voice | Haiku | **George Orwell** | "Politics and the English Language" author. Six rules for clear prose — ancestor of the AI-tells inventory. Names jargon, cuts padding, refuses vague abstraction. |
 | 7 | Meta-reviewer | Opus | **Erika Hall** | Mule Design co-founder. *Just Enough Research*, *Conversational Design*. Evidence-gated critique that rejects "it's fine" — the design is finished when the last reason to remove something is gone. |
 | — | Meta-retro | Opus | **Joan Didion** | Essayist. *Slouching Towards Bethlehem*, *The White Album*. Observes the pattern that was there all along and names it without flinching. |
 | — | Maintainer | Sonnet | **Rachel Andrew** | CSS Grid spec co-editor at W3C. Former Smashing Magazine editor-in-chief. Ships spec revisions with bundle discipline, semver by blast radius, tag and push before close. |
@@ -268,14 +281,14 @@ High-fidelity prototype covers one page or one flow per pass. Pattern: `page →
 Three parallel moments in pipeline-v3:
 
 - **Stage 3a, 3b, 3c** — N instances per stage, one per pattern block named in the direction doc. All three substages run parallel across patterns; each pattern's 3a → 3b → 3c loop is sequential within that pattern.
-- **Stage 6a + 6b** — two cold-read consistency reviewers, in parallel on the same built prototype.
+- **Stage 6a + 6b + 6c** — three cold-read reviewers, in parallel on the same built prototype. Each has its own canonical frame (jobstory clarity, kit-pattern conformance, voice conformance) and carries its own character.
 
 Spawning owner:
 
 - **3a** spawned by the design director at the end of stage 2 (one per pattern).
 - **3b** spawned by each 3a instance on pass (or by the design director after consolidating 3a outputs, implementation detail).
 - **3c** spawned by each 3b instance on completion.
-- **6a + 6b** spawned by the design engineer at stage-5 ship.
+- **6a + 6b + 6c** spawned by the design engineer at stage-5 ship.
 
 Wall-clock cost stays at one stage per phase, not N.
 

@@ -28,6 +28,7 @@ Read only the sections named.
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/manifesto.md` — §Foundations (all), §Runtime
 - `../kk-design-system/patterns/*.md` — all available patterns
+- `../kk-design-system/voice.md` — full file (component map prose + pattern-block descriptions pass voice canon)
 - `../kk-design-system/pipeline.md` — §Role roster, §Agent communication protocol, §Parallel spawning
 - `../kk-design-system/doc-format.md` — full file
 - Kit demo: `index.html` at the repo root (the manifesto showcase — use it to locate the canonical example for each component)

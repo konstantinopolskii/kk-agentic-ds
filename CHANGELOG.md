@@ -2,6 +2,35 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.1.0 — 2026-04-23
+
+Stage 6c voice reviewer + voice discipline extended to every role that writes UI text, prototype prose, or pattern descriptions. v1.0.0's pipeline-v3 folded the dedicated UX-copy-review role into meta-reviewer's rubric item 5 (one line on a six-item Opus rubric). User flagged the dilution — voice defects written at stage 3b would survive until stage 7, then require an expensive reiterate loop. This release restores a dedicated cold-read voice auditor parallel with 6a + 6b, and tightens voice.md canon load on the four roles that author prose for prototype or docs.
+
+### Added
+- `skills/kk-role-voice-reviewer/SKILL.md` — Haiku, George Orwell. Stage 6c. Cold reads every visible UI string against `voice.md` — AI tells, button-label discipline, empty-state shape, error shape, sentence case, em-dash and italics rules, muted and light-weight rules. Flags file:line + string + rule broken. No pass/fail — feeds stage 7 meta-reviewer's rubric item 5.
+- `skills/kk-design-system/pipeline.md § Stage 6c — Voice` — new stage section.
+- `skills/kk-design-system/pipeline.md § Role roster` — voice reviewer row added.
+- Canon-load entries for `voice.md` on four roles that were previously missing or partial: `kk-role-analyst` (job stories + open questions), `kk-role-design-director` (direction doc + pattern descriptions), `kk-role-ds-manager` (component map prose), `kk-role-design-engineer` (upgraded from `§AI tells` to full `voice.md` — carries designer strings + writes dummy text).
+
+### Removed
+- Nothing. Additive release.
+
+### Moved
+- `skills/kk-design-system/pipeline.md` intro: "Ten role skills" → "Eleven role skills".
+- `skills/kk-design-system/pipeline.md § Parallel spawning` — stage-6 parallel updates from "6a + 6b" to "6a + 6b + 6c". Spawning owner is the design engineer at stage-5 ship.
+- `skills/kk-design-system/pipeline.md § Meta-reviewer rubric` item 5 — now names stage 6c as the evidence source. Flags must be either fixed in copy or stamped as user-approved exceptions in the direction doc.
+- `skills/kk-design-system/pipeline.md § Dumb-reviewer character` — footnote extended. Steve Jobs governs fresh-eyes + consistency-jobstory (0.2-second user-clarity frame). Dieter Rams (6b) and George Orwell (6c) are Haiku reviewers with canon-framed lenses — kit-pattern conformance and voice conformance respectively.
+- `skills/kk-design-system/pipeline.md § Stage 7 Meta-reviewer` canon input — now reads 06c alongside 06a + 06b + upstream chain.
+- `skills/kk-design-system/manifesto.md § Pipeline` — "three cold-read audits (jobstory, DS, voice)" replaces the two-audit phrasing; role count ten → eleven.
+- `package.json` version `1.0.2` → `1.1.0`. Minor bump — added a new role skill.
+- `package.json` description — role count ten → eleven.
+- `package.json` `files` array — added `skills/kk-role-voice-reviewer/`.
+
+### Open
+- The three parallel 6a + 6b + 6c reviewers produce three distinct artefact files. Meta-reviewer reads all three. Wall-clock cost of stage 6 stays unchanged because the three run in parallel.
+- Three other roles already carried `voice.md` in their canon load prior to this release: `kk-role-designer` (full file), `kk-role-meta-retro` (full file), `kk-ds-maintainer` (inherited rules). No change for those three.
+- Reviewer-only roles (fresh-eyes-jobstory, consistency-jobstory, consistency-ds, meta-reviewer) do not author UI text or prototype prose. Their canon loads remain role-specific; voice is not added to their load lists.
+
 ## 1.0.2 — 2026-04-23
 
 Convention parity for §Character body paragraphs. The four role SKILL.md files that carried character only in frontmatter (analyst, ds-manager, design-engineer, meta-retro) now carry the same 2-3 sentence §Character body section the seven other roles already had — who this person is, the work they are famous for, why the match holds. All eleven roles now share the convention. Patch-level: no mandate, trigger description, or consumer API changed.
