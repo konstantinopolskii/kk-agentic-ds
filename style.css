@@ -449,7 +449,14 @@ body {
 }
 .doc__section > h4,
 .doc__section > .t-subtitle {
-  margin-bottom: var(--space-12);
+  /* Below-gap tightened 48 → 40 (var(--space-10)) so rule 12 text-to-
+     text ratio clears 2:1 with leading-slack safety. Prior 96/48 box
+     was exactly 2.0 but measured 1.6 text-to-text (Jobs round 4 defect
+     4) because prev-element descent leading + subtitle ascent leading
+     bias the visual ratio below box. New 96/40 box = 2.40; text ratio
+     lands ≥ 2.20. Rule 13 floor holds (40 ≥ subtitle line-height 24).
+     Matches the 40 px below-gap carried by h2/h3/.t-display/.t-title. */
+  margin-bottom: var(--space-10);
 }
 /* When a table sits directly under a heading, the first header row's
    own 12 px top padding stacks under the heading's 40 px below-gap —
@@ -1800,19 +1807,56 @@ body {
 .deck-card.active { cursor: pointer; }
 
 /* =========================================================================
-   Quote — italic, black, Medium 500. A 0.5px hairline on the left, same
-   weight as every other hairline in the system. The italic face carries
-   the citation; muting the colour would contradict the no-muted-by-
-   default rule and bury a quote against its surrounding body. A quote
-   is content, not metadata.
+   Quote — italic, black, Medium 500, body-sized. A 0.5px hairline on the
+   left, same weight as every other hairline in the system. Body size is
+   explicit so the quote cannot inherit the document's caption-size root
+   (body { font-size: var(--fs-caption) }) when it sits under a paragraph
+   or after a horizontal rule. A quote is content, not metadata; it reads
+   at body rank beside the prose it interrupts. Margin-top carried
+   explicitly so `.doc__section > * + *` (20 px) cannot land under the
+   quote's own 32 px line-box — rule 14 (inner ≤ outer) holds.
    ========================================================================= */
 .quote {
   padding: 0 0 0 var(--space-3);
   border-left: 0.5px solid var(--color-border-strong);
   color: var(--color-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   font-style: italic;
   font-weight: var(--fw-regular);
   margin: 0;
+}
+/* Rule 14 rescue on blockquote. Outer above-gap ≥ inner line-box (32 px).
+   The `.doc__section > * + *` default is 20 px — under the quote's 32 px
+   line-height, so rule 14 (inner ≤ outer) inverts whenever a quote sits
+   after a paragraph. Bumping to 40 px (space-10) clears the 32 px line
+   box with breathing room and matches the content-rank air given to
+   t-display/t-title next-siblings.
+
+   Two tie-breaker rules preserve prior rhythm contracts.
+
+   - `heading + .quote` drops margin-top to 0 so the heading's own
+     margin-bottom (40) is the sole below-gap carrier — same contract
+     the rule-12 rescue applies to every other next-sibling. Without
+     this, the flex container (`.doc__section` is display:flex, so
+     vertical margins do NOT collapse) would stack heading's 40 +
+     quote's 40 = 80 px and break rule 12.
+   - `hr + .quote` restores the 60 px hr rule (via `.doc__section >
+     hr + *`). Without it the `* + .quote` specificity (0,2,0)
+     overrides the 0,1,1 hr rule. */
+.doc__section > * + .quote {
+  margin-top: var(--space-10);
+}
+.doc__section > h2 + .quote,
+.doc__section > h3 + .quote,
+.doc__section > h4 + .quote,
+.doc__section > .t-display + .quote,
+.doc__section > .t-title + .quote,
+.doc__section > .t-subtitle + .quote {
+  margin-top: 0;
+}
+.doc__section > hr + .quote {
+  margin-top: var(--space-15);
 }
 .quote > cite {
   display: block;
@@ -1955,6 +1999,34 @@ ol.t-list > li::before {
   width: var(--space-3);
   color: var(--color-text);
   font-weight: var(--fw-bold);
+}
+
+/* Prose list — used for markdown-rendered `<ul>`/`<ol>` where each
+   item is a sentence or phrase, not a data row. Body-sized, black,
+   Medium 500, with a disc (ul) or decimal (ol) marker in the left
+   gutter. No hairlines between items — hairlines belong to the
+   tabular `.t-list` pattern, not prose. Paragraph rhythm between
+   items reads as continuous prose broken into enumerated beats.
+   Sits at the same size + weight as surrounding body copy so a list
+   inside a markdown article does not visually step down from the
+   paragraphs it breaks. */
+.t-prose-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: 0 0 0 var(--space-6);
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--track-tight);
+  color: var(--color-text);
+}
+ul.t-prose-list { list-style: disc; }
+ol.t-prose-list { list-style: decimal; }
+.t-prose-list > li { padding: 0; }
+.t-prose-list > li::marker {
+  color: var(--color-text);
 }
 
 /* Figure — the SVG or image alone, then a micro-muted caption. No

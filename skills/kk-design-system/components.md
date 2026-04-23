@@ -191,6 +191,31 @@ The workhorse for key/value rows inside a card. Three shapes:
 <dl class="doc__spec doc__spec--triple">...</dl>
 ```
 
+## Prose list (.t-prose-list)
+
+Body-sized, disc-or-decimal list for markdown-rendered prose. Each item is a sentence or phrase, not a data row. Paragraph rhythm between items, no hairlines. Markers render in the left gutter (disc on `ul`, decimal on `ol`).
+
+```html
+<!-- Unordered. -->
+<ul class="t-prose-list">
+  <li>First item, unmarked.</li>
+  <li>Second item with a <a href="/">link</a>.</li>
+</ul>
+
+<!-- Ordered. -->
+<ol class="t-prose-list">
+  <li>Fetch.</li>
+  <li>Render.</li>
+  <li>Inject.</li>
+</ol>
+```
+
+Rules:
+- Sits at body size + body line-height so a list inside a markdown article does not step down from the paragraphs it breaks.
+- No per-item hairlines. Hairlines belong to `.t-list` (tabular registry-row pattern), not prose.
+- `js/md.js` emits this class for markdown `-` and `1.` blocks. Authors rarely hand-write the class.
+- For tabular data lists (registry rows, key-column lists), use `.t-list` instead.
+
 ## Preview surfaces
 
 Document-surface primitive for kit docs that embed component or pattern slices. Used on `patterns.html` and any future registry page. The wrapper clips. The inner iframe renders at 400% and scales to 0.25 so the reader sees the preview at full container width regardless of the slice's internal viewport.

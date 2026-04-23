@@ -30,7 +30,7 @@
 
   var CLASS_MAP = {
     h1: "t-hero", h2: "t-display", h3: "t-title", h4: "t-subtitle",
-    p: "t-body", ul: "t-list", ol: "t-list",
+    p: "t-body", ul: "t-prose-list", ol: "t-prose-list",
     blockquote: "quote", table: "registry-table",
     th: "t-caption--bold", td: "t-caption"
   };
@@ -94,10 +94,15 @@
     return html;
   }
 
-  // List: renders a consecutive run of ul or ol items.
+  // List: renders a consecutive run of ul or ol items. Prose lists emit
+  // `.t-prose-list`, not `.t-list` — the kit's `.t-list` is a tabular
+  // registry-row pattern (hairlines between items, caption-sized type).
+  // Markdown `- item` and `1. item` are prose patterns: body-sized, disc
+  // or decimal markers, paragraph rhythm between items. One class per
+  // intent keeps both contracts legible.
   function renderList(items, ordered) {
     var tag = ordered ? "ol" : "ul";
-    var out = "<" + tag + ' class="t-list">';
+    var out = "<" + tag + ' class="t-prose-list">';
     items.forEach(function (it) { out += "<li>" + inline(it.trim()) + "</li>"; });
     out += "</" + tag + ">";
     return out;
@@ -142,16 +147,29 @@
       // Horizontal rule.
       if (/^---+\s*$/.test(line)) { out.push("<hr />"); i++; continue; }
 
-      // Heading. Level shifts by offset, then caps at 4 so the CLASS_MAP
-      // always resolves. Below h1 the h1 branch never fires — the shell
-      // owns the page title — so the cap stays legible.
-      var h = /^(#{1,4})\s+(.*)$/.exec(line);
+      // Heading. Level shifts by offset, then resolves. Levels 1–4 land
+      // on the kit heading classes (t-hero, t-display, t-title,
+      // t-subtitle). Level 5 and below demote to a paragraph of
+      // caption-bold text (`<p class="t-caption--bold">`) — visibly
+      // smaller than h4/t-subtitle (16 px vs 18 px, both bold) so
+      // authors who write `####` then `#####` see a clear step down
+      // instead of two identical lines. No separate heading rank exists
+      // in the kit below subtitle; demotion is intentional rather than
+      // a collapse, and the renderer logs a one-line info so authors
+      // know the level hit the demotion branch. Below h1 the h1 branch
+      // never fires — the shell owns the page title.
+      var h = /^(#{1,6})\s+(.*)$/.exec(line);
       if (h) {
         var level = h[1].length + offset;
         if (level < 1) { level = 1; }
-        if (level > 4) { level = 4; }
-        var tag = "h" + level;
-        out.push("<" + tag + ' class="' + CLASS_MAP[tag] + '">' + inline(h[2].trim()) + "</" + tag + ">");
+        var inner = inline(h[2].trim());
+        if (level > 4) {
+          console.info("[md.js] heading level " + level + " demoted to t-caption--bold (no kit rank below h4): " + h[2].trim());
+          out.push('<p class="t-caption--bold">' + inner + "</p>");
+        } else {
+          var tag = "h" + level;
+          out.push("<" + tag + ' class="' + CLASS_MAP[tag] + '">' + inner + "</" + tag + ">");
+        }
         i++;
         continue;
       }
