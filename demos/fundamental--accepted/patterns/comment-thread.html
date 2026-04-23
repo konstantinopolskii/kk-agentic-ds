@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Comment thread</title>
+  <style>
+    body { margin: 0; padding: var(--space-6); background: var(--color-bg); }
+  </style>
+</head>
+<body>
+  <div class="comment-stack">
+    <div class="card card--interactive comment-thread" data-can-approve="true">
+      <div class="comment-thread__preview">
+        <div class="comment-msg" data-message-id="m-01">
+          <div class="comment-msg__header">
+            <div class="t-subtitle">Sofia Hlazunova</div>
+            <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+          </div>
+          <p class="t-caption">The tag row needs one more variant to cover the metadata case.</p>
+          <div class="comment__menu-popover" role="menu">
+            <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+          </div>
+        </div>
+        <div class="comment-thread__ellipsis" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="comment-msg" data-message-id="m-03" data-author-role="agent">
+          <div class="comment-msg__header">
+            <div class="t-subtitle">Claude</div>
+            <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+          </div>
+          <p class="t-caption">Added a bold tag at the end of the row. Take a look.</p>
+          <div class="comment__menu-popover" role="menu">
+            <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+            <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="card__collapsible">
+        <div class="card__collapsible-inner">
+          <div class="comment-thread__list">
+            <div class="comment-msg" data-message-id="m-01">
+              <div class="comment-msg__header">
+                <div class="t-subtitle">Sofia Hlazunova</div>
+                <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+              </div>
+              <p class="t-caption">The tag row needs one more variant to cover the metadata case.</p>
+              <div class="comment__menu-popover" role="menu">
+                <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+              </div>
+            </div>
+            <div class="comment-msg" data-message-id="m-02">
+              <div class="comment-msg__header">
+                <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+                <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+              </div>
+              <p class="t-caption">Claude, add a bold tag to the row.</p>
+              <div class="comment__menu-popover" role="menu">
+                <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+              </div>
+            </div>
+            <div class="comment-msg" data-message-id="m-03" data-author-role="agent">
+              <div class="comment-msg__header">
+                <div class="t-subtitle">Claude</div>
+                <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+              </div>
+              <p class="t-caption">Added a bold tag at the end of the row. Take a look.</p>
+              <div class="comment__menu-popover" role="menu">
+                <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+              </div>
+            </div>
+          </div>
+          <label class="field comment-thread__reply">
+            <input class="t-caption field__input" type="text" placeholder="looks right now, thank you" />
+            <span class="field__fake-caret" aria-hidden="true"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

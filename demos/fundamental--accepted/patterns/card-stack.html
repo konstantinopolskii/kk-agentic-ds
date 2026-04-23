@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Card stack</title>
+  <style>
+    body { margin: 0; padding: var(--space-6); background: var(--color-bg); }
+  </style>
+</head>
+<body>
+  <div class="card-stack">
+    <div class="card card--interactive" data-state="active">
+      <div class="card__heading">
+        <h3 class="t-title">Pick a direction</h3>
+        <p class="t-caption">Pick the direction for the next document pass.</p>
+      </div>
+      <div class="card__collapsible">
+        <div class="card__collapsible-inner">
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Name</span>
+            <input class="t-caption field__input" type="text" placeholder="sofia@kk.consulting" />
+          </label>
+          <label class="field">
+            <input class="t-caption field__input" type="text" placeholder="drop the shout card, tighten the stack" />
+          </label>
+        </div>
+      </div>
+      <button class="button t-subtitle" data-cta="minimized">Pick</button>
+      <button class="button button--primary t-subtitle" data-cta="active">Apply direction</button>
+    </div>
+    <div class="card card--interactive">
+      <div class="card__heading">
+        <h3 class="t-title">Scope the change</h3>
+        <p class="t-caption">Name the tokens the agent may touch.</p>
+      </div>
+      <div class="card__collapsible">
+        <div class="card__collapsible-inner">
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" checked />
+            <span class="switch__track"></span>
+            Color tokens
+          </label>
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" />
+            <span class="switch__track"></span>
+            Type tokens
+          </label>
+        </div>
+      </div>
+      <button class="button t-subtitle" data-cta="minimized">Choose</button>
+      <button class="button button--primary t-subtitle" data-cta="active">Apply scope</button>
+    </div>
+    <div class="card card--interactive">
+      <div class="card__heading">
+        <h3 class="t-title">Commit the change</h3>
+        <p class="t-caption">Write the memo and ship.</p>
+      </div>
+      <div class="card__collapsible">
+        <div class="card__collapsible-inner">
+          <label class="field">
+            <input class="t-caption field__input" type="text" placeholder="v1.2.0. stack tightened, shout demoted" />
+          </label>
+        </div>
+      </div>
+      <button class="button t-subtitle" data-cta="minimized">Draft</button>
+      <button class="button button--primary t-subtitle" data-cta="active">Ship the change</button>
+    </div>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Three-column shell</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Fundamental</div>
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+        <section class="nav-group">
+          <h3 class="t-subtitle">Prose</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#opening">Opening</a></li>
+            <li class="t-caption"><a href="#reading">Reading</a></li>
+          </ul>
+        </section>
+      </nav>
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        Fundamental demo
+      </footer>
+    </aside>
+
+    <main class="doc" id="doc">
+      <h1 class="t-hero">Fundamental</h1>
+      <p class="doc__intro t-body">
+        The middle column is what we read. Sidebar on the left carries
+        the map. Inspector on the right carries actions and comments.
+      </p>
+      <article class="doc__section" id="opening">
+        <h2 class="t-display">
+          Opening<br />
+          <span class="t-display--medium t-muted">Hero, intro, part break</span>
+        </h2>
+        <p class="t-body">
+          Document-shaped. Seven parts, each a section in the middle
+          column. The sidebar tracks position; the inspector holds
+          state.
+        </p>
+      </article>
+      <article class="doc__section" id="reading">
+        <h2 class="t-display">
+          Reading<br />
+          <span class="t-display--medium t-muted">Body, caption, micro</span>
+        </h2>
+        <p class="t-body">
+          Paragraphs set in body type. Over three sentences, the
+          paragraph becomes a list or a spec card.
+        </p>
+      </article>
+    </main>
+
+    <aside class="inspector" aria-label="Actions and comments">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Tweak</h2>
+        </header>
+        <div class="card card--interactive" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title">Tweak the tokens</h3>
+            <p class="t-caption">Brief the agent, pick a direction, scope, commit.</p>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Configure</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Apply tweak</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

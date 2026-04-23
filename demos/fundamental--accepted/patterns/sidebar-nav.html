@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Sidebar nav</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+    .app { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Fundamental</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Prose</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#opening">Opening</a></li>
+            <li class="t-caption"><a href="#reading">Reading</a></li>
+            <li class="t-caption"><a href="#lists">Lists</a></li>
+            <li class="t-caption"><a href="#figures">Figures</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Spec</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#color">Color</a></li>
+            <li class="t-caption"><a href="#space">Space</a></li>
+            <li class="t-caption"><a href="#type">Type</a></li>
+            <li class="t-caption"><a href="#motion">Motion</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Controls</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#cards">Cards</a></li>
+            <li class="t-caption"><a href="#fields">Fields</a></li>
+            <li class="t-caption"><a href="#buttons">Buttons</a></li>
+            <li class="t-caption"><a href="#tags">Tags</a></li>
+            <li class="t-caption"><a href="#switches">Switches</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Margin</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#signoff">Signoff</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        Fundamental demo
+      </footer>
+    </aside>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

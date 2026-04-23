@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Spec list</title>
+  <style>
+    body { margin: 0; padding: var(--space-6); background: var(--color-bg); display: grid; gap: var(--space-6); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <dl class="doc__spec">
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--ease-out</span></dt>
+        <dd class="doc__spec-value">Hover, focus, state flips.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--ease-spring</span></dt>
+        <dd class="doc__spec-value">Switch thumbs, small confirmations.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--ease-swing</span></dt>
+        <dd class="doc__spec-value">Long reveals, column arrivals.</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="card">
+    <div class="card__heading">
+      <h3 class="t-title">Scale</h3>
+    </div>
+    <dl class="doc__spec doc__spec--value">
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--space-4</span></dt>
+        <dd class="doc__spec-value"><span class="t-mono">16px</span></dd>
+        <dd class="doc__spec-value">row to row.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--space-6</span></dt>
+        <dd class="doc__spec-value"><span class="t-mono">24px</span></dd>
+        <dd class="doc__spec-value">card gaps, text rail.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key"><span class="t-mono">--space-8</span></dt>
+        <dd class="doc__spec-value"><span class="t-mono">32px</span></dd>
+        <dd class="doc__spec-value">section to section.</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="card">
+    <div class="card__heading">
+      <h3 class="t-title">Weight rules</h3>
+    </div>
+    <dl class="doc__spec doc__spec--triple">
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key">Regular</dt>
+        <dd class="doc__spec-value">reads too thin at 400</dd>
+        <dd class="doc__spec-value">Regular sits on 500.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key">Medium</dt>
+        <dd class="doc__spec-value">subtitle under display</dd>
+        <dd class="doc__spec-value">500, paired with bold 700 headline.</dd>
+      </div>
+      <div class="doc__spec-row">
+        <dt class="doc__spec-key">Bold</dt>
+        <dd class="doc__spec-value">headings, labels</dd>
+        <dd class="doc__spec-value">700, one step up from the 500 body.</dd>
+      </div>
+    </dl>
+  </div>
+</body>
+</html>

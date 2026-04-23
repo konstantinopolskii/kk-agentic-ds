@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Resolved comment thread</title>
+  <style>
+    body { margin: 0; padding: var(--space-6); background: var(--color-bg); }
+  </style>
+</head>
+<body>
+  <div class="comment-stack">
+    <div class="card card--interactive comment-thread" data-resolved="true" data-state="minimized">
+      <div class="comment-thread__preview">
+        <div class="comment-thread__resolved">
+          <span class="comment-thread__resolved-stamp t-caption" aria-hidden="true">&check;</span>
+          <span class="comment-thread__resolved-snippet t-caption">The signoff timestamp should carry the timezone.</span>
+          <span class="comment-thread__resolved-byline t-caption t-muted">Konstantin Konstantinopolskii</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>
