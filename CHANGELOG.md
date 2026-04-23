@@ -2,6 +2,25 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.0.2 — 2026-04-23
+
+Convention parity for §Character body paragraphs. The four role SKILL.md files that carried character only in frontmatter (analyst, ds-manager, design-engineer, meta-retro) now carry the same 2-3 sentence §Character body section the seven other roles already had — who this person is, the work they are famous for, why the match holds. All eleven roles now share the convention. Patch-level: no mandate, trigger description, or consumer API changed.
+
+### Added
+- `skills/kk-role-analyst/SKILL.md § Character` — Margaret Hamilton body paragraph (NASA Apollo lead, coined "software engineering", Apollo 11 priority-display system).
+- `skills/kk-role-ds-manager/SKILL.md § Character` — Muriel Cooper body paragraph (first MIT Press art director, MIT Press colophon, Visible Language Workshop).
+- `skills/kk-role-design-engineer/SKILL.md § Character` — Sara Soueidan body paragraph (independent front-end engineer, accessible-component deep-dive series).
+- `skills/kk-role-meta-retro/SKILL.md § Character` — Joan Didion body paragraph (American essayist, *Slouching Towards Bethlehem*, *The White Album*, pattern-observer).
+
+### Removed
+- Nothing. Patch release.
+
+### Moved
+- `package.json` version `1.0.1` → `1.0.2`. Patch bump — §Character convention parity; no mandate, trigger description, or consumer API changed.
+
+### Open
+- Nothing pending from v1.0.0 + v1.0.1 character work. Convention now uniform across eleven roles.
+
 ## 1.0.1 — 2026-04-23
 
 Character swaps for four roles after v1.0.0 ship — user flagged that the original picks were famous but not domain-fit. Each new pick is a practitioner whose actual craft matches the role's work. Every role SKILL.md also gains a §Character body section that expands on the match — the frontmatter carries name + voice, the body carries the why-this-person reference the agent reads at invocation. Patch-level: no role mandate changed, no stage mechanics changed, no consumer-visible API changed.
