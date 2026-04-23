@@ -393,28 +393,32 @@ body {
 }
 
 /* =========================================================================
-   Registry surfaces — iframe previews and disclosure wrappers used on
-   patterns.html and any kit doc that embeds component or pattern slices.
-   Document-surface primitives, not component variants.
+   Preview surfaces — scaled iframe wrappers for kit docs that embed
+   component or pattern slices. Wrapper clips. Inner iframe renders at 4x
+   and scales to 0.25 so readers see the preview at full container width
+   regardless of the slice's internal viewport. Document-surface
+   primitive, not a component variant.
    ========================================================================= */
-.registry-frame {
+.preview-frame {
+  position: relative;
   width: 100%;
-  height: 480px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  height: calc(100vh - var(--space-20) - var(--space-20));
+  min-height: 420px;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   background: var(--color-bg);
-  margin-top: var(--space-4);
+  overflow: hidden;
 }
-.registry-frame--tall { height: 640px; }
-
-/* Disclosure — minimal styling for <details> wrappers in kit docs.
-   Hides the default browser marker and adds a consistent top margin. */
-.registry-disclosure { margin-top: var(--space-3); }
-.registry-disclosure > summary {
-  cursor: pointer;
-  list-style: none;
+.preview-frame__iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 400%;
+  border: 0;
+  transform: scale(0.25);
+  transform-origin: top left;
 }
-.registry-disclosure > summary::-webkit-details-marker { display: none; }
 
 /* =========================================================================
    Inspector — right panel, card-based, content is flexible
@@ -526,6 +530,15 @@ body {
    state is explicit. We let the default hover rule apply to minimized cards
    (hinting at clickability) but override on active to keep the surface solid. */
 .card--interactive[data-state="active"]:hover { background: var(--color-surface-overlay); }
+
+/* Selectable interactive card — registry-style card that drives an external
+   preview (see patterns.html). Active reads as "this is the current
+   selection" rather than "this form is open for input", so the surface
+   lands one notch stronger than the default interactive-active overlay.
+   Inspector-scoped overrides still win; this only changes doc-column use. */
+.card--interactive.card--selectable[data-state="active"] {
+  background: var(--color-surface-strong);
+}
 
 /* The collapsible is a single-row grid that animates between 0fr and 1fr.
    Its inner div carries the real content with overflow:hidden so children

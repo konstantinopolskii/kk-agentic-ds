@@ -12,8 +12,9 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 - `skills/kk-design-system/pipeline.md § Post-pipeline pattern discovery` — new subsection placing the pass outside the eight-stage walk, trigger by `--accepted` stamp, dedup rule, canon read-only constraint.
 - `skills/kk-design-system/pipeline.md § Kit-internal review adaptation` — new subsection. 6a skipped for kit-internal artifacts, 6b and 6c universal, 7 runs on an adjusted rubric that drops the 6a-vs-analyst comparison and adds an artifact-specific completeness item declared at walk start.
 - `skills/kk-design-system/components.md § Signoff` — one-line rule that `doc__signoff-stats` grids into three columns, two `.stat` children plus a trailing empty column for asymmetric breathing room. Ship two stats, never three.
-- `style.css § Registry surfaces` — `.registry-frame` + `.registry-frame--tall` + `.registry-disclosure` primitives for iframe pattern previews and collapsed-by-default disclosures in kit docs.
-- `skills/kk-design-system/components.md § Registry surfaces` — new section documenting the three classes + modifier.
+- `style.css § Preview surfaces` — `.preview-frame` + `.preview-frame__iframe` primitive. Wrapper clips, inner iframe renders at 400% and scales to 0.25 so registry pages show pattern slices at full container width regardless of the slice's internal viewport. Ships as the single registry-preview primitive after the phase-3 patterns rework dropped the iframe-in-`<details>` UX.
+- `skills/kk-design-system/components.md § Preview surfaces` — new section documenting `.preview-frame` + `.preview-frame__iframe` + the pairing rule with `.card--selectable` in doc-column registries.
+- `style.css § .card--interactive.card--selectable[data-state="active"]` — registry-only active surface. Reads as "this is the current selection" with `var(--color-surface-strong)` rather than the softer "this form is open for input" overlay on plain `.card--interactive[data-state="active"]`. Scoped by the `card--selectable` opt-in so comment-thread and comment-new active states keep their existing surface.
 
 ### Fixed
 - `js/kit.js` — empty `comment-new` now dismisses on demote. The MutationObserver bailed on `!tid` before reaching the dismiss branch, so the pre-rendered static demo draft (no `data-thread-id`) became a zombie preview card on blur. Reordered: the empty-draft dismiss runs first and independent of thread id; the highlight-mark branch keeps its tid gate.
@@ -23,12 +24,14 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 - `style.css` — `.comment__menu-popover` no longer truncates when the message sits near the bottom of an open thread. Popover lives inside `.card__collapsible-inner` which carries `overflow: hidden` for the slide transition. Added a `:has()` rule that flips the inner to `overflow: visible` while any menu popover is open, mirroring the existing deck-escape rule. Returns to `overflow: hidden` on close.
 
 ### Removed
-- Nothing. Additive release.
+- `skills/kk-design-system/components.md § Registry surfaces` — section removed. The three primitives it documented (`.registry-frame`, `.registry-frame--tall`, `.registry-disclosure`) were retired in the same bundle. See §Moved.
+- `skills/kk-design-system/components.md § What's forbidden` — `registry` prefix dropped from the class allowlist. Replaced by `preview-frame` to cover the new primitive.
 
 ### Moved
 - `package.json` version `1.1.0` → `1.2.0`. Minor bump — one new role skill, additive.
 - `package.json` `files` array — added `skills/kk-role-pattern-discoverer/` after the other `kk-role-*` entries.
 - `.claude-plugin/plugin.json` version `0.4.0` → `1.2.0`. Bump in lockstep with `package.json` after a drift window across the 1.0.x and 1.1.0 cycles. Plugin `skills` array unchanged — the discoverer is kit-internal, matching the precedent that no `kk-role-*` skill is listed there.
+- `.registry-frame` + `.registry-frame--tall` + `.registry-disclosure` were added earlier in 1.2.0 drafts (commit `549c9ad`) and removed before tag. The final 1.2.0 does not carry them. Zero consumers reached outside the drafting window, so the removal does not break semver — the release has not been tagged or pushed.
 
 ### Open
 - `patterns.html` not created in this release. Phase 3 of the initiative deploys the discoverer against `demos/fundamental--accepted/`, which creates the file and populates the first entry set.
