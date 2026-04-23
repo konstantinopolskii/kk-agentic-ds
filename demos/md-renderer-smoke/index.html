@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>md.js smoke test — kit shell</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Smoke</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Samples</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#sample-a">Sample A</a></li>
+            <li class="t-caption"><a href="#sample-b">Sample B</a></li>
+            <li class="t-caption"><a href="#sample-c">Sample C</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        md.js renderer<br />
+        real kit shell preview
+      </footer>
+    </aside>
+
+    <main class="doc" id="doc">
+      <h1 class="t-hero">md.js smoke test</h1>
+
+      <p class="doc__intro t-body">
+        Three articles below, each fed by a different <code class="t-mono">data-md-src</code>.
+        Every article is a <code class="t-mono">doc__section</code> with the same scaffolding
+        as <code class="t-mono">index.html</code>. What you see here is what kit docs look like
+        when their body is rendered from markdown.
+      </p>
+
+      <h2 class="doc__part">Samples</h2>
+
+      <!--
+        Local serve: browsers block fetch() of file://. From the repo root:
+          python3 -m http.server 8765
+        Then open http://localhost:8765/demos/md-renderer-smoke/
+      -->
+
+      <article class="doc__section" id="sample-a" data-md-src="./sample-a.md"></article>
+      <article class="doc__section" id="sample-b" data-md-src="./sample-b.md"></article>
+      <article class="doc__section" id="sample-c" data-md-src="./sample-c.md"></article>
+    </main>
+
+    <aside class="inspector" aria-label="Inspector">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Notes</h2>
+        </header>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Renderer is dumb</h3>
+            <p class="t-caption">The <code class="t-mono">doc__section</code> wrapper lives in the shell, not the renderer. Each article is one markdown file.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Console</h3>
+            <p class="t-caption">Open devtools. <code class="t-mono">kk:md-rendered</code> fires once per article. Zero errors.</p>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <script src="../../js/kit.js" defer></script>
+  <script src="../../js/md.js" defer></script>
+  <script>
+    document.addEventListener('kk:md-rendered', function () {
+      console.log('[smoke] kk:md-rendered fired; articles:',
+        document.querySelectorAll('[data-md-src]').length);
+    });
+  </script>
+</body>
+</html>

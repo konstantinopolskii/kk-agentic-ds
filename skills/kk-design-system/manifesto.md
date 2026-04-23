@@ -108,6 +108,10 @@ Rule 13 is the second most-broken: a heading whose next line sits closer than it
 
 Rule 14 audits any vertical list of values. If the padding inside a card exceeds the space between cards, the cards fail to group. Same for section body versus section separator.
 
+Label-list pairs fall under rule 14 too. A paragraph ending in `:` followed by a list is a label-list pair — ship them tight. Gap between label and list sits well below paragraph rhythm so the label reads as caption of the list, not as continuation of the prose above.
+
+Rule 12 ratio floor in practice: top margin ≥ 2× bottom margin on any heading sitting inside a dense text column. 1.5:1 reads roughly equal at the 0.2-second bar; 2:1 reads as clear lead.
+
 ### Radii
 
 Two radii plus one pill alias. 12px for buttons, tiers, switches, fields. 24px for cards and anything that holds content. 9999px for pills: switch thumbs, avatars, scrollbars. A third canonical radius is forbidden.
