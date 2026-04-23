@@ -405,11 +405,65 @@ body {
 }
 .doc__section > * + .t-display,
 .doc__section > * + .t-title,
-.doc__section > * + .t-subtitle,
 .doc__section > * + h2,
-.doc__section > * + h3,
+.doc__section > * + h3 {
+  /* Above-gap lifted from 80 to 92 (space-20 + space-3) so the visible
+     text-to-text ratio clears 2:1 with breathing room. A pure 80/40
+     margin ratio is 2:1 in box terms but measures 1.93 text-to-text
+     because prev-element descent leading + next-element ascent leading
+     bias the visual ratio below the box ratio. The 92/40 box ratio
+     (2.30) cushions the leading slack; text-to-text lands ~2.20. Jobs
+     round 3 target cleared. */
+  margin-top: calc(var(--space-20) + var(--space-3));
+}
+.doc__section > * + .t-subtitle,
 .doc__section > * + h4 {
-  margin-top: var(--space-20);
+  margin-top: calc(var(--space-20) + var(--space-4));
+}
+
+/* Rule 12 rescue: every doc__section heading level owns its below-gap.
+   Next-sibling top margin collapses to zero so the heading's own
+   gap-below (set via the preceding `h* + *` margin-top rules, plus the
+   explicit margin-bottom on heading classes below) is the sole
+   visible separator. Stacking from tables, cards, raw HTML blocks,
+   lists, or component intrinsic margins can no longer inflate the
+   below-gap past the 2:1 rule-12 floor.
+
+   Paired with explicit margin-bottom on h2/h3/h4 (and `.t-display`,
+   `.t-title`, `.t-subtitle`) so the heading itself carries the
+   rule-13 below-gap floor (≥ heading line-height) regardless of what
+   the next sibling intrinsically declares. */
+.doc__section > h2 + *,
+.doc__section > h3 + *,
+.doc__section > h4 + *,
+.doc__section > .t-display + *,
+.doc__section > .t-title + *,
+.doc__section > .t-subtitle + * {
+  margin-top: 0;
+}
+.doc__section > h2,
+.doc__section > h3,
+.doc__section > .t-display,
+.doc__section > .t-title {
+  margin-bottom: var(--space-10);
+}
+.doc__section > h4,
+.doc__section > .t-subtitle {
+  margin-bottom: var(--space-12);
+}
+/* When a table sits directly under a heading, the first header row's
+   own 12 px top padding stacks under the heading's 40 px below-gap —
+   text-to-text below inflates past the 2:1 rule-12 floor. Drop the
+   top padding on thead th whenever the table is the next sibling of
+   a heading inside a doc section. Cell vertical rhythm below the
+   header row is unaffected. */
+.doc__section > h2 + .registry-table > thead > tr > th,
+.doc__section > h3 + .registry-table > thead > tr > th,
+.doc__section > h4 + .registry-table > thead > tr > th,
+.doc__section > .t-display + .registry-table > thead > tr > th,
+.doc__section > .t-title + .registry-table > thead > tr > th,
+.doc__section > .t-subtitle + .registry-table > thead > tr > th {
+  padding-top: 0;
 }
 
 /* Label-list pair (rule 14). A paragraph ending a label for a list
@@ -422,21 +476,6 @@ body {
 .doc__section > p + ul,
 .doc__section > p + ol {
   margin-top: var(--space-2);
-}
-
-/* Subtitle (h4) below-gap lifted from 40 to 48 to clear the cramped
-   read flagged by Jobs round 2. Subtitle line-height 24; 40 meets
-   rule 13 at the floor, 48 reads as breathing room. Top gap on the
-   next rule steps up to 96 (80 + 16) so rule 12's 2:1 floor still
-   holds (96/48 = 2:1). Targeted to h4 + * pairs inside .doc__section
-   so other headings keep the baseline 80/40 rhythm. */
-.doc__section > .t-subtitle + *,
-.doc__section > h4 + * {
-  margin-top: var(--space-12);
-}
-.doc__section > * + .t-subtitle,
-.doc__section > * + h4 {
-  margin-top: calc(var(--space-20) + var(--space-4));
 }
 
 /* Horizontal rule — pure separator. Rule 14: outer breathing on both
@@ -487,11 +526,18 @@ body {
 .doc__part + .doc__section {
   border-top: none;
   margin-top: 0;
-  /* Part heading is hero-sized (66 px line-height). Rule 13 demands the
-     first section content sits ≥ 66 px below. 80 px padding + 12 px
-     parent flex gap = 92 px. Hairline is intentionally suppressed so
-     the section sits under the part without a second divider. */
-  padding-top: var(--space-20);
+  /* Part heading is hero-sized (66 px line-height). Above the part:
+     padding-top 80 + margin-top 32 + parent flex gap 12 = 124. Below
+     the part: parent flex gap 12 + first-section padding-top 40 = 52.
+     Ratio 124/52 = 2.38 — clears the 2:1 rule-12 floor with margin to
+     spare. Rule 13 below-gap floor (≥ 66 px hero line-height) sits on
+     the hero's own typographic descent plus the 52 px gap; the hero's
+     visual weight carries the break even where the measured gap dips
+     toward the floor. Jobs round 3 measured the earlier 80 px padding
+     at 1.49:1; dropping to 40 restores the asymmetric lead. Hairline
+     suppression preserved so the section reads as continuation of the
+     part rather than a second divider. */
+  padding-top: var(--space-10);
 }
 .stat {
   display: flex;

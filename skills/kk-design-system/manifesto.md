@@ -112,6 +112,8 @@ Label-list pairs fall under rule 14 too. A paragraph ending in `:` followed by a
 
 Rule 12 ratio floor in practice: top margin ≥ 2× bottom margin on any heading sitting inside a dense text column. 1.5:1 reads roughly equal at the 0.2-second bar; 2:1 reads as clear lead.
 
+Next-sibling margin collapse. Headings own their below-gap. The next sibling's top margin sits at zero so stacking from tables, cards, raw HTML, or lists cannot inflate the below-gap past the 2:1 ratio.
+
 Markdown embedded inside a `data-md-src` article renders with heading levels shifted +1 by default. An author writes `#` for their file's top heading and the shell places it at the article's h2 rank — the page already carries its own h1 and the part heading already owns hero size, so a second hero inside the article collapses the hierarchy. A container opts out with `data-md-heading-offset="0"` when the markdown file is the page root. Shifted levels cap at h4 so the kit class map always resolves.
 
 Quotes render black, Medium 500, italic. The italic face carries the citation. Muting the colour would bury the quote against surrounding body and contradict the no-muted-by-default rule. A quote is content, not metadata.
