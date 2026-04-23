@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Fundamental — kit atoms and elements in plain composition</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <!-- ================================================================= -->
+    <!-- Sidebar: brand, nav groups, footer                                 -->
+    <!-- ================================================================= -->
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Fundamental</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Prose</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#opening">Opening</a></li>
+            <li class="t-caption"><a href="#reading">Reading</a></li>
+            <li class="t-caption"><a href="#lists">Lists</a></li>
+            <li class="t-caption"><a href="#figures">Figures</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Spec</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#color">Color</a></li>
+            <li class="t-caption"><a href="#space">Space</a></li>
+            <li class="t-caption"><a href="#type">Type</a></li>
+            <li class="t-caption"><a href="#motion">Motion</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Controls</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#cards">Cards</a></li>
+            <li class="t-caption"><a href="#fields">Fields</a></li>
+            <li class="t-caption"><a href="#buttons">Buttons</a></li>
+            <li class="t-caption"><a href="#tags">Tags</a></li>
+            <li class="t-caption"><a href="#switches">Switches</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Collections</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#stack">Card stack</a></li>
+            <li class="t-caption"><a href="#deck">Deck</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Margin</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#signoff">Signoff</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        Fundamental demo
+      </footer>
+    </aside>
+
+    <!-- ================================================================= -->
+    <!-- Doc: prose + spec + controls, set in plain composition             -->
+    <!-- ================================================================= -->
+    <main class="doc" id="doc">
+      <h1 class="t-hero">Fundamental</h1>
+
+      <p class="doc__intro t-body">
+        Every atom the kit owns, composed the way the kit composes.
+        A document that reads itself.
+      </p>
+      <p class="doc__intro t-body">
+        Seven parts, sidebar on the left, margin on the right. The
+        middle column is what we read.
+      </p>
+
+      <!-- ================== PROSE ======================================= -->
+
+      <h2 class="doc__part">Prose</h2>
+
+      <article class="doc__section" id="opening">
+        <h2 class="t-display">
+          Opening<br />
+          <span class="t-display--medium t-muted">Hero, intro, part break</span>
+        </h2>
+        <p class="t-body">
+          Commissioner is the only typeface. Regular sits on Medium
+          500 so the body holds weight on screen. Bold is for
+          headings and the short emphasis that earns it.
+        </p>
+        <p class="t-body">
+          The hero runs at <span class="t-mono">66 / 66</span>. Body
+          at <span class="t-mono">22 / 32</span>. A 3&times; jump
+          between the two is what the kit calls radical contrast.
+        </p>
+      </article>
+
+      <article class="doc__section" id="reading">
+        <h2 class="t-display">
+          Reading<br />
+          <span class="t-display--medium t-muted">Body, caption, micro</span>
+        </h2>
+        <p class="t-body">
+          Paragraphs set in body type. Over three sentences, the
+          paragraph becomes a list or a spec card. This one holds
+          three and stops.
+        </p>
+        <p class="t-caption">
+          Caption sits at <span class="t-mono">16 / 24</span>. It is
+          the workhorse inside cards.
+        </p>
+        <p class="t-micro t-muted">
+          Micro is <span class="t-mono">14 / 20</span>, reserved for
+          metadata and citations.
+        </p>
+      </article>
+
+      <article class="doc__section" id="lists">
+        <h2 class="t-display">
+          Lists<br />
+          <span class="t-display--medium t-muted">Ordered, unordered, inline</span>
+        </h2>
+        <p class="t-body">
+          An unordered list for items where order carries no weight.
+          A numbered list for steps and rank. Both sit on the same
+          rail.
+        </p>
+
+        <ul class="t-list">
+          <li>Pure signal before decoration.</li>
+          <li>Expected patterns cost nothing.</li>
+          <li>Eighty to twenty at every nesting.</li>
+          <li>Chunk past seven items.</li>
+          <li>Radical contrast, one distinction step.</li>
+        </ul>
+
+        <ol class="t-list">
+          <li>Name the job before drawing.</li>
+          <li>Reach for the closest kit component.</li>
+          <li>Compose. Do not invent.</li>
+          <li>Sign.</li>
+        </ol>
+
+        <p class="t-body">
+          A sentence can carry an inline value like
+          <span class="t-mono">--space-4</span> without breaking the
+          rhythm. Numbers, tokens, and the occasional
+          <span class="aside">softer beat, one notch smaller</span>
+          all sit on the same line.
+        </p>
+      </article>
+
+      <article class="doc__section" id="figures">
+        <h2 class="t-display">
+          Figures<br />
+          <span class="t-display--medium t-muted">Quote, figure, citation</span>
+        </h2>
+
+        <blockquote class="quote">
+          Beauty is a side effect of clarity.
+          <cite>Konstantin Konstantinopolskii</cite>
+        </blockquote>
+
+        <p class="t-body">
+          A quote wears italic and a hairline rail. Citation sits
+          below in micro.
+        </p>
+
+        <figure class="figure">
+          <img src="../../signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
+          <figcaption>Signature, SVG, right-hand rail of every signoff.</figcaption>
+        </figure>
+      </article>
+
+      <!-- ================== SPEC ======================================== -->
+
+      <h2 class="doc__part">Spec</h2>
+
+      <article class="doc__section" id="color">
+        <h2 class="t-display">
+          Color<br />
+          <span class="t-display--medium t-muted">Nine tokens</span>
+        </h2>
+        <p class="t-body">
+          Two backgrounds, two surface tints, two hairlines, three
+          text alphas. Text is black. Muted and subtle carry
+          metadata only.
+        </p>
+        <div class="card">
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg)"></span><span class="t-mono">--color-bg</span></span></dt>
+              <dd class="doc__spec-value">Primary background. White.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg-muted)"></span><span class="t-mono">--color-bg-muted</span></span></dt>
+              <dd class="doc__spec-value">Soft frame outside the app.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-overlay)"></span><span class="t-mono">--color-surface-overlay</span></span></dt>
+              <dd class="doc__spec-value">The 3% overlay. Hover, focus, active share it.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-strong)"></span><span class="t-mono">--color-surface-strong</span></span></dt>
+              <dd class="doc__spec-value">Row hover, button rest.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border)"></span><span class="t-mono">--color-border</span></span></dt>
+              <dd class="doc__spec-value">Hairline dividers.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border-strong)"></span><span class="t-mono">--color-border-strong</span></span></dt>
+              <dd class="doc__spec-value">Focus rings, deeper rules.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text)"></span><span class="t-mono">--color-text</span></span></dt>
+              <dd class="doc__spec-value">Primary text. Pure black.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-muted)"></span><span class="t-mono">--color-text-muted</span></span></dt>
+              <dd class="doc__spec-value">Metadata: bylines, captions, hairlines.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-subtle)"></span><span class="t-mono">--color-text-subtle</span></span></dt>
+              <dd class="doc__spec-value">Placeholders, softest labels.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="space">
+        <h2 class="t-display">
+          Space<br />
+          <span class="t-display--medium t-muted">A 4px grid</span>
+        </h2>
+        <p class="t-body">
+          Every gap, padding, margin snaps to a multiple of 4. A
+          <span class="t-mono">13px</span> gap means we need a
+          different component.
+        </p>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Scale</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-1</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">4px</span></dd>
+              <dd class="doc__spec-value">tag gaps, micro stacks.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-2</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">8px</span></dd>
+              <dd class="doc__spec-value">tight adjacency.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-3</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">12px</span></dd>
+              <dd class="doc__spec-value">card inset.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-4</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">16px</span></dd>
+              <dd class="doc__spec-value">row to row.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-5</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">20px</span></dd>
+              <dd class="doc__spec-value">section inner padding.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-6</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">24px</span></dd>
+              <dd class="doc__spec-value">card gaps, text rail.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-7</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">28px</span></dd>
+              <dd class="doc__spec-value">rare, when 24 reads cramped.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-8</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">32px</span></dd>
+              <dd class="doc__spec-value">section to section.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-10</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">40px</span></dd>
+              <dd class="doc__spec-value">block separation in long-form.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-12</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">48px</span></dd>
+              <dd class="doc__spec-value">part breaks.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-15</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">60px</span></dd>
+              <dd class="doc__spec-value">around the hero.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--space-20</span></dt>
+              <dd class="doc__spec-value"><span class="t-mono">80px</span></dd>
+              <dd class="doc__spec-value">end of document.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="type">
+        <h2 class="t-display">
+          Type<br />
+          <span class="t-display--medium t-muted">One font, three weights, seven sizes</span>
+        </h2>
+        <p class="t-body">
+          Commissioner. Regular 500, Medium 500, Bold 700. Seven
+          sizes from hero down to micro.
+        </p>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Scale</h3>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Hero</dt>
+              <dd class="doc__spec-value"><span class="t-mono">66 / 66</span></dd>
+              <dd class="doc__spec-value">the document's own title.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Display</dt>
+              <dd class="doc__spec-value"><span class="t-mono">38 / 38</span></dd>
+              <dd class="doc__spec-value">section headings.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Body</dt>
+              <dd class="doc__spec-value"><span class="t-mono">22 / 32</span></dd>
+              <dd class="doc__spec-value">long-form reading text.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Title</dt>
+              <dd class="doc__spec-value"><span class="t-mono">22 / 28</span></dd>
+              <dd class="doc__spec-value">card headings.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Subtitle</dt>
+              <dd class="doc__spec-value"><span class="t-mono">18 / 24</span></dd>
+              <dd class="doc__spec-value">nav headers, spec keys.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Caption</dt>
+              <dd class="doc__spec-value"><span class="t-mono">16 / 24</span></dd>
+              <dd class="doc__spec-value">UI labels, body inside cards.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Micro</dt>
+              <dd class="doc__spec-value"><span class="t-mono">14 / 20</span></dd>
+              <dd class="doc__spec-value">captions, citations, metadata.</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Triple-column spec variant: claim / reality / resolution shape. -->
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Weight rules</h3>
+          </div>
+          <dl class="doc__spec doc__spec--triple">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Regular</dt>
+              <dd class="doc__spec-value">reads too thin at 400</dd>
+              <dd class="doc__spec-value">Regular sits on 500.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Medium</dt>
+              <dd class="doc__spec-value">subtitle under display</dd>
+              <dd class="doc__spec-value">500, paired with bold 700 headline.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Bold</dt>
+              <dd class="doc__spec-value">headings, labels</dd>
+              <dd class="doc__spec-value">700, one step up from the 500 body.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="doc__section" id="motion">
+        <h2 class="t-display">
+          Motion<br />
+          <span class="t-display--medium t-muted">Four easings, four durations</span>
+        </h2>
+        <p class="t-body">
+          Default is <span class="t-mono">200ms &times; ease-out</span>
+          on transform and opacity. Reduced motion collapses every
+          duration to <span class="t-mono">0.01ms</span>.
+        </p>
+        <div class="card">
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--ease-out</span></dt>
+              <dd class="doc__spec-value">Hover, focus, state flips.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--ease-spring</span></dt>
+              <dd class="doc__spec-value">Switch thumbs, small confirmations.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--ease-swing</span></dt>
+              <dd class="doc__spec-value">Long reveals, column arrivals.</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key"><span class="t-mono">--ease-in-out</span></dt>
+              <dd class="doc__spec-value">Motion that continues past the frame.</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+
+      <!-- ================== CONTROLS ==================================== -->
+
+      <h2 class="doc__part">Controls</h2>
+
+      <article class="doc__section" id="cards">
+        <h2 class="t-display">
+          Cards<br />
+          <span class="t-display--medium t-muted">Static, interactive, shout</span>
+        </h2>
+        <p class="t-body">
+          Every widget is a card. Transparent at rest, 3% on touch.
+          Three variants, one HTML shape.
+        </p>
+
+        <!-- Static card with a caption child. -->
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Static card</h3>
+            <p class="t-caption">A caption under the title. Raw paragraphs pick up the 12px inset without a card__body wrapper.</p>
+          </div>
+          <p class="t-caption">Transparent until a pointer enters.</p>
+        </div>
+
+        <!-- Static card using card__body explicitly for an inner group. -->
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">With body wrapper</h3>
+          </div>
+          <div class="card__body">
+            <p class="t-caption">The card__body wrapper carries the 24px rail when the inner content is not a raw paragraph, list, or spec.</p>
+            <p class="t-caption">Two lines, one rail.</p>
+          </div>
+        </div>
+
+        <!-- Tight card variant. -->
+        <div class="card card--tight">
+          <p class="t-caption">Tight card. Smaller inset, tighter gap. For dense stacks.</p>
+        </div>
+
+        <!-- Shout card. Inverts everything inside. -->
+        <div class="card card--shout">
+          <div class="card__heading">
+            <h3 class="t-title">Shout card</h3>
+            <p class="t-caption t-muted">Inverted. One per column.</p>
+          </div>
+          <p class="t-caption">Black surface, white content. Reserved for the one card that should interrupt the column.</p>
+        </div>
+
+        <!-- Heading card — used at the top of an inspector group. -->
+        <header class="card card--heading">
+          <h2 class="t-display">Heading card</h2>
+        </header>
+      </article>
+
+      <article class="doc__section" id="fields">
+        <h2 class="t-display">
+          Fields<br />
+          <span class="t-display--medium t-muted">A row, a label, a value</span>
+        </h2>
+        <p class="t-body">
+          A label and a value share one row. No box, no outline.
+          Hover fills the row with 3%. Focus inverts to black with
+          a white caret.
+        </p>
+        <div class="card">
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Base</span>
+            <input class="t-caption field__input" type="text" value="16px" />
+          </label>
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Ratio</span>
+            <span class="t-caption field__value">1.25</span>
+          </label>
+          <label class="field">
+            <input class="t-caption field__input" type="text" placeholder="sofia@kk.consulting" />
+            <span class="field__fake-caret" aria-hidden="true"></span>
+          </label>
+        </div>
+      </article>
+
+      <article class="doc__section" id="buttons">
+        <h2 class="t-display">
+          Buttons<br />
+          <span class="t-display--medium t-muted">Secondary, primary</span>
+        </h2>
+        <p class="t-body">
+          Full-width by default, <span class="t-mono">12px</span>
+          radius, bold label. Imperative verbs. One primary per
+          card.
+        </p>
+        <div class="card">
+          <p class="t-caption">Pick a theme for the next document pass.</p>
+          <button class="button t-subtitle">Pick tokens</button>
+          <button class="button button--primary t-subtitle">Apply tokens</button>
+        </div>
+      </article>
+
+      <article class="doc__section" id="tags">
+        <h2 class="t-display">
+          Tags<br />
+          <span class="t-display--medium t-muted">Metadata only</span>
+        </h2>
+        <p class="t-body">
+          A tag labels a thing. If it looks clickable, reach for a
+          button.
+        </p>
+        <div class="card">
+          <p class="t-caption">
+            Version <span class="tag tag--inline">v1.1.0</span> ships
+            with <span class="tag tag--inline">9</span> components and
+            <span class="tag tag--inline">0</span> brand colors.
+          </p>
+          <p class="t-caption">
+            <span class="tag">Foundations</span>
+            <span class="tag">9 components</span>
+            <span class="tag">18 Apr '26</span>
+            <span class="tag tag--bold">Signed</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="doc__section" id="switches">
+        <h2 class="t-display">
+          Switches<br />
+          <span class="t-display--medium t-muted">Binary toggle</span>
+        </h2>
+        <p class="t-body">
+          Off is the border tint, on is full text color. Use a
+          switch when the change commits instantly.
+        </p>
+        <div class="card">
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" checked />
+            <span class="switch__track"></span>
+            Color tokens
+          </label>
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" checked />
+            <span class="switch__track"></span>
+            Type tokens
+          </label>
+          <label class="switch t-caption">
+            <input type="checkbox" class="switch__input" />
+            <span class="switch__track"></span>
+            Motion tokens
+          </label>
+        </div>
+      </article>
+
+      <!-- ================== COLLECTIONS ================================= -->
+
+      <h2 class="doc__part">Collections</h2>
+
+      <article class="doc__section" id="stack">
+        <h2 class="t-display">
+          Card stack<br />
+          <span class="t-display--medium t-muted">One active, the rest minimized</span>
+        </h2>
+        <p class="t-body">
+          Interactive cards stack vertically. One active at a time.
+          Inactive cards collapse to heading and minimized button.
+        </p>
+        <div class="card-stack">
+          <div class="card card--interactive" data-state="active">
+            <div class="card__heading">
+              <h3 class="t-title">Pick a direction</h3>
+              <p class="t-caption">Pick the direction for the next document pass.</p>
+            </div>
+            <div class="card__collapsible">
+              <div class="card__collapsible-inner">
+                <label class="field field--row">
+                  <span class="t-caption--bold field__label">Name</span>
+                  <input class="t-caption field__input" type="text" placeholder="sofia@kk.consulting" />
+                </label>
+                <label class="field">
+                  <input class="t-caption field__input" type="text" placeholder="drop the shout card, tighten the stack" />
+                </label>
+              </div>
+            </div>
+            <button class="button t-subtitle" data-cta="minimized">Pick</button>
+            <button class="button button--primary t-subtitle" data-cta="active">Apply direction</button>
+          </div>
+          <div class="card card--interactive">
+            <div class="card__heading">
+              <h3 class="t-title">Scope the change</h3>
+              <p class="t-caption">Name the tokens the agent may touch.</p>
+            </div>
+            <div class="card__collapsible">
+              <div class="card__collapsible-inner">
+                <label class="switch t-caption">
+                  <input type="checkbox" class="switch__input" checked />
+                  <span class="switch__track"></span>
+                  Color tokens
+                </label>
+                <label class="switch t-caption">
+                  <input type="checkbox" class="switch__input" />
+                  <span class="switch__track"></span>
+                  Type tokens
+                </label>
+              </div>
+            </div>
+            <button class="button t-subtitle" data-cta="minimized">Choose</button>
+            <button class="button button--primary t-subtitle" data-cta="active">Apply scope</button>
+          </div>
+          <div class="card card--interactive">
+            <div class="card__heading">
+              <h3 class="t-title">Commit the change</h3>
+              <p class="t-caption">Write the memo and ship.</p>
+            </div>
+            <div class="card__collapsible">
+              <div class="card__collapsible-inner">
+                <label class="field">
+                  <input class="t-caption field__input" type="text" placeholder="v1.2.0. stack tightened, shout demoted" />
+                </label>
+              </div>
+            </div>
+            <button class="button t-subtitle" data-cta="minimized">Draft</button>
+            <button class="button button--primary t-subtitle" data-cta="active">Ship the change</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="doc__section" id="deck">
+        <h2 class="t-display">
+          Deck<br />
+          <span class="t-display--medium t-muted">Browse without consequence</span>
+        </h2>
+        <p class="t-body">
+          A horizontal stack. One card active, the rest fanned back
+          in perspective. Live inside a shout card.
+        </p>
+        <div class="card card--shout">
+          <div class="deck">
+            <div class="deck-card active">
+              <p class="t-caption--bold">Monochrome</p>
+              <p class="t-caption">Pure black on white. Nine tokens, no brand.</p>
+              <button class="tag deck-card__select" type="button">Choose</button>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption--bold">Muted warm</p>
+              <p class="t-caption">Same tokens, 2% warm tint in neutrals.</p>
+              <button class="tag deck-card__select" type="button">Choose</button>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption--bold">Cool gray</p>
+              <p class="t-caption">Slight blue cast in the neutral scale.</p>
+              <button class="tag deck-card__select" type="button">Choose</button>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption--bold">High contrast</p>
+              <p class="t-caption">Pure black text, borders at 20%.</p>
+              <button class="tag deck-card__select" type="button">Choose</button>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption--bold">Ink</p>
+              <p class="t-caption">Inverted. White on black. Full system.</p>
+              <button class="tag deck-card__select" type="button">Choose</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================== MARGIN ====================================== -->
+
+      <h2 class="doc__part">Margin</h2>
+
+      <article class="doc__section" id="signoff">
+        <h2 class="t-display">
+          Signoff<br />
+          <span class="t-display--medium t-muted">Stats, byline, signature</span>
+        </h2>
+        <p class="t-body">
+          The canonical ending. Stats sit on the left rail. Byline
+          and signature close the document on the right.
+        </p>
+        <div class="doc__signoff">
+          <div class="doc__signoff-stats">
+            <div class="stat t-caption">
+              <div><span class="t-caption--bold">9</span> components in the kit.</div>
+              <div><span class="t-caption--bold">9</span> color tokens, and not one more.</div>
+            </div>
+            <div class="stat t-caption">
+              <div><span class="t-caption--bold">12</span> spacing tokens on a 4px grid.</div>
+              <div><span class="t-caption--bold">7</span> type sizes, three weights.</div>
+            </div>
+          </div>
+          <div class="doc__signoff-signature">
+            <p class="t-caption">
+              Signed by
+              <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
+              founder at
+              <span class="t-caption--bold">kk.consulting<br /></span>
+              <span class="t-muted">23 April '26 at 17:30 Tbilisi Time.</span>
+            </p>
+            <img class="doc__signoff-signature-img" src="../../signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- Inspector: heading card, interactive stack, comment stack          -->
+    <!-- ================================================================= -->
+    <aside class="inspector" aria-label="Actions and comments">
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Tweak</h2>
+        </header>
+
+        <div class="card card--interactive" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title">Tweak the tokens</h3>
+            <p class="t-caption">Brief the agent, pick a direction, scope, commit.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <div class="deck">
+                <div class="deck-card active">
+                  <p class="t-caption--bold">Monochrome</p>
+                  <p class="t-caption">Pure black on white. Nine tokens, no brand.</p>
+                  <button class="tag deck-card__select" type="button">Choose</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Muted warm</p>
+                  <p class="t-caption">Same tokens, 2% warm tint in neutrals.</p>
+                  <button class="tag deck-card__select" type="button">Choose</button>
+                </div>
+                <div class="deck-card">
+                  <p class="t-caption--bold">Ink</p>
+                  <p class="t-caption">Inverted. White on black.</p>
+                  <button class="tag deck-card__select" type="button">Choose</button>
+                </div>
+              </div>
+
+              <label class="switch t-caption">
+                <input type="checkbox" class="switch__input" checked />
+                <span class="switch__track"></span>
+                Color tokens
+              </label>
+              <label class="switch t-caption">
+                <input type="checkbox" class="switch__input" />
+                <span class="switch__track"></span>
+                Type tokens
+              </label>
+
+              <div class="card__heading">
+                <h4 class="t-subtitle">Scope</h4>
+                <p class="t-caption">Token sets the agent may touch.</p>
+              </div>
+
+              <label class="field">
+                <input class="t-caption field__input" type="text" placeholder="bump radius to 16, leave weights alone" />
+              </label>
+
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Version</span>
+                <input class="t-caption field__input" type="text" value="v1.2.0" />
+              </label>
+            </div>
+          </div>
+
+          <button class="button t-subtitle" data-cta="minimized">Configure</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Apply tweak</button>
+        </div>
+
+        <div class="card card--interactive">
+          <div class="card__heading">
+            <h3 class="t-title">Templates</h3>
+            <p class="t-caption">Saved configurations from earlier tweaks.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Memo</span>
+                <span class="t-caption field__value">monochrome, bold</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Call</span>
+                <span class="t-caption field__value">muted warm, balanced</span>
+              </label>
+              <label class="field field--row">
+                <span class="t-caption--bold field__label">Notes</span>
+                <span class="t-caption field__value">high contrast, bold</span>
+              </label>
+            </div>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Browse</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Apply template</button>
+        </div>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Comments</h2>
+        </header>
+
+        <div class="comment-stack">
+
+          <!-- Open thread with kebab and agent reply. -->
+          <div class="card card--interactive comment-thread" data-can-approve="true">
+            <div class="comment-thread__preview">
+              <div class="comment-msg" data-message-id="m-01">
+                <div class="comment-msg__header">
+                  <div class="t-subtitle">Sofia Hlazunova</div>
+                  <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                </div>
+                <p class="t-caption">The tag row needs one more variant to cover the metadata case.</p>
+                <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                </div>
+              </div>
+              <div class="comment-thread__ellipsis" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="comment-msg" data-message-id="m-03" data-author-role="agent">
+                <div class="comment-msg__header">
+                  <div class="t-subtitle">Claude</div>
+                  <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                </div>
+                <p class="t-caption">Added a bold tag at the end of the row. Take a look.</p>
+                <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="card__collapsible">
+              <div class="card__collapsible-inner">
+                <div class="comment-thread__list">
+                  <div class="comment-msg" data-message-id="m-01">
+                    <div class="comment-msg__header">
+                      <div class="t-subtitle">Sofia Hlazunova</div>
+                      <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                    </div>
+                    <p class="t-caption">The tag row needs one more variant to cover the metadata case.</p>
+                    <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                    </div>
+                  </div>
+                  <div class="comment-msg" data-message-id="m-02">
+                    <div class="comment-msg__header">
+                      <div class="t-subtitle">Konstantin Konstantinopolskii</div>
+                      <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                    </div>
+                    <p class="t-caption">Claude, add a bold tag to the row.</p>
+                    <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                    </div>
+                  </div>
+                  <div class="comment-msg" data-message-id="m-03" data-author-role="agent">
+                    <div class="comment-msg__header">
+                      <div class="t-subtitle">Claude</div>
+                      <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                    </div>
+                    <p class="t-caption">Added a bold tag at the end of the row. Take a look.</p>
+                    <div class="comment__menu-popover" role="menu">
+                      <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                      <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                    </div>
+                  </div>
+                </div>
+                <label class="field comment-thread__reply">
+                  <input class="t-caption field__input" type="text" placeholder="looks right now, thank you" />
+                  <span class="field__fake-caret" aria-hidden="true"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resolved thread. -->
+          <div class="card card--interactive comment-thread" data-resolved="true" data-state="minimized">
+            <div class="comment-thread__preview">
+              <div class="comment-thread__resolved">
+                <span class="comment-thread__resolved-stamp t-caption" aria-hidden="true">&check;</span>
+                <span class="comment-thread__resolved-snippet t-caption">The signoff timestamp should carry the timezone.</span>
+                <span class="comment-thread__resolved-byline t-caption t-muted">Konstantin Konstantinopolskii</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Archived thread — DOM retained, hidden by CSS. -->
+          <div class="card card--interactive comment-thread" data-archived="true">
+            <div class="comment-thread__preview">
+              <div class="comment-msg" data-message-id="m-99">
+                <div class="comment-msg__header">
+                  <div class="t-subtitle">Sofia Hlazunova</div>
+                  <button class="comment__menu" type="button" aria-label="Message actions" aria-expanded="false"><span></span></button>
+                </div>
+                <p class="t-caption">Early tag sizing notes. Superseded by v1.1.</p>
+                <div class="comment__menu-popover" role="menu">
+                  <button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>
+                  <button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <!-- Shared kit behaviour. Comment selection flow opted in for parity
+       with index.html. -->
+  <script src="../../js/kit.js"></script>
+  <script>KK.enableCommentSelectionFlow();</script>
+
+  <!-- FABs — narrow-view-only floating triggers. -->
+  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Navigation">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+      <rect width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Comments">
+    <span class="fab__count">2</span>
+  </button>
+  <button class="fab fab--comment" type="button" aria-label="Add a comment">Add a comment</button>
+</body>
+</html>

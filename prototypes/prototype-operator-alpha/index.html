@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- title: browser tab label, mentee name + product short-name, up to 60 chars -->
+  <title>Стратегия для Нелли Кам — kk.consulting</title>
+  <link rel="preload" href="../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../vars.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./prototype.css">
+</head>
+<body>
+  <div class="app" data-view="doc" data-role="operator" data-stage="review">
+
+    <!-- ==================================================================== -->
+    <!-- Sidebar — map. Working-layout TOC.                                    -->
+    <!-- ==================================================================== -->
+    <aside class="sidebar" aria-label="Навигация">
+
+      <!-- header: two-line session header, up to 16 chars per line -->
+      <div class="sidebar__header t-title">Нелли<br />Кам</div>
+
+      <nav class="sidebar__nav" id="toc" aria-label="Разделы документа">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <!-- nav-group heading: working-block label, up to 14 chars -->
+          <h3 class="t-subtitle">Работа</h3>
+          <ul class="nav-group__items">
+            <!-- toc row: brief section label, up to 14 chars -->
+            <li class="t-caption"><a href="#brief">Бриф</a></li>
+            <!-- toc row: research section label, up to 18 chars -->
+            <li class="t-caption"><a href="#research-1">Ресерч 1</a></li>
+            <!-- toc row: strategy section label, up to 14 chars -->
+            <li class="t-caption"><a href="#strategy">Стратегия</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <!-- nav-group heading: signoff-block label, up to 14 chars -->
+          <h3 class="t-subtitle">Подпись</h3>
+          <ul class="nav-group__items">
+            <!-- toc row: additional-notes section label, up to 18 chars -->
+            <li class="t-caption"><a href="#additional-notes">Заметки</a></li>
+            <!-- toc row: signoff section label, up to 14 chars -->
+            <li class="t-caption"><a href="#signoff">Подпись</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        <!-- footer: copyright + run identifier, up to 60 chars across 2 lines -->
+        <div>2026, kk.consulting<br />Ранап #142, 22 апреля</div>
+      </footer>
+    </aside>
+
+    <!-- ==================================================================== -->
+    <!-- Document — territory. Working-layout review state.                   -->
+    <!-- ==================================================================== -->
+    <main class="doc" id="doc">
+
+      <!-- hero: document title, mentee first name + last name, up to 40 chars -->
+      <h1 class="t-hero">Стратегия для Нелли&nbsp;Кам</h1>
+
+      <!-- ================= BRIEF ================================ -->
+      <article class="doc__section" id="brief">
+        <h2 class="t-display">
+          <!-- section title: brief block, up to 14 chars -->
+          <span>Бриф</span><br />
+          <!-- section subtitle: job-story line for brief, up to 60 chars -->
+          <span class="t-display--medium t-muted">Что кладём в пайплайн</span>
+        </h2>
+
+        <!-- Brief input card — committed state. Read-only values. Four field
+             rows + one committed-brief summary body. Primary button lives on
+             the control block below this card; the brief's own primary
+             ([Commit brief]) already fired at stage 1 and does not re-render.
+             Per kit §Card: one primary per card is a maximum, zero is fine
+             for a committed-state card. -->
+        <div class="card">
+          <div class="card__heading">
+            <!-- card heading: brief input card title, up to 20 chars -->
+            <h3 class="t-title">Входные данные</h3>
+            <!-- card subtitle: brief input card byline, up to 60 chars -->
+            <p class="t-caption">Собрано на бриф-стадии. Передано агенту без правок.</p>
+          </div>
+          <div class="field field--row">
+            <!-- field label: transcription picker, up to 16 chars -->
+            <span class="t-caption--bold field__label">Транскрипция</span>
+            <!-- field value: selected call id + duration, up to 40 chars -->
+            <span class="t-caption field__input">KK-Nelly-Kam-2d99cc63, 32 мин</span>
+          </div>
+          <div class="field field--row">
+            <!-- field label: CV attach slot, up to 14 chars -->
+            <span class="t-caption--bold field__label">CV</span>
+            <!-- field value: attached filename + parse status, up to 40 chars -->
+            <span class="t-caption field__input">Nelly-Kam-CV.pdf, распарсен</span>
+          </div>
+          <div class="field field--row">
+            <!-- field label: mentor notes slot, up to 14 chars -->
+            <span class="t-caption--bold field__label">Заметки</span>
+            <!-- field value: notes source + count, up to 40 chars -->
+            <span class="t-caption field__input">Telegram, 4 сообщения</span>
+          </div>
+          <div class="field field--row">
+            <!-- field label: depth switch, up to 10 chars -->
+            <span class="t-caption--bold field__label">Глубина</span>
+            <label class="switch t-caption">
+              <input type="checkbox" class="switch__input" checked disabled />
+              <span class="switch__track"></span>
+              <!-- switch label: right-side value when on, up to 14 chars -->
+              <span>Deep Research</span>
+            </label>
+            <!-- caption: depth price annotation, up to 16 chars, metadata -->
+            <span class="t-caption t-muted">20 USD</span>
+          </div>
+        </div>
+
+        <!-- Brief control block. One thread tag + Improve/Redo/Redo-whole.
+             Per stage-7 amendment 7, [Improve in place] is primary. -->
+        <div class="card" data-block="control" data-scope="brief">
+          <div class="card__heading">
+            <!-- tag: thread count for brief, short metric, up to 14 chars -->
+            <span class="tag">0 тредов</span>
+            <!-- caption: context-stream count line, total open threads, plain, up to 30 chars -->
+            <span class="t-caption t-muted">7 открытых тредов в доке</span>
+          </div>
+          <!-- button primary: default regen scope, imperative verb, up to 22 chars -->
+          <button class="button button--primary t-subtitle" data-action="improve" data-scope="brief">Улучшить на месте</button>
+          <!-- button secondary: redo this section, imperative verb, up to 18 chars -->
+          <button class="button t-subtitle" data-action="redo-section" data-scope="brief">Пересобрать бриф</button>
+          <!-- button secondary: redo whole doc, imperative verb, up to 20 chars -->
+          <button class="button t-subtitle" data-action="redo-doc" data-scope="brief">Пересобрать весь док</button>
+        </div>
+      </article>
+
+      <!-- ================= RESEARCH 1 =========================== -->
+      <article class="doc__section" id="research-1">
+        <h2 class="t-display">
+          <!-- section title: research section with ordinal, up to 18 chars -->
+          <span>Ресерч 1</span><br />
+          <!-- section subtitle: job-story line for research, up to 60 chars -->
+          <span class="t-display--medium t-muted">Ресерч против гипотез</span>
+        </h2>
+
+        <div class="card">
+          <div class="card__heading">
+            <!-- card heading: research sources, up to 20 chars -->
+            <h3 class="t-title">Находки</h3>
+            <!-- card subtitle: sources byline, count + scope, up to 60 chars -->
+            <p class="t-caption">Пять строк, отсортированы по влиянию на стратегию.</p>
+          </div>
+          <dl class="doc__spec doc__spec--value">
+            <div class="doc__spec-row">
+              <!-- spec key: topic-1 name, up to 22 chars -->
+              <dt class="doc__spec-key">Founding Designer, США</dt>
+              <!-- spec value: finding, one line, up to 60 chars -->
+              <dd class="doc__spec-value">1 200 открытых вакансий, 40% связаны с AI или ML</dd>
+              <!-- spec value: attribution, up to 40 chars -->
+              <dd class="doc__spec-value">LinkedIn Jobs, апрель 2026</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Ставки Fractional</dt>
+              <dd class="doc__spec-value">150-300 USD в час, ретейнер 5 000-12 000 в месяц</dd>
+              <dd class="doc__spec-value">Hired, Glassdoor, Levels.fyi</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">AI в дизайне</dt>
+              <dd class="doc__spec-value">73% дизайнеров применяют generative AI в продакшне</dd>
+              <dd class="doc__spec-value">Adobe Strategy Report 2024</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">Passeport Talent</dt>
+              <dd class="doc__spec-value">«Artistique» 1 237 €/мес. «Renommée» — международные выставки</dd>
+              <dd class="doc__spec-value">Service-Public.fr, март 2026</dd>
+            </div>
+            <div class="doc__spec-row">
+              <dt class="doc__spec-key">LinkedIn автоматизация</dt>
+              <dd class="doc__spec-value">Taplio, Dripify работают, есть риск блокировки</dd>
+              <dd class="doc__spec-value">Гипотеза, требует проверки</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Research control block. Same shape as brief/strategy but
+             different verb set: implement comments / redo / add research.
+             Implement-in-research is primary (default, most common). -->
+        <div class="card" data-block="control" data-scope="research">
+          <div class="card__heading">
+            <!-- tag: thread count for research, up to 14 chars -->
+            <span class="tag">2 треда</span>
+          </div>
+          <!-- button primary: implement comments in research, imperative, up to 24 chars -->
+          <button class="button button--primary t-subtitle" data-action="implement-research" data-scope="research">Учесть комментарии</button>
+          <!-- button secondary: redo research (destructive, opens inline confirm), up to 22 chars -->
+          <button class="button t-subtitle" data-action="redo-research" data-scope="research">Пересобрать ресерч</button>
+          <!-- button secondary: add research (additive), up to 22 chars -->
+          <button class="button t-subtitle" data-action="add-research" data-scope="research">Добавить ресерч</button>
+        </div>
+      </article>
+
+      <!-- ================= STRATEGY ============================= -->
+      <article class="doc__section" id="strategy">
+        <h2 class="t-display">
+          <!-- section title: strategy block, up to 14 chars -->
+          <span>Стратегия</span><br />
+          <!-- section subtitle: job-story line for strategy, up to 60 chars -->
+          <span class="t-display--medium t-muted">Девять блоков, собранных агентом</span>
+        </h2>
+
+        <!-- Subsection: Что обсудили. No thread. -->
+        <h3 class="t-display--medium" id="call-digest">Что обсудили</h3>
+        <p class="t-body">
+          Звонок 21 апреля 2026. Формат интро, без домашнего задания. Цель — зафиксировать текущую точку и вектор, не решение. Восемь тезисов из 32 минут: делегирование рутины ассистентке, фрагментация внимания, full-time за 5 000 USD net с работой «в стол», плакаты как дополнительный доход, США как уже идущий трек, Passeport Talent через артистику, интроверсия и ход через фаундеров.
+        </p>
+
+        <!-- Subsection: Точка А. Thread t1 anchored to "Ничего не заканчивается". -->
+        <h3 class="t-display--medium" id="point-a">Точка А</h3>
+        <p class="t-body">
+          Опытный дизайнер на full-time с ощущением потолка. Сильный бэкграунд в AI-интерфейсах, слабая переговорная позиция из-за самоописания. Блок — микроменеджмент и работа в стол, «Ничего не заканчивается до успешного успеха». Доход 5 000 USD net плюс нерегулярный фриланс. Локации Дубай, Санкт-Петербург, Белград; целевая — Франция.
+        </p>
+
+        <!-- Subsection: Точка Б. No thread. -->
+        <h3 class="t-display--medium" id="point-b">Точка Б</h3>
+        <p class="t-body">
+          Founding Designer или Design Partner в одном AI-стартапе США плюс второй короткий контракт. Доход 10 000 USD в месяц: ретейнер 5-12k плюс один короткий контракт 2-3 месяца. Анти-цели — маркетинг-дизайн и полная занятость у одного работодателя. Параллельный трек — пакет документов на визу Passeport Talent по артистической категории.
+        </p>
+
+        <!-- Subsection: Видение. No thread. -->
+        <h3 class="t-display--medium" id="vision-model">Видение и бизнес-модель</h3>
+        <p class="t-body">
+          Одна роль — якорь, второй контракт — воздух. Артистическая линия идёт параллельно и питает визу. Крафт делегируется, Нелли держит стратегический слой. Состав 10 000 USD в месяц: ретейнер 6 000, второй контракт 3 500, артистическая линия 500 USD плюс материалы для визы. Время — 30% крафт, 70% стратегия и коммуникация.
+        </p>
+
+        <!-- Subsection: Позиционирование. Threads t2 + t3. Two anchors. -->
+        <h3 class="t-display--medium" id="positioning">Позиционирование</h3>
+        <p class="t-body">
+          Три смены в профиле, в письмах, в первом звонке. Lead Product Designer — исполнительский фрейм, заменяется на Founding Designer или Design Partner. «Не шарю в UI» — невыгодная переговорная позиция. Прекратить транслировать неуверенность. AI-интерфейсы и Conversational UX — основная ниша с Alan AI. Crafter на полном цикле съедает время; решение — делегирование двум проверенным спецам, Нелли держит архитектуру и ревью.
+        </p>
+
+        <!-- Subsection: Гипотезы. Thread t4 anchored to "Фаундеры читают прямые сообщения в LinkedIn". -->
+        <h3 class="t-display--medium" id="hypotheses-channels">Гипотезы и каналы</h3>
+        <p class="t-body">
+          Две гипотезы, три канала. Первая — AI pre-seed и seed нуждается в единственном дизайнере, который закрывает и продукт, и процесс, то есть роль «Founding Designer». Вторая — Фаундеры читают прямые сообщения в LinkedIn, если первое предложение релевантно их последнему релизу или питчу. Каналы — LinkedIn с ассистенткой на первом контакте, личный нетворк из Facebook и Alan AI, дизайн-сообщество через общих знакомых.
+        </p>
+
+        <!-- Subsection: Рынок. No thread. -->
+        <h3 class="t-display--medium" id="market">Рынок</h3>
+        <p class="t-body">
+          Deep Research по рынку США и беглый по Passeport Talent. Пять находок, прямо относящихся к стратегии. Вакансии Founding Designer в AI-стартапах растут, медианные ставки Fractional держатся в районе 150-300 USD в час. Passeport Talent через артистическую категорию требует подтверждённого дохода 1 237 €/мес. Автоматизация LinkedIn работает, но с риском блокировки — требует отдельной проверки.
+        </p>
+
+        <!-- Subsection: Ближайшие шаги. Thread t5 anchored to "Ассистентка и 25 инвайтов". -->
+        <h3 class="t-display--medium" id="next-steps">Ближайшие шаги</h3>
+        <p class="t-body">
+          Пять шагов, каждый с ожидаемым результатом. Перепозиционирование — убрать «не шарю в UI» из CV и первых писем. Делегирование крафта — выбрать двух специалистов на UI, передать один проект, освободить десять часов в неделю. Ассистентка и 25 инвайтов в день целевым ролям — 30 разговоров в месяц к концу июня. Французский сайт с FR по умолчанию. Пакет визы — собрать плакаты, зины, подтверждения выставок к сентябрю.
+        </p>
+
+        <!-- Subsection: Как работаем. No thread. -->
+        <h3 class="t-display--medium" id="how-we-work">Как мы работаем</h3>
+        <p class="t-body">
+          Еженедельные звонки по 30 минут в фиксированный слот, асинхронный текст в мессенджере с ответом в течение суток. Перед каждым звонком — одна страница по текущему блоку. Закрытый чат менти, 23 человека в активной работе. Прошлый год — 47 стратегий собрано, 12 менти сменили роль, 9 закрыли первый контракт в новой нише. База 2 200+ тредов комментариев, решённые возражения переиспользуются пайплайном.
+        </p>
+
+        <!-- Strategy control block. Primary = [Improve in place]. -->
+        <div class="card" data-block="control" data-scope="strategy">
+          <div class="card__heading">
+            <!-- tag: thread count for strategy, up to 14 chars -->
+            <span class="tag">5 тредов</span>
+          </div>
+          <!-- button primary: improve strategy in place, imperative, up to 22 chars -->
+          <button class="button button--primary t-subtitle" data-action="improve" data-scope="strategy">Улучшить на месте</button>
+          <!-- button secondary: redo whole strategy, imperative, up to 18 chars -->
+          <button class="button t-subtitle" data-action="redo-section" data-scope="strategy">Переписать</button>
+          <!-- button secondary: redo whole doc, imperative, up to 20 chars -->
+          <button class="button t-subtitle" data-action="redo-doc" data-scope="strategy">Пересобрать весь док</button>
+        </div>
+      </article>
+
+      <!-- ================= ADDITIONAL NOTES ===================== -->
+      <article class="doc__section" id="additional-notes">
+        <h2 class="t-display">
+          <!-- section title: additional notes block, up to 18 chars -->
+          <span>Заметки</span><br />
+          <!-- section subtitle: job-story line for notes, up to 60 chars -->
+          <span class="t-display--medium t-muted">Что стоит добавить от себя</span>
+        </h2>
+        <p class="t-body">
+          <!-- body: empty-state prose for notes, terse, one sentence, up to 120 chars -->
+          Пусто. Выделите абзац в документе и оставьте комментарий, чтобы агент дописал сюда строку.
+        </p>
+      </article>
+
+      <!-- ================= SIGNOFF (shout, pending) ============= -->
+      <article class="doc__section" id="signoff">
+        <div class="card card--shout">
+          <div class="card__heading">
+            <!-- card heading: signoff title, up to 14 chars -->
+            <h3 class="t-title">Подпись</h3>
+            <!-- card subtitle: signoff pending byline, up to 40 chars, metadata -->
+            <p class="t-caption t-muted">Подписать можно в любой момент.</p>
+          </div>
+
+          <div class="doc__signoff-stats">
+            <div class="stat t-caption">
+              <div>
+                <span class="t-caption--bold">2</span>
+                <!-- stat label: revisions count, up to 24 chars -->
+                <span>цикла ревью закрыто.</span>
+              </div>
+            </div>
+            <div class="stat t-caption">
+              <div>
+                <span class="t-caption--bold">11</span>
+                <!-- stat label: research hits count, up to 24 chars -->
+                <span>находок в ресерче.</span>
+              </div>
+            </div>
+            <div class="stat t-caption">
+              <div>
+                <span class="t-caption--bold">7</span>
+                <!-- stat label: edits pending count, up to 24 chars -->
+                <span>открытых тредов.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <!-- steps list: guidance not gates. Four rows. -->
+              <!-- step 1: research step label with status glyph, up to 36 chars -->
+              <p class="t-caption">1. <span>Сверить ресерч с гипотезами.</span></p>
+              <!-- step 2: draft step label with status glyph, up to 36 chars -->
+              <p class="t-caption">2. <span>Пересобрать стратегию с правками.</span></p>
+              <!-- step 3: threads step label with status glyph, up to 36 chars -->
+              <p class="t-caption">3. <span>Закрыть открытые треды.</span></p>
+              <!-- step 4: read-through step label with status glyph, up to 36 chars -->
+              <p class="t-caption">4. <span>Прочитать документ целиком.</span></p>
+            </div>
+          </div>
+
+          <!-- button primary: sign the strategy, imperative, up to 20 chars -->
+          <button class="button button--primary t-subtitle" data-action="sign">Подписать</button>
+        </div>
+      </article>
+    </main>
+
+    <!-- ==================================================================== -->
+    <!-- Inspector — margin. Three pinned groups.                             -->
+    <!-- ==================================================================== -->
+    <aside class="inspector" aria-label="Стадии и треды">
+
+      <!-- ================= STAGES ================================ -->
+      <section class="inspector__group">
+        <div class="card">
+          <div class="card__heading">
+            <!-- card heading: stages card title, up to 14 chars -->
+            <h3 class="t-title">Стадии</h3>
+          </div>
+          <dl class="doc__spec">
+            <div class="doc__spec-row">
+              <!-- stage row: brief stage label, up to 14 chars -->
+              <dt class="doc__spec-key">Бриф</dt>
+              <dd class="doc__spec-value t-caption">&check;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: research-brief stage label, up to 18 chars -->
+              <dt class="doc__spec-key">Промпт ресерча</dt>
+              <dd class="doc__spec-value t-caption">&check;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: research stage label, up to 14 chars -->
+              <dt class="doc__spec-key">Ресерч</dt>
+              <dd class="doc__spec-value t-caption">&check;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: strategy stage label, up to 14 chars -->
+              <dt class="doc__spec-key">Стратегия</dt>
+              <dd class="doc__spec-value t-caption">&check;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: notes stage label, up to 14 chars -->
+              <dt class="doc__spec-key">Заметки</dt>
+              <dd class="doc__spec-value t-caption">&check;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: signoff stage label, up to 14 chars -->
+              <dt class="doc__spec-key">Подпись</dt>
+              <dd class="doc__spec-value t-caption--bold">&bull;</dd>
+            </div>
+            <div class="doc__spec-row">
+              <!-- stage row: delivered stage label, up to 14 chars -->
+              <dt class="doc__spec-key t-subtle">Доставлено</dt>
+              <dd class="doc__spec-value t-caption t-subtle">&middot;</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ================= FUTURE-RESERVED ====================== -->
+      <section class="inspector__group">
+        <div class="card">
+          <div class="card__heading">
+            <!-- card heading: future-reserved card title, up to 18 chars -->
+            <h3 class="t-title">Вопросы агента</h3>
+          </div>
+          <!-- caption: future-reserved placeholder note, metadata so t-muted allowed, up to 80 chars -->
+          <p class="t-caption t-muted">Агент задаст уточнения здесь. Пока тишина.</p>
+        </div>
+      </section>
+
+      <!-- ================= THREADS =============================== -->
+      <section class="inspector__group">
+        <div class="card card--heading">
+          <div class="card__heading">
+            <!-- card heading: threads group title, up to 14 chars -->
+            <h3 class="t-title">Треды</h3>
+            <!-- caption: context-stream count line, plain t-caption, up to 40 chars -->
+            <!-- aria-live polite so SR users hear the count change when kit -->
+            <!-- emits kk:comment approve / archive / new / delete. -->
+            <p class="t-caption t-muted" data-context-count aria-live="polite" role="status"></p>
+          </div>
+        </div>
+        <!-- Flat thread stack. Seven open. Rendered by app.js from data.js
+             so each card carries consistent data attributes for kit v0.13.0
+             Approve (data-author-role="agent" on the agent-proposal msg)
+             and per-thread data-thread-id for the highlight → thread mirror. -->
+        <div class="comment-stack" id="commentStack"></div>
+      </section>
+    </aside>
+  </div>
+
+  <!-- i18n keys for kit.js. Must run BEFORE kit.js. Localized for Russian
+       operator. Used by kit's comment selection flow + deck module. -->
+  <script>
+    window.KK = { config: { i18n: {
+      addComment: 'Ваш комментарий',
+      reply: 'Ответить…',
+      deckChoose: 'Выбрать',
+      deckChosen: 'Выбрано'
+    } } };
+  </script>
+  <script src="../js/kit.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

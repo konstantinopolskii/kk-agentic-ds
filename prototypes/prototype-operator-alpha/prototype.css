@@ -1,0 +1,42 @@
+/* Prototype composition for the operator review-state fixture.
+   Attribute-scoped only. No new classes.
+   Every visible element uses a kit class (t-*, card, field, button,
+   tag, switch, sidebar, doc, nav-group, inspector, comment-*, stat,
+   app). Composition rules below target kit classes via data attributes
+   the consumer sets on markup, never via new classnames. */
+
+/* ------------------------------------------------------------------ */
+/* Control block — a plain .card that carries a tag + 2-3 buttons in  */
+/* one row per conservative's spec + stage-7 amendment 7 (primary on  */
+/* the default scope). The kit's .card already handles the 24px rail  */
+/* and 3% hover overlay; we add the single-row flow here via the      */
+/* [data-block="control"] attribute. No new classes, kit-native tokens.*/
+/* ------------------------------------------------------------------ */
+
+.card[data-block="control"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.card[data-block="control"] > .card__heading {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+}
+.card[data-block="control"] > .button {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+/* Narrow viewport — control block flows to vertical so buttons keep
+   the 44px touch target without cramping. Mirrors the doc column's
+   responsive breakpoint in style.css. */
+
+@media (max-width: 800px) {
+  .card[data-block="control"] { flex-direction: column; align-items: stretch; }
+  .card[data-block="control"] > .button { width: 100%; }
+}
