@@ -49,31 +49,47 @@ Gray mush is the default AI failure mode. The cure is hypertrophied contrast: he
 ### The iPad feel
 Three panes in one frame, each with its own scroll. Only the middle column moves during reading. Soft corners on every surface inside; crisp edges outside where the document meets the screen. No skeuomorphism, no liquid glass.
 
-## Foundations — material
+## Foundations
 
-Forbidden: gradients, drop shadows, glass/translucency, blur. Depth comes from hierarchy and spacing, not effects.
+Token inventories (swatches, scale tables, space / radii / motion tables) live in the fundamental demo and in `tokens.json`. The sections below carry the why.
 
-## Foundations — color
+### Material
 
-Nine tokens only: two backgrounds, two surface tints, two hairlines, three text alphas. No brand, no status colors, no accent. Text is black by default. Muted and subtle are metadata-only. If text is ambiguous without color, rewrite the text, not the palette.
+No skeuomorphic surfaces. Depth comes from hierarchy and spacing, not from effects. Four things are forbidden: gradients, drop shadows, glass / translucency, blur. Each fakes light or depth the screen cannot carry; each trades clarity for decoration.
+
+### Color
+
+Nine tokens: two backgrounds, two surface tints, two hairlines, three text alphas. No brand, no status colors, no accent.
+
+Text is black. Muted and subtle are for metadata only — bylines, captions, hairlines. One distinction step per pair. Stacking color tiers creates [gray mush](#radical-contrast).
+
+If the text is ambiguous without color, rewrite the text, not the palette. The full swatch inventory lives in the fundamental demo.
 
 Selection renders inverted — `--color-text` background, `--color-bg` text. No native blue, no custom color. A live selection previews the mark it is about to become.
 
-## Foundations — type
+### Type
 
-Commissioner. Variable font, SIL OFL 1.1. Three kit weights (regular 500, medium 500, bold 700), seven sizes (66 → 14 px). No italics outside quotes. Regular sits on Medium — the 400 axis reads too thin on screen at body size.
+Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas. Three weights used in the kit (regular, medium, bold), seven sizes (66 to 14 px). No italics outside of quotes.
 
-## Foundations — space
+One distinction step between two elements: bold vs regular, or big vs small, or black vs muted. Never all three. Never subtle.
 
-4px grid. Every spacing value is a multiple of 4. Off-grid fails the linter.
+Regular sits on Medium 500 because the 400 axis reads too thin on screen at body size. Light weight is forbidden unless the content is metadata or the user asks.
 
-## Foundations — radii
+### Space
 
-12 / 16 / 24 / 9999. Buttons 12, cards 16, large surfaces 24, pills/circles 9999.
+All gaps, padding, margins snap to multiples of 4. Larger jumps mean larger semantic distance. A 13 px gap means we need a different component. Off-grid fails the linter.
 
-## Foundations — motion
+### Radii
 
-Four easings, four durations. `--ease-out` for hover/focus, `--ease-swing` for elegant long reveals, `--ease-spring` for confirmation, `--ease-in-out` everywhere else. Reduced-motion collapses all durations to near-zero.
+Two radii plus one pill alias. 12px for buttons, tiers, switches, fields. 24px for cards and anything that holds content. 9999px for pills: switch thumbs, avatars, scrollbars. A third canonical radius is forbidden.
+
+### Motion
+
+Default: `200ms × ease-out` on `transform` and `opacity` only. Four easing curves, four roles: ease-out for functional settles, ease-spring for small confirmations, ease-swing for long reveals, ease-in-out for motion that continues past the frame.
+
+Press feedback: every tappable surface scales to `0.96` on `:active`.
+
+On `prefers-reduced-motion`, every duration drops to `0.01ms`. State changes instantly.
 
 ## Runtime
 

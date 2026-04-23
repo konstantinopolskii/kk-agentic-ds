@@ -46,19 +46,7 @@
             <li class="t-caption"><a href="#components">Components</a></li>
             <li class="t-caption"><a href="#patterns">Patterns</a></li>
             <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h3 class="t-subtitle">Foundations</h3>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#foundations">Where they live</a></li>
-            <li class="t-caption"><a href="#material">Material</a></li>
-            <li class="t-caption"><a href="#color">Color</a></li>
-            <li class="t-caption"><a href="#type">Type</a></li>
-            <li class="t-caption"><a href="#space">Space &amp; rhythm</a></li>
-            <li class="t-caption"><a href="#radii">Radii</a></li>
-            <li class="t-caption"><a href="#motion">Motion</a></li>
+            <li class="t-caption"><a href="#foundations">Foundations</a></li>
           </ul>
         </section>
 
@@ -452,138 +440,22 @@
         </div>
       </article>
 
-      <!-- ================== FOUNDATIONS ================================= -->
-      <!-- Philosophy only. Token inventories (swatches, scale tables,      -->
-      <!-- space / radii / motion tables) live in the fundamental demo and -->
-      <!-- in skills/kk-design-system/tokens.json.                          -->
-
-      <h2 class="doc__part">Foundations</h2>
-
       <article class="doc__section" id="foundations">
         <h2 class="t-display">
-          Where they live<br />
+          Foundations<br />
           <span class="t-display--medium t-muted">Values and swatches</span>
         </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Foundations</h3>
-            <p class="t-caption">Swatches and scale tables render in the fundamental demo; the sections below carry the why.</p>
+            <p class="t-caption">Swatches and scale tables render in the fundamental demo; the why lives in manifesto.md.</p>
           </div>
           <a class="button button--primary t-subtitle" href="./demos/fundamental--accepted/index.html#color" target="_blank" rel="noopener">Open the swatches</a>
           <p class="t-micro t-muted">
-            Also: <a href="./skills/kk-design-system/tokens.json" target="_blank" rel="noopener">tokens.json</a>.
+            Also: <a href="./skills/kk-design-system/tokens.json" target="_blank" rel="noopener">tokens.json</a>,
+            <a href="./skills/kk-design-system/manifesto.md" target="_blank" rel="noopener">manifesto.md</a>.
           </p>
         </div>
-      </article>
-
-      <article class="doc__section" id="material">
-        <h2 class="t-display">
-          Material<br />
-          <span class="t-display--medium t-muted">Light on white</span>
-        </h2>
-        <p class="t-body">
-          No skeuomorphic surfaces. Depth comes from hierarchy and
-          spacing, not from effects. Four things are forbidden:
-          gradients, drop shadows, glass / translucency, blur. Each
-          fakes light or depth the screen cannot carry; each trades
-          clarity for decoration.
-        </p>
-      </article>
-
-      <article class="doc__section" id="color">
-        <h2 class="t-display">
-          Color<br />
-          <span class="t-display--medium t-muted">Nine tokens</span>
-        </h2>
-        <p class="t-body">
-          Nine tokens: two backgrounds, two surface tints, two
-          hairlines, three text alphas. No brand, no status colors,
-          no accent.
-        </p>
-        <p class="t-body">
-          Text is black. Muted and subtle are for metadata only
-          &mdash; bylines, captions, hairlines. One distinction step
-          per pair. Stacking color tiers creates
-          <a href="#contrast">gray mush</a>.
-        </p>
-        <p class="t-body">
-          If the text is ambiguous without color, rewrite the text,
-          not the palette. The full swatch inventory lives in
-          <a href="./demos/fundamental--accepted/index.html#color">the fundamental demo</a>.
-        </p>
-      </article>
-
-      <article class="doc__section" id="type">
-        <h2 class="t-display">
-          Type<br />
-          <span class="t-display--medium t-muted">One font, three weights, seven sizes</span>
-        </h2>
-        <p class="t-body">
-          Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas.
-          Three weights used in the kit (regular, medium, bold), seven
-          sizes (66 to 14 px). No italics outside of quotes.
-        </p>
-        <p class="t-body">
-          One distinction step between two elements: bold vs
-          regular, or big vs small, or black vs muted. Never all
-          three. Never subtle.
-        </p>
-        <p class="t-body">
-          Regular sits on Medium 500 because the 400 axis reads too
-          thin on screen at body size. Light weight is forbidden
-          unless the content is metadata or the user asks.
-        </p>
-      </article>
-
-      <article class="doc__section" id="space">
-        <h2 class="t-display">
-          Space &amp; rhythm<br />
-          <span class="t-display--medium t-muted">A 4px grid</span>
-        </h2>
-        <p class="t-body">
-          All gaps, padding, margins snap to multiples of 4. Larger
-          jumps mean larger semantic distance. A 13&thinsp;px gap
-          means we need a different component.
-        </p>
-      </article>
-
-      <article class="doc__section" id="radii">
-        <h2 class="t-display">
-          Radii<br />
-          <span class="t-display--medium t-muted">Two corners</span>
-        </h2>
-        <p class="t-body">
-          Two radii plus one pill alias. 12px for buttons, tiers,
-          switches, fields. 24px for cards and anything that holds
-          content. 9999px for pills: switch thumbs, avatars,
-          scrollbars. A third canonical radius is forbidden.
-        </p>
-      </article>
-
-      <article class="doc__section" id="motion">
-        <h2 class="t-display">
-          Motion<br />
-          <span class="t-display--medium t-muted">200ms ease-out</span>
-        </h2>
-        <p class="t-body">
-          Default: <span class="t-mono">200ms &times; ease-out</span>
-          on <span class="t-mono">transform</span> and
-          <span class="t-mono">opacity</span> only. Four easing
-          curves, four roles: ease-out for functional settles,
-          ease-spring for small confirmations, ease-swing for long
-          reveals, ease-in-out for motion that continues past the
-          frame.
-        </p>
-        <p class="t-body">
-          Press feedback: every tappable surface scales to
-          <span class="t-mono">0.96</span> on
-          <span class="t-mono">:active</span>.
-        </p>
-        <p class="t-caption">
-          On <span class="t-mono">prefers-reduced-motion</span>,
-          every duration drops to <span class="t-mono">0.01ms</span>.
-          State changes instantly.
-        </p>
       </article>
 
       <!-- ================== VOICE ======================================== -->
