@@ -211,6 +211,35 @@ Rules:
 - Pair with `.card--interactive.card--selectable` in the doc column when the preview is driven by a click-to-select registry. See `patterns.html`.
 - Kit docs only. Product prose does not render iframes.
 
+## Registry surfaces
+
+Document-surface primitive for dense two-column inventories on kit registry pages (atoms, elements, and any future flat catalogue). Resets browser table defaults, applies the kit's hairline border and text tokens, and keeps links inheriting surface type. Used on `patterns.html` today.
+
+```html
+<!-- Atoms inventory on a registry page. -->
+<table class="registry-table">
+  <thead>
+    <tr>
+      <th class="t-caption">Class</th>
+      <th class="t-caption">Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="t-body"><a href="./index.html#t-body">t-body</a></td>
+      <td class="t-body">Body text, 14 px Medium.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Rules:
+- `.registry-table` carries the full table reset. No per-cell inline styles.
+- First column reserves 30% width and forbids wrapping — the class name or token name column.
+- Header row uses `--color-border-strong`; body rows use `--color-border`. Last body row drops its border so the table ends flush with following prose.
+- Links inside a registry table inherit `--color-text` and underline on hover or focus. Do not override.
+- Kit docs only. Product prose does not render inventory tables.
+
 ## Patterns
 
 ### Three columns (default shell)
@@ -235,7 +264,7 @@ Below ~800px: doc becomes the single column, inspector slides over, sidebar coll
 
 ## What's forbidden
 
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `doc`, `nav-group`, `inspector`, `comment`, `stat`, `tag`, `swatch`, `app`, `preview-frame`.
+- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `doc`, `nav-group`, `inspector`, `comment`, `stat`, `tag`, `swatch`, `app`, `preview-frame`, `registry-table`.
 - Inline styles for tokens. Use `var(--token-name)`.
 - New color, spacing, or radius values outside `tokens.json`.
 - Drop shadows, glass, blur, gradients.

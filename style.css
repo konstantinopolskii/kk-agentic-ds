@@ -421,6 +421,46 @@ body {
 }
 
 /* =========================================================================
+   Registry surfaces — dense two-column table for atoms and elements
+   inventories on kit docs. Resets browser table defaults, applies the
+   kit's hairline border + text tokens, and keeps links inheriting
+   surface type. Document-surface primitive, not a component variant.
+   Registry pages only (patterns.html today).
+   ========================================================================= */
+.registry-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-4);
+}
+.registry-table th,
+.registry-table td {
+  text-align: left;
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  vertical-align: baseline;
+  border-bottom: 0.5px solid var(--color-border);
+}
+.registry-table th {
+  border-bottom-color: var(--color-border-strong);
+}
+.registry-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.registry-table td:first-child {
+  width: 30%;
+  white-space: nowrap;
+}
+.registry-table a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+.registry-table a:hover,
+.registry-table a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 3px;
+}
+
+/* =========================================================================
    Inspector — right panel, card-based, content is flexible
    ========================================================================= */
 .inspector {

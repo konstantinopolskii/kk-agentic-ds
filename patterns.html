@@ -52,12 +52,12 @@
 
       <p class="doc__intro t-body">
         The registry points at real patterns living in real prototypes.
-        Click any entry. The inspector on the right loads the source
+        Click any pattern. The inspector on the right loads the source
         at 25% scale.
       </p>
       <p class="doc__intro t-body">
-        Atoms and elements preview the fundamental demo at the named
-        anchor. Patterns preview the sliced fragment on its own page.
+        Atoms and elements open the fundamental demo at the named anchor
+        in a new tab. Patterns preview the sliced fragment in the inspector.
       </p>
 
       <!-- ================== ATOMS ======================================= -->
@@ -73,229 +73,112 @@
           patterns; they do not stand as patterns themselves.
         </p>
 
-        <!-- Type utilities -->
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#opening"
-             data-preview-label=".t-hero">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-hero</span></h3>
-            <p class="t-caption">Document title. 66 / 66.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#opening"
-             data-preview-label=".t-display">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-display</span></h3>
-            <p class="t-caption">Section heading. 38 / 38.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".t-title">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-title</span></h3>
-            <p class="t-caption">Card heading. 22 / 28.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#reading"
-             data-preview-label=".t-subtitle">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-subtitle</span></h3>
-            <p class="t-caption">Nav header, spec key. 18 / 24.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#reading"
-             data-preview-label=".t-body">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-body</span></h3>
-            <p class="t-caption">Long-form reading text. 22 / 32.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#reading"
-             data-preview-label=".t-caption">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-caption</span></h3>
-            <p class="t-caption">UI label, body inside cards. 16 / 24.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#reading"
-             data-preview-label=".t-micro">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-micro</span></h3>
-            <p class="t-caption">Caption, citation, metadata. 14 / 20.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#opening"
-             data-preview-label=".t-mono">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-mono</span></h3>
-            <p class="t-caption">Inline tokens, numeric values, code.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#opening"
-             data-preview-label=".t-muted">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-muted</span></h3>
-            <p class="t-caption">Metadata color for bylines, captions, subheads.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#lists"
-             data-preview-label=".t-list">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.t-list</span></h3>
-            <p class="t-caption">Ordered or unordered list body type.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#lists"
-             data-preview-label=".aside">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.aside</span></h3>
-            <p class="t-caption">Softer inline beat, one notch smaller.</p>
-          </div>
-        </div>
-
-        <!-- Token groups -->
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#color"
-             data-preview-label="Color tokens">
-          <div class="card__heading">
-            <h3 class="t-title">Color tokens</h3>
-            <p class="t-caption">Nine tokens from bg to text-subtle. Pure black, one soft frame, three surface overlays.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#space"
-             data-preview-label="Space tokens">
-          <div class="card__heading">
-            <h3 class="t-title">Space tokens</h3>
-            <p class="t-caption">Twelve steps on a 4px grid, from tag gaps to end-of-document margins.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#motion"
-             data-preview-label="Motion tokens">
-          <div class="card__heading">
-            <h3 class="t-title">Motion tokens</h3>
-            <p class="t-caption">Four eases: out, spring, swing, in-out.</p>
-          </div>
-        </div>
-
-        <!-- Controls -->
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#buttons"
-             data-preview-label=".button">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.button</span></h3>
-            <p class="t-caption">Secondary default, primary for commit.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#tags"
-             data-preview-label=".tag">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.tag</span></h3>
-            <p class="t-caption">Metadata label. Inline or block.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#switches"
-             data-preview-label=".switch">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.switch</span></h3>
-            <p class="t-caption">Binary toggle for instant commits.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#fields"
-             data-preview-label=".field__input">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.field__input</span></h3>
-            <p class="t-caption">Text input, rest and focus.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#deck"
-             data-preview-label=".deck-card">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.deck-card</span></h3>
-            <p class="t-caption">Single card in a deck.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html"
-             data-preview-label=".comment-msg">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.comment-msg</span></h3>
-            <p class="t-caption">Author, body, kebab. One message.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html"
-             data-preview-label=".fab">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.fab</span></h3>
-            <p class="t-caption">Floating action button. Narrow-view trigger.</p>
-          </div>
-        </div>
-
-        <!-- Prose primitives -->
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#figures"
-             data-preview-label=".quote">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.quote</span></h3>
-            <p class="t-caption">Blockquote with italic body and cite line.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#figures"
-             data-preview-label=".figure">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.figure</span></h3>
-            <p class="t-caption">Image with figcaption.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#signoff"
-             data-preview-label=".doc__signoff-signature-img">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.doc__signoff-signature-img</span></h3>
-            <p class="t-caption">Handwritten signature, right-hand rail.</p>
-          </div>
-        </div>
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th scope="col" class="t-caption--bold">Name</th>
+              <th scope="col" class="t-caption--bold">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#opening" target="_blank" rel="noopener"><span class="t-mono">.t-hero</span></a></td>
+              <td class="t-caption">Document title. 66 / 66.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#opening" target="_blank" rel="noopener"><span class="t-mono">.t-display</span></a></td>
+              <td class="t-caption">Section heading. 38 / 38.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.t-title</span></a></td>
+              <td class="t-caption">Card heading. 22 / 28.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#reading" target="_blank" rel="noopener"><span class="t-mono">.t-subtitle</span></a></td>
+              <td class="t-caption">Nav header, spec key. 18 / 24.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#reading" target="_blank" rel="noopener"><span class="t-mono">.t-body</span></a></td>
+              <td class="t-caption">Long-form reading text. 22 / 32.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#reading" target="_blank" rel="noopener"><span class="t-mono">.t-caption</span></a></td>
+              <td class="t-caption">UI label, body inside cards. 16 / 24.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#reading" target="_blank" rel="noopener"><span class="t-mono">.t-micro</span></a></td>
+              <td class="t-caption">Caption, citation, metadata. 14 / 20.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#opening" target="_blank" rel="noopener"><span class="t-mono">.t-mono</span></a></td>
+              <td class="t-caption">Inline tokens, numeric values, code.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#opening" target="_blank" rel="noopener"><span class="t-mono">.t-muted</span></a></td>
+              <td class="t-caption">Metadata color for bylines, captions, subheads.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#lists" target="_blank" rel="noopener"><span class="t-mono">.t-list</span></a></td>
+              <td class="t-caption">Ordered or unordered list body type.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#lists" target="_blank" rel="noopener"><span class="t-mono">.aside</span></a></td>
+              <td class="t-caption">Softer inline beat, one notch smaller.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#color" target="_blank" rel="noopener">Color tokens</a></td>
+              <td class="t-caption">Nine tokens from bg to text-subtle. Pure black, one soft frame, three surface overlays.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#space" target="_blank" rel="noopener">Space tokens</a></td>
+              <td class="t-caption">Twelve steps on a 4px grid, from tag gaps to end-of-document margins.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#motion" target="_blank" rel="noopener">Motion tokens</a></td>
+              <td class="t-caption">Four eases: out, spring, swing, in-out.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#buttons" target="_blank" rel="noopener"><span class="t-mono">.button</span></a></td>
+              <td class="t-caption">Secondary default, primary for commit.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#tags" target="_blank" rel="noopener"><span class="t-mono">.tag</span></a></td>
+              <td class="t-caption">Metadata label. Inline or block.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#switches" target="_blank" rel="noopener"><span class="t-mono">.switch</span></a></td>
+              <td class="t-caption">Binary toggle for instant commits.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#fields" target="_blank" rel="noopener"><span class="t-mono">.field__input</span></a></td>
+              <td class="t-caption">Text input, rest and focus.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#deck" target="_blank" rel="noopener"><span class="t-mono">.deck-card</span></a></td>
+              <td class="t-caption">Single card in a deck.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html" target="_blank" rel="noopener"><span class="t-mono">.comment-msg</span></a></td>
+              <td class="t-caption">Author, body, kebab. One message.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html" target="_blank" rel="noopener"><span class="t-mono">.fab</span></a></td>
+              <td class="t-caption">Floating action button. Narrow-view trigger.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#figures" target="_blank" rel="noopener"><span class="t-mono">.quote</span></a></td>
+              <td class="t-caption">Blockquote with italic body and cite line.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#figures" target="_blank" rel="noopener"><span class="t-mono">.figure</span></a></td>
+              <td class="t-caption">Image with figcaption.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#signoff" target="_blank" rel="noopener"><span class="t-mono">.doc__signoff-signature-img</span></a></td>
+              <td class="t-caption">Handwritten signature, right-hand rail.</td>
+            </tr>
+          </tbody>
+        </table>
       </article>
 
       <!-- ================== ELEMENTS ==================================== -->
@@ -311,86 +194,52 @@
           that pairs a number with a sentence.
         </p>
 
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".card">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card</span></h3>
-            <p class="t-caption">Static surface. Transparent at rest, 3% on touch.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".card--tight">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card--tight</span></h3>
-            <p class="t-caption">Smaller inset. For dense stacks.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".card--shout">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card--shout</span></h3>
-            <p class="t-caption">Inverted surface. Black ground, white content.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".card--heading">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card--heading</span></h3>
-            <p class="t-caption">Display title sitting above a group of cards.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#stack"
-             data-preview-label=".card--interactive">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card--interactive</span></h3>
-            <p class="t-caption">Card with a collapsible body and two CTAs.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#cards"
-             data-preview-label=".card__heading">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.card__heading</span></h3>
-            <p class="t-caption">Title plus optional caption inside a card.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#fields"
-             data-preview-label=".field--row">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.field--row</span></h3>
-            <p class="t-caption">Label on the left, value on the right. One row.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#color"
-             data-preview-label=".swatch">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.swatch</span></h3>
-            <p class="t-caption">Color dot paired with its token name.</p>
-          </div>
-        </div>
-
-        <div class="card card--interactive card--selectable"
-             data-preview-src="./demos/fundamental--accepted/index.html#signoff"
-             data-preview-label=".stat">
-          <div class="card__heading">
-            <h3 class="t-title"><span class="t-mono">.stat</span></h3>
-            <p class="t-caption">Bold number followed by a one-line fact.</p>
-          </div>
-        </div>
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th scope="col" class="t-caption--bold">Name</th>
+              <th scope="col" class="t-caption--bold">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.card</span></a></td>
+              <td class="t-caption">Static surface. Transparent at rest, 3% on touch.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.card--tight</span></a></td>
+              <td class="t-caption">Smaller inset. For dense stacks.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.card--shout</span></a></td>
+              <td class="t-caption">Inverted surface. Black ground, white content.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.card--heading</span></a></td>
+              <td class="t-caption">Display title sitting above a group of cards.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#stack" target="_blank" rel="noopener"><span class="t-mono">.card--interactive</span></a></td>
+              <td class="t-caption">Card with a collapsible body and two CTAs.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#cards" target="_blank" rel="noopener"><span class="t-mono">.card__heading</span></a></td>
+              <td class="t-caption">Title plus optional caption inside a card.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#fields" target="_blank" rel="noopener"><span class="t-mono">.field--row</span></a></td>
+              <td class="t-caption">Label on the left, value on the right. One row.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#color" target="_blank" rel="noopener"><span class="t-mono">.swatch</span></a></td>
+              <td class="t-caption">Color dot paired with its token name.</td>
+            </tr>
+            <tr>
+              <td class="t-caption--bold"><a href="./demos/fundamental--accepted/index.html#signoff" target="_blank" rel="noopener"><span class="t-mono">.stat</span></a></td>
+              <td class="t-caption">Bold number followed by a one-line fact.</td>
+            </tr>
+          </tbody>
+        </table>
       </article>
 
       <!-- ================== PATTERNS ==================================== -->
@@ -408,6 +257,7 @@
         </p>
 
         <div class="card card--interactive card--selectable"
+             data-state="active"
              data-preview-default
              data-preview-src="./demos/fundamental--accepted/patterns/card-stack.html"
              data-preview-label="Card stack">
@@ -544,6 +394,21 @@
         </div>
 
         <div class="card card--interactive card--selectable"
+             data-preview-src="./demos/fundamental--accepted/patterns/comments-group.html"
+             data-preview-label="Comments group">
+          <div class="card__heading">
+            <h3 class="t-title">Comments group</h3>
+            <p class="t-caption">Inspector section with the Comments heading above open, resolved, and archived threads.</p>
+            <p class="t-micro t-muted"><span class="t-mono">demos/fundamental--accepted/index.html:826</span></p>
+            <a class="t-micro t-muted"
+               data-preview-escape
+               href="./demos/fundamental--accepted/patterns/comments-group.html"
+               target="_blank"
+               rel="noopener">Open in new tab</a>
+          </div>
+        </div>
+
+        <div class="card card--interactive card--selectable"
              data-preview-src="./demos/fundamental--accepted/patterns/signoff.html"
              data-preview-label="Signoff">
           <div class="card__heading">
@@ -573,8 +438,8 @@
         <div class="preview-frame">
           <iframe class="preview-frame__iframe"
                   data-preview-target
-                  src=""
-                  title="Pattern preview"
+                  src="./demos/fundamental--accepted/patterns/card-stack.html"
+                  title="Card stack preview"
                   loading="lazy"></iframe>
         </div>
       </section>
