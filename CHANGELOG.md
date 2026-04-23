@@ -2,6 +2,47 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.0.0 — 2026-04-23
+
+Pipeline-v3. Eight stages. Ten role skills. Three-track designer parallel collapses to N-per-pattern on one designer track. UX writer role eliminated — designers ship UI copy drafts. Revolutionary protocol deleted — user-approved exceptions replace it. Fresh-eyes jobstory loop (Steve Jobs character, Haiku) frames designer output via pre-question + post-validation. DS Manager absorbs PM role. Design Engineer refined from frontend engineer. Stage-10 reviewer trio becomes two dumb consistency officers (Steve Jobs + Dieter Rams) + one strict meta-reviewer (Anna Wintour, Opus, rubric-gated). Every role carries `model:` + `character:` frontmatter. `kk-ds-frontend` + `kk-ds-supervisor` deprecated, retained for historical session playback. See `proposals/2026-04-23-retro.md` for the full proposal set.
+
+### Added
+- `skills/kk-role-design-director/SKILL.md` — Opus, Charlotte Perriand. Brings multiple directions at session open; aligns on one with the human; writes the direction document with pattern blocks, exceptions, alignment transcript. Replaces the deleted `kk-role-art-director`.
+- `skills/kk-role-designer/SKILL.md` — Sonnet, Hella Jongerius. Single-track designer, one per pattern block, N parallel. Answers 3a fresh-eyes questions in ASCII across states, variants, edge cases, example content, UI copy drafts. Replaces the deleted `kk-role-designer-conservative`.
+- `skills/kk-role-design-engineer/SKILL.md` — Sonnet, Sara Soueidan. Refined frontend engineer. Piece-by-piece landing, state fidelity, designer copy verbatim, dummy text flagged only. DS-engineer mode retained for kit refactors. Replaces the deleted `kk-role-frontend-engineer`.
+- `skills/kk-role-fresh-eyes-jobstory/SKILL.md` — Haiku, Steve Jobs. Two modes: pre-designer (3a, naive question list per pattern) + post-designer (3c, pass/fail per question).
+- `skills/kk-role-ds-manager/SKILL.md` — Sonnet, Muriel Cooper. Stage 4 PM-absorbing catalog role. Per-block component map, build-order task split, kit-demo references.
+- `skills/kk-role-consistency-jobstory/SKILL.md` — Haiku, Steve Jobs. Stage 6a cold-read jobstory audit. Zero upstream context, five-section output.
+- `skills/kk-role-consistency-ds/SKILL.md` — Haiku, Dieter Rams. Stage 6b cold-read strict audit against `components.md` + `tokens.json`. Class resolution, token compliance, off-grid spacing, pattern-language drift.
+- `skills/kk-role-meta-reviewer/SKILL.md` — Opus, Anna Wintour. Stage 7 rubric-gated verdict. Rejects "it's fine" replies. Six rubric items, each answered with file:line evidence or left open.
+- `skills/kk-design-system/pipeline.md` — §Fidelity contract, §Reiterate protocol, §Meta-reviewer rubric, §Dumb-reviewer character, §Role roster sections. Full v3 stage list. Updated §Parallel spawning, §Entry point matching, §Failure mode.
+- `proposals/README.md` — convention note for retro-produced proposal files.
+- Every role + maintainer SKILL.md `metadata:` — `model:` + `character:` keys. Model tiered Haiku / Sonnet / Opus by role capability. Character tiered women (clever) / men (dumb-reviewer) per role-roster mapping.
+
+### Removed
+- `skills/kk-role-art-director/` — replaced by `kk-role-design-director` (renamed + remandated).
+- `skills/kk-role-designer-conservative/` — replaced by `kk-role-designer` (renamed + single-track mandate).
+- `skills/kk-role-frontend-engineer/` — replaced by `kk-role-design-engineer` (renamed + piece-by-piece + designer-copy-verbatim mandate).
+- `skills/kk-role-designer-ux/` — eliminated. Single-track designer only.
+- `skills/kk-role-designer-revolutionary/` — eliminated. Canon changes route via `kk-ds-maintainer` retros only.
+- `skills/kk-role-ds-reviewer/` — eliminated. Three-hand-off comparative role has no subject under v3.
+- `skills/kk-role-concept/` — eliminated. Concept stage collapses into the design-director's direction document.
+- `skills/kk-role-ux-copywriter/` — eliminated. Designers ship UI copy drafts at 3b; no separate writer.
+- `skills/kk-role-ux-copy-reviewer/` — eliminated. Voice binding enforced at meta-reviewer rubric item 5.
+- `skills/kk-design-system/manifesto.md § Revolutionary protocol` — section deleted. Replacement affordance: user-agreed exceptions in the direction doc, logged via meta-reviewer rubric item 6.
+
+### Moved
+- `skills/kk-design-system/manifesto.md § Pipeline` — updated to name eight stages, ten roles, no in-pipeline canon changes.
+- `skills/kk-ds-frontend/SKILL.md` + `skills/kk-ds-supervisor/SKILL.md` — frontmatter marked `status: deprecated` with `replaced-by:` pointers. Files retained for historical session playback.
+- `package.json` version `0.13.0` → `1.0.0`. Major bump: nine role-skill `description:` trigger phrases changed (renames, new mandates, deprecations), pipeline stage numbers renumbered consumer-visible, six role skills deleted. Backward-incompatible with pipeline-v2 session folders.
+- `package.json` description field — eight-stage pipeline-v3 summary.
+- `package.json` `files` array — pruned six deleted role skill dirs, added five new ones, tracked the three renames.
+- Role SKILL.md `metadata.version` unchanged per precedent.
+
+### Open
+- `.claude-plugin/plugin.json` still reads `0.4.0`; `package.json` sits at `1.0.0`. Drift flagged in 0.12.1; not bundled here per the proposal's scope discipline. Resync remains its own decision.
+- Existing `documentation/<session>/` folders under the v2 schema (e.g. `2026-04-22-wealthy-operator-alpha`) remain under pipeline-v2 filenames. Not backported. Only new sessions use v3 schema.
+
 ## 0.13.0 — 2026-04-22
 
 Comment: `Approve` + `Archive thread` actions in kebab menu. Resolved threads collapse to checkmark + replacement snippet. Archived threads hidden via `data-archived` (data preserved for future UI). `kk:comment` event gains `approve` (carries `replacementText` + anchor for doc-body sync) and `archive` (thread kept, not removed) action types.

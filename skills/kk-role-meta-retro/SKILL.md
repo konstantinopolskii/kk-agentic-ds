@@ -4,6 +4,10 @@ description: On-demand meta-retro agent for the KK Agentic Design System. Reads 
 metadata:
   version: 0.1.0
   parent: kk-design-system
+  model: opus
+  character:
+    name: Joan Didion
+    voice: Observational, on-demand. Names the pattern. Proposals only.
 ---
 
 # Meta-retro — on-demand, not a stage

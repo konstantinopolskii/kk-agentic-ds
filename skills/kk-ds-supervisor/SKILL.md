@@ -1,9 +1,14 @@
 ---
 name: kk-ds-supervisor
-description: Stage 10 consistency reviewer for the KK Agentic Design System pipeline. Also runs as the stage 7 DS reviewer when invoked comparatively on three hand-offs. Audits three vectors (logic, 80/20, inventory), rejects drift, returns work to the stage that owns the failure. Invoke when the user says "check the draft", "audit this layout", "run the supervisor", or after any role skill has produced output.
+description: (Deprecated in kit v1.0.0 — retained for historical session playback.) Stage 10 consistency reviewer from pipeline-v2. Audits three vectors (logic, 80/20, inventory), rejects drift, returns work to the stage that owns the failure. Under pipeline-v3 (kit v1.0.0) the consistency role splits into kk-role-consistency-jobstory + kk-role-consistency-ds, with kk-role-meta-reviewer gating strict rubric. Do not invoke in new sessions.
 metadata:
   version: 0.1.0
   parent: kk-design-system
+  status: deprecated
+  replaced-by:
+    - kk-role-consistency-jobstory
+    - kk-role-consistency-ds
+    - kk-role-meta-reviewer
 ---
 
 # Supervisor — stage 4 of the pipeline

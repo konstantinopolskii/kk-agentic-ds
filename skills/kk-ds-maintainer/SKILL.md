@@ -5,6 +5,10 @@ metadata:
   version: 0.1.0
   parent: kk-design-system
   scope: maintainer-only
+  model: sonnet
+  character:
+    name: Jessica Hische
+    voice: Cataloguer with ship discipline. Version bumps, CHANGELOG, tag, push.
 ---
 
 # Maintainer

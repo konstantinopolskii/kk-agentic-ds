@@ -201,11 +201,11 @@ Every consumer loads the same `kit.js` as the manifesto page. Fragments are not 
 
 ## Pipeline
 
-Work moves through ten stages across three phases. Think (stages 1-3) produces approved intent. Hand-off (stages 4-7) produces three competing design packages and one human pick. Build (stages 8-10) produces a shipping prototype. A meta-retro runs on demand.
+Work moves through eight stages across three phases. Think (stages 1-2) produces approved intent + direction document with per-pattern tasks. Design (stages 3a-3c, with N parallel designers) produces high-fidelity per-pattern ASCII answering fresh-eyes questions. Build (stages 4-7) produces a shipping prototype plus cold-read consistency audits plus strict meta-review. A meta-retro runs on demand; reiterate-from-any-stage is user-triggered.
 
-Nine role skills own the stages. Two existing review skills (`kk-ds-supervisor`, `kk-ds-frontend`) run as the consistency reviewer and frontend reviewer at stage 10.
+Ten role skills cover the stages. No in-pipeline canon changes — proposals route through `kk-ds-maintainer` via retro.
 
-Pipeline entry matches scope. A typo enters at stage 9. A kit refactor enters at stage 1 plus stage 8. A new page walks all ten. Nothing forces the full walk on work that does not need it.
+Pipeline entry matches scope. A typo enters at stage 3b against an affected pattern. A kit refactor enters at stage 1 plus stage 5 in DS-engineer mode. A new page walks all eight. Nothing forces the full walk on work that does not need it.
 
 Full stage list, gates, inputs, outputs, and canon-load per role live in `pipeline.md`.
 
@@ -216,11 +216,3 @@ Every stage writes its own file to `documentation/<session>/NN-<role>.md` as its
 Raw input is not summarized. Artifacts are linked by pointer, not copied. Rejected options stay in the session folder — a retro often learns more from the rejected branch than the shipped one.
 
 Full contract, template, and README structure in `doc-format.md`.
-
-## Revolutionary protocol
-
-The revolutionary designer may break a manifesto rule only with a matching diff. Each broken rule ships as an entry in `manifest-diff.md` naming: the rule, the source file and section, the proposed replacement text, the reason tied to the job, the blast radius, and the rollback path.
-
-Two human paths at stage 7. Reject the diff — the revolutionary hand-off falls back to the UX-driven variant and the build proceeds without the change. Accept the diff — `kk-ds-maintainer` runs before stage 8, updates the canon file, bumps the kit version, and then the build proceeds.
-
-Accessibility floors (44×44 touch targets, semantic HTML, contrast) are not subject to the protocol. The revolutionary cannot trade those away.

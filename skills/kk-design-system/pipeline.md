@@ -1,133 +1,143 @@
 # The pipeline
 
-Ten stages. Three phases. Nine role skills plus one meta. Do not skip stages inside a phase. Do not reorder them. Gates are either human approval or a verifiable check.
+Eight stages. Three phases. Ten role skills. Do not skip stages inside a phase. Do not reorder them. Gates are either human approval, a peer-agent pass, or a rubric-gated verdict.
 
-Entry point matches scope. A new page walks all ten stages. A copy tweak enters at stage 9. Kit refactoring enters at stage 8. Nothing forces the full walk on work that does not need it.
+Entry point matches scope. A new page walks all eight stages. A copy tweak enters at stage 3b against an existing block. Kit refactoring enters at stage 5 in DS-engineer mode. Nothing forces the full walk on work that does not need it.
 
-The point: AI agents draft most of our work. Without gates they produce gray mush, invent components, and ship the first plausible draft. The pipeline enforces breadth at the think phase, honesty at the hand-off phase, discipline at the build phase. Each stage writes its own documentation artifact so retros never replay the conversation.
+The point: AI agents draft most of our work. Without gates they produce gray mush, invent components, and ship the first plausible draft. The pipeline enforces breadth at the think phase, question-driven fidelity at the design phase, cold-read audits and strict rubric at the build phase. Each stage writes its own documentation artifact so retros never replay the conversation.
 
 ## Phase 1 — Think
 
 ### Stage 1 — Analyst
 
 - **Role skill:** `kk-role-analyst`
+- **Model:** Sonnet. **Character:** Margaret Hamilton.
 - **Input:** User brief plus referenced materials (files, transcripts, tickets).
 - **Output:** Decomposed brief — users, job stories (`context + motivation = step → value`), priority scenarios, open questions.
 - **Canon load:** `manifesto.md` (philosophy, job stories).
-- **Gate:** Human approves the brief. No further stages start until the brief holds.
+- **Gate:** Human approves the brief. Every open question stamped.
 - **Self-doc:** `documentation/<session>/01-analyst.md`
 
 The analyst pushes back. If the brief has holes, they surface here. No pixels yet.
 
-### Stage 2 — Art-director
+### Stage 2 — Design Director
 
-- **Role skill:** `kk-role-art-director`
+- **Role skill:** `kk-role-design-director`
+- **Model:** Opus. **Character:** Charlotte Perriand.
 - **Input:** Approved brief from stage 1.
-- **Output:** Five or more directions, each with a one-line intent and the guardrails that keep it honest (which kit components are expected, which signal dominates, what gets demoted).
-- **Canon load:** `manifesto.md`, `tokens.json`, `patterns/*`.
-- **Gate:** Human picks one direction. Unused directions archive in the session docs — never deleted.
-- **Self-doc:** `documentation/<session>/02-art-director.md`
+- **Output, round one:** Five or more directions, each with a one-line intent, primary signal, guardrails, expected kit surface.
+- **Output, round two (after user picks):** Direction document — aligned direction, named pattern blocks (N per session), exceptions register, rejected-directions archive, alignment transcript.
+- **Canon load:** `manifesto.md`, `tokens.json`, `components.md` (patterns, card, typography), `patterns/*`.
+- **Gate 2a:** Human picks one direction. Others archive.
+- **Gate 2b:** Human stamps pattern blocks + any exceptions. Round-two direction document locked.
+- **Self-doc:** `documentation/<session>/02-design-director.md`
 
-Breadth at this stage is non-negotiable. One option is a fail.
+Breadth on round one, commitment on round two. The pattern-block naming is the handoff contract — downstream designers spawn one per block.
 
-### Stage 3 — Concept agents (parallel)
+## Phase 2 — Design
 
-- **Role skill:** `kk-role-concept` (spawned 3-5 times in parallel by the art-director)
-- **Input:** Chosen direction from stage 2.
-- **Output:** One concept each. Each concept carries: ASCII flow mockups (one per step), a JSON component tree for block structure, shape-up solution framing (fat marker problem, rabbit holes, no-gos, appetite).
-- **Canon load:** `components.md`, `patterns/*`.
-- **Gate:** Human picks one concept. Others archive.
-- **Self-doc:** `documentation/<session>/03-concept-<N>.md` per spawned agent.
+Per-pattern, question-driven. N pattern blocks means N parallel designer tracks. Each pattern walks a three-substage loop.
 
-Concepts stay low-fi. No code, no polished pixels.
+### Stage 3a — Fresh-eyes pre-designer (N parallel, one per pattern)
 
-## Phase 2 — Hand-off
+- **Role skill:** `kk-role-fresh-eyes-jobstory` (pre-designer mode)
+- **Model:** Haiku. **Character:** Steve Jobs.
+- **Input:** Direction doc's pattern block + analyst job story.
+- **Output:** Question list per pattern — what I'd want to see first, what I'd try to do, what this is for, unclarities, 0.2-second self-evidence check.
+- **Canon load:** `pipeline.md` §Dumb-reviewer character + §Fidelity contract only.
+- **Gate:** None. Feeds stage 3b.
+- **Self-doc:** `documentation/<session>/03a-fresh-eyes-pre-<pattern-slug>.md`
 
-Three designers run on the chosen concept in parallel. Each produces a hand-off. A DS reviewer compares. Human picks which hand-off becomes the build.
+Naive user POV. Zero design context — reading `components.md` would break the cold-read contract.
 
-### Stage 4 — Designer: conservative
+### Stage 3b — Designer (N parallel, one per pattern)
 
-- **Role skill:** `kk-role-designer-conservative`
-- **Input:** Chosen concept from stage 3.
-- **Output:** Hand-off — exact component list (kit inventory only), behaviors, flow ASCII, JSON component tree, reasoning for every choice.
-- **Canon load:** `components.md`, `tokens.json`, `manifesto.md`.
-- **Gate:** DS reviewer at stage 7.
-- **Self-doc:** `documentation/<session>/04-conservative.md`
+- **Role skill:** `kk-role-designer`
+- **Model:** Sonnet. **Character:** Hella Jongerius.
+- **Input:** Direction doc + 3a question list for this pattern.
+- **Output:** Per-pattern hand-off — question-to-answer map, states (rest/hover/focus/active/disabled/loading/empty/error), interaction variants, edge cases, example content, UI copy drafts, kit-inventory check.
+- **Canon load:** `manifesto.md`, `components.md`, `tokens.json`, `voice.md`, `patterns/*`.
+- **Gate:** Stage 3c pass. Unanswered 3a questions fail and re-dispatch to this stage.
+- **Self-doc:** `documentation/<session>/03b-designer-<pattern-slug>.md`
 
-Strict. No invented classes, no off-grid values, no composition that reads unfamiliar.
+Single track. Strict kit inventory unless the direction doc's §Exceptions carries a user-stamped override for this pattern. UI copy drafts ship downstream — there is no separate copywriter.
 
-### Stage 5 — Designer: UX-driven (parallel with 4)
+### Stage 3c — Fresh-eyes post-designer (N parallel, one per pattern)
 
-- **Role skill:** `kk-role-designer-ux`
-- **Input:** Chosen concept from stage 3.
-- **Output:** Hand-off in the same shape as stage 4, but may reorganize components to serve the job better. Layout frame stays kit-standard.
-- **Canon load:** `components.md`, `tokens.json`, `manifesto.md`, `patterns/*`.
-- **Gate:** DS reviewer at stage 7.
-- **Self-doc:** `documentation/<session>/05-ux.md`
-
-Rearranges within the room. Does not rebuild the room.
-
-### Stage 6 — Designer: revolutionary (parallel with 4)
-
-- **Role skill:** `kk-role-designer-revolutionary`
-- **Input:** Chosen concept from stage 3.
-- **Output:** Hand-off that may break a rule. Every broken rule carries a `manifest-diff.md` entry naming the rule, the proposed change, and the reason. Output also includes the full hand-off shape (component list, behaviors, flow, JSON, reasoning).
-- **Canon load:** `manifesto.md`, `tokens.json`, `components.md`, `patterns/*`.
-- **Gate:** DS reviewer at stage 7. Diff routed to `kk-ds-maintainer` if accepted.
-- **Self-doc:** `documentation/<session>/06-revolutionary.md`
-
-Steve Jobs mode. May break rules only with a diff and a reason.
-
-### Stage 7 — DS reviewer
-
-- **Role skill:** `kk-role-ds-reviewer`
-- **Input:** Three hand-offs from stages 4-6.
-- **Output:** Comparative write-up. What each hand-off optimizes for. Where they align, where they diverge. A recommendation with the tradeoff made explicit. Revolutionary diff evaluated separately.
-- **Canon load:** `manifesto.md`, `components.md`, `voice.md`.
-- **Gate:** Human picks one hand-off. If a revolutionary diff is accepted, `kk-ds-maintainer` runs before the build.
-- **Self-doc:** `documentation/<session>/07-ds-reviewer.md`
-
-The reviewer does not pick. The reviewer clarifies the tradeoff so the human picks with eyes open.
+- **Role skill:** `kk-role-fresh-eyes-jobstory` (post-designer mode)
+- **Model:** Haiku. **Character:** Steve Jobs.
+- **Input:** Designer hand-off (03b) + original question list (03a).
+- **Output:** Pass/fail per question. Gap list on fail.
+- **Canon load:** `pipeline.md` §Dumb-reviewer character + §Fidelity contract only.
+- **Gate:** All patterns must pass 3c before stage 4 runs. Fails return to 3b with the gap list.
+- **Self-doc:** `documentation/<session>/03c-fresh-eyes-post-<pattern-slug>.md`
 
 ## Phase 3 — Build
 
-### Stage 8 — Frontend engineer
+### Stage 4 — DS Manager
 
-- **Role skill:** `kk-role-frontend-engineer`
-- **Input:** Chosen hand-off from stage 7.
-- **Output:** Prototype structure. HTML + CSS + JS using kit classes and the kit's shared `kit.js`. Copy is placeholder comments: `<!-- button: primary action, imperative verb, up to 24 chars -->`. No real strings.
-- **Canon load:** `components.md`, `tokens.json`, `patterns/*`.
-- **Gate:** Frontend reviewer (existing `kk-ds-frontend`).
-- **Self-doc:** `documentation/<session>/08-frontend-engineer.md`
+- **Role skill:** `kk-role-ds-manager`
+- **Model:** Sonnet. **Character:** Muriel Cooper.
+- **Input:** Direction doc + every 03b hand-off.
+- **Output:** Per-block component map (kit class + variant + attribute + kit-demo section), build-order task split, kit-demo references, inventory check.
+- **Canon load:** `components.md`, `tokens.json`, `patterns/*`, the kit demo `index.html`.
+- **Gate:** Inventory check passes, or halts back to 3b with a named pattern.
+- **Self-doc:** `documentation/<session>/04-ds-manager.md`
 
-Structure and behavior only. No voice decisions happen here.
+Catalogue, not draw. Copy briefs out of scope — designers own UI copy.
 
-### Stage 9 — UX copywriter
+### Stage 5 — Design Engineer
 
-- **Role skill:** `kk-role-ux-copywriter`
-- **Input:** Prototype from stage 8 plus hand-off context.
-- **Output:** Final copy in every placeholder slot. Consistency across buttons, labels, empty states, errors, captions. One voice across the whole prototype.
-- **Canon load:** `voice.md`, `manifesto.md` (voice section).
-- **Gate:** UX copy reviewer at stage 10.
-- **Self-doc:** `documentation/<session>/09-ux-copywriter.md`
+- **Role skill:** `kk-role-design-engineer`
+- **Model:** Sonnet. **Character:** Sara Soueidan.
+- **Input:** DS Manager component map + task split + every 03b hand-off + direction doc.
+- **Output:** Prototype built piece by piece, saved to disk as each piece lands. HTML + CSS + JS using kit classes and shared `kit.js`. Designer UI copy drafts verbatim; dummy text flagged where drafts are missing.
+- **Canon load:** `components.md`, `tokens.json`, `manifesto.md` foundations, `patterns/*`, `voice.md` §AI tells.
+- **Gate:** Stages 6a + 6b run in parallel on the built files. Then stage 7.
+- **Self-doc:** `documentation/<session>/05-design-engineer.md`
 
-Does not touch structure. Words only.
+Piece-by-piece means the human can peek mid-build. Short feedback loop. No placeholder-comment-for-copywriter convention — copywriter stage is gone.
 
-### Stage 10 — Reviewers (three parallel)
+### Stage 6a — Consistency — jobstory
 
-Three reviewers run in parallel on the fully-copied prototype. Any failure returns to the stage that owns it.
+- **Role skill:** `kk-role-consistency-jobstory`
+- **Model:** Haiku. **Character:** Steve Jobs.
+- **Input:** Built prototype files only. Zero upstream context.
+- **Output:** Per-block cold read — what I see, what I can do, what this is for, what's great, what could be better.
+- **Canon load:** `pipeline.md` §Dumb-reviewer character only.
+- **Gate:** No direct gate. Output feeds stage 7.
+- **Self-doc:** `documentation/<session>/06a-consistency-jobstory.md`
 
-- **Frontend reviewer** — skill: `kk-ds-frontend` (existing). Checks semantics, a11y, mobile, cross-browser, JS simplicity. Fails return to stage 8.
-- **UX copy reviewer** — skill: `kk-role-ux-copy-reviewer`. Checks voice rules, AI-tells, button label discipline, placeholder quality, error message shape. Fails return to stage 9.
-- **Consistency reviewer** — skill: `kk-ds-supervisor` (existing). Checks logic, 80/20, inventory. Fails return to stage 4-6 (rebuild the hand-off, not patch the build).
+Cold means cold. Reading the brief or direction doc would pollute the read — the reviewer's guesses are the signal.
 
-All three must pass before ship.
+### Stage 6b — Consistency — DS
 
-- **Self-doc:** `documentation/<session>/10-reviewers.md` (three sub-sections or three files).
+- **Role skill:** `kk-role-consistency-ds`
+- **Model:** Haiku. **Character:** Dieter Rams.
+- **Input:** Built prototype files + `components.md` + `tokens.json`. No brief, no direction, no hand-off.
+- **Output:** Per-block strict audit across class resolution, token compliance, off-grid spacing, pattern-language drift.
+- **Canon load:** `components.md`, `tokens.json`, `manifesto.md` foundations.
+- **Gate:** No direct gate. Output feeds stage 7.
+- **Self-doc:** `documentation/<session>/06b-consistency-ds.md`
+
+Dumb-about-layout, strict-about-inventory.
+
+### Stage 7 — Meta-reviewer
+
+- **Role skill:** `kk-role-meta-reviewer`
+- **Model:** Opus. **Character:** Anna Wintour.
+- **Input:** Full chain — 01 + 02 + every 03b + 05 + 06a + 06b + the built prototype.
+- **Output:** Rubric-gated issue list. PASS or FAIL verdict with per-item evidence.
+- **Canon load:** `manifesto.md`, `voice.md`, `pipeline.md` §Meta-reviewer rubric + §Reiterate protocol + §Fidelity contract.
+- **Gate:** PASS ships. FAIL routes user to §Reiterate protocol.
+- **Self-doc:** `documentation/<session>/07-meta-reviewer.md`
+
+Rejects "it's fine" replies. A rubric item is either answered with evidence (file:line citation) or left open. Open items fail the build until the user acts.
 
 ## Meta — retro
 
 - **Role skill:** `kk-role-meta-retro`
+- **Model:** Opus. **Character:** Joan Didion.
 - **Input:** All session documentation in `documentation/<session>/*`.
 - **Output:** `proposals/<date>-retro.md` — proposed updates to `manifesto.md`, `pipeline.md`, `components.md`, `voice.md`, `tokens.json`. Never edits canon directly.
 - **Trigger:** On-demand only. User calls the retro when something feels off.
@@ -135,14 +145,73 @@ All three must pass before ship.
 
 ## Protocols
 
-### Revolutionary protocol
+### Fidelity contract
 
-The revolutionary designer may break a manifesto rule only with a `manifest-diff.md` entry in their hand-off. Each entry: rule broken, proposed change, reason. Two user paths at stage 7:
+High-fidelity output earns its label by answering questions a naive user of the job story would ask. Stages 3a → 3b → 3c run the loop:
 
-- **Reject the diff.** The revolutionary hand-off falls back to the UX-driven variant; build proceeds without the diff.
-- **Accept the diff.** `kk-ds-maintainer` runs between stage 7 and stage 8, updates the canon file and bumps the kit version. Only then does the build proceed.
+1. **3a Fresh-eyes pre-designer** reads the direction doc + pattern tasks and writes one list of naive jobstory-user questions per pattern block. Zero design context — strictly user POV.
+2. **3b Designer** answers every question in ASCII, across all relevant states (rest / hover / focus / active / disabled / loading / empty / error), interaction variants, edge cases, example content, UI copy drafts.
+3. **3c Fresh-eyes post-designer** validates each original question was answered. Unanswered questions fail the stage — returns to 3b with the gap list.
 
-Revolutionary output that does not carry a diff for every broken rule fails DS review automatically.
+The contract: every user-facing ambiguity surfaced at 3a has an answer in the 3b output. Cases the designer cannot answer without user input bubble up to a user gate, not a silent guess. Fidelity = answered questions, not pixel count.
+
+### Reiterate protocol
+
+The user may re-enter the pipeline at any prior stage after meta-review. On meta-reviewer issue list, two user paths:
+
+- **(a) Fix + re-dispatch.** User picks issues to fix + names the stage to reiterate. That stage reruns with the issue list as added input. Downstream stages rerun from that point.
+- **(b) Ship with named exception.** User green-lights ship ignoring named issues. Each exception carries a one-line reason in the session README under §Exceptions shipped. Meta-reviewer cannot override (a) into (b) — only the user can.
+
+Reiteration cannot originate from a role. Meta-reviewer flags; role-to-role handoff does not skip stages. The user is the only loop trigger.
+
+### Meta-reviewer rubric
+
+Stage 7 meta-reviewer fails a build when ANY rubric item is unanswered or contradicted. Items:
+
+1. **Every analyst open-question has an answer visible in the final UI.** Questions without UI answers bubble up for user ruling; they do not silently pass.
+2. **Every direction-doc pattern named at stage 2 has an implementation in the built prototype.** Pattern without impl = stage-3b or stage-5 gap.
+3. **Every consistency-jobstory guess (stage 6a) either matches the analyst's stated intent OR names a real ambiguity.** Guesses that do not track intent are UX failures, not OK-reads.
+4. **Zero off-inventory components.** Every class resolves to `components.md`. User-agreed exceptions allowed only if recorded in direction doc + CHANGELOG.
+5. **Zero AI-tells.** Full `voice.md` §No AI tells inventory applies.
+6. **User-agreed exceptions and new components carry paper trail.** Each lives in the direction doc under §Exceptions with reason + user stamp.
+
+Meta-reviewer rejects "it's fine" replies. A rubric item is either answered with evidence (file:line citation) or left open. Open items fail the build until the user acts via reiterate protocol.
+
+### Dumb-reviewer character
+
+Every Haiku "dumb" reviewer operates in character as **Steve Jobs himself**. Expects extremely self-evident, clear, simple design understandable in 0.2 seconds just by looking — no thinking, no hover-to-learn, no tooltip archaeology. Anything that takes a moment to parse is a defect. Does not excuse complexity. Does not justify. Does not read role briefs or direction docs to fill gaps.
+
+**Output shape — five sections, every dumb-reviewer invocation:**
+
+1. **What I see.** Literal description. "Three cards stacked. Top one has a dark title and a checkmark. Middle one has an input with grey text. Bottom one is empty."
+2. **What I can do.** Guessed affordances from visuals alone. "I can probably click the top card. The input looks typable. The bottom card seems dead."
+3. **What this is for — my guess at the job + flow.** Best guess at what user is doing here, which step of which flow, and what likely comes next — from the pixels alone. "Feels like someone's writing a strategy brief. I'd guess this is near the start. Click the button, probably research kicks off. Maybe."
+4. **What's great.** Self-evident clarity, quiet weight, calm. Specific elements — not general praise.
+5. **What could be better.** Anything that pulled the eye wrong, took over 0.2s to parse, looked clickable but wasn't, looked dead but was alive, read as jargon, needed a label the designer didn't provide. Specific, ungenerous.
+
+Reviewer never defers. If a block feels unclear, it says unclear. If a mechanic is hidden, it says hidden. If the job or flow is ambiguous at 0.2s, the guess will reveal the ambiguity — that's the point. Silence on a block = confirmed clarity.
+
+Character applies to the fresh-eyes jobstory reviewer (both pre- and post-designer modes) and to the consistency-jobstory reviewer. The consistency-DS reviewer wears a different character — Dieter Rams — but shares the 0.2s-self-evidence instinct for anything that lands outside the kit's established pattern language.
+
+### Role roster
+
+Each role operates in character as a specific person. Gender codes tier: women for Opus + Sonnet (clever roles), men for Haiku (dumb-reviewer roles). Characters are hints for voice, not costume — the skill contract still governs the work.
+
+| Stage | Role | Model | Character | Why this person |
+|---|---|---|---|---|
+| 1 | Analyst | Sonnet | **Margaret Hamilton** | Decomposes hard briefs into verifiable parts. Famous for not letting systems ship with unspecified paths. |
+| 2 | Design Director | Opus | **Charlotte Perriand** | Builds spatial direction documents. Brings multiple, commits to one, names the patterns downstream must answer. |
+| 3a + 3c | Fresh-eyes jobstory | Haiku | **Steve Jobs** | 0.2-second clarity bar. Reads as the intended user, ungenerously. |
+| 3b | Designer | Sonnet | **Hella Jongerius** | State-thoughtful, material-honest. Answers questions in full variant sets. |
+| 4 | DS Manager | Sonnet | **Muriel Cooper** | Catalogues pattern libraries. Maps designs to components without invention. |
+| 5 | Design Engineer | Sonnet | **Sara Soueidan** | Craft-respecting builder. Ships piece by piece, thinks in states, honors the kit. |
+| 6a | Consistency — jobstory | Haiku | **Steve Jobs** | Same 0.2s bar as 3a/3c — read cold, report what a Steve Jobs reads upfront. |
+| 6b | Consistency — DS | Haiku | **Dieter Rams** | Ten Principles eye. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
+| 7 | Meta-reviewer | Opus | **Anna Wintour** | Rejects "it's fine." Rubric-gated, unimpressed by ceremony, ships the issue list. |
+| — | Meta-retro | Opus | **Joan Didion** | Observational, on-demand. Names the pattern, writes proposals only. |
+| — | Maintainer | Sonnet | **Jessica Hische** | Cataloguer with ship discipline. Owns version bumps, CHANGELOG, tagging, push to origin. |
+
+Steve Jobs appears twice (3a/3c and 6a) deliberately — same dumb-reader character at different stages, not two different men. Dieter Rams is a separate dumb character because the consistency-DS reviewer has a distinct lens (pattern conformance, not user clarity).
 
 ### Agent communication protocol
 
@@ -153,7 +222,7 @@ Rules:
 - Drop articles (a / an / the), filler (just, really, basically, actually, simply), pleasantries (sure, certainly, happy to), hedging.
 - Fragments OK. Short synonyms. Technical terms stay exact.
 - Unchanged surfaces — never compressed: code blocks, file paths, URLs, error strings, frontmatter keys and values, blockquoted raw user input.
-- Structured design artefacts — never compressed: ASCII flow mockups, JSON component trees, hand-off tables, manifest-diff entries. Designer outputs render untouched.
+- Structured design artefacts — never compressed: ASCII flow mockups, JSON component trees, hand-off tables, rubric verdicts. Designer outputs render untouched.
 - Auto-clarity carve-out: drop caveman for multi-step sequences where fragment order risks misread, destructive confirmations, or when the human asks for clarification. Resume after the clear part.
 
 Override by user:
@@ -186,7 +255,7 @@ gate: <gate result>
 
 Body carries: raw user input verbatim where the stage received one, agent output summary, reasoning for non-obvious decisions, gate result. Artifact pointers, not copies — build files live in their repo location, the doc links.
 
-`README.md` is maintained by the analyst at stage 1, appended by each subsequent stage.
+`README.md` is maintained by the analyst at stage 1, appended by each subsequent stage. The README's §Exceptions shipped section is created on first use when the user ships via reiterate path (b).
 
 ### Vertical slice rule
 
@@ -194,20 +263,34 @@ High-fidelity prototype covers one page or one flow per pass. Pattern: `page →
 
 ### Parallel spawning
 
-Stages 3 (concepts), 4-6 (designers), and 10 (reviewers) run as parallel subagents. The orchestrating role spawns them via the Agent tool, collects outputs, and hands the combined result to the next stage. Wall-clock cost is one stage, not N.
+Three parallel moments in pipeline-v3:
+
+- **Stage 3a, 3b, 3c** — N instances per stage, one per pattern block named in the direction doc. All three substages run parallel across patterns; each pattern's 3a → 3b → 3c loop is sequential within that pattern.
+- **Stage 6a + 6b** — two cold-read consistency reviewers, in parallel on the same built prototype.
+
+Spawning owner:
+
+- **3a** spawned by the design director at the end of stage 2 (one per pattern).
+- **3b** spawned by each 3a instance on pass (or by the design director after consolidating 3a outputs, implementation detail).
+- **3c** spawned by each 3b instance on completion.
+- **6a + 6b** spawned by the design engineer at stage-5 ship.
+
+Wall-clock cost stays at one stage per phase, not N.
 
 ### Entry point matching
 
 Pipeline entry points, from lightest to heaviest:
 
-- **Typo or copy tweak** — stage 9 only (UX copywriter) plus stage 10 copy review.
-- **Kit refactor (like kit.js extraction)** — stage 1 (analyst decomposes) + stage 8 (frontend engineer implements) + stage 10 frontend and consistency reviewers. Designers skipped; revolutionary protocol used only if the refactor changes canon.
-- **New component in an existing page** — stages 4-10.
-- **New page or flow** — stages 1-10 (full walk).
+- **Typo or copy tweak** — stage 3b only for the affected pattern (designer re-drafts the string). Stage 6a + 6b + 7 follow if the copy lands in the shipped prototype; otherwise stop at 3b.
+- **Kit refactor (like kit.js extraction)** — stage 1 (analyst decomposes) + stage 5 in DS-engineer mode (design engineer implements) + stage 6b + stage 7. Pattern design phase skipped; the direction doc §Exceptions block is populated directly by the user.
+- **New component in an existing page** — stages 2-7.
+- **New page or flow** — stages 1-7 (full walk).
 - **Retro** — meta only.
 
 Entry point is declared at session start and recorded in `documentation/<session>/README.md`.
 
 ## Failure mode to watch for
 
-Agents like to patch. When a stage fails review, the tempting fix is to tweak the broken output. That is how drift enters. Failures return to the stage that owns them. Rebuild from kit parts, not from the broken draft.
+Agents like to patch. When stage 7 fails, the tempting fix is to tweak the built output. That is how drift enters. Reiterate protocol names the stage that owns each failure. Return there. Rebuild from kit parts, not from the broken draft.
+
+Second failure mode: stage 3c passing with hollow answers. "Answered" means the designer's 03b has a visible answer in ASCII or copy, not a sentence saying "this is handled". Reviewer at 3c enforces shape, not just presence — if the answer is a deflection, mark unanswered and return.
