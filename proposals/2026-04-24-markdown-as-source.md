@@ -124,7 +124,7 @@ Deliverables:
 - Smoke-test matrix: headings h1-h4, paragraphs, lists, links (internal + external), inline code, code fences, bold, italic, tables, raw HTML pass-through, blockquote, horizontal rule.
 - `index.html` is NOT touched in this phase.
 
-Gate: smoke test renders correctly in a browser. KK stamps.
+Gate: smoke test renders correctly in a browser, devtools console clean (zero errors, zero warnings), screenshot + console capture in the self-doc. KK stamps.
 
 ### Phase 2: Consolidation
 
@@ -140,7 +140,7 @@ Deliverables:
 - `components.md` retires. Its rules migrate to `manifesto.md § Components`. Agent skill canon loads update to read from `manifesto.md` where they previously read `components.md`.
 - A migration report at `documentation/2026-04-24-markdown-source/` documenting what moved where and what drifts got resolved.
 
-Gate: KK reads the consolidated markdown files. Stamps when satisfied.
+Gate: KK reads the consolidated markdown files. Migration report links every drift resolution. Stamps when satisfied.
 
 ### Phase 3: Rewire index.html
 
@@ -155,7 +155,7 @@ Deliverables:
 - Line count drops below 400 (down from 767 post-slim). The cut is real: prose migrates out.
 - Old Radii / ai-tells / foundations drifts confirmed absent.
 
-Gate: visual parity check — KK compares the rendered page against the pre-migration `index.html` screenshots. Sidebar nav still maps. No broken anchors. No dead links. KK stamps.
+Gate: visual parity check — KK compares the rendered page against the pre-migration `index.html` screenshots. Devtools console clean. Every click target tested. Every anchor resolves. Self-doc carries the screenshots + console capture. KK stamps.
 
 ### Phase 4: Ship
 
@@ -176,18 +176,27 @@ Decide at the start of Phase 4.
 - **Agent skills unbroken.** Every role's canon load list must still resolve. If a skill loads `components.md`, Phase 2 must either leave the file or migrate the skill's canon load.
 - **Visual parity.** The rendered `index.html` looks identical to the current hand-written one at stage end. No regressions in sidebar, scroll-spy, card layouts, type scale.
 - **Kit demos (fundamental, patterns.html) untouched.** They stay HTML. Live kit behaviour doesn't render from markdown.
-- **Token values untouched.** `tokens.json` + `vars.css` stay the machine truth. Any drift found during Phase 2 resolves by fixing the lying side.
+- **Token values untouched.** `tokens.json` + `vars.css` stay the machine truth. Any drift found during Phase 2 resolves by updating the lying side.
 
-## Open questions
+## Verification discipline (every phase)
 
-1. **Renderer library:** custom 150-line renderer vs `marked.js` vendor drop. Lean custom. User stamps at Phase 1 kickoff.
-2. **Radii truth:** once the renderer lands and manifesto is authoritative, resolve the 12/24/9999 vs 12/16/24/9999 discrepancy. Two paths:
-   - **(α)** Manifesto is truth. Drop `--radius-md` from `vars.css` if `.preview-frame` is the only consumer (swap to `--radius-sm`).
-   - **(β)** `vars.css` is truth. Update manifesto prose to "three radii + pill alias."
-   User picks at Phase 2.
-3. **Protocols.md split:** if `manifesto.md` crosses ~500 lines after absorbing evolve / backlog / ideation / components-rules, split protocols into `protocols.md`. Trigger for split, not a prior decision.
-4. **Foundations counts:** "nine tokens," "seven type sizes," "three weights" — these hardcode reality. Keep in manifesto prose under the (β) discipline (manifesto is truth, implementation must match), or soften to "a bounded palette" style (α discipline, no counts)? KK rules before Phase 2.
-5. **Cards-in-markdown:** can authors drop `<div class="card">` raw-HTML blocks inside markdown to embed cards in prose? Renderer must pass raw HTML. Yes, but stylistic restraint — cards should be the exception, not the default expression.
+Reading the code is not enough. Every phase ends with a browser check. Shitty-work guard rail:
+
+- **Screenshot the rendered page** before / after. Diff reads in one glance.
+- **Open the devtools console. Zero errors, zero warnings.** Capture a screenshot of the console state. Paste into the phase's self-doc.
+- **Click every interactive affordance on the page once.** Confirm no silent breakage (dead clicks, lost scroll-spy, broken nav anchors, iframe preview stuck).
+- **For the renderer specifically**: a smoke test page with a sample markdown covering every supported construct. Side-by-side render-vs-source. Console clean.
+- Any regression discovered post-ship routes back to the phase owner, not a hotfix patch.
+
+This is a kit-wide rule going forward, not just this initiative. Every browser-affecting change ends with a verified console + screenshot evidence in the self-doc. Migrate the rule to `manifesto.md § Ship discipline` when the file grows to carry it.
+
+## Resolved round 2 — user rulings
+
+1. **Renderer library**: custom tiny renderer. No vendor drop. Kit ethos holds.
+2. **Radii truth**: `vars.css` is truth (β-inverse). Manifesto prose updates to match the four radii (12 / 16 / 24 / 9999) + pill alias, or describes the count abstractly per §4 below. Implementation wins.
+3. **Manifesto length**: 500 lines acceptable. Golden standard is coherence, not line count — split only when topics genuinely diverge. A manifesto at 500-700 lines staying focused beats an arbitrary split. If the file ever feels incoherent when skimmed, split by concern (philosophy / protocols / reference), not by size.
+4. **Foundations counts**: abstract phrasing. "Bounded palette," "restricted type scale," "a small set of radii." No hardcoded numbers in prose. Counts live in `vars.css` and render in `fundamental`. Prose stays stable across implementation evolution. Fewer drift points.
+5. **Raw-HTML cards-inside-markdown**: engineer judgement call in Phase 1. Likely starts as raw-HTML passthrough only (authors drop `<div class="card">...</div>` inline). Phase 1 engineer evaluates whether a lightweight injection shorthand (`:::card ... :::` fenced-div, or `{.card}` attribute syntax) earns its complexity by proving demand in Phase 2's migration. Security footnote: markdown source is author-controlled (lives in the repo, not user input), so XSS from passthrough is not a live threat — but the engineer should note the assumption in the self-doc so a future change doesn't silently make it a threat.
 
 ## Out of scope for this initiative
 
@@ -205,7 +214,6 @@ Decide at the start of Phase 4.
 - Renderer preference: custom tiny renderer.
 - Ownership principle: one home per fact.
 - `components.md`: retires in Phase 2 or 4; canon loads migrate.
-- Radii drift: resolved in Phase 2 under α or β discipline, user picks.
 - ai-tells mirror: resolved by construction in Phase 2. `voice.md` is the truth; the manifesto page renders it.
 
 ## First execution: this session's scope
