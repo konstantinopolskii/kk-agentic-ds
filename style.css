@@ -523,6 +523,11 @@ body {
 .card__collapsible-inner:has(.deck) {
   overflow: visible;
 }
+/* Open menu popover needs to escape the same clip. Only kicks in while a
+   popover is open; otherwise inner keeps overflow:hidden for clean slide. */
+.card__collapsible-inner:has(.comment__menu[aria-expanded="true"]) {
+  overflow: visible;
+}
 .card--interactive:not([data-state="active"]) .card__collapsible {
   grid-template-rows: 0fr;
   opacity: 0;

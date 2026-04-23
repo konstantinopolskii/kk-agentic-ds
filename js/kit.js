@@ -445,6 +445,8 @@
         return;
       }
       if (card.classList.contains('card--heading')) return;
+      if (card.getAttribute('data-resolved') === 'true' ||
+          card.getAttribute('data-archived') === 'true') return;
 
       if (card.classList.contains('card--interactive')) {
         promoteCard(card);
