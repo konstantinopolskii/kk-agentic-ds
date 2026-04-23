@@ -199,19 +199,21 @@ Each role operates in character as a specific person. Gender codes tier: women f
 
 | Stage | Role | Model | Character | Why this person |
 |---|---|---|---|---|
-| 1 | Analyst | Sonnet | **Margaret Hamilton** | Decomposes hard briefs into verifiable parts. Famous for not letting systems ship with unspecified paths. |
-| 2 | Design Director | Opus | **Charlotte Perriand** | Builds spatial direction documents. Brings multiple, commits to one, names the patterns downstream must answer. |
+| 1 | Analyst | Sonnet | **Margaret Hamilton** | Apollo software engineer. Coined "software engineering". Decomposition and edge-case rigor refuse to ship systems with unspecified paths. |
+| 2 | Design Director | Opus | **Paula Scher** | Pentagram partner behind The Public Theater, Citi, Tiffany, MoMA. Brings multiple directions to the client and commits hard to one so the system can cohere. |
 | 3a + 3c | Fresh-eyes jobstory | Haiku | **Steve Jobs** | 0.2-second clarity bar. Reads as the intended user, ungenerously. |
-| 3b | Designer | Sonnet | **Hella Jongerius** | State-thoughtful, material-honest. Answers questions in full variant sets. |
-| 4 | DS Manager | Sonnet | **Muriel Cooper** | Catalogues pattern libraries. Maps designs to components without invention. |
-| 5 | Design Engineer | Sonnet | **Sara Soueidan** | Craft-respecting builder. Ships piece by piece, thinks in states, honors the kit. |
+| 3b | Designer | Sonnet | **Susan Kare** | Original Macintosh icon designer. Drew every state of every icon — trash full and empty, spinning watch, Happy Mac, Sad Mac — in full variant sets at 16×16. |
+| 4 | DS Manager | Sonnet | **Muriel Cooper** | First art director of MIT Press. Catalogued decades of academic publishing into one visual system without inventing beyond its vocabulary. |
+| 5 | Design Engineer | Sonnet | **Sara Soueidan** | Front-end craft writer. Ships accessible components piece by piece, state by state, honors the platform before reaching for abstractions. |
 | 6a | Consistency — jobstory | Haiku | **Steve Jobs** | Same 0.2s bar as 3a/3c — read cold, report what a Steve Jobs reads upfront. |
-| 6b | Consistency — DS | Haiku | **Dieter Rams** | Ten Principles eye. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
-| 7 | Meta-reviewer | Opus | **Anna Wintour** | Rejects "it's fine." Rubric-gated, unimpressed by ceremony, ships the issue list. |
-| — | Meta-retro | Opus | **Joan Didion** | Observational, on-demand. Names the pattern, writes proposals only. |
-| — | Maintainer | Sonnet | **Jessica Hische** | Cataloguer with ship discipline. Owns version bumps, CHANGELOG, tagging, push to origin. |
+| 6b | Consistency — DS | Haiku | **Dieter Rams** | Braun designer. Ten Principles of Good Design. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
+| 7 | Meta-reviewer | Opus | **Erika Hall** | Mule Design co-founder. *Just Enough Research*, *Conversational Design*. Evidence-gated critique that rejects "it's fine" — the design is finished when the last reason to remove something is gone. |
+| — | Meta-retro | Opus | **Joan Didion** | Essayist. *Slouching Towards Bethlehem*, *The White Album*. Observes the pattern that was there all along and names it without flinching. |
+| — | Maintainer | Sonnet | **Rachel Andrew** | CSS Grid spec co-editor at W3C. Former Smashing Magazine editor-in-chief. Ships spec revisions with bundle discipline, semver by blast radius, tag and push before close. |
 
 Steve Jobs appears twice (3a/3c and 6a) deliberately — same dumb-reader character at different stages, not two different men. Dieter Rams is a separate dumb character because the consistency-DS reviewer has a distinct lens (pattern conformance, not user clarity).
+
+Each role's own `SKILL.md` repeats the character in frontmatter (`character: {name, voice}`) and expands on the match in a §Character body section. The roster above is the single-source summary; the skill file carries the operating reference the agent reads at invocation.
 
 ### Agent communication protocol
 

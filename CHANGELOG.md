@@ -2,6 +2,31 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.0.1 — 2026-04-23
+
+Character swaps for four roles after v1.0.0 ship — user flagged that the original picks were famous but not domain-fit. Each new pick is a practitioner whose actual craft matches the role's work. Every role SKILL.md also gains a §Character body section that expands on the match — the frontmatter carries name + voice, the body carries the why-this-person reference the agent reads at invocation. Patch-level: no role mandate changed, no stage mechanics changed, no consumer-visible API changed.
+
+### Added
+- `skills/kk-role-design-director/SKILL.md § Character` — Paula Scher body paragraph (Pentagram partner, The Public Theater / Citi / Tiffany / MoMA / Windows 8, multi-direction client presentation that commits hard to one).
+- `skills/kk-role-designer/SKILL.md § Character` — Susan Kare body paragraph (original Macintosh icon designer, every state of every icon in full variant sets at 16×16).
+- `skills/kk-role-meta-reviewer/SKILL.md § Character` — Erika Hall body paragraph (Mule Design co-founder, *Just Enough Research*, *Conversational Design*, evidence-gated critique). Replaces prior Anna Wintour paragraph in the same section.
+- `skills/kk-ds-maintainer/SKILL.md § Character` — Rachel Andrew body paragraph (CSS Grid spec co-editor at W3C, former Smashing Magazine editor-in-chief, bundle discipline).
+- `skills/kk-design-system/pipeline.md § Role roster` — footnote pointing agents to each skill's own §Character section for the full reference.
+
+### Removed
+- Nothing. Patch release.
+
+### Moved
+- `skills/kk-role-design-director/SKILL.md` frontmatter `character.name` — Charlotte Perriand → Paula Scher. Perriand was a designer, not a director; Scher's strategic-commitment work is the prototype.
+- `skills/kk-role-designer/SKILL.md` frontmatter `character.name` + voice — Hella Jongerius → Susan Kare. Kare is the prototype for "every state of every variant answered".
+- `skills/kk-role-meta-reviewer/SKILL.md` frontmatter `character.name` + voice — Anna Wintour → Erika Hall. Wintour was cultural shorthand for ruthless; Hall is the actual rubric-gated UX reviewer.
+- `skills/kk-ds-maintainer/SKILL.md` frontmatter `character.name` + voice — Jessica Hische → Rachel Andrew. Hische is a letterer; Andrew runs production CSS systems with explicit version discipline.
+- `skills/kk-design-system/pipeline.md § Role roster` — the four swapped rows rewritten with why-this-person descriptions tied to each practitioner's actual work.
+- `package.json` version `1.0.0` → `1.0.1`. Patch bump — character metadata only; no mandate, trigger description, or consumer API changed.
+
+### Open
+- Seven other roles (analyst, fresh-eyes, ds-manager, design-engineer, consistency-jobstory, consistency-ds, meta-retro) carry character in frontmatter + some have body paragraphs, others do not. Asymmetric. Not bundled here — user may extend the §Character body-paragraph convention to all roles in a future patch.
+
 ## 1.0.0 — 2026-04-23
 
 Pipeline-v3. Eight stages. Ten role skills. Three-track designer parallel collapses to N-per-pattern on one designer track. UX writer role eliminated — designers ship UI copy drafts. Revolutionary protocol deleted — user-approved exceptions replace it. Fresh-eyes jobstory loop (Steve Jobs character, Haiku) frames designer output via pre-question + post-validation. DS Manager absorbs PM role. Design Engineer refined from frontend engineer. Stage-10 reviewer trio becomes two dumb consistency officers (Steve Jobs + Dieter Rams) + one strict meta-reviewer (Anna Wintour, Opus, rubric-gated). Every role carries `model:` + `character:` frontmatter. `kk-ds-frontend` + `kk-ds-supervisor` deprecated, retained for historical session playback. See `proposals/2026-04-23-retro.md` for the full proposal set.
