@@ -41,8 +41,18 @@
         </section>
 
         <section class="nav-group">
+          <h3 class="t-subtitle">Inventory</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#components">Components</a></li>
+            <li class="t-caption"><a href="#patterns">Patterns</a></li>
+            <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
           <h3 class="t-subtitle">Foundations</h3>
           <ul class="nav-group__items">
+            <li class="t-caption"><a href="#foundations">Where they live</a></li>
             <li class="t-caption"><a href="#material">Material</a></li>
             <li class="t-caption"><a href="#color">Color</a></li>
             <li class="t-caption"><a href="#type">Type</a></li>
@@ -62,6 +72,7 @@
         <section class="nav-group">
           <h3 class="t-subtitle">Practice</h3>
           <ul class="nav-group__items">
+            <li class="t-caption"><a href="#practice">Where it lives</a></li>
             <li class="t-caption"><a href="#evolve">How to evolve a rule</a></li>
           </ul>
         </section>
@@ -71,6 +82,13 @@
           <ul class="nav-group__items">
             <li class="t-caption"><a href="#backlog">Backlog</a></li>
             <li class="t-caption"><a href="#ideation">Ideation</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h3 class="t-subtitle">Distribution</h3>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#distribution">Install and ship</a></li>
           </ul>
         </section>
 
@@ -383,12 +401,68 @@
         </p>
       </article>
 
+      <!-- ================== INVENTORY =================================== -->
+      <!-- Pointer stubs. Full inventory lives in the fundamental demo,     -->
+      <!-- patterns.html, and pipeline.md. One sentence each.               -->
+
+      <h2 class="doc__part">Inventory</h2>
+
+      <article class="doc__section" id="components">
+        <h2 class="t-display">
+          Components<br />
+          <span class="t-display--medium t-muted">Nine in the kit</span>
+        </h2>
+        <p class="t-body">
+          Nine components cover most SAAS flows; the live catalog renders in
+          <a href="./demos/fundamental--accepted/index.html">the fundamental demo</a>
+          and every class is indexed in
+          <a href="./patterns.html">the patterns registry</a>.
+        </p>
+      </article>
+
+      <article class="doc__section" id="patterns">
+        <h2 class="t-display">
+          Patterns<br />
+          <span class="t-display--medium t-muted">Registry at the repo root</span>
+        </h2>
+        <p class="t-body">
+          Eleven patterns from the first accepted prototype are registered in
+          <a href="./patterns.html">patterns.html</a>,
+          first-accepted wins on cross-prototype dedup.
+        </p>
+      </article>
+
+      <article class="doc__section" id="pipeline">
+        <h2 class="t-display">
+          Pipeline<br />
+          <span class="t-display--medium t-muted">Eight stages, eleven roles</span>
+        </h2>
+        <p class="t-body">
+          The full spec for the eight-stage, eleven-role agentic pipeline lives in
+          <a href="./skills/kk-design-system/pipeline.md">pipeline.md</a>.
+        </p>
+      </article>
+
       <!-- ================== FOUNDATIONS ================================= -->
       <!-- Philosophy only. Token inventories (swatches, scale tables,      -->
       <!-- space / radii / motion tables) live in the fundamental demo and -->
       <!-- in skills/kk-design-system/tokens.json.                          -->
 
       <h2 class="doc__part">Foundations</h2>
+
+      <article class="doc__section" id="foundations">
+        <h2 class="t-display">
+          Where they live<br />
+          <span class="t-display--medium t-muted">Values and swatches</span>
+        </h2>
+        <p class="t-body">
+          Machine values live in
+          <a href="./skills/kk-design-system/tokens.json">tokens.json</a>;
+          swatches and scale tables render in
+          <a href="./demos/fundamental--accepted/index.html">the fundamental demo</a>.
+          The sections below carry the why.
+        </p>
+      </article>
 
       <article class="doc__section" id="material">
         <h2 class="t-display">
@@ -512,6 +586,11 @@
           No AI tells<br />
           <span class="t-display--medium t-muted">Unmask the agent</span>
         </h2>
+        <p class="t-caption">
+          Machine-readable source:
+          <a href="./skills/kk-design-system/voice.md">voice.md § No AI tells</a>.
+          The inventory below mirrors it for human readers.
+        </p>
         <p class="t-body">
           AI drafts leak the same tics. Cutting them is the fastest
           way to un-AI a passage. Based on the Wikipedia project&rsquo;s
@@ -620,6 +699,21 @@
 
       <h2 class="doc__part">Practice</h2>
 
+      <article class="doc__section" id="practice">
+        <h2 class="t-display">
+          Where it lives<br />
+          <span class="t-display--medium t-muted">Evolve here, inventory out</span>
+        </h2>
+        <p class="t-body">
+          The <a href="#evolve">evolve protocol</a> and the
+          <a href="./skills/kk-ds-maintainer/SKILL.md">ship protocol</a>
+          are canonical; the practice inventory lives in
+          <a href="./patterns.html">the patterns registry</a>
+          and
+          <a href="./skills/kk-design-system/components.md">components.md</a>.
+        </p>
+      </article>
+
       <article class="doc__section" id="evolve">
         <h2 class="t-display">
           How to evolve a rule<br />
@@ -715,6 +809,23 @@
             </div>
           </dl>
         </div>
+      </article>
+
+      <!-- ================== DISTRIBUTION ================================ -->
+      <!-- Install, update, ship discipline all live in the maintainer     -->
+      <!-- skill's Ship protocol. Pointer only.                            -->
+
+      <h2 class="doc__part">Distribution</h2>
+
+      <article class="doc__section" id="distribution">
+        <h2 class="t-display">
+          Install and ship<br />
+          <span class="t-display--medium t-muted">The maintainer skill owns it</span>
+        </h2>
+        <p class="t-body">
+          Install, update, and ship discipline live in the
+          <a href="./skills/kk-ds-maintainer/SKILL.md">kk-ds-maintainer skill&rsquo;s § Ship protocol</a>.
+        </p>
       </article>
     </main>
 
