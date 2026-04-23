@@ -35,6 +35,7 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 - `package.json` `files` array — added `skills/kk-role-pattern-discoverer/` after the other `kk-role-*` entries.
 - `.claude-plugin/plugin.json` version `0.4.0` → `1.2.0`. Bump in lockstep with `package.json` after a drift window across the 1.0.x and 1.1.0 cycles. Plugin `skills` array unchanged — the discoverer is kit-internal, matching the precedent that no `kk-role-*` skill is listed there.
 - `.registry-frame` + `.registry-frame--tall` + `.registry-disclosure` were added earlier in 1.2.0 drafts (commit `549c9ad`) and removed before tag. The final 1.2.0 does not carry them. Zero consumers reached outside the drafting window, so the removal does not break semver — the release has not been tagged or pushed.
+- `index.html` slimmed: component catalogues + pattern demos + atom/element state galleries removed; live in `demos/fundamental--accepted/index.html` + `patterns.html`. The kit canon doc now carries manifesto + protocols + foundations-why only. Line count 3304 → 765 (77% reduction).
 
 ### Open
 - `patterns.html` not created in this release. Phase 3 of the initiative deploys the discoverer against `demos/fundamental--accepted/`, which creates the file and populates the first entry set.
