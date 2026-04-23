@@ -222,6 +222,7 @@ Each role operates in character as a specific person. Gender codes tier: women f
 | 6c | Voice | Haiku | **George Orwell** | "Politics and the English Language" author. Six rules for clear prose — ancestor of the AI-tells inventory. Names jargon, cuts padding, refuses vague abstraction. |
 | 7 | Meta-reviewer | Opus | **Erika Hall** | Mule Design co-founder. *Just Enough Research*, *Conversational Design*. Evidence-gated critique that rejects "it's fine" — the design is finished when the last reason to remove something is gone. |
 | — | Meta-retro | Opus | **Joan Didion** | Essayist. *Slouching Towards Bethlehem*, *The White Album*. Observes the pattern that was there all along and names it without flinching. |
+| — (post) | Pattern discoverer | Sonnet | **Jina Anne** | Built Salesforce Lightning Design System. Founded the Design Systems Conference. Co-spec'd the W3C Design Tokens work. Cataloguer whose craft is naming and inventorying systems — the same craft this role runs on accepted prototypes. |
 | — | Maintainer | Sonnet | **Rachel Andrew** | CSS Grid spec co-editor at W3C. Former Smashing Magazine editor-in-chief. Ships spec revisions with bundle discipline, semver by blast radius, tag and push before close. |
 
 Steve Jobs appears twice (3a/3c and 6a) deliberately — same dumb-reader character at different stages, not two different men. Dieter Rams is a separate dumb character because the consistency-DS reviewer has a distinct lens (pattern conformance, not user clarity).
@@ -303,6 +304,21 @@ Pipeline entry points, from lightest to heaviest:
 - **Retro** — meta only.
 
 Entry point is declared at session start and recorded in `documentation/<session>/README.md`.
+
+### Post-pipeline pattern discovery
+
+Pattern discovery sits outside the eight-stage walk. It is a post-pipeline pass, triggered by the `--accepted` suffix on a prototype folder. `kk-role-pattern-discoverer` runs once per accepted prototype against `demos/<slug>--accepted/`, slices qualifying compositions to `demos/<slug>--accepted/patterns/<pattern-slug>.html`, and appends entries to the repo-root `patterns.html` registry for anything not already catalogued. First-accepted wins on cross-prototype dedup — repeat patterns add a usage citation to the existing entry rather than creating a second one. The discoverer never edits canon.
+
+### Kit-internal review adaptation
+
+Pipeline-v3 review stages were designed for product-shaped artifacts. Kit-internal artifacts — `fundamental`, a slimmed `index.html`, future in-repo docs — need an adapted sweep because there is no analyst jobstory for the cold read at 6a to gate against.
+
+- **Stage 6a — consistency jobstory:** skipped for kit-internal artifacts. No analyst jobstory exists, so the 0.2-second cold read has nothing to compare against at stage 7.
+- **Stage 6b — consistency DS:** runs. Kit-pattern conformance applies to anything using the kit.
+- **Stage 6c — voice:** runs. Voice audit applies to any visible prose.
+- **Stage 7 — meta-reviewer:** runs on an adjusted rubric. Drop the 6a-vs-analyst comparison item. Add an artifact-specific completeness item, stated in the session README at walk start (for `fundamental`: "every atom present, every element present, no catalog ceremony retained").
+
+The adaptation is scope-triggered. A session opened against a kit-internal artifact declares the adapted sweep in `documentation/<session>/README.md`; product-shaped sessions run the unadjusted pipeline.
 
 ## Failure mode to watch for
 

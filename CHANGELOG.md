@@ -2,6 +2,28 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.2.0 — 2026-04-23
+
+Pattern discoverer role. The 2026-04-23 patterns-library initiative split kit work into a canon track (atoms and elements in `index.html`) and a pattern registry track (`patterns.html` at repo root, thin index over `demos/<slug>--accepted/`). A discovery pass was missing from the pipeline — stage 7 meta-reviewer ends the product-shaped walk, but no role owns the post-acceptance pattern catalogue. This release adds `kk-role-pattern-discoverer`, wires it into the roster as a post-pipeline pass, and bakes the kit-internal review adaptation (skip 6a, keep 6b + 6c, adjusted 7 rubric) into `pipeline.md` so future kit-internal artefacts route through the right sweep.
+
+### Added
+- `skills/kk-role-pattern-discoverer/SKILL.md` — Sonnet, Jina Anne. Triggered by the `--accepted` suffix on a prototype folder. Slices qualifying compositions to `demos/<slug>--accepted/patterns/<pattern-slug>.html` and appends entries to `patterns.html`. First-accepted wins on cross-prototype dedup. Never edits canon. Full pattern-eligibility rubric (five must-clauses plus disqualifiers) carried in the skill body.
+- `skills/kk-design-system/pipeline.md § Role roster` — pattern-discoverer row (stage column `— (post)`, Jina Anne, Design Systems Conference + W3C Design Tokens citation).
+- `skills/kk-design-system/pipeline.md § Post-pipeline pattern discovery` — new subsection placing the pass outside the eight-stage walk, trigger by `--accepted` stamp, dedup rule, canon read-only constraint.
+- `skills/kk-design-system/pipeline.md § Kit-internal review adaptation` — new subsection. 6a skipped for kit-internal artifacts, 6b and 6c universal, 7 runs on an adjusted rubric that drops the 6a-vs-analyst comparison and adds an artifact-specific completeness item declared at walk start.
+
+### Removed
+- Nothing. Additive release.
+
+### Moved
+- `package.json` version `1.1.0` → `1.2.0`. Minor bump — one new role skill, additive.
+- `package.json` `files` array — added `skills/kk-role-pattern-discoverer/` after the other `kk-role-*` entries.
+- `.claude-plugin/plugin.json` version `0.4.0` → `1.2.0`. Bump in lockstep with `package.json` after a drift window across the 1.0.x and 1.1.0 cycles. Plugin `skills` array unchanged — the discoverer is kit-internal, matching the precedent that no `kk-role-*` skill is listed there.
+
+### Open
+- `plugin.json` version lagged `package.json` from 1.0.0 through 1.1.0. This release re-aligns them; future bumps should move them together per the maintainer skill §Bundle.
+- `patterns.html` not created in this release. Phase 3 of the initiative deploys the discoverer against `demos/fundamental--accepted/`, which creates the file and populates the first entry set.
+
 ## 1.1.0 — 2026-04-23
 
 Stage 6c voice reviewer + voice discipline extended to every role that writes UI text, prototype prose, or pattern descriptions. v1.0.0's pipeline-v3 folded the dedicated UX-copy-review role into meta-reviewer's rubric item 5 (one line on a six-item Opus rubric). User flagged the dilution — voice defects written at stage 3b would survive until stage 7, then require an expensive reiterate loop. This release restores a dedicated cold-read voice auditor parallel with 6a + 6b, and tightens voice.md canon load on the four roles that author prose for prototype or docs.
