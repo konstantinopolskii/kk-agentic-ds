@@ -461,10 +461,12 @@ body {
   margin-bottom: var(--space-10);
 }
 .doc__section > h2,
-.doc__section > h3,
 .doc__section > .t-display,
 .doc__section > .t-title {
   margin-bottom: var(--space-6);
+}
+.doc__section > h3 {
+  margin-bottom: 0;
 }
 .doc__section > h4,
 .doc__section > .t-subtitle {
