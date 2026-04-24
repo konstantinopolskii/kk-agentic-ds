@@ -130,8 +130,9 @@ body {
    No tabular-nums (forcing digit widths makes "1 0" look stretched in
    a proportional font), no ss01 stylistic set (adds unwanted spacing).
    Letter-spacing resets to 0 so code reads cleanly even inside body
-   copy that carries -0.01em tracking. */
-.t-mono { letter-spacing: 0; }
+   copy that carries -0.01em tracking. Uses Commissioner (kit font) at 600
+   (semibold) instead of monospace to maintain visual consistency. */
+.t-mono { font-family: inherit; font-weight: 600; letter-spacing: 0; }
 
 /* =========================================================================
    App shell — three-pane layout, iPad-style split view
