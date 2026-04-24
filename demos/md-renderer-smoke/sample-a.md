@@ -1,5 +1,7 @@
 # Core prose path
 
+Three articles below, each fed by a different `data-md-src`. Every article is a `doc__section` with the same scaffolding as `index.html`. What you see here is what kit docs look like when their body is rendered from markdown.
+
 Exercises the core prose path. Every heading level, body paragraphs, unordered and ordered lists, internal and external links, and inline code spans.
 
 ## Section heading

@@ -269,12 +269,14 @@ body {
    padding-left 18 (= 4 px indicator bar + 14 px gap to text) and
    padding-right 18 (symmetric hover surface). Vertical stays tag-
    tight at 4 px. */
-.nav-group > h3 {
-  padding: var(--space-1) 18px;
+.nav-group > h3,
+.nav-group > h4 {
+  padding: var(--space-1) 18px var(--space-1) var(--space-3);
   color: var(--color-text-muted);
   transition: color var(--dur-base) var(--ease-out);
 }
-.nav-group.is-active > h3 { color: var(--color-text); }
+.nav-group.is-active > h3,
+.nav-group.is-active > h4 { color: var(--color-text); }
 
 .nav-group__items a {
   display: block;
@@ -454,11 +456,15 @@ body {
 .doc__section > .t-subtitle + * {
   margin-top: 0;
 }
+.doc__section > h1,
+.doc__section > .t-hero {
+  margin-bottom: var(--space-10);
+}
 .doc__section > h2,
 .doc__section > h3,
 .doc__section > .t-display,
 .doc__section > .t-title {
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
 }
 .doc__section > h4,
 .doc__section > .t-subtitle {
@@ -468,7 +474,7 @@ body {
      4) because prev-element descent leading + subtitle ascent leading
      bias the visual ratio below box. New 96/40 box = 2.40; text ratio
      lands ≥ 2.20. Rule 13 floor holds (40 ≥ subtitle line-height 24).
-     Matches the 40 px below-gap carried by h2/h3/.t-display/.t-title. */
+     Matches the 24 px below-gap carried by h2/h3/.t-display/.t-title. */
   margin-bottom: var(--space-10);
 }
 /* When a table sits directly under a heading, the first header row's
