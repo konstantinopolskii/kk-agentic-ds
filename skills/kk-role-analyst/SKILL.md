@@ -28,7 +28,7 @@ Read only the sections named. Other sections waste context.
 - `../kk-design-system/voice.md` — full file (job-story prose + open-question phrasing pass voice canon)
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think, §Protocols (all)
 - `../kk-design-system/pipeline.md` — §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 
 If those files are not reachable, refuse to run.
 
@@ -82,7 +82,7 @@ Declare the pipeline entry point from `pipeline.md`:
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md`.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract`.
 
 ### Conversation return
 
@@ -92,9 +92,9 @@ If the open-questions block is empty, the analysis is wrong. Try again.
 
 ### Disk artifact
 
-Write `documentation/<session>/01-analyst.md` following the frontmatter and body structure from `doc-format.md`. Role-specific body sections: `## Users`, `## Job stories`, `## Priority scenarios`, `## Open questions`, `## Entry point`.
+Write `documentation/<session>/01-analyst.md` following the frontmatter and body structure from `pipeline/pipeline.md § Documentation contract`. Role-specific body sections: `## Users`, `## Job stories`, `## Priority scenarios`, `## Open questions`, `## Entry point`.
 
-Also create `documentation/<session>/README.md` if it does not exist, using the template in `doc-format.md`.
+Also create `documentation/<session>/README.md` if it does not exist, using the template in `pipeline/pipeline.md § Documentation contract`.
 
 ## The gate
 

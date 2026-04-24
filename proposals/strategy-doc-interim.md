@@ -1,3 +1,5 @@
+<!-- Interim home. Final destination: inside the strategy prototype under demos/ when that prototype ships. -->
+
 # Pattern — strategy / audit document
 
 The canonical output of the Wealthy consulting pipeline. An audit transcription becomes a research-backed strategy, rendered in this design system, commentable, signed.

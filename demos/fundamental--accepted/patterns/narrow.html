@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Narrow mobile</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+    <aside class="sidebar sidebar--collapsed" aria-label="Navigation">
+      <button class="button button--icon" aria-label="Open navigation">
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+          <rect width="18" height="2" rx="1" fill="currentColor"/>
+          <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
+          <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </button>
+    </aside>
+
+    <main class="book" id="doc">
+      <h1 class="t-hero">Narrow</h1>
+      <p class="book__intro t-body">
+        Below 800 px the book takes the full column. Sidebar collapses
+        behind a hamburger. Inspector slides over as a modal sheet.
+      </p>
+      <article class="book__section" id="full-width">
+        <h2 class="t-display">
+          Full width<br />
+          <span class="t-display--medium t-muted">Book column carries the read</span>
+        </h2>
+        <p class="t-body">
+          Only one column shows at a time. The hamburger on the left
+          opens the sidebar; the FAB on the right opens the inspector.
+        </p>
+      </article>
+      <article class="book__section" id="slide-over">
+        <h2 class="t-display">
+          Slide over<br />
+          <span class="t-display--medium t-muted">Inspector as a sheet</span>
+        </h2>
+        <p class="t-body">
+          Tapping the inspector FAB reveals the inspector as a modal
+          sheet above the book. Tap outside to dismiss.
+        </p>
+      </article>
+    </main>
+
+    <aside class="inspector inspector--modal" aria-hidden="true">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Sheet</h2>
+        </header>
+        <div class="card card--interactive">
+          <div class="card__heading">
+            <h3 class="t-title">Modal inspector</h3>
+            <p class="t-caption">Opens from the right at narrow widths. Same content, different shell.</p>
+          </div>
+          <button class="button t-subtitle" data-cta="minimized">Close</button>
+          <button class="button button--primary t-subtitle" data-cta="active">Confirm</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

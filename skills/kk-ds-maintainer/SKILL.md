@@ -65,7 +65,7 @@ Any edit that touches what consumers see must ship with this set. If one is miss
 
 1. **The code** — `vars.css`, `style.css`, or the skill file you're changing.
 2. **The doc** — `index.html`, whichever section owns the rule (manifesto foundations, component page, voice rules, whichever applies).
-3. **The skill reference files** — `skills/kk-design-system/tokens.json`, `voice.md`, `manifesto.md` (which carries §Components). These are what the agent reads. Drift between CSS and skill reference files is the worst failure mode, because the agent trusts the skill files. `components.md` survives as a re-export stub until v2.0.0 — edits to the inventory land in `manifesto.md § Components`, not in the stub.
+3. **The skill reference files** — `skills/kk-design-system/tokens.json`, `manifesto.md` (thin opener), `canon/components.md`, `canon/patterns.md`, `canon/voice.md`, `pipeline/pipeline.md`, `pipeline/protocols.md`. These are what the agent reads. Drift between CSS and skill reference files is the worst failure mode, because the agent trusts the skill files. Inventory edits land in `canon/components.md`, not in the manifesto.
 4. **`CHANGELOG.md`** — one entry, in the format: Added / Removed / Moved.
 5. **`package.json`** + **`.claude-plugin/plugin.json`** version bump, in lockstep. Semver:
    - **Major** — removed a component, renamed a class, changed a skill's `description` trigger phrase, broke a consumer's selector.

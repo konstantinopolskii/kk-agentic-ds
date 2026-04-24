@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Agentic Design System — signed, by Konstantin Konstantinopolskii</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=md-source">
-  <link rel="stylesheet" href="./style.css?v=md-source">
+  <link rel="stylesheet" href="./vars.css?v=1.3.0">
+  <link rel="stylesheet" href="./style.css?v=1.3.0">
 </head>
 <body>
   <div class="app" data-view="doc">
-    <!-- ================================================================= -->
-    <!-- Sidebar: brand, nav groups (scroll-spy targets), footer            -->
-    <!-- TOC is hand-curated and carries one structure: the manifesto's    -->
-    <!-- rendered TOC. Pointer cards at the top of the doc are reachable   -->
-    <!-- by scrolling; the sidebar no longer names them twice.             -->
-    <!-- ================================================================= -->
+
+    <!-- ============================================================== -->
+    <!-- Sidebar: brand + scroll-spy TOC of the currently-rendered book -->
+    <!-- Only internal nav lives here. Cross-book nav lives in the      -->
+    <!-- inspector pointer cards. Nav groups are hand-curated per book. -->
+    <!-- ============================================================== -->
     <aside class="sidebar" aria-label="Navigation">
       <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
 
@@ -40,29 +40,17 @@
         </section>
 
         <section class="nav-group">
-          <h4 class="t-subtitle">Matter</h4>
+          <h4 class="t-subtitle">Agents</h4>
           <ul class="nav-group__items">
-            <li class="t-caption"><a href="#foundations">Foundations</a></li>
-            <li class="t-caption"><a href="#components">Components</a></li>
-            <li class="t-caption"><a href="#runtime">Runtime</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Protocols</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#protocols">Evolve, backlog, ideation</a></li>
+            <li class="t-caption"><a href="#agents">Agents</a></li>
             <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
-            <li class="t-caption"><a href="#documentation-contract">Documentation</a></li>
-            <li class="t-caption"><a href="#ship-discipline">Ship discipline</a></li>
           </ul>
         </section>
 
         <section class="nav-group">
-          <h4 class="t-subtitle">Surfaces</h4>
+          <h4 class="t-subtitle">Navigation</h4>
           <ul class="nav-group__items">
-            <li class="t-caption"><a href="./patterns.html">Patterns registry</a></li>
-            <li class="t-caption"><a href="./demos/fundamental--accepted/index.html">Fundamental demo</a></li>
+            <li class="t-caption"><a href="#navigation">Reading order</a></li>
           </ul>
         </section>
       </nav>
@@ -73,155 +61,111 @@
       </footer>
     </aside>
 
-    <!-- ================================================================= -->
-    <!-- Document: thin shell. Pointer cards sit at the top; the manifesto -->
-    <!-- body renders from markdown via [data-md-src]; signoff closes. No  -->
-    <!-- shell hero — the markdown file's `# Manifesto` carries the page   -->
-    <!-- h1 (data-md-heading-offset="0"), so one hero rules the page.     -->
-    <!-- ================================================================= -->
-    <main class="doc" id="doc">
-
-      <!-- ================== INVENTORY POINTER CARDS ===================== -->
-      <h2 class="doc__part">Inventory</h2>
-
-      <article class="doc__section" id="inv-components">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Components</h3>
-            <p class="t-caption">Nine components cover most SAAS flows; every class is indexed in the patterns registry.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./demos/fundamental--accepted/index.html" target="_blank" rel="noopener">Open fundamental</a>
-          <p class="t-micro t-muted">
-            Also: <a href="./patterns.html" target="_blank" rel="noopener">patterns.html</a>.
-          </p>
-        </div>
-      </article>
-
-      <article class="doc__section" id="inv-patterns">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Patterns</h3>
-            <p class="t-caption">Eleven patterns from the first accepted prototype seed the registry; first-accepted wins on cross-prototype dedup.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./patterns.html" target="_blank" rel="noopener">Open the registry</a>
-        </div>
-      </article>
-
-      <article class="doc__section" id="inv-pipeline">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Pipeline</h3>
-            <p class="t-caption">The eight-stage, eleven-role agentic pipeline spec lives in pipeline.md.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./skills/kk-design-system/pipeline.md" target="_blank" rel="noopener">Read pipeline.md</a>
-        </div>
-      </article>
-
-      <article class="doc__section" id="inv-foundations">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Foundations</h3>
-            <p class="t-caption">Swatches and scale tables render in the fundamental demo; the why lives in manifesto.md.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./demos/fundamental--accepted/index.html#color" target="_blank" rel="noopener">Open the swatches</a>
-          <p class="t-micro t-muted">
-            Also: <a href="./skills/kk-design-system/tokens.json" target="_blank" rel="noopener">tokens.json</a>,
-            <a href="./skills/kk-design-system/manifesto.md" target="_blank" rel="noopener">manifesto.md</a>.
-          </p>
-        </div>
-      </article>
-
-      <!-- ================== DISTRIBUTION POINTER CARDS ================== -->
-      <h2 class="doc__part">Distribution</h2>
-
-      <article class="doc__section" id="inv-practice">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Practice</h3>
-            <p class="t-caption">The pattern and component registries carry the inventory; evolve and ship protocols govern how it changes.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./patterns.html" target="_blank" rel="noopener">Open the registry</a>
-          <p class="t-micro t-muted">
-            Also: <a href="./skills/kk-design-system/manifesto.md" target="_blank" rel="noopener">manifesto.md &sect; Components</a>,
-            <a href="#protocols">§protocols</a>,
-            <a href="./skills/kk-ds-maintainer/SKILL.md" target="_blank" rel="noopener">ship protocol</a>.
-          </p>
-        </div>
-      </article>
-
-      <article class="doc__section" id="inv-distribution">
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Distribution</h3>
-            <p class="t-caption">Install, update, and ship protocols live in the kk-ds-maintainer skill.</p>
-          </div>
-          <a class="button button--primary t-subtitle" href="./skills/kk-ds-maintainer/SKILL.md" target="_blank" rel="noopener">Open the maintainer skill</a>
-        </div>
-      </article>
-
-      <!-- ================== MANIFESTO (RENDERED FROM MARKDOWN) ========== -->
-      <!-- manifesto.md renders with offset 0: source `#` lands at h1/t-hero,
-           `##` at h2/t-display, `###` at h3/t-title, `####` at h4/t-subtitle.
-           Post-render, each top-level `##` section gets wrapped into its
-           own .doc__section with a slugified id so scroll-spy tracks it
-           and the sidebar TOC resolves. The shell carries no h1 — the
-           markdown file's `# Manifesto` owns the page title. -->
-      <div id="manifesto-mount" data-md-src="./skills/kk-design-system/manifesto.md" data-md-heading-offset="0"></div>
-
-      <!-- ================== SIGNOFF ==================================== -->
-      <div class="doc__signoff">
-        <div class="doc__signoff-stats">
-          <div class="stat t-caption">
-            <div>Signed, kit v1.3.0.</div>
-          </div>
-          <div class="stat t-caption">
-            <div>24 April &rsquo;26, Tbilisi.</div>
-          </div>
-        </div>
-
-        <div class="doc__signoff-signature">
-          <p class="t-caption">
-            Signed by
-            <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
-            founder at
-            <span class="t-caption--bold">kk.consulting<br /></span>
-            <span class="t-muted">24 April &lsquo;26 at 12:00 Tbilisi Time.</span>
-          </p>
-          <img class="doc__signoff-signature-img" src="signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
-        </div>
-      </div>
+    <!-- ============================================================== -->
+    <!-- Book: the rendered manifesto. No shell hero. Source #Manifesto -->
+    <!-- carries the page h1 at t-hero via data-md-heading-offset="0".  -->
+    <!-- Post-render hook wraps each top-level ## into a .book__section -->
+    <!-- so scroll-spy tracks and the sidebar TOC resolves.             -->
+    <!-- ============================================================== -->
+    <main class="book" id="doc" data-md-src="./skills/kk-design-system/manifesto.md" data-md-heading-offset="0">
     </main>
 
-    <!-- ================================================================= -->
-    <!-- Inspector: shell column for the selection-to-draft comment flow.  -->
-    <!-- Empty stack; drafts spawn on text selection via kit.js.           -->
-    <!-- ================================================================= -->
-    <aside class="inspector" aria-label="Comments">
+    <!-- ============================================================== -->
+    <!-- Inspector: eight pointer cards. Six canon + two demos.         -->
+    <!-- Each card is a card--interactive anchor wrapping its content.  -->
+    <!-- One inspector__group per rank tier (canon vs demos).           -->
+    <!-- Pattern-first reading order on canon: patterns → components →  -->
+    <!-- voice → pipeline → protocols → tokens.                         -->
+    <!-- ============================================================== -->
+    <aside class="inspector" aria-label="Open a book">
+
       <section class="inspector__group">
         <header class="card card--heading">
-          <h2 class="t-display">Comments</h2>
+          <h2 class="t-display">Open a book</h2>
         </header>
 
-        <!-- Empty stack. Select any paragraph in the doc to open a draft. -->
-        <div class="comment-stack"></div>
+        <a class="card card--interactive" href="./skills/kk-design-system/canon/patterns.md">
+          <div class="card__heading">
+            <h3 class="t-title">Patterns</h3>
+            <p class="t-caption">When composing any layout, start here. Three columns, card stack, narrow mobile.</p>
+          </div>
+          <span class="button t-subtitle">Open the book</span>
+        </a>
+
+        <a class="card card--interactive" href="./skills/kk-design-system/canon/components.md">
+          <div class="card__heading">
+            <h3 class="t-title">Components</h3>
+            <p class="t-caption">When drilling from a pattern into a part, find every foundation, component, and forbidden thing.</p>
+          </div>
+          <span class="button t-subtitle">Open the book</span>
+        </a>
+
+        <a class="card card--interactive" href="./skills/kk-design-system/canon/voice.md">
+          <div class="card__heading">
+            <h3 class="t-title">Voice</h3>
+            <p class="t-caption">When writing a string, find shape rules and the AI-tells inventory in one place.</p>
+          </div>
+          <span class="button t-subtitle">Open the book</span>
+        </a>
+
+        <a class="card card--interactive" href="./skills/kk-design-system/pipeline/pipeline.md">
+          <div class="card__heading">
+            <h3 class="t-title">Pipeline</h3>
+            <p class="t-caption">When entering or evaluating a session, find stages, role roster, and communication protocol.</p>
+          </div>
+          <span class="button t-subtitle">Open the book</span>
+        </a>
+
+        <a class="card card--interactive" href="./skills/kk-design-system/pipeline/protocols.md">
+          <div class="card__heading">
+            <h3 class="t-title">Protocols</h3>
+            <p class="t-caption">When shipping, evolving, or logging an exception, find bundle, semver, evolve, backlog, ideation.</p>
+          </div>
+          <span class="button t-subtitle">Open the book</span>
+        </a>
+
+        <a class="card card--interactive" href="./skills/kk-design-system/tokens.json">
+          <div class="card__heading">
+            <h3 class="t-title">Tokens</h3>
+            <p class="t-caption">When code needs a design token, read the machine-readable source of truth.</p>
+          </div>
+          <span class="button t-subtitle">Open the file</span>
+        </a>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Demos</h2>
+        </header>
+
+        <a class="card card--interactive" href="./demos/fundamental--accepted/index.html">
+          <div class="card__heading">
+            <h3 class="t-title">Fundamental</h3>
+            <p class="t-caption">Live component inventory. Deep-link target for every canon class.</p>
+          </div>
+          <span class="button t-subtitle">Open the demo</span>
+        </a>
+
+        <a class="card card--interactive" href="./demos/md-renderer-smoke/index.html">
+          <div class="card__heading">
+            <h3 class="t-title">Renderer smoke</h3>
+            <p class="t-caption">Side-by-side markdown render vs source. Ship-time check for the .md pipeline.</p>
+          </div>
+          <span class="button t-subtitle">Open the demo</span>
+        </a>
       </section>
     </aside>
   </div>
 
-  <!-- ================================================================= -->
-  <!-- Scripts: md.js fetches and renders manifesto.md; the post-render -->
-  <!-- hook wraps each top-level h2 + siblings into its own             -->
-  <!-- .doc__section so scroll-spy tracks and TOC anchors resolve;      -->
-  <!-- then KK.refresh() rescans the DOM.                               -->
-  <!-- kit.js must load first so KK.init fires on DOMContentLoaded, and -->
-  <!-- KK.enableCommentSelectionFlow opts this page into the full flow. -->
-  <!-- ================================================================= -->
+  <!-- ================================================================ -->
+  <!-- Scripts: kit.js first (auto-init on DOMContentLoaded); md.js     -->
+  <!-- fetches the manifesto into .book. Post-render hook wraps each    -->
+  <!-- top-level ## into its own .book__section with a slug id so       -->
+  <!-- scroll-spy tracks and sidebar TOC anchors resolve.               -->
+  <!-- ================================================================ -->
   <script src="./js/kit.js" defer></script>
   <script src="./js/md.js" defer></script>
   <script defer>
-    // Slugify heading text to an anchor id. Lowercase, trim, spaces to
-    // hyphens, drop everything outside [a-z0-9-]. Matches the TOC
-    // anchor ids in the sidebar.
     function slugify(text) {
       return (text || "")
         .toLowerCase()
@@ -231,18 +175,10 @@
         .replace(/\s+/g, "-");
     }
 
-    // Post-render wrapper. Takes the #manifesto-mount container with
-    // the rendered markdown tree, walks its children, and splits each
-    // h2.t-display + following siblings (until the next h2.t-display)
-    // into its own <article class="doc__section" id="..."></article>.
-    // Content before the first h2 (the # Manifesto h1 + lead paragraph)
-    // stays as a lead-in .doc__section with no id.
-    function wrapManifestoSections() {
-      var mount = document.getElementById("manifesto-mount");
-      if (!mount) return;
-      var doc = mount.parentNode;
-      var children = Array.prototype.slice.call(mount.childNodes);
-
+    function wrapBookSections() {
+      var book = document.querySelector(".book");
+      if (!book) return;
+      var children = Array.prototype.slice.call(book.childNodes);
       var sections = [];
       var current = null;
 
@@ -252,7 +188,7 @@
           && node.classList.contains("t-display");
         if (isH2) {
           current = document.createElement("article");
-          current.className = "doc__section";
+          current.className = "book__section";
           var id = slugify(node.textContent);
           if (id) current.id = id;
           sections.push(current);
@@ -260,55 +196,37 @@
         } else if (current) {
           current.appendChild(node);
         } else {
-          // Content before the first h2 (the hero + opener paragraph).
-          // Seed a lead-in section with no id so scroll-spy does not
-          // latch onto it.
           if (!sections.length || sections[0].id) {
             var lead = document.createElement("article");
-            lead.className = "doc__section";
+            lead.className = "book__section";
             sections.unshift(lead);
           }
           sections[0].appendChild(node);
         }
       });
 
-      // Insert new sections in place of the mount, then remove it.
-      sections.forEach(function (s) { doc.insertBefore(s, mount); });
-      doc.removeChild(mount);
+      book.innerHTML = "";
+      sections.forEach(function (s) { book.appendChild(s); });
     }
 
     document.addEventListener("kk:md-rendered", function () {
-      wrapManifestoSections();
-      // Refresh kit modules so scroll-spy observes the new .doc__section
-      // nodes and the TOC indicator tracks them.
+      wrapBookSections();
       if (window.KK && typeof window.KK.refresh === "function") {
         window.KK.refresh();
       }
     });
-
-    // Opt this page into the selection-to-draft comment flow. kit.js's
-    // English-labeled draft builder handles selections; consumers with
-    // their own localized flow skip this call.
-    document.addEventListener("DOMContentLoaded", function () {
-      if (window.KK && typeof window.KK.enableCommentSelectionFlow === "function") {
-        window.KK.enableCommentSelectionFlow();
-      }
-    });
   </script>
 
-  <!-- FABs — floating action buttons for narrow views (tablet + phone).
-       Sit outside .app to escape overflow:hidden. data-view-target wires
-       them into the existing narrow-view toggle in kit.js. -->
-  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Navigation">
+  <!-- FABs for tablet + phone. Outside .app so overflow:hidden cannot clip. -->
+  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">
     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
       <rect width="18" height="2" rx="1" fill="currentColor"/>
       <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
       <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
     </svg>
   </button>
-  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Comments">
-    <span class="fab__count">0</span>
+  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open a book">
+    <span class="fab__count">8</span>
   </button>
-  <button class="fab fab--comment" type="button" aria-label="Add a comment">Add a comment</button>
 </body>
 </html>

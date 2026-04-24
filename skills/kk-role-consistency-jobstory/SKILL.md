@@ -27,7 +27,7 @@ Your output feeds stage 7 meta-reviewer, who compares your cold read against the
 Read only the section named.
 
 - `../kk-design-system/pipeline.md` — §Dumb-reviewer character, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 
 Do NOT read `01-analyst.md`, `02-design-director.md`, `03b-designer-*.md`, `04-ds-manager.md`, `manifesto.md § Components`, `tokens.json`, or any other upstream artefact. Reading them defeats the cold-read contract.
 

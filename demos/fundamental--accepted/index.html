@@ -76,23 +76,23 @@
     <!-- ================================================================= -->
     <!-- Doc: prose + spec + controls, set in plain composition             -->
     <!-- ================================================================= -->
-    <main class="doc" id="doc">
+    <main class="book" id="doc">
       <h1 class="t-hero">Fundamental</h1>
 
-      <p class="doc__intro t-body">
+      <p class="book__intro t-body">
         Every atom the kit owns, composed the way the kit composes.
         A document that reads itself.
       </p>
-      <p class="doc__intro t-body">
+      <p class="book__intro t-body">
         Seven parts, sidebar on the left, margin on the right. The
         middle column is what we read.
       </p>
 
       <!-- ================== PROSE ======================================= -->
 
-      <h2 class="doc__part">Prose</h2>
+      <h2 class="book__part">Prose</h2>
 
-      <article class="doc__section" id="opening">
+      <article class="book__section" id="opening">
         <h2 class="t-display">
           Opening<br />
           <span class="t-display--medium t-muted">Hero, intro, part break</span>
@@ -109,7 +109,19 @@
         </p>
       </article>
 
-      <article class="doc__section" id="reading">
+      <article class="book__section" id="navigation">
+        <h2 class="t-display">
+          Navigation<br />
+          <span class="t-display--medium t-muted">Sidebar TOC, scroll-spy, nav groups</span>
+        </h2>
+        <p class="t-body">
+          The sidebar to the left carries the doc-internal TOC. Nav
+          groups chunk one to nine items each. Scroll-spy tracks the
+          active section; the indicator slides between rows on scroll.
+        </p>
+      </article>
+
+      <article class="book__section" id="reading">
         <h2 class="t-display">
           Reading<br />
           <span class="t-display--medium t-muted">Body, caption, micro</span>
@@ -129,7 +141,7 @@
         </p>
       </article>
 
-      <article class="doc__section" id="lists">
+      <article class="book__section" id="lists">
         <h2 class="t-display">
           Lists<br />
           <span class="t-display--medium t-muted">Ordered, unordered, inline</span>
@@ -164,7 +176,7 @@
         </p>
       </article>
 
-      <article class="doc__section" id="figures">
+      <article class="book__section" id="figures">
         <h2 class="t-display">
           Figures<br />
           <span class="t-display--medium t-muted">Quote, figure, citation</span>
@@ -186,11 +198,58 @@
         </figure>
       </article>
 
+      <article class="book__section" id="preview-frame">
+        <h2 class="t-display">
+          Preview frame<br />
+          <span class="t-display--medium t-muted">Scaled iframe for doc surfaces</span>
+        </h2>
+        <p class="t-body">
+          A clipped wrapper with an iframe rendering at 400% and
+          scaling to 0.25. Kit docs only. Product prose does not
+          embed iframes.
+        </p>
+      </article>
+
+      <article class="book__section" id="registry-table">
+        <h2 class="t-display">
+          Registry table<br />
+          <span class="t-display--medium t-muted">Dense two-column inventory</span>
+        </h2>
+        <p class="t-body">
+          Resets browser table defaults, applies hairline borders and
+          text tokens, keeps links inheriting surface type. First
+          column reserves 30% width and forbids wrapping.
+        </p>
+      </article>
+
+      <article class="book__section" id="spec-list">
+        <h2 class="t-display">
+          Spec list<br />
+          <span class="t-display--medium t-muted">Key and value rows</span>
+        </h2>
+        <p class="t-body">
+          The workhorse for key-value rows inside a card. Two, three,
+          or four-column shapes only. Key cells render at Medium 500,
+          full black.
+        </p>
+      </article>
+
       <!-- ================== SPEC ======================================== -->
 
-      <h2 class="doc__part">Spec</h2>
+      <h2 class="book__part">Spec</h2>
 
-      <article class="doc__section" id="color">
+      <article class="book__section" id="material">
+        <h2 class="t-display">
+          Material<br />
+          <span class="t-display--medium t-muted">No gradients, shadows, glass, blur</span>
+        </h2>
+        <p class="t-body">
+          Depth comes from hierarchy and spacing, not from effects. Each
+          skeuomorphic trick fakes light the screen cannot carry.
+        </p>
+      </article>
+
+      <article class="book__section" id="color">
         <h2 class="t-display">
           Color<br />
           <span class="t-display--medium t-muted">Nine tokens</span>
@@ -201,48 +260,48 @@
           metadata only.
         </p>
         <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg)"></span><span class="t-mono">--color-bg</span></span></dt>
-              <dd class="doc__spec-value">Primary background. White.</dd>
+          <dl class="book__spec">
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg)"></span><span class="t-mono">--color-bg</span></span></dt>
+              <dd class="book__spec-value">Primary background. White.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg-muted)"></span><span class="t-mono">--color-bg-muted</span></span></dt>
-              <dd class="doc__spec-value">Soft frame outside the app.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-bg-muted)"></span><span class="t-mono">--color-bg-muted</span></span></dt>
+              <dd class="book__spec-value">Soft frame outside the app.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-overlay)"></span><span class="t-mono">--color-surface-overlay</span></span></dt>
-              <dd class="doc__spec-value">The 3% overlay. Hover, focus, active share it.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-overlay)"></span><span class="t-mono">--color-surface-overlay</span></span></dt>
+              <dd class="book__spec-value">The 3% overlay. Hover, focus, active share it.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-strong)"></span><span class="t-mono">--color-surface-strong</span></span></dt>
-              <dd class="doc__spec-value">Row hover, button rest.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-surface-strong)"></span><span class="t-mono">--color-surface-strong</span></span></dt>
+              <dd class="book__spec-value">Row hover, button rest.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border)"></span><span class="t-mono">--color-border</span></span></dt>
-              <dd class="doc__spec-value">Hairline dividers.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border)"></span><span class="t-mono">--color-border</span></span></dt>
+              <dd class="book__spec-value">Hairline dividers.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border-strong)"></span><span class="t-mono">--color-border-strong</span></span></dt>
-              <dd class="doc__spec-value">Focus rings, deeper rules.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-border-strong)"></span><span class="t-mono">--color-border-strong</span></span></dt>
+              <dd class="book__spec-value">Focus rings, deeper rules.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text)"></span><span class="t-mono">--color-text</span></span></dt>
-              <dd class="doc__spec-value">Primary text. Pure black.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text)"></span><span class="t-mono">--color-text</span></span></dt>
+              <dd class="book__spec-value">Primary text. Pure black.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-muted)"></span><span class="t-mono">--color-text-muted</span></span></dt>
-              <dd class="doc__spec-value">Metadata: bylines, captions, hairlines.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-muted)"></span><span class="t-mono">--color-text-muted</span></span></dt>
+              <dd class="book__spec-value">Metadata: bylines, captions, hairlines.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-subtle)"></span><span class="t-mono">--color-text-subtle</span></span></dt>
-              <dd class="doc__spec-value">Placeholders, softest labels.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="swatch"><span class="swatch__dot" style="background: var(--color-text-subtle)"></span><span class="t-mono">--color-text-subtle</span></span></dt>
+              <dd class="book__spec-value">Placeholders, softest labels.</dd>
             </div>
           </dl>
         </div>
       </article>
 
-      <article class="doc__section" id="space">
+      <article class="book__section" id="space">
         <h2 class="t-display">
           Space<br />
           <span class="t-display--medium t-muted">A 4px grid</span>
@@ -256,72 +315,72 @@
           <div class="card__heading">
             <h3 class="t-title">Scale</h3>
           </div>
-          <dl class="doc__spec doc__spec--value">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-1</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">4px</span></dd>
-              <dd class="doc__spec-value">tag gaps, micro stacks.</dd>
+          <dl class="book__spec book__spec--value">
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-1</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">4px</span></dd>
+              <dd class="book__spec-value">tag gaps, micro stacks.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-2</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">8px</span></dd>
-              <dd class="doc__spec-value">tight adjacency.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-2</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">8px</span></dd>
+              <dd class="book__spec-value">tight adjacency.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-3</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">12px</span></dd>
-              <dd class="doc__spec-value">card inset.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-3</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">12px</span></dd>
+              <dd class="book__spec-value">card inset.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-4</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">16px</span></dd>
-              <dd class="doc__spec-value">row to row.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-4</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">16px</span></dd>
+              <dd class="book__spec-value">row to row.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-5</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">20px</span></dd>
-              <dd class="doc__spec-value">section inner padding.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-5</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">20px</span></dd>
+              <dd class="book__spec-value">section inner padding.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-6</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">24px</span></dd>
-              <dd class="doc__spec-value">card gaps, text rail.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-6</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">24px</span></dd>
+              <dd class="book__spec-value">card gaps, text rail.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-7</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">28px</span></dd>
-              <dd class="doc__spec-value">rare, when 24 reads cramped.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-7</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">28px</span></dd>
+              <dd class="book__spec-value">rare, when 24 reads cramped.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-8</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">32px</span></dd>
-              <dd class="doc__spec-value">section to section.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-8</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">32px</span></dd>
+              <dd class="book__spec-value">section to section.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-10</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">40px</span></dd>
-              <dd class="doc__spec-value">block separation in long-form.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-10</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">40px</span></dd>
+              <dd class="book__spec-value">block separation in long-form.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-12</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">48px</span></dd>
-              <dd class="doc__spec-value">part breaks.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-12</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">48px</span></dd>
+              <dd class="book__spec-value">part breaks.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-15</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">60px</span></dd>
-              <dd class="doc__spec-value">around the hero.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-15</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">60px</span></dd>
+              <dd class="book__spec-value">around the hero.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--space-20</span></dt>
-              <dd class="doc__spec-value"><span class="t-mono">80px</span></dd>
-              <dd class="doc__spec-value">end of document.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--space-20</span></dt>
+              <dd class="book__spec-value"><span class="t-mono">80px</span></dd>
+              <dd class="book__spec-value">end of document.</dd>
             </div>
           </dl>
         </div>
       </article>
 
-      <article class="doc__section" id="type">
+      <article class="book__section" id="type">
         <h2 class="t-display">
           Type<br />
           <span class="t-display--medium t-muted">One font, three weights, seven sizes</span>
@@ -335,41 +394,41 @@
           <div class="card__heading">
             <h3 class="t-title">Scale</h3>
           </div>
-          <dl class="doc__spec doc__spec--value">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Hero</dt>
-              <dd class="doc__spec-value"><span class="t-mono">66 / 66</span></dd>
-              <dd class="doc__spec-value">the document's own title.</dd>
+          <dl class="book__spec book__spec--value">
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Hero</dt>
+              <dd class="book__spec-value"><span class="t-mono">66 / 66</span></dd>
+              <dd class="book__spec-value">the document's own title.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Display</dt>
-              <dd class="doc__spec-value"><span class="t-mono">38 / 38</span></dd>
-              <dd class="doc__spec-value">section headings.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Display</dt>
+              <dd class="book__spec-value"><span class="t-mono">38 / 38</span></dd>
+              <dd class="book__spec-value">section headings.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Body</dt>
-              <dd class="doc__spec-value"><span class="t-mono">22 / 32</span></dd>
-              <dd class="doc__spec-value">long-form reading text.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Body</dt>
+              <dd class="book__spec-value"><span class="t-mono">22 / 32</span></dd>
+              <dd class="book__spec-value">long-form reading text.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Title</dt>
-              <dd class="doc__spec-value"><span class="t-mono">22 / 28</span></dd>
-              <dd class="doc__spec-value">card headings.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Title</dt>
+              <dd class="book__spec-value"><span class="t-mono">22 / 28</span></dd>
+              <dd class="book__spec-value">card headings.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Subtitle</dt>
-              <dd class="doc__spec-value"><span class="t-mono">18 / 24</span></dd>
-              <dd class="doc__spec-value">nav headers, spec keys.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Subtitle</dt>
+              <dd class="book__spec-value"><span class="t-mono">18 / 24</span></dd>
+              <dd class="book__spec-value">nav headers, spec keys.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Caption</dt>
-              <dd class="doc__spec-value"><span class="t-mono">16 / 24</span></dd>
-              <dd class="doc__spec-value">UI labels, body inside cards.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Caption</dt>
+              <dd class="book__spec-value"><span class="t-mono">16 / 24</span></dd>
+              <dd class="book__spec-value">UI labels, body inside cards.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Micro</dt>
-              <dd class="doc__spec-value"><span class="t-mono">14 / 20</span></dd>
-              <dd class="doc__spec-value">captions, citations, metadata.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Micro</dt>
+              <dd class="book__spec-value"><span class="t-mono">14 / 20</span></dd>
+              <dd class="book__spec-value">captions, citations, metadata.</dd>
             </div>
           </dl>
         </div>
@@ -379,27 +438,41 @@
           <div class="card__heading">
             <h3 class="t-title">Weight rules</h3>
           </div>
-          <dl class="doc__spec doc__spec--triple">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Regular</dt>
-              <dd class="doc__spec-value">reads too thin at 400</dd>
-              <dd class="doc__spec-value">Regular sits on 500.</dd>
+          <dl class="book__spec book__spec--triple">
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Regular</dt>
+              <dd class="book__spec-value">reads too thin at 400</dd>
+              <dd class="book__spec-value">Regular sits on 500.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Medium</dt>
-              <dd class="doc__spec-value">subtitle under display</dd>
-              <dd class="doc__spec-value">500, paired with bold 700 headline.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Medium</dt>
+              <dd class="book__spec-value">subtitle under display</dd>
+              <dd class="book__spec-value">500, paired with bold 700 headline.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Bold</dt>
-              <dd class="doc__spec-value">headings, labels</dd>
-              <dd class="doc__spec-value">700, one step up from the 500 body.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key">Bold</dt>
+              <dd class="book__spec-value">headings, labels</dd>
+              <dd class="book__spec-value">700, one step up from the 500 body.</dd>
             </div>
           </dl>
         </div>
       </article>
 
-      <article class="doc__section" id="motion">
+      <article class="book__section" id="radii">
+        <h2 class="t-display">
+          Radii<br />
+          <span class="t-display--medium t-muted">Four values</span>
+        </h2>
+        <p class="t-body">
+          <span class="t-mono">12 px</span> for buttons and fields,
+          <span class="t-mono">16 px</span> for preview frames,
+          <span class="t-mono">24 px</span> for cards,
+          <span class="t-mono">9999 px</span> for pills and thumbs. A
+          fifth radius is forbidden.
+        </p>
+      </article>
+
+      <article class="book__section" id="motion">
         <h2 class="t-display">
           Motion<br />
           <span class="t-display--medium t-muted">Four easings, four durations</span>
@@ -410,22 +483,22 @@
           duration to <span class="t-mono">0.01ms</span>.
         </p>
         <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--ease-out</span></dt>
-              <dd class="doc__spec-value">Hover, focus, state flips.</dd>
+          <dl class="book__spec">
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--ease-out</span></dt>
+              <dd class="book__spec-value">Hover, focus, state flips.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--ease-spring</span></dt>
-              <dd class="doc__spec-value">Switch thumbs, small confirmations.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--ease-spring</span></dt>
+              <dd class="book__spec-value">Switch thumbs, small confirmations.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--ease-swing</span></dt>
-              <dd class="doc__spec-value">Long reveals, column arrivals.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--ease-swing</span></dt>
+              <dd class="book__spec-value">Long reveals, column arrivals.</dd>
             </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key"><span class="t-mono">--ease-in-out</span></dt>
-              <dd class="doc__spec-value">Motion that continues past the frame.</dd>
+            <div class="book__spec-row">
+              <dt class="book__spec-key"><span class="t-mono">--ease-in-out</span></dt>
+              <dd class="book__spec-value">Motion that continues past the frame.</dd>
             </div>
           </dl>
         </div>
@@ -433,9 +506,9 @@
 
       <!-- ================== CONTROLS ==================================== -->
 
-      <h2 class="doc__part">Controls</h2>
+      <h2 class="book__part">Controls</h2>
 
-      <article class="doc__section" id="cards">
+      <article class="book__section" id="cards">
         <h2 class="t-display">
           Cards<br />
           <span class="t-display--medium t-muted">Static, interactive, shout</span>
@@ -485,7 +558,7 @@
         </header>
       </article>
 
-      <article class="doc__section" id="fields">
+      <article class="book__section" id="fields">
         <h2 class="t-display">
           Fields<br />
           <span class="t-display--medium t-muted">A row, a label, a value</span>
@@ -511,7 +584,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="buttons">
+      <article class="book__section" id="buttons">
         <h2 class="t-display">
           Buttons<br />
           <span class="t-display--medium t-muted">Secondary, primary</span>
@@ -528,7 +601,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="tags">
+      <article class="book__section" id="tags">
         <h2 class="t-display">
           Tags<br />
           <span class="t-display--medium t-muted">Metadata only</span>
@@ -552,7 +625,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="switches">
+      <article class="book__section" id="switches">
         <h2 class="t-display">
           Switches<br />
           <span class="t-display--medium t-muted">Binary toggle</span>
@@ -582,9 +655,9 @@
 
       <!-- ================== COLLECTIONS ================================= -->
 
-      <h2 class="doc__part">Collections</h2>
+      <h2 class="book__part">Collections</h2>
 
-      <article class="doc__section" id="stack">
+      <article class="book__section" id="stack">
         <h2 class="t-display">
           Card stack<br />
           <span class="t-display--medium t-muted">One active, the rest minimized</span>
@@ -653,7 +726,21 @@
         </div>
       </article>
 
-      <article class="doc__section" id="deck">
+      <article class="book__section" id="comment">
+        <h2 class="t-display">
+          Comment<br />
+          <span class="t-display--medium t-muted">Draft and thread</span>
+        </h2>
+        <p class="t-body">
+          Two shapes, one pattern. Draft uses the shout variant.
+          Thread uses the interactive card with a collapsible reveal.
+          Kebab menu carries Approve, Reply, Archive thread, Delete.
+          Runtime events live in
+          <span class="t-mono">docs/integration/comment.md</span>.
+        </p>
+      </article>
+
+      <article class="book__section" id="deck">
         <h2 class="t-display">
           Deck<br />
           <span class="t-display--medium t-muted">Browse without consequence</span>
@@ -695,9 +782,9 @@
 
       <!-- ================== MARGIN ====================================== -->
 
-      <h2 class="doc__part">Margin</h2>
+      <h2 class="book__part">Margin</h2>
 
-      <article class="doc__section" id="signoff">
+      <article class="book__section" id="signoff">
         <h2 class="t-display">
           Signoff<br />
           <span class="t-display--medium t-muted">Stats, byline, signature</span>
@@ -706,8 +793,8 @@
           The canonical ending. Stats sit on the left rail. Byline
           and signature close the document on the right.
         </p>
-        <div class="doc__signoff">
-          <div class="doc__signoff-stats">
+        <div class="book__signoff">
+          <div class="book__signoff-stats">
             <div class="stat t-caption">
               <div><span class="t-caption--bold">9</span> components in the kit.</div>
               <div><span class="t-caption--bold">9</span> color tokens, and not one more.</div>
@@ -717,7 +804,7 @@
               <div><span class="t-caption--bold">7</span> type sizes, three weights.</div>
             </div>
           </div>
-          <div class="doc__signoff-signature">
+          <div class="book__signoff-signature">
             <p class="t-caption">
               Signed by
               <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
@@ -725,7 +812,7 @@
               <span class="t-caption--bold">kk.consulting<br /></span>
               <span class="t-muted">23 April '26 at 17:30 Tbilisi Time.</span>
             </p>
-            <img class="doc__signoff-signature-img" src="../../signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
+            <img class="book__signoff-signature-img" src="../../signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
           </div>
         </div>
       </article>

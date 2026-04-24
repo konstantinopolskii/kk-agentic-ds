@@ -32,7 +32,7 @@
       </footer>
     </aside>
 
-    <main class="doc" id="doc">
+    <main class="book" id="doc">
       <!--
         Local serve: browsers block fetch() of file://. From the repo root:
           python3 -m http.server 8765
@@ -43,9 +43,9 @@
         part label; three article h1s coexist on this internal test page.
       -->
 
-      <article class="doc__section" id="sample-a" data-md-src="./sample-a.md" data-md-heading-offset="0"></article>
-      <article class="doc__section" id="sample-b" data-md-src="./sample-b.md" data-md-heading-offset="0"></article>
-      <article class="doc__section" id="sample-c" data-md-src="./sample-c.md" data-md-heading-offset="0"></article>
+      <article class="book__section" id="sample-a" data-md-src="./sample-a.md" data-md-heading-offset="0"></article>
+      <article class="book__section" id="sample-b" data-md-src="./sample-b.md" data-md-heading-offset="0"></article>
+      <article class="book__section" id="sample-c" data-md-src="./sample-c.md" data-md-heading-offset="0"></article>
     </main>
 
     <aside class="inspector" aria-label="Inspector">
@@ -56,7 +56,7 @@
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Renderer is dumb</h3>
-            <p class="t-caption">The <code class="t-mono">doc__section</code> wrapper lives in the shell, not the renderer. Each article is one markdown file.</p>
+            <p class="t-caption">The <code class="t-mono">book__section</code> wrapper lives in the shell, not the renderer. Each article is one markdown file.</p>
           </div>
         </div>
         <div class="card">

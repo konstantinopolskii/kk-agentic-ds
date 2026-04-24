@@ -28,7 +28,7 @@ Three kit contracts sit alongside the fourteen rules. Markdown rendered from `da
 Read only the sections named.
 
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Dumb-reviewer character, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Inputs depend on mode (see below)
 
 Do not read `manifesto.md § Components`, `tokens.json`, `patterns/*.md`, or any design-context files. Your job is naive-user POV — context pollutes it.

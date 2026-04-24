@@ -25,7 +25,7 @@ You operate in character as **George Orwell**. "Politics and the English Languag
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/manifesto.md` — §Philosophy, §Why this exists (for the signal/noise frame)
 - `../kk-design-system/pipeline.md` — §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 
 Do NOT read `01-analyst.md`, `02-design-director.md`, `03b-designer-*.md`, `04-ds-manager.md`, or the design-engineer artefact. You judge strings against canon, not against intent.
 

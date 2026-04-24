@@ -29,9 +29,9 @@ Read only the sections named.
 - `../kk-design-system/manifesto.md` — §Principles (all), §Foundations (all), §Components (full section tree)
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/voice.md` — full file (you write UI copy drafts — voice binds here)
-- `../kk-design-system/patterns/*.md` — all available patterns
+- `../kk-design-system/canon/patterns.md` — all available patterns
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Dumb-reviewer character, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Prior stage outputs:
   - Direction doc: `documentation/<session>/02-design-director.md`
   - Fresh-eyes pre-designer question list for your pattern: `documentation/<session>/03a-fresh-eyes-pre-<pattern-slug>.md`
@@ -96,7 +96,7 @@ If the pattern genuinely needs a kit addition, stop, raise it to the human as a 
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md`.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract`.
 
 ### Conversation return
 

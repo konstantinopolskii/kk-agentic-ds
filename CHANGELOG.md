@@ -4,7 +4,47 @@ Every release names: what was added, what was removed, what moved. Consumers rea
 
 ## 1.3.0 — 2026-04-24
 
-Markdown-as-source plus retro rework. The 2026-04-24 initiative moved the manifesto body out of `index.html` prose into `skills/kk-design-system/manifesto.md` and taught `js/md.js` to render it at runtime. `index.html` slimmed to a thin shell (six pointer cards, signoff, inspector, FABs). `components.md` retires to a 39-line re-export stub that forwards to `manifesto.md § Components`; full removal is deferred to v2.0.0. After ship-to-disk, Didion's whole-initiative retro surfaced five drifts the thesis was supposed to close — duplicated sidebar entries, pointer-card subtitles restating manifesto facts, signoff stats re-introducing the count-drift the retro exists to prevent, and two canon gaps that let the shell write its own copy unchecked. This release bakes the retro's accepted rework (proposals 1, 2, 4, 5, 6) before tag, so the v1.3.0 tag ships the thesis, not a relocation of the problem.
+Content-architecture rework. Breaking: `.doc` and `.doc__*` wrapper classes rename to `.book` / `.book__*` across CSS, JS, HTML, markdown snippets, and skill canon loads. Every consumer selector targeting `.doc` breaks. The 2026-04-24 content-architecture session replaces the earlier (rejected, unshipped) 1.3.0 markdown-as-source content with a thin manifesto (200 lines from 685), a `canon/` folder (components, patterns, voice), and a `pipeline/` folder (pipeline, protocols). Patterns now live in `canon/patterns.md` with an embedded registry table that absorbs the root `patterns.html` file. The repo-root `index.html` rebuilds as a three-column hallway — sidebar TOC + rendered manifesto in the middle column + eight pointer cards in the inspector (six canon + two demos). Renderer infrastructure (`js/md.js`, `demos/md-renderer-smoke/`) carries forward unchanged. Scope-triggered rename; replay-clean content, no destructive git ops.
+
+### Breaking
+- `.doc` wrapper class and every `.doc__*` BEM descendant rename to `.book` / `.book__*`. Scope: `style.css`, `js/kit.js`, every HTML surface under repo root + `demos/`, every markdown snippet inside `skills/` and `docs/`, every SKILL.md. Consumer selectors targeting `.doc` or `.doc__section`, `.doc__part`, `.doc__spec`, `.doc__signoff` no longer match. `id="doc"` on the main element kept for kit.js compatibility; `kit.js § initScrollSpy` + `initCommentSelectionFlow` now query `.book` first and fall back to `#doc`.
+
+### Added
+- `skills/kk-design-system/canon/` folder — three canon books (`components.md`, `patterns.md`, `voice.md`).
+- `skills/kk-design-system/canon/components.md` — foundations (Material, Color, Type, Space, Radii, Motion), typography rhythm (inner and outer theory — no attribution), typography utility registry, component sections (Card / Field / Button / Tag / Switch / Comment / Navigation / Signoff / Spec list / List), kit-doc primitives (Preview frame / Registry table), Forbidden close. Each component section carries pointer prose + HTML snippet + rules + deep link into `demos/fundamental--accepted/index.html`.
+- `skills/kk-design-system/canon/patterns.md` — three top-level patterns (Three columns, Card stack, Narrow mobile) with HTML snippets and preview deep links, plus the 11-row registry absorbed from the deleted root `patterns.html`.
+- `skills/kk-design-system/pipeline/` folder — pipeline and protocols books.
+- `skills/kk-design-system/pipeline/protocols.md` — new book. Ship discipline, Bundle rule, Semver (with axes + push steps), Evolve protocol (five-step conflict walk), Backlog, Ideation. Migrated from the old manifesto's §Protocols and §Ship discipline.
+- `skills/kk-design-system/pipeline/pipeline.md § Documentation contract` — new sub-section. Absorbs the entire `doc-format.md` file.
+- `demos/fundamental--accepted/patterns/narrow.html` — narrow-mobile pattern preview slice. Completes the registry's 11 previews.
+- Seven new anchor ids in `demos/fundamental--accepted/index.html`: `#material`, `#radii`, `#comment`, `#preview-frame`, `#registry-table`, `#navigation`, `#spec-list`. Every canon deep link now resolves to a dedicated anchor.
+- Root `index.html` rebuilt as a three-column hallway: sidebar scroll-spy TOC + `<main class="book" data-md-src="./skills/kk-design-system/manifesto.md">` middle column + inspector with eight `card card--interactive` pointer cards (Patterns, Components, Voice, Pipeline, Protocols, Tokens, Fundamental, Renderer smoke) split into two `inspector__group` tiers. Two FABs for narrow-mobile (nav + inspector).
+
+### Removed
+- Root `patterns.html` — absorbed into `canon/patterns.md § Registry of additional patterns`.
+- `skills/kk-design-system/doc-format.md` — content folded into `pipeline/pipeline.md § Documentation contract`.
+- `skills/kk-design-system/components.md` — old re-export stub removed; canonical home is `canon/components.md`.
+- `skills/kk-design-system/patterns/` directory — the kit-canon patterns folder no longer exists.
+- `.doc` class namespace in its entirety (replaced by `.book`; see Breaking).
+
+### Moved
+- `skills/kk-design-system/voice.md` → `skills/kk-design-system/canon/voice.md`. Canon tri-set (patterns, components, voice) now sits in one folder.
+- `skills/kk-design-system/pipeline.md` → `skills/kk-design-system/pipeline/pipeline.md`.
+- `skills/kk-design-system/patterns/strategy-doc.md` → `proposals/strategy-doc-interim.md`. Strategy doc is a product-deliverable recipe, not kit canon; interim home until a strategy prototype ships under `demos/`.
+- `manifesto.md` thinned to ~200 lines — purpose, four layers, signal/noise/magic, philosophy, six principles (one paragraph each), job stories, time to value, agents roster, pipeline summary, navigation pointers, signoff. Foundation inventory, typography rhythm, component inventory, protocols, and ship discipline all migrated to their canonical homes under `canon/` and `pipeline/`.
+- Every SKILL.md canon-load reference repointed: `doc-format.md` → `pipeline/pipeline.md § Documentation contract`; `patterns/*.md` → `canon/patterns.md`; `patterns/strategy-doc.md` → `../../proposals/strategy-doc-interim.md`; `patterns.html` → `canon/patterns.md § Registry of additional patterns`.
+
+### Voice
+- Typography rhythm migrated to `canon/components.md § Foundations § Type § Rhythm — inner and outer theory` with zero attribution. The "Source: Artemy Lebedev, Bureau" line and the attribution paragraph are stripped from every kit surface. Concept name: "inner and outer theory" or describe the rules directly.
+
+### Fixed
+- `kit.js § initScrollSpy` + `initCommentSelectionFlow` — selector relaxed from `document.getElementById('doc')` to `document.querySelector('.book') || document.getElementById('doc')`. Contract preserves the `id="doc"` fallback so consumers who kept the old id on their main element keep working through the rename transition.
+
+### Unchanged
+- `js/md.js` and `demos/md-renderer-smoke/` — renderer infrastructure carried from the earlier (unshipped) 1.3.0 cycle. Every supported construct renders the same way; only class names inside `CLASS_MAP` and class-string literals shifted under the rename.
+- `tokens.json` — no new tokens, no new values.
+- `docs/integration/comment.md` — runtime events, config keys, consumer integration patterns unchanged; class references inside code fences renamed in lockstep with the kit.
+
 
 ### Added
 - `js/md.js` — markdown renderer. Fetches `[data-md-src]` sources, parses headings / paragraphs / lists / blockquotes / code / HR / tables / raw HTML passthrough, maps to kit classes via `CLASS_MAP`, dispatches `kk:md-rendered` on completion. Heading-offset contract: every `[data-md-src]` container reads `data-md-heading-offset` (integer, default 0) and shifts source levels against it. Levels 1–4 resolve to kit heading classes (t-hero, t-display, t-title, t-subtitle); level 5 and deeper demote to `<p class="t-caption">` with a one-line console info naming the demoted source. `renderList` emits `.t-list`.

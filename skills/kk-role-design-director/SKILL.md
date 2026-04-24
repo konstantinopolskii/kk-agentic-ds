@@ -30,7 +30,7 @@ Read only the sections named.
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/voice.md` — full file (direction doc prose + pattern-block descriptions pass voice canon)
 - `../kk-design-system/pipeline.md` — §Phase 1 — Think, §Fidelity contract, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Prior stage output: `documentation/<session>/01-analyst.md`
 
 ## What a direction looks like
@@ -81,7 +81,7 @@ Every direction from round one that the human did not pick. Full paragraph each.
 
 ### 5. Alignment transcript
 
-Raw user input from the alignment conversation, verbatim in a blockquote. Per `doc-format.md` — never summarize, never restyle.
+Raw user input from the alignment conversation, verbatim in a blockquote. Per `pipeline/pipeline.md § Documentation contract` — never summarize, never restyle.
 
 ## What you do not do
 
@@ -94,7 +94,7 @@ Raw user input from the alignment conversation, verbatim in a blockquote. Per `d
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md`.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract`.
 
 ### Conversation return — round one (before user picks)
 

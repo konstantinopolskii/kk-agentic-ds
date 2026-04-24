@@ -52,7 +52,7 @@ Fires when a draft commits and a thread card is created.
   anchorPrefix: '…up to 20 chars before',
   anchorSuffix: '20 chars after…',
   cluster:      'strategy',          // from nearest [data-cluster] ancestor, null if none
-  sectionSlug:  'targeting',         // from nearest .doc__section id
+  sectionSlug:  'targeting',         // from nearest .book__section id
   text:         'comment body'
 }
 ```

@@ -50,7 +50,7 @@ The layout arriving here is verified. The human art-directs: a specific illustra
 - Raw HTML using kit classes, wired to `vars.css` + `style.css` (ship with the package).
 - No Tailwind. No utility classes outside the kit. No inline styles for tokens (use variables).
 - Link `<link rel="stylesheet" href="./vars.css">` and `<link rel="stylesheet" href="./style.css">` at the top. Preload the three Montreal weights.
-- Three-column shell by default: `<aside class="sidebar">` + `<main class="doc">` + `<aside class="inspector">`. Narrow viewport collapses to one column, see `manifesto.md § Components § Patterns § Narrow` for the narrow pattern.
+- Three-column shell by default: `<aside class="sidebar">` + `<main class="book">` + `<aside class="inspector">`. Narrow viewport collapses to one column, see `manifesto.md § Components § Patterns § Narrow` for the narrow pattern.
 
 ## When you're unsure
 
@@ -58,9 +58,11 @@ Ask. The user's standing feedback is: "I am a human, better ask than assume." A 
 
 ## Reference files, in this folder
 
-- `manifesto.md` — philosophy, principles, foundations, components, protocols
+- `manifesto.md` — philosophy, principles, agents, pipeline summary, navigation (thin starter)
+- `canon/patterns.md` — pattern-first layout composition. Start here.
+- `canon/components.md` — foundations, component inventory, forbidden list, typography rhythm
+- `canon/voice.md` — tone rules, AI-tells to strip
+- `pipeline/pipeline.md` — eight stages, eleven role skills, entry-point matching, documentation contract
+- `pipeline/protocols.md` — ship, bundle, semver, evolve, backlog, ideation
 - `tokens.json` — every token, machine-readable
-- `voice.md` — tone rules, AI-tells to strip
-- `pipeline.md` — expanded version of the 5 stages
-- `patterns/strategy-doc.md` — the Wealthy / consulting strategy doc pattern (the canonical use case)
-- `components.md` — thin re-export stub pointing at `manifesto.md § Components`; retires in v2.0.0
+- `../../proposals/strategy-doc-interim.md` — strategy-doc recipe moved out of kit canon in v1.3.0; final home inside a future strategy prototype under `demos/`

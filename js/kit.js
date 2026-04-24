@@ -107,9 +107,9 @@
   var scrollSpyObserver = null;
 
   // ================================================================
-  // Scroll-spy — sidebar indicator tracks the visible section in .doc
+  // Scroll-spy — sidebar indicator tracks the visible section in .book
   //
-  // Refresh-friendly: on re-entry, observes any new .doc__section
+  // Refresh-friendly: on re-entry, observes any new .book__section
   // since the last init. IntersectionObserver.observe is idempotent
   // for already-observed elements. Nav links and sections are queried
   // live on each callback so SPA-style content swaps (new sections,
@@ -117,19 +117,19 @@
   // ================================================================
   function initScrollSpy() {
     var nav = document.getElementById('toc');
-    var doc = document.getElementById('doc');
+    var doc = document.querySelector('.book') || document.getElementById('doc');
     if (!nav || !doc || !('IntersectionObserver' in global)) return;
 
     // Refresh path — observer already exists, just observe new sections.
     if (bound.scrollSpy) {
-      doc.querySelectorAll('.doc__section').forEach(function (s) {
+      doc.querySelectorAll('.book__section').forEach(function (s) {
         scrollSpyObserver.observe(s);
       });
       return;
     }
 
     var indicator = nav.querySelector('.toc__indicator');
-    var firstSections = doc.querySelectorAll('.doc__section');
+    var firstSections = doc.querySelectorAll('.book__section');
     var firstId = firstSections[0] && firstSections[0].id;
 
     function setActive(id) {
@@ -204,7 +204,7 @@
       });
       if (scrollLocked) return;
       // Live query so SPA-added sections participate in best-visible.
-      var liveSections = doc.querySelectorAll('.doc__section');
+      var liveSections = doc.querySelectorAll('.book__section');
       var best = null;
       for (var i = 0; i < liveSections.length; i++) {
         if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
@@ -239,7 +239,7 @@
         doc.removeEventListener('scrollend', release);
         doc.removeEventListener('wheel', release);
         doc.removeEventListener('touchstart', release);
-        var liveSections = doc.querySelectorAll('.doc__section');
+        var liveSections = doc.querySelectorAll('.book__section');
         var best = null;
         for (var i = 0; i < liveSections.length; i++) {
           if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
@@ -303,7 +303,7 @@
     if (!app) return;
 
     var COLUMNS = [
-      { selector: '.doc',       keyframe: 'reveal-from-below' },
+      { selector: '.book',       keyframe: 'reveal-from-below' },
       { selector: '.sidebar',   keyframe: 'reveal-from-left'  },
       { selector: '.inspector', keyframe: 'reveal-from-right' }
     ];
@@ -669,7 +669,7 @@
   function initCommentSelectionFlow() {
     if (commentFlowEnabled) return;
 
-    var doc = document.getElementById('doc');
+    var doc = document.querySelector('.book') || document.getElementById('doc');
     var inspector = document.querySelector('.inspector');
     if (!doc || !inspector) return;
 
@@ -933,13 +933,13 @@
     }
 
     // Collect the ±20-char context around the first occurrence of `quote`
-    // inside the nearest .doc__section. Consumers use this for fuzzy
+    // inside the nearest .book__section. Consumers use this for fuzzy
     // re-anchoring on the server side — quote + prefix + suffix survives
     // DOM rebuilds where numeric offsets would not. Falls back to the
     // anchor's nearest paragraph-like parent if the section is missing.
     function captureAnchorContext(quote, anchorEl) {
       if (!anchorEl || !anchorEl.closest) return { prefix: '', suffix: '' };
-      var scope = anchorEl.closest('.doc__section')
+      var scope = anchorEl.closest('.book__section')
                || anchorEl.closest('p, dd, li')
                || anchorEl.parentNode;
       var full = (scope && scope.textContent) || '';
@@ -981,7 +981,7 @@
       // to emit at commit time. Stored on the draft's dataset so empty-
       // draft dismissal discards it automatically.
       var ctx = captureAnchorContext(quoteText, spans[0]);
-      var sectionEl = spans[0].closest('.doc__section');
+      var sectionEl = spans[0].closest('.book__section');
       var clusterEl = spans[0].closest('[data-cluster]');
 
       var draft = buildDraft(currentAuthor, threadId);
@@ -1343,7 +1343,7 @@
   // Global listeners bound once (on .inspector, .app, document, window,
   // #toc) keep working through DOM mutations because they are delegated
   // or watch stable ancestors. Per-instance bindings (each .deck wrapper,
-  // each observed .doc__section) get picked up by this call.
+  // each observed .book__section) get picked up by this call.
   //
   // Call after injecting new decks, new doc sections, new inspector
   // cards, new nav items, or new comment threads into the page. Safe to

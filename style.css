@@ -154,7 +154,7 @@ body {
   overflow: hidden;
 }
 
-.sidebar, .doc, .inspector {
+.sidebar, .book, .inspector {
   height: 100%;
   overflow-y: auto;
   scrollbar-width: thin;
@@ -163,20 +163,20 @@ body {
 /* Sidebar and doc animate via CSS scroll-behavior on link-click.
    The inspector drives its own scroll from JS (see index.html), so we
    leave its scroll-behavior at the default (auto). */
-.sidebar, .doc {
+.sidebar, .book {
   scroll-behavior: smooth;
 }
 .sidebar::-webkit-scrollbar,
-.doc::-webkit-scrollbar,
+.book::-webkit-scrollbar,
 .inspector::-webkit-scrollbar { width: 6px; }
 .sidebar::-webkit-scrollbar-thumb,
-.doc::-webkit-scrollbar-thumb,
+.book::-webkit-scrollbar-thumb,
 .inspector::-webkit-scrollbar-thumb {
   background: transparent;
   border-radius: var(--radius-full);
 }
 .sidebar:hover::-webkit-scrollbar-thumb,
-.doc:hover::-webkit-scrollbar-thumb,
+.book:hover::-webkit-scrollbar-thumb,
 .inspector:hover::-webkit-scrollbar-thumb {
   background: var(--color-border);
 }
@@ -307,7 +307,7 @@ body {
 /* =========================================================================
    Main document — centered column, generous left indent, long-form
    ========================================================================= */
-.doc {
+.book {
   background: var(--color-bg);
   /* Top padding rides the body line-height (32 px) per Lebedev's rule 9:
      outer page margin ≥ body line-height. `--doc-pad-left` clamp floors
@@ -327,13 +327,13 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-.doc__intro {
+.book__intro {
   max-width: 612px;
   /* Hero-to-intro distance must clear the hero's line-height (66 px) per
-     Lebedev rule 13. `.doc` gap (12) + this padding (60) = 72 ≥ 66. */
+     Lebedev rule 13. `.book` gap (12) + this padding (60) = 72 ≥ 66. */
   padding-top: var(--space-15);
 }
-.doc__signoff {
+.book__signoff {
   padding-top: var(--space-3);
   display: flex;
   flex-direction: column;
@@ -344,25 +344,25 @@ body {
      right, outside the readable column. */
   max-width: 612px;
 }
-.doc__signoff-stats {
+.book__signoff-stats {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--space-3);
 }
-.doc__signoff-signature {
+.book__signoff-signature {
   display: flex;
   gap: var(--space-3);
   align-items: flex-end;
   justify-content: space-between;
   padding-top: var(--space-6);
 }
-.doc__signoff-signature-img {
+.book__signoff-signature-img {
   width: 148px;
   height: 81px;
   flex-shrink: 0;
 }
 
-.doc__section {
+.book__section {
   padding-top: var(--space-8);
   margin-top: var(--space-5);
   border-top: 0.5px solid var(--color-border);
@@ -372,7 +372,7 @@ body {
   scroll-margin-top: var(--space-5);
   padding-bottom: var(--space-20);
 }
-.doc > .doc__section:first-of-type {
+.book > .book__section:first-of-type {
   border-top: none;
   padding-top: 0;
   margin-top: 0;
@@ -389,23 +389,23 @@ body {
    80 inner — rule 14 holds at the strict equality; the section's
    hairline rule keeps the outer boundary legible where the numbers
    match. */
-.doc__section > * + * {
+.book__section > * + * {
   margin-top: var(--space-5);
 }
-.doc__section > .t-display + *,
-.doc__section > .t-title + *,
-.doc__section > .t-subtitle + *,
-.doc__section > h2 + *,
-.doc__section > h3 + *,
-.doc__section > h4 + * {
+.book__section > .t-display + *,
+.book__section > .t-title + *,
+.book__section > .t-subtitle + *,
+.book__section > h2 + *,
+.book__section > h3 + *,
+.book__section > h4 + * {
   margin-top: var(--space-10);
 }
-.doc__section > * + .t-hero,
-.doc__section > * + h1 {
+.book__section > * + .t-hero,
+.book__section > * + h1 {
   margin-top: var(--space-20);
 }
-.doc__section > * + .t-display,
-.doc__section > * + h2 {
+.book__section > * + .t-display,
+.book__section > * + h2 {
   /* Above-gap lifted from 80 to 92 (space-20 + space-3) so the visible
      text-to-text ratio clears 2:1 with breathing room. A pure 80/40
      margin ratio is 2:1 in box terms but measures 1.93 text-to-text
@@ -415,16 +415,16 @@ body {
      round 3 target cleared. */
   margin-top: calc(var(--space-20) + var(--space-3));
 }
-.doc__section > * + .t-title,
-.doc__section > * + h3 {
+.book__section > * + .t-title,
+.book__section > * + h3 {
   margin-top: var(--space-10);
 }
-.doc__section > * + .t-subtitle,
-.doc__section > * + h4 {
+.book__section > * + .t-subtitle,
+.book__section > * + h4 {
   margin-top: calc(var(--space-20) + var(--space-4));
 }
 
-/* Rule 12 rescue: every doc__section heading level owns its below-gap.
+/* Rule 12 rescue: every book__section heading level owns its below-gap.
    Next-sibling top margin collapses to zero so the heading's own
    gap-below (set via the preceding `h* + *` margin-top rules, plus the
    explicit margin-bottom on heading classes below) is the sole
@@ -436,28 +436,28 @@ body {
    `.t-title`, `.t-subtitle`) so the heading itself carries the
    rule-13 below-gap floor (≥ heading line-height) regardless of what
    the next sibling intrinsically declares. */
-.doc__section > h2 + *,
-.doc__section > h3 + *,
-.doc__section > h4 + *,
-.doc__section > .t-display + *,
-.doc__section > .t-title + *,
-.doc__section > .t-subtitle + * {
+.book__section > h2 + *,
+.book__section > h3 + *,
+.book__section > h4 + *,
+.book__section > .t-display + *,
+.book__section > .t-title + *,
+.book__section > .t-subtitle + * {
   margin-top: 0;
 }
-.doc__section > h1,
-.doc__section > .t-hero {
+.book__section > h1,
+.book__section > .t-hero {
   margin-bottom: var(--space-6);
 }
-.doc__section > h2,
-.doc__section > .t-display {
+.book__section > h2,
+.book__section > .t-display {
   margin-bottom: var(--space-5);
 }
-.doc__section > h3,
-.doc__section > .t-title {
+.book__section > h3,
+.book__section > .t-title {
   margin-bottom: var(--space-4);
 }
-.doc__section > h4,
-.doc__section > .t-subtitle {
+.book__section > h4,
+.book__section > .t-subtitle {
   /* Below-gap tightened to var(--space-1) (4 px). */
   margin-bottom: var(--space-1);
 }
@@ -467,12 +467,12 @@ body {
    top padding on thead th whenever the table is the next sibling of
    a heading inside a doc section. Cell vertical rhythm below the
    header row is unaffected. */
-.doc__section > h2 + .registry-table > thead > tr > th,
-.doc__section > h3 + .registry-table > thead > tr > th,
-.doc__section > h4 + .registry-table > thead > tr > th,
-.doc__section > .t-display + .registry-table > thead > tr > th,
-.doc__section > .t-title + .registry-table > thead > tr > th,
-.doc__section > .t-subtitle + .registry-table > thead > tr > th {
+.book__section > h2 + .registry-table > thead > tr > th,
+.book__section > h3 + .registry-table > thead > tr > th,
+.book__section > h4 + .registry-table > thead > tr > th,
+.book__section > .t-display + .registry-table > thead > tr > th,
+.book__section > .t-title + .registry-table > thead > tr > th,
+.book__section > .t-subtitle + .registry-table > thead > tr > th {
   padding-top: 0;
 }
 
@@ -487,12 +487,12 @@ body {
    only `ul/ol { margin-top: 8 }`; the preceding paragraph's own
    margin-bottom kept the visible gap at paragraph rhythm. Closes
    Jobs round 5 defect 3. */
-.doc__section > p:has(+ ul),
-.doc__section > p:has(+ ol) {
+.book__section > p:has(+ ul),
+.book__section > p:has(+ ol) {
   margin-bottom: var(--space-2);
 }
-.doc__section > p + ul,
-.doc__section > p + ol {
+.book__section > p + ul,
+.book__section > p + ol {
   margin-top: 0;
 }
 
@@ -503,27 +503,27 @@ body {
    and `* + h2` (80 below next heading) so the HR owns its own space.
    Border drops the browser default inset shading; the hairline matches
    other kit separators. */
-.doc__section > hr,
-.doc__section > * + hr {
+.book__section > hr,
+.book__section > * + hr {
   margin-top: var(--space-15);
   margin-bottom: 0;
   border: 0;
   border-top: 0.5px solid var(--color-border);
   height: 0;
 }
-.doc__section > hr + * {
+.book__section > hr + * {
   margin-top: var(--space-15);
 }
 
 /* Raw-HTML blocks in prose get air below before the next heading / paragraph. */
-.doc__section > .card,
-.doc__section > .card--shout {
+.book__section > .card,
+.book__section > .card--shout {
   margin-top: var(--space-8);
   margin-bottom: var(--space-1);
 }
 /* Caption inside doc section gets standard top margin. */
-.doc__section > .t-caption,
-.doc__section > .t-caption.t-muted {
+.book__section > .t-caption,
+.book__section > .t-caption.t-muted {
   margin-top: var(--space-3);
 }
 
@@ -541,7 +541,7 @@ body {
    to the visual anchor and a 1.35 ratio reads as clear break. The
    hero line-height floors rule 13 at 66 px, well under the 92 px
    below-gap — pass. */
-.doc__part {
+.book__part {
   font-size: var(--fs-hero);
   line-height: var(--lh-hero);
   font-weight: var(--fw-bold);
@@ -553,7 +553,7 @@ body {
   max-width: 612px;
   scroll-margin-top: var(--space-5);
 }
-.doc__part + .doc__section {
+.book__part + .book__section {
   border-top: none;
   margin-top: 0;
   /* Part heading is hero-sized (66 px line-height). Above the part:
@@ -847,7 +847,7 @@ body {
    shell padding and miss the 24 px rail every other child lands on.
    Picking up the inset here keeps authors from wrapping a single
    paragraph in card__body just to land on the rail. This rule also
-   supersedes the former `.doc .card > .doc__spec` selector: doc__spec
+   supersedes the former `.book .card > .book__spec` selector: book__spec
    is always a <dl>, so .card > dl covers it in every context. */
 .card > p,
 .card > ol,
@@ -1474,10 +1474,10 @@ body {
    Exception 2: non-first cards inside a .card-stack stay transparent —
                 they're the minimized siblings of whichever card is active.
    ========================================================================= */
-.doc .card:not(.card--heading) {
+.book .card:not(.card--heading) {
   background: var(--color-surface-overlay);
 }
-.doc .card-stack > .card:not(:first-child):not(.card--heading) {
+.book .card-stack > .card:not(:first-child):not(.card--heading) {
   background: transparent;
 }
 
@@ -1490,7 +1490,7 @@ body {
 .card.card--shout:has(input:focus),
 .card.card--shout:has(textarea:focus),
 .card.card--shout[data-state="active"],
-.doc .card.card--shout:not(.card--heading),
+.book .card.card--shout:not(.card--heading),
 .card-stack > .card.card--shout {
   background: #000000;
 }
@@ -1580,12 +1580,12 @@ body {
    Doc example — a live component rendered inline in the manifesto
    No frame. The section gap does the spacing work.
    ========================================================================= */
-.doc__example {
+.book__example {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
-.doc__example--row {
+.book__example--row {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
@@ -1851,7 +1851,7 @@ body {
    (body { font-size: var(--fs-caption) }) when it sits under a paragraph
    or after a horizontal rule. A quote is content, not metadata; it reads
    at body rank beside the prose it interrupts. Margin-top carried
-   explicitly so `.doc__section > * + *` (20 px) cannot land under the
+   explicitly so `.book__section > * + *` (20 px) cannot land under the
    quote's own 32 px line-box — rule 14 (inner ≤ outer) holds.
    ========================================================================= */
 .quote {
@@ -1865,7 +1865,7 @@ body {
   margin: 0;
 }
 /* Rule 14 rescue on blockquote. Outer above-gap ≥ inner line-box (32 px).
-   The `.doc__section > * + *` default is 20 px — under the quote's 32 px
+   The `.book__section > * + *` default is 20 px — under the quote's 32 px
    line-height, so rule 14 (inner ≤ outer) inverts whenever a quote sits
    after a paragraph. Bumping to 40 px (space-10) clears the 32 px line
    box with breathing room and matches the content-rank air given to
@@ -1876,24 +1876,24 @@ body {
    - `heading + .quote` drops margin-top to 0 so the heading's own
      margin-bottom (40) is the sole below-gap carrier — same contract
      the rule-12 rescue applies to every other next-sibling. Without
-     this, the flex container (`.doc__section` is display:flex, so
+     this, the flex container (`.book__section` is display:flex, so
      vertical margins do NOT collapse) would stack heading's 40 +
      quote's 40 = 80 px and break rule 12.
-   - `hr + .quote` restores the 60 px hr rule (via `.doc__section >
+   - `hr + .quote` restores the 60 px hr rule (via `.book__section >
      hr + *`). Without it the `* + .quote` specificity (0,2,0)
      overrides the 0,1,1 hr rule. */
-.doc__section > * + .quote {
+.book__section > * + .quote {
   margin-top: var(--space-10);
 }
-.doc__section > h2 + .quote,
-.doc__section > h3 + .quote,
-.doc__section > h4 + .quote,
-.doc__section > .t-display + .quote,
-.doc__section > .t-title + .quote,
-.doc__section > .t-subtitle + .quote {
+.book__section > h2 + .quote,
+.book__section > h3 + .quote,
+.book__section > h4 + .quote,
+.book__section > .t-display + .quote,
+.book__section > .t-title + .quote,
+.book__section > .t-subtitle + .quote {
   margin-top: 0;
 }
-.doc__section > hr + .quote {
+.book__section > hr + .quote {
   margin-top: var(--space-15);
 }
 .quote > cite {
@@ -1979,7 +1979,7 @@ body {
    own class; the rest ride on what the kit already provides.
    ========================================================================= */
 
-/* Lists — each li reads as a row, same as a doc__spec row. A 0.5px
+/* Lists — each li reads as a row, same as a book__spec row. A 0.5px
    hairline sits between rows; the marker (numeral or hairline
    bullet) sits in the left gutter like a key column. Structurally
    still a ul/ol for semantics, visually a tight tabular list. */
@@ -2075,14 +2075,14 @@ ol.t-list > li::before {
    short ones never strand. A three-column variant carries tables
    like Contradictions. Rows live as <dl>/<div>/<dt>/<dd> so the
    semantics stay honest. */
-.doc__spec {
+.book__spec {
   display: grid;
   grid-template-columns: minmax(140px, 30%) 1fr;
   column-gap: var(--space-6);
   padding: 0;
   margin: 0;
 }
-.doc__spec > .doc__spec-row {
+.book__spec > .book__spec-row {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: subgrid;
@@ -2090,7 +2090,7 @@ ol.t-list > li::before {
   padding: var(--space-4) 0;
   position: relative;
 }
-.doc__spec > .doc__spec-row:not(:last-child)::after {
+.book__spec > .book__spec-row:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 0;
@@ -2107,7 +2107,7 @@ ol.t-list > li::before {
    width, so a long unbreakable key would force the column past the
    260px cap in the parent grid. Zeroing min-width lets the column
    cap actually hold, and overflow-wrap lets long keys wrap cleanly. */
-.doc__spec-key {
+.book__spec-key {
   font-size: var(--fs-caption);
   line-height: var(--lh-caption);
   font-weight: var(--fw-bold);
@@ -2116,7 +2116,7 @@ ol.t-list > li::before {
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.doc__spec-value {
+.book__spec-value {
   font-size: var(--fs-caption);
   line-height: var(--lh-caption);
   font-weight: var(--fw-regular);
@@ -2128,7 +2128,7 @@ ol.t-list > li::before {
 /* Three-column spec — first two columns cap at 30% of the table width
    each; the third takes the remainder. Prose-heavy third columns (plan
    tables, claim/reality/resolution) get room to breathe. */
-.doc__spec--triple {
+.book__spec--triple {
   grid-template-columns: minmax(0, 30%) minmax(0, 30%) 1fr;
 }
 
@@ -2136,7 +2136,7 @@ ol.t-list > li::before {
    Weights, Durations) all share one shape: a token name, a concrete
    value, and what the thing is for. Key and middle-value each cap at
    30% of the table width; the use-column gets the rest. */
-.doc__spec--value {
+.book__spec--value {
   grid-template-columns: minmax(120px, 30%) minmax(60px, 30%) 1fr;
 }
 
@@ -2214,7 +2214,7 @@ ol.t-list > li::before {
   .fab--nav { display: flex; }
   .app[data-selection] .fab--comment { display: flex; }
 
-  .doc {
+  .book {
     padding: 0 var(--space-6) var(--space-20) var(--space-6);
   }
 }
@@ -2228,8 +2228,8 @@ ol.t-list > li::before {
   .app[data-view] {
     grid-template-columns: 1fr;
   }
-  .sidebar, .doc, .inspector { display: none; }
-  .app[data-view="doc"] .doc { display: flex; }
+  .sidebar, .book, .inspector { display: none; }
+  .app[data-view="doc"] .book { display: flex; }
   .app[data-view="nav"] .sidebar { display: flex; }
   .app[data-view="inspector"] .inspector { display: flex; }
 
@@ -2240,7 +2240,7 @@ ol.t-list > li::before {
   .fab--inspector { display: flex; }
   .app[data-selection] .fab--comment { display: flex; }
 
-  .doc {
+  .book {
     padding: 0 var(--space-6) var(--space-20) var(--space-6);
   }
 
@@ -2275,8 +2275,8 @@ ol.t-list > li::before {
   }
 
   /* Signoff reflows to a single column; whitespace is the last stat. */
-  .doc__signoff-stats { grid-template-columns: 1fr; }
-  .doc__signoff-signature {
+  .book__signoff-stats { grid-template-columns: 1fr; }
+  .book__signoff-signature {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-4);
@@ -2284,21 +2284,21 @@ ol.t-list > li::before {
 
   /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
   .t-hero,
-  .doc__part { font-size: 48px; line-height: 48px; }
+  .book__part { font-size: 48px; line-height: 48px; }
 
   /* Intro sits snug against the top of the doc column on phones. The
      desktop 12 px padding creates a visible gap above the hero that
      looks wrong at phone scale. */
-  .doc__intro { padding-top: 0; }
+  .book__intro { padding-top: 0; }
 
   /* Spec collapses to one column on phones — key and value stack,
      the subgrid inherits, row padding tightens a notch. */
-  .doc__spec,
-  .doc__spec--triple {
+  .book__spec,
+  .book__spec--triple {
     grid-template-columns: 1fr;
     column-gap: 0;
   }
-  .doc__spec > .doc__spec-row {
+  .book__spec > .book__spec-row {
     row-gap: var(--space-1);
     padding: var(--space-3) 0;
   }

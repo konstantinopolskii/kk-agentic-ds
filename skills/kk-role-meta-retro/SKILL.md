@@ -28,8 +28,8 @@ Everything. A retro can recommend changes to any canon file, so you need to know
 - `../kk-design-system/pipeline.md` — full file (includes §Agent communication protocol)
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/tokens.json` — full file
-- `../kk-design-system/patterns/*.md` — all files
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/canon/patterns.md` — all files
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Inputs: every folder under `documentation/` the user names. Default: the last completed session.
 
 ## What you look for
@@ -58,7 +58,7 @@ The same off-grid value, or the same forbidden color, attempted in multiple sess
 
 ### 6. Documentation gaps
 
-A section of a `doc-format.md` contract that nobody fills in, or a frontmatter field that nobody sets. Suggests: remove from the contract, or clarify how to fill it.
+A section of a `pipeline/pipeline.md § Documentation contract` contract that nobody fills in, or a frontmatter field that nobody sets. Suggests: remove from the contract, or clarify how to fill it.
 
 ### 7. Pipeline entry-point miscalls
 
@@ -119,7 +119,7 @@ One proposal per change. Do not batch unrelated changes into one proposal.
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md` — adjusted, since the retro is not a pipeline stage.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract` — adjusted, since the retro is not a pipeline stage.
 
 ### Conversation return
 

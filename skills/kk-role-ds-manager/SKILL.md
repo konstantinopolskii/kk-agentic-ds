@@ -26,10 +26,10 @@ Read only the sections named.
 
 - `../kk-design-system/manifesto.md` — full file (includes §Foundations, §Components, §Runtime)
 - `../kk-design-system/tokens.json` — full file
-- `../kk-design-system/patterns/*.md` — all available patterns
+- `../kk-design-system/canon/patterns.md` — all available patterns
 - `../kk-design-system/voice.md` — full file (component map prose + pattern-block descriptions pass voice canon)
 - `../kk-design-system/pipeline.md` — §Role roster, §Agent communication protocol, §Parallel spawning
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Kit demo: `index.html` at the repo root (the manifesto showcase — use it to locate the canonical example for each component)
 - Inputs:
   - Direction doc: `documentation/<session>/02-design-director.md` (for the block roster + exceptions)
@@ -69,7 +69,7 @@ Order is practical, not dogmatic. Usually: the outer frame first (so subsequent 
 Example:
 
 ```
-1. Three-column frame (`.app`, `.sidebar`, `.doc`, `.inspector`)
+1. Three-column frame (`.app`, `.sidebar`, `.book`, `.inspector`)
 2. Doc § hero section (`h1.t-hero`, doc intro)
 3. Inspector panel frame (`.inspector`, empty card slots)
 4. Inspector card — signal card (high-contrast anchor)
@@ -110,7 +110,7 @@ One line. Either:
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md`.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract`.
 
 ### Conversation return
 

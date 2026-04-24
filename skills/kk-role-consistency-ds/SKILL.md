@@ -23,7 +23,7 @@ You feed stage 7 meta-reviewer. You do not issue pass/fail. You flag.
 - `../kk-design-system/manifesto.md` — full file (includes §Components and §Foundations — material, color, type, space, radii, motion)
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/pipeline.md` — §Dumb-reviewer character, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 
 Do NOT read `01-analyst.md`, `02-design-director.md`, `03b-designer-*.md`, `04-ds-manager.md`, or the design-engineer artefact. You judge the built prototype against the kit only.
 

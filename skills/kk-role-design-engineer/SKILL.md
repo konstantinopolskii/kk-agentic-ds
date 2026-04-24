@@ -28,10 +28,10 @@ Read only the sections named.
 
 - `../kk-design-system/manifesto.md` — full file (includes §Components, §Foundations — space, type, typography rhythm, radii, motion, §Runtime)
 - `../kk-design-system/tokens.json` — color, space, radius, type
-- `../kk-design-system/patterns/*.md` — patterns matching the assigned blocks
+- `../kk-design-system/canon/patterns.md` — patterns matching the assigned blocks
 - `../kk-design-system/voice.md` — full file (verify every copy string you carry passes, and every dummy string you write passes)
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Role roster, §Agent communication protocol
-- `../kk-design-system/doc-format.md` — full file
+- `../kk-design-system/pipeline/pipeline.md § Documentation contract` — full file
 - Inputs:
   - DS Manager component map + task split: `documentation/<session>/04-ds-manager.md`
   - Per-pattern designer hand-offs: `documentation/<session>/03b-designer-<pattern-slug>.md` (all blocks)
@@ -71,7 +71,7 @@ One page or one flow per session. If the direction doc covers more, build only t
 
 ### 8. Typography rhythm
 
-Every new doc surface honours Lebedev's fourteen rules — core principle **inner ≤ outer**. Headings sit closer to the paragraph they lead than to the paragraph they trail (rule 12). Heading-to-paragraph spacing equals or exceeds the heading's own line-height (rule 13). Page outer margins stay at or above the body line-height (rule 9). List item padding exceeds body line-height (rule 10). Full canon lives in `../kk-design-system/manifesto.md § Typography rhythm`. Read it before building; measure before shipping.
+Every new doc surface honours the fourteen inner-and-outer rules — core principle **inner ≤ outer**. Headings sit closer to the paragraph they lead than to the paragraph they trail (rule 12). Heading-to-paragraph spacing equals or exceeds the heading's own line-height (rule 13). Page outer margins stay at or above the body line-height (rule 9). List item padding exceeds body line-height (rule 10). Full canon lives in `../kk-design-system/canon/components.md § Foundations § Type § Rhythm — inner and outer theory`. Read it before building; measure before shipping.
 
 Three kit contracts sit alongside the fourteen rules. Markdown rendered inside a `data-md-src` article shifts heading levels by +1 so the article's top heading lands at h2 rank, not h1 — the page hierarchy owns one hero per scroll. Quotes render black, Medium 500, italic; muting a quote buries it against its own citation. Raw HTML embedded in prose carries a `t-caption t-muted` caption line above (e.g. `Example`) so the block reads as illustration, not as a standalone callout competing with section headings.
 
@@ -108,7 +108,7 @@ This mode is not a default. Normal prototype builds (stages 1-7) keep the strict
 
 ## Output
 
-Two artifacts as defined in `../kk-design-system/doc-format.md`.
+Two artifacts as defined in `../kk-design-system/pipeline/pipeline.md § Documentation contract`.
 
 ### Conversation return
 
