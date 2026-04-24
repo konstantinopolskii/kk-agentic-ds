@@ -697,6 +697,20 @@ body {
   background: var(--color-border);
   pointer-events: none;
 }
+/* Hairline divider between consecutive non-interactive cards in the inspector. */
+.inspector__group > .card + .card {
+  position: relative;
+}
+.inspector__group > .card + .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--card-inset-x);
+  right: var(--card-inset-x);
+  height: 0.5px;
+  background: var(--color-border);
+  pointer-events: none;
+}
 /* The surface lights up on hover, on input/textarea focus (typing), or when
    a card is promoted via data-state. Button focus does NOT count — buttons
    fire and forget; they shouldn't leave a trail. */
