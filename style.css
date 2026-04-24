@@ -271,7 +271,7 @@ body {
    tight at 4 px. */
 .nav-group > h3,
 .nav-group > h4 {
-  padding: var(--space-1) 18px var(--space-1) var(--space-3);
+  padding: var(--space-1) 18px;
   color: var(--color-text-muted);
   transition: color var(--dur-base) var(--ease-out);
 }
