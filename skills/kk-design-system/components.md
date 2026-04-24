@@ -14,7 +14,7 @@ Use these on any element. No inline styles.
 | `t-display` | 38 / 38 | Section headings. |
 | `t-display--medium` | 38 / 38 medium | Subtitle under a display heading. |
 | `t-body` | 22 / 32 | Long-form body. |
-| `t-title` | 22 / 28 | Card headings. |
+| `t-title` | 22 / 32 | Card headings. Leading matches body. |
 | `t-subtitle` | 18 / 24 | Nav headers, spec keys. |
 | `t-caption` | 16 / 24 | UI labels, body inside cards. |
 | `t-caption--bold` | 16 / 24 bold | Emphasized caption. |

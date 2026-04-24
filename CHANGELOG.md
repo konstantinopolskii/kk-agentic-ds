@@ -85,7 +85,12 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 - `skills/kk-design-system/components.md § Registry surfaces` — section removed. The three primitives it documented (`.registry-frame`, `.registry-frame--tall`, `.registry-disclosure`) were retired in the same bundle. See §Moved.
 - `skills/kk-design-system/components.md § What's forbidden` — `registry` prefix dropped from the class allowlist. Replaced by `preview-frame` to cover the new primitive.
 
+### Changed
+- `--lh-title` 28 → 32 px. Title leading matches body leading; inline code + title on the same line no longer jumps when the line breaks between them. `skills/kk-design-system/tokens.json § typography.scale.title` and `skills/kk-design-system/components.md § Typography utility classes` updated in lockstep.
+- `skills/kk-design-system/manifesto.md § Typography rhythm` — new paragraph codifying the h4 rank binding: every `<h4>` element in kit surfaces carries `t-subtitle`. `js/md.js` enforces the pair for rendered markdown; HTML authors write the two together. `<h3 class="t-subtitle">` is not a valid pairing. Second new paragraph names the title-leading match: `--lh-title` sits at 32 so title and body share a vertical rhythm.
+
 ### Moved
+- Sidebar nav-group heading tag `<h3>` → `<h4>`. Accompanying `t-subtitle` class unchanged. All kit canvases updated: `index.html`, `patterns.html`, `demos/md-renderer-smoke/index.html`, `demos/fundamental--accepted/index.html`, `demos/fundamental--accepted/patterns/sidebar-nav.html`, `demos/fundamental--accepted/patterns/three-column-shell.html`, `prototypes/prototype-alpha/index.html`, `prototypes/prototype-operator-alpha/index.html`, `skills/kk-design-system/patterns/strategy-doc.md`.
 - `package.json` version `1.1.0` → `1.2.0`. Minor bump — one new role skill, additive.
 - `package.json` `files` array — added `skills/kk-role-pattern-discoverer/` after the other `kk-role-*` entries.
 - `.claude-plugin/plugin.json` version `0.4.0` → `1.2.0`. Bump in lockstep with `package.json` after a drift window across the 1.0.x and 1.1.0 cycles. Plugin `skills` array unchanged — the discoverer is kit-internal, matching the precedent that no `kk-role-*` skill is listed there.

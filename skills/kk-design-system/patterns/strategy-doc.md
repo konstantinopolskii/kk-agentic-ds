@@ -13,7 +13,7 @@ Three columns. Narrow collapses to one.
     <nav class="sidebar__nav" id="toc">
       <span class="toc__indicator" aria-hidden="true"></span>
       <section class="nav-group">
-        <h3 class="t-subtitle">Findings</h3>
+        <h4 class="t-subtitle">Findings</h4>
         <ul class="nav-group__items">
           <li class="t-caption"><a href="#snapshot">Snapshot</a></li>
           <li class="t-caption"><a href="#signals">Signals</a></li>
