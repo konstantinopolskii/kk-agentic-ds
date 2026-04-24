@@ -150,22 +150,23 @@
       // Heading. Level shifts by offset, then resolves. Levels 1–4 land
       // on the kit heading classes (t-hero, t-display, t-title,
       // t-subtitle). Level 5 and below demote to a paragraph of
-      // caption-bold text (`<p class="t-caption--bold">`) — visibly
-      // smaller than h4/t-subtitle (16 px vs 18 px, both bold) so
-      // authors who write `####` then `#####` see a clear step down
-      // instead of two identical lines. No separate heading rank exists
-      // in the kit below subtitle; demotion is intentional rather than
-      // a collapse, and the renderer logs a one-line info so authors
-      // know the level hit the demotion branch. Below h1 the h1 branch
-      // never fires — the shell owns the page title.
+      // regular caption text (`<p class="t-caption">`) — 16 px regular
+      // against h4/t-subtitle's 18 px bold. Size drop + weight drop
+      // mark the rank step at 0.2 s so authors who write `####` then
+      // `#####` see an unambiguous stair instead of two peer lines.
+      // No separate heading rank exists in the kit below subtitle;
+      // demotion is intentional rather than a collapse, and the
+      // renderer logs a one-line info so authors know the level hit
+      // the demotion branch. Below h1 the h1 branch never fires — the
+      // shell owns the page title.
       var h = /^(#{1,6})\s+(.*)$/.exec(line);
       if (h) {
         var level = h[1].length + offset;
         if (level < 1) { level = 1; }
         var inner = inline(h[2].trim());
         if (level > 4) {
-          console.info("[md.js] heading level " + level + " demoted to t-caption--bold (no kit rank below h4): " + h[2].trim());
-          out.push('<p class="t-caption--bold">' + inner + "</p>");
+          console.info("[md.js] heading level " + level + " demoted to t-caption (no kit rank below h4): " + h[2].trim());
+          out.push('<p class="t-caption">' + inner + "</p>");
         } else {
           var tag = "h" + level;
           out.push("<" + tag + ' class="' + CLASS_MAP[tag] + '">' + inner + "</" + tag + ">");
