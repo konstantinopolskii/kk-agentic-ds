@@ -404,9 +404,7 @@ body {
   margin-top: var(--space-20);
 }
 .doc__section > * + .t-display,
-.doc__section > * + .t-title,
-.doc__section > * + h2,
-.doc__section > * + h3 {
+.doc__section > * + h2 {
   /* Above-gap lifted from 80 to 92 (space-20 + space-3) so the visible
      text-to-text ratio clears 2:1 with breathing room. A pure 80/40
      margin ratio is 2:1 in box terms but measures 1.93 text-to-text
@@ -415,6 +413,10 @@ body {
      (2.30) cushions the leading slack; text-to-text lands ~2.20. Jobs
      round 3 target cleared. */
   margin-top: calc(var(--space-20) + var(--space-3));
+}
+.doc__section > * + .t-title,
+.doc__section > * + h3 {
+  margin-top: var(--space-10);
 }
 .doc__section > * + .t-subtitle,
 .doc__section > * + h4 {
