@@ -27,7 +27,7 @@ The analyst pushes back. If the brief has holes, they surface here. No pixels ye
 - **Input:** Approved brief from stage 1.
 - **Output, round one:** Five or more directions, each with a one-line intent, primary signal, guardrails, expected kit surface.
 - **Output, round two (after user picks):** Direction document — aligned direction, named pattern blocks (N per session), exceptions register, rejected-directions archive, alignment transcript.
-- **Canon load:** `manifesto.md`, `tokens.json`, `components.md` (patterns, card, typography), `patterns/*`.
+- **Canon load:** `manifesto.md` (full file, including §Components — patterns, card, typography), `tokens.json`, `patterns/*`.
 - **Gate 2a:** Human picks one direction. Others archive.
 - **Gate 2b:** Human stamps pattern blocks + any exceptions. Round-two direction document locked.
 - **Self-doc:** `documentation/<session>/02-design-director.md`
@@ -48,7 +48,7 @@ Per-pattern, question-driven. N pattern blocks means N parallel designer tracks.
 - **Gate:** None. Feeds stage 3b.
 - **Self-doc:** `documentation/<session>/03a-fresh-eyes-pre-<pattern-slug>.md`
 
-Naive user POV. Zero design context — reading `components.md` would break the cold-read contract.
+Naive user POV. Zero design context — reading `manifesto.md § Components` would break the cold-read contract.
 
 ### Stage 3b — Designer (N parallel, one per pattern)
 
@@ -56,7 +56,7 @@ Naive user POV. Zero design context — reading `components.md` would break the 
 - **Model:** Sonnet. **Character:** Hella Jongerius.
 - **Input:** Direction doc + 3a question list for this pattern.
 - **Output:** Per-pattern hand-off — question-to-answer map, states (rest/hover/focus/active/disabled/loading/empty/error), interaction variants, edge cases, example content, UI copy drafts, kit-inventory check.
-- **Canon load:** `manifesto.md`, `components.md`, `tokens.json`, `voice.md`, `patterns/*`.
+- **Canon load:** `manifesto.md` (full file, including §Components), `tokens.json`, `voice.md`, `patterns/*`.
 - **Gate:** Stage 3c pass. Unanswered 3a questions fail and re-dispatch to this stage.
 - **Self-doc:** `documentation/<session>/03b-designer-<pattern-slug>.md`
 
@@ -80,7 +80,7 @@ Single track. Strict kit inventory unless the direction doc's §Exceptions carri
 - **Model:** Sonnet. **Character:** Muriel Cooper.
 - **Input:** Direction doc + every 03b hand-off.
 - **Output:** Per-block component map (kit class + variant + attribute + kit-demo section), build-order task split, kit-demo references, inventory check.
-- **Canon load:** `components.md`, `tokens.json`, `patterns/*`, the kit demo `index.html`.
+- **Canon load:** `manifesto.md § Components`, `tokens.json`, `patterns/*`, the kit demo `index.html`.
 - **Gate:** Inventory check passes, or halts back to 3b with a named pattern.
 - **Self-doc:** `documentation/<session>/04-ds-manager.md`
 
@@ -92,7 +92,7 @@ Catalogue, not draw. Copy briefs out of scope — designers own UI copy.
 - **Model:** Sonnet. **Character:** Sara Soueidan.
 - **Input:** DS Manager component map + task split + every 03b hand-off + direction doc.
 - **Output:** Prototype built piece by piece, saved to disk as each piece lands. HTML + CSS + JS using kit classes and shared `kit.js`. Designer UI copy drafts verbatim; dummy text flagged where drafts are missing.
-- **Canon load:** `components.md`, `tokens.json`, `manifesto.md` foundations, `patterns/*`, `voice.md` §AI tells.
+- **Canon load:** `manifesto.md` (full file, including §Foundations and §Components), `tokens.json`, `patterns/*`, `voice.md` §AI tells.
 - **Gate:** Stages 6a + 6b run in parallel on the built files. Then stage 7.
 - **Self-doc:** `documentation/<session>/05-design-engineer.md`
 
@@ -114,9 +114,9 @@ Cold means cold. Reading the brief or direction doc would pollute the read — t
 
 - **Role skill:** `kk-role-consistency-ds`
 - **Model:** Haiku. **Character:** Dieter Rams.
-- **Input:** Built prototype files + `components.md` + `tokens.json`. No brief, no direction, no hand-off.
+- **Input:** Built prototype files + `manifesto.md § Components` + `tokens.json`. No brief, no direction, no hand-off.
 - **Output:** Per-block strict audit across class resolution, token compliance, off-grid spacing, pattern-language drift.
-- **Canon load:** `components.md`, `tokens.json`, `manifesto.md` foundations.
+- **Canon load:** `manifesto.md` (full file, including §Foundations and §Components), `tokens.json`.
 - **Gate:** No direct gate. Output feeds stage 7.
 - **Self-doc:** `documentation/<session>/06b-consistency-ds.md`
 
@@ -151,7 +151,7 @@ Rejects "it's fine" replies. A rubric item is either answered with evidence (fil
 - **Role skill:** `kk-role-meta-retro`
 - **Model:** Opus. **Character:** Joan Didion.
 - **Input:** All session documentation in `documentation/<session>/*`.
-- **Output:** `proposals/<date>-retro.md` — proposed updates to `manifesto.md`, `pipeline.md`, `components.md`, `voice.md`, `tokens.json`. Never edits canon directly.
+- **Output:** `proposals/<date>-retro.md` — proposed updates to `manifesto.md`, `pipeline.md`, `voice.md`, `tokens.json`. Never edits canon directly.
 - **Trigger:** On-demand only. User calls the retro when something feels off.
 - **Gate:** Human accepts or rejects each proposal. Accepted proposals route to `kk-ds-maintainer`.
 
@@ -183,7 +183,7 @@ Stage 7 meta-reviewer fails a build when ANY rubric item is unanswered or contra
 1. **Every analyst open-question has an answer visible in the final UI.** Questions without UI answers bubble up for user ruling; they do not silently pass.
 2. **Every direction-doc pattern named at stage 2 has an implementation in the built prototype.** Pattern without impl = stage-3b or stage-5 gap.
 3. **Every consistency-jobstory guess (stage 6a) either matches the analyst's stated intent OR names a real ambiguity.** Guesses that do not track intent are UX failures, not OK-reads.
-4. **Zero off-inventory components.** Every class resolves to `components.md`. User-agreed exceptions allowed only if recorded in direction doc + CHANGELOG.
+4. **Zero off-inventory components.** Every class resolves to `manifesto.md § Components`. User-agreed exceptions allowed only if recorded in direction doc + CHANGELOG.
 5. **Zero AI-tells.** Full `voice.md` §No AI tells inventory applies. Evidence source: stage 6c voice reviewer's flag list. Each flag must be either fixed in copy or stamped as a user-approved exception in the direction doc. Unaddressed 6c flags fail this item.
 6. **User-agreed exceptions and new components carry paper trail.** Each lives in the direction doc under §Exceptions with reason + user stamp.
 

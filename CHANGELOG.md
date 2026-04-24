@@ -102,8 +102,45 @@ Pattern discoverer role, plus four canon-kit defects surfaced during the first f
 
 ### Open
 - `patterns.html` not created in this release. Phase 3 of the initiative deploys the discoverer against `demos/fundamental--accepted/`, which creates the file and populates the first entry set.
+- Phase 2b of the markdown-as-source initiative lands in this release as an unreleased label (`1.3.0-unreleased`): manifesto absorbs `components.md` into a new §Components tree, `components.md` becomes a thin re-export stub, and every SKILL.md + non-skill canon updates its canon load to point at `manifesto.md § Components`. Version in `package.json` / `plugin.json` stays at `1.2.0` until Phase 4 ships the label as `1.3.0` with tag + push.
 
-## 1.1.0 — 2026-04-23
+### Moved (1.3.0-unreleased — Phase 2b of markdown-as-source)
+- `skills/kk-design-system/manifesto.md` absorbs the full component inventory from `components.md`. New subsection tree: §Components § Typography utility classes / § Card / § Field / § Button / § Tag / § Switch / § Comment / § Navigation / § Signoff / § Spec list / § List / § Preview surfaces / § Registry surfaces / § Patterns / § What's forbidden. Manifesto line count 234 → 685, inside the 500-700 coherence band.
+- `skills/kk-design-system/manifesto.md § Why this exists` — opener rewritten to absorb the two framing paragraphs that previously sat as `doc__intro` prose at `index.html` lines 106-115. Paragraph on the fundamental demo + patterns registry stays in `index.html` as shell framing.
+- `skills/kk-design-system/manifesto.md § Job stories` — added the voice-transcription example from `index.html § jobs` as a dedicated paragraph beneath the anti-pattern bullet.
+- `skills/kk-design-system/manifesto.md § Principles § Eighty / twenty` — screen/panel/card examples migrated from `index.html § eighty-twenty` as three bullets.
+- `skills/kk-design-system/manifesto.md § Principles § Chunking` — fractal examples (sidebar, color tokens, spacing tokens, decision tree, checklist) migrated from `index.html § chunking` as five bullets. Concrete counts preserved per user ruling 4 — chunking examples teach the discipline, not foundation claims.
+- `skills/kk-design-system/manifesto.md § Foundations § Radii` — drift resolved. Prior "two radii plus one pill alias" replaced with "Four radii: 12 px… 16 px… 24 px… 9999 px." Matches `vars.css` and `tokens.json`.
+- `skills/kk-design-system/manifesto.md § Components § Signoff` — rule relaxed per user ruling 3 of Resolved round 3. "Two or four `.stat` children are valid shapes — never three." Grid unchanged.
+- `skills/kk-design-system/manifesto.md § Protocols` — new section. Absorbs §Evolve (five-step protocol from `index.html § evolve`), §Backlog, §Ideation (parked-idea card from `index.html § ideation` — auto-sync inspector comments).
+- `skills/kk-design-system/manifesto.md § Ship discipline` — new section. Absorbs the verification discipline from the markdown-as-source proposal (screenshot + devtools console every browser-affecting change) and the bundle rule + semver ship protocol from `kk-ds-maintainer/SKILL.md` so the canon reader encounters ship rules next to the protocols that need them. Skill file still owns the operational detail.
+- `skills/kk-design-system/voice.md § No AI tells` — opener paragraph added. Absorbs the two-paragraph intro that previously lived at `index.html § ai-tells` ("AI drafts leak the same tics… Based on the Wikipedia project's inventory of signs of AI writing"). Voice.md is now the sole source for the AI-tells inventory.
+- `skills/kk-design-system/voice.md § Signature` — cross-reference `components.md → Signoff` repointed to `manifesto.md § Components § Signoff`.
+- `skills/kk-design-system/components.md` — file retires as an authored doc. Replaced with a 39-line re-export stub whose sections point at `manifesto.md § Components § <Name>`. Stub stays for one minor cycle (1.3.0) so consumer skills loading `components.md` keep working. Full removal bumps to v2.0.0.
+- `skills/kk-design-system/SKILL.md § Hard rules § 1` — read order dropped `components.md`; reads `manifesto.md → tokens.json → voice.md → pipeline.md`. §Reference files lists `components.md` as a retired stub pointing at `manifesto.md § Components`; retires in v2.0.0.
+- `skills/kk-design-system/SKILL.md § Hard rules § 2` — inventory check references `manifesto.md § Components` instead of `components.md`.
+- `skills/kk-design-system/SKILL.md § What to emit` — narrow-pattern reference repointed to `manifesto.md § Components § Patterns § Narrow`.
+- `skills/kk-design-system/pipeline.md` — every `components.md` canon-load reference across stages 2, 3a (anti-reference), 3b, 4, 5, 6b, meta-retro, and the meta-reviewer rubric item 4 repointed to `manifesto.md § Components` or a specific subsection.
+- `skills/kk-design-system/patterns/strategy-doc.md` — two references (signoff + comment) repointed to `manifesto.md § Components § Signoff` and `manifesto.md § Components § Comment`.
+- `skills/kk-role-design-director/SKILL.md § Load the canonical rules first` — `components.md` line repointed to `manifesto.md § Components § Typography utility classes + § Card + § Patterns (Three columns, Card stack, Narrow)`; consolidated with the existing manifesto line.
+- `skills/kk-role-design-director/SKILL.md § What a direction looks like` — "Named from `components.md`" repointed to "Named from `manifesto.md § Components`".
+- `skills/kk-role-designer/SKILL.md § Load the canonical rules first` — `components.md` line collapsed into `manifesto.md` full-file read with §Components flagged in parentheses.
+- `skills/kk-role-designer/SKILL.md § What a pattern hand-off contains` — inventory-resolve reference repointed to `manifesto.md § Components`.
+- `skills/kk-role-ds-manager/SKILL.md § Load the canonical rules first` — `components.md` full-file line collapsed into `manifesto.md` full-file read.
+- `skills/kk-role-ds-manager/SKILL.md § 1 Per-block component map` + §3 Kit-demo references — body text repointed to `manifesto.md § Components`.
+- `skills/kk-role-design-engineer/SKILL.md § Load the canonical rules first` — `components.md` line collapsed into `manifesto.md` full-file read.
+- `skills/kk-role-design-engineer/SKILL.md § Disk artifact` — "verify against `components.md`" repointed.
+- `skills/kk-role-consistency-ds/SKILL.md § Body + §Load the canonical rules first + §1 Class resolution` — `components.md` in opener + canon load + three flag clauses all repointed to `manifesto.md § Components`. Frontmatter `description` left untouched (description changes trigger a major semver bump; the stub keeps it factually accurate until v2.0.0).
+- `skills/kk-role-consistency-jobstory/SKILL.md § Load the canonical rules first + §What you do not do` — anti-reference + cross-check wording repointed.
+- `skills/kk-role-fresh-eyes-jobstory/SKILL.md § Load the canonical rules first + §What you do not do` — anti-reference + "Read components.md" wording repointed.
+- `skills/kk-role-meta-reviewer/SKILL.md § Load the canonical rules first` — `components.md` §Typography utility classes repointed to `manifesto.md § Components § Typography utility classes`.
+- `skills/kk-role-meta-retro/SKILL.md § Load the canonical rules first` — `components.md` full-file entry removed (manifesto full file already carries it). §Output — proposal format — canon-target example updated to `manifesto.md § Components § Card`.
+- `skills/kk-role-pattern-discoverer/SKILL.md § Inputs` — reference set repointed.
+- `skills/kk-ds-maintainer/SKILL.md § Inherited rules + §The bundle + §Hidden failure modes` — three references repointed. Bundle list keeps a note that `components.md` is a stub until v2.0.0.
+- `skills/kk-ds-supervisor/SKILL.md` + `skills/kk-ds-frontend/SKILL.md` (both deprecated) — references repointed.
+- `docs/integration/comment.md` — cross-reference repointed to `manifesto.md § Components`.
+- `index.html` — two in-file references: comment at line 581 and cross-reference link at line 598 repointed to `manifesto.md § Components`. Structural shell untouched (Phase 3 rewrites it).
+- `documentation/2026-04-24-markdown-source/phase-2b-migration.md` — migration report written. Per-block log (32 rows), drift resolutions (12 rows), skill canon load updates (19 files).
 
 Stage 6c voice reviewer + voice discipline extended to every role that writes UI text, prototype prose, or pattern descriptions. v1.0.0's pipeline-v3 folded the dedicated UX-copy-review role into meta-reviewer's rubric item 5 (one line on a six-item Opus rubric). User flagged the dilution — voice defects written at stage 3b would survive until stage 7, then require an expensive reiterate loop. This release restores a dedicated cold-read voice auditor parallel with 6a + 6b, and tightens voice.md canon load on the four roles that author prose for prototype or docs.
 

@@ -1,299 +1,35 @@
-# Component inventory
-
-The kit stays small. Before adding anything, check this list. If an existing component fits, even awkwardly, use it. Adding a component requires a manifesto change (see `pipeline.md` → stage 4).
-
-Nine components. Two patterns. Everything else is composition.
-
-## Typography utility classes
-
-Use these on any element. No inline styles.
-
-| Class | Size | Use |
-|-------|------|-----|
-| `t-hero` | 66 / 66 | Document title. Once per page. |
-| `t-display` | 38 / 38 | Section headings. |
-| `t-display--medium` | 38 / 38 medium | Subtitle under a display heading. |
-| `t-body` | 22 / 32 | Long-form body. |
-| `t-title` | 22 / 32 | Card headings. Leading matches body. |
-| `t-subtitle` | 18 / 24 | Nav headers, spec keys. |
-| `t-caption` | 16 / 24 | UI labels, body inside cards. |
-| `t-caption--bold` | 16 / 24 bold | Emphasized caption. |
-| `t-micro` | 14 / 20 | Captions, citations, metadata. |
-| `t-mono` | inherited | Inline tokens, values, durations. |
-| `t-muted` | — | Opacity to `--color-text-muted`. **Metadata only.** |
-| `t-subtle` | — | Opacity to `--color-text-subtle`. Placeholders only. |
-
-Forbidden: emitting raw `font-size` / `font-weight` / `color` on elements. Always pick a utility class.
-
-## Card
-
-Every widget is a card. Transparent at rest, 3% on hover/focus/active. No borders. No shadows.
-
-Three variants, one HTML shape.
-
-```html
-<!-- Static card. Default. -->
-<div class="card">
-  <div class="card__heading">
-    <h3 class="t-title">Card title</h3>
-    <p class="t-caption">Optional subtitle.</p>
-  </div>
-  <!-- content -->
-</div>
-
-<!-- Interactive card. Sticky active / minimized state. -->
-<div class="card card--interactive" data-state="active">
-  <div class="card__heading">
-    <h3 class="t-title">Interactive card</h3>
-  </div>
-  <div class="card__collapsible">
-    <div class="card__collapsible-inner">
-      <!-- revealed when active -->
-    </div>
-  </div>
-  <button class="button t-subtitle" data-cta="minimized">Open</button>
-  <button class="button button--primary t-subtitle" data-cta="active">Commit</button>
-</div>
-
-<!-- Shout card. One per column. Inverts everything inside. -->
-<div class="card card--shout">
-  <div class="card__heading">
-    <h3 class="t-title">Shout card</h3>
-    <p class="t-caption t-muted">For the moments that matter.</p>
-  </div>
-  <button class="button button--primary t-subtitle">Commit the choice</button>
-</div>
-
-<!-- Raw text or list children of the card get the 24px rail
-     without a card__body wrapper. -->
-<div class="card">
-  <p class="t-caption t-muted">Empty for now.</p>
-</div>
-```
-
-Rules:
-- Interactive cards need hidden content (not just inputs). A card that only fires an action stays static.
-- One active per stack.
-- One shout per column. If everything shouts, nothing does.
-- Primary and minimized button labels never match.
-- A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12px half-inset on its own. No `card__body` wrapper needed.
-
-## Field
-
-A label and a value sharing one row. No box, no outline. `0.5px` divider between consecutive fields, never above the first or below the last.
-
-```html
-<div class="card">
-  <label class="field field--row">
-    <span class="t-caption--bold field__label">Label</span>
-    <input class="t-caption field__input" type="text" value="value" />
-  </label>
-  <label class="field">
-    <input class="t-caption field__input" type="text" placeholder="sofia@kk.consulting" />
-    <span class="field__fake-caret" aria-hidden="true"></span>
-  </label>
-</div>
-```
-
-Hover fills the row with 3%. Focus inverts it — black surface, white text, white caret.
-
-## Button
-
-Full-width by default. `12px` radius. Bold label. Two variants.
+# Components
 
-```html
-<button class="button t-subtitle">Secondary</button>
-<button class="button button--primary t-subtitle">Primary</button>
-```
+> This file retired as an authored doc in v1.3.0. Every rule moved to `manifesto.md § Components`. This stub stays for one minor cycle so consumer skills loading `components.md` keep working. Full removal bumps to v2.0.0.
 
-Rules:
-- Never outline-only, never text-only, never floating over content.
-- One primary per card.
-- Imperative verbs. "Apply tokens", not "Proceed".
-- Sentence case. No Title Case. No ALL CAPS.
+Every section below points at the corresponding subsection of `manifesto.md`. Read there.
 
-## Tag
+## Typography utility classes → see [manifesto.md § Components § Typography utility classes](manifesto.md#components-typography-utility-classes)
 
-Metadata, not action. If it looks clickable, it's a button.
+## Card → see [manifesto.md § Components § Card](manifesto.md#components-card)
 
-```html
-<span class="tag">Foundations</span>
-<span class="tag">9 components</span>
-<span class="tag tag--bold">Signed</span>
-```
+## Field → see [manifesto.md § Components § Field](manifesto.md#components-field)
 
-## Switch
+## Button → see [manifesto.md § Components § Button](manifesto.md#components-button)
 
-Binary toggle. See `index.html` → `#switch` for the full markup.
+## Tag → see [manifesto.md § Components § Tag](manifesto.md#components-tag)
 
-## Comment
+## Switch → see [manifesto.md § Components § Switch](manifesto.md#components-switch)
 
-Two shapes, one pattern. Draft (shout) and thread (interactive card with collapsible reveal). Lives in the inspector. See `index.html` → `#comment` for the complete markup including `comment-new`, `comment-thread`, `comment-msg`, `comment__menu`.
+## Comment → see [manifesto.md § Components § Comment](manifesto.md#components-comment)
 
-Each message's kebab carries four actions in 0.13.0: `Approve`, `Reply`, `Archive thread`, `Delete`. Approve is gated on the thread's last list message having `data-author-role="agent"` (consumer sets this at render time); the kit hides the item otherwise. Approve collapses the thread to a single resolved row (`data-resolved="true"`), emits the approved text as a replacement for the anchored quote, and the consumer rewrites the doc body. Archive sets `data-archived="true"` on the thread — DOM retained, hidden from the stack via CSS.
+## Navigation → see [manifesto.md § Components § Navigation](manifesto.md#components-navigation)
 
-Consumer integration (events, config, delete, persistence patterns per framework) lives in `docs/integration/comment.md`. The `kk:comment` CustomEvent is how a backend hooks in.
+## Signoff → see [manifesto.md § Components § Signoff](manifesto.md#components-signoff)
 
-## Navigation
+## Spec list → see [manifesto.md § Components § Spec list](manifesto.md#components-spec-list-dldocspec)
 
-Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections; `toc__indicator` animates between active items.
+## List → see [manifesto.md § Components § List](manifesto.md#components-list-t-list)
 
-## Signoff
+## Preview surfaces → see [manifesto.md § Components § Preview surfaces](manifesto.md#components-preview-surfaces)
 
-Canonical document ending. Stats + byline + handwritten signature SVG.
+## Registry surfaces → see [manifesto.md § Components § Registry surfaces](manifesto.md#components-registry-surfaces)
 
-`doc__signoff-stats` grids into three columns: two `.stat` blocks, one empty column on the right for asymmetric breathing room. Ship two stats, never three.
+## Patterns → see [manifesto.md § Components § Patterns](manifesto.md#components-patterns)
 
-```html
-<div class="doc__signoff-stats">
-  <div class="stat t-caption">
-    <div><span class="t-caption--bold">3</span> revisions before sealing.</div>
-  </div>
-  <div class="stat t-caption">
-    <div><span class="t-caption--bold">0</span> edits pending.</div>
-  </div>
-</div>
-<div class="doc__signoff-signature">
-  <p class="t-caption">
-    Signed by <span class="t-caption--bold">Author,</span><br />
-    role at <span class="t-caption--bold">organization</span><br />
-    <span class="t-muted">day, time, timezone.</span>
-  </p>
-  <img class="doc__signoff-signature-img" src="signature.svg" alt="Signature" />
-</div>
-```
-
-Every doc ships signed.
-
-## Spec list (dl.doc__spec)
-
-The workhorse for key/value rows inside a card. Three shapes:
-
-```html
-<!-- Two-column: key + value -->
-<dl class="doc__spec">
-  <div class="doc__spec-row">
-    <dt class="doc__spec-key">Key</dt>
-    <dd class="doc__spec-value">Value that may wrap.</dd>
-  </div>
-</dl>
-
-<!-- Three-column: key + value + prose -->
-<dl class="doc__spec doc__spec--value">
-  <div class="doc__spec-row">
-    <dt class="doc__spec-key">Token</dt>
-    <dd class="doc__spec-value">16px</dd>
-    <dd class="doc__spec-value">When and why to reach for it.</dd>
-  </div>
-</dl>
-
-<!-- Claim / reality / resolution -->
-<dl class="doc__spec doc__spec--triple">...</dl>
-```
-
-
-## List (.t-list)
-
-Caption-sized hairlined list for prose or tabular data. Both `<ul>` (disc marker) and `<ol>` (decimal marker). Hairline separates each item from the next. Used by `js/md.js` for markdown-rendered `- item` and `1. item` blocks.
-
-```html
-<!-- Unordered list with bullet markers. -->
-<ul class="t-list">
-  <li>First item.</li>
-  <li>Second item.</li>
-</ul>
-
-<!-- Ordered list with decimal markers. -->
-<ol class="t-list">
-  <li>First step.</li>
-  <li>Second step.</li>
-</ol>
-```
-
-Rules:
-- Caption size (16 / 24) with hairlines between items.
-- Custom markers: bullet (`ul`) or decimal (`ol`) in the left gutter, bold weight.
-- Single list class for both prose and tabular data patterns.
-- `js/md.js` emits this class automatically for markdown lists.
-
-
-## Preview surfaces
-
-Document-surface primitive for kit docs that embed component or pattern slices. Used on `patterns.html` and any future registry page. The wrapper clips. The inner iframe renders at 400% and scales to 0.25 so the reader sees the preview at full container width regardless of the slice's internal viewport.
-
-```html
-<!-- Scaled iframe preview of a kit slice. -->
-<div class="preview-frame">
-  <iframe class="preview-frame__iframe"
-          src="./demos/fundamental--accepted/patterns/some-slice.html"
-          title="Slice preview"
-          loading="lazy"></iframe>
-</div>
-```
-
-Rules:
-- `.preview-frame` carries the clip, border, radius, and height floor. The iframe inside must carry `.preview-frame__iframe` — the 400% width/height and the 0.25 scale are load-bearing.
-- Scale ratio is a constant. If a second ratio is ever needed, ship a modifier class (`.preview-frame--half`) with its own width/height/scale trio.
-- Pair with `.card--interactive.card--selectable` in the doc column when the preview is driven by a click-to-select registry. See `patterns.html`.
-- Kit docs only. Product prose does not render iframes.
-
-## Registry surfaces
-
-Document-surface primitive for dense two-column inventories on kit registry pages (atoms, elements, and any future flat catalogue). Resets browser table defaults, applies the kit's hairline border and text tokens, and keeps links inheriting surface type. Used on `patterns.html` today.
-
-```html
-<!-- Atoms inventory on a registry page. -->
-<table class="registry-table">
-  <thead>
-    <tr>
-      <th class="t-caption">Class</th>
-      <th class="t-caption">Role</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="t-body"><a href="./index.html#t-body">t-body</a></td>
-      <td class="t-body">Body text, 14 px Medium.</td>
-    </tr>
-  </tbody>
-</table>
-```
-
-Rules:
-- `.registry-table` carries the full table reset. No per-cell inline styles.
-- First column reserves 30% width and forbids wrapping — the class name or token name column.
-- Header row uses `--color-border-strong`; body rows use `--color-border`. Last body row drops its border so the table ends flush with following prose.
-- Links inside a registry table inherit `--color-text` and underline on hover or focus. Do not override.
-- Kit docs only. Product prose does not render inventory tables.
-
-## Patterns
-
-### Three columns (default shell)
-
-```html
-<div class="app" data-view="doc">
-  <aside class="sidebar" aria-label="Navigation">...</aside>
-  <main class="doc" id="doc">...</main>
-  <aside class="inspector">...</aside>
-</div>
-```
-
-Left is the map. Middle is the territory. Right is the margin — actions, references, comments. Only the middle scrolls during reading.
-
-### Card stack
-
-Stack interactive cards vertically. One active at a time. Inactive cards collapse to heading + minimized CTA. See `#card-stack-3d` in `index.html` for the 3D reveal variant.
-
-### Narrow (mobile)
-
-Below ~800px: doc becomes the single column, inspector slides over, sidebar collapses to a hamburger. See `#narrow`.
-
-## What's forbidden
-
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `doc`, `nav-group`, `inspector`, `comment`, `stat`, `tag`, `swatch`, `app`, `preview-frame`, `registry-table`.
-- Inline styles for tokens. Use `var(--token-name)`.
-- New color, spacing, or radius values outside `tokens.json`.
-- Drop shadows, glass, blur, gradients.
-- Any utility-class framework (Tailwind, Bootstrap, Bulma).
-
-When you need something genuinely new: do not add it to the kit. Ask the maintainer. Additions require a manifesto update before code lands.
+## What's forbidden → see [manifesto.md § Components § What's forbidden](manifesto.md#components-whats-forbidden)

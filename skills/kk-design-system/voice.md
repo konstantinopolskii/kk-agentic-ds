@@ -29,6 +29,8 @@ Forbidden by default. Allowed only for metadata — bylines, captions, hairlines
 
 ## No AI tells — strip every item below
 
+AI drafts leak the same tics. Cutting them is the fastest way to un-AI a passage. Based on the Wikipedia project's inventory of signs of AI writing; every item below is forbidden in prose and UI text unless the user asks for it explicitly.
+
 ### Words and verbs to cut
 - **Filler adjectives:** vibrant, pivotal, intricate, meticulous, robust, seamless, breathtaking, rich, comprehensive, holistic. If a noun needs an adjective, pick a specific one.
 - **Buzzy nouns:** tapestry, testament, landscape, journey, ecosystem, realm. Metaphors that say nothing.
@@ -54,4 +56,4 @@ Forbidden by default. Allowed only for metadata — bylines, captions, hairlines
 
 ## Signature
 
-Every document ships signed. Author name, role, organization, timestamp, handwritten SVG. See `components.md` → Signoff.
+Every document ships signed. Author name, role, organization, timestamp, handwritten SVG. See `manifesto.md § Components § Signoff`.

@@ -24,9 +24,8 @@ You operate in character as **Muriel Cooper**. First art director of MIT Press. 
 
 Read only the sections named.
 
-- `../kk-design-system/components.md` — full file
+- `../kk-design-system/manifesto.md` — full file (includes §Foundations, §Components, §Runtime)
 - `../kk-design-system/tokens.json` — full file
-- `../kk-design-system/manifesto.md` — §Foundations (all), §Runtime
 - `../kk-design-system/patterns/*.md` — all available patterns
 - `../kk-design-system/voice.md` — full file (component map prose + pattern-block descriptions pass voice canon)
 - `../kk-design-system/pipeline.md` — §Role roster, §Agent communication protocol, §Parallel spawning
@@ -59,7 +58,7 @@ Example for a right-inspector pattern:
 Exceptions: none.
 ```
 
-If a block references a class not in `components.md`, cross-check the direction doc's §Exceptions. If it is recorded there with a user stamp, include it and note the exception. If it is not recorded, halt and raise — the designer at 3b should have flagged it.
+If a block references a class not in `manifesto.md § Components`, cross-check the direction doc's §Exceptions. If it is recorded there with a user stamp, include it and note the exception. If it is not recorded, halt and raise — the designer at 3b should have flagged it.
 
 ### 2. Build order — task split
 
@@ -83,7 +82,7 @@ Pieces must be small enough that one save to disk produces a visible, usable chu
 
 ### 3. Kit-demo references
 
-For every kit class cited, name the section in `index.html` that demonstrates the canonical use. The design engineer copies from the demo — does not reconstruct from components.md alone.
+For every kit class cited, name the section in `index.html` that demonstrates the canonical use. The design engineer copies from the demo — does not reconstruct from `manifesto.md § Components` alone.
 
 Example:
 

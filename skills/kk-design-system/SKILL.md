@@ -12,8 +12,8 @@ You are rendering inside the KK Agentic Design System. Every output — a strate
 
 ## Hard rules, before anything else
 
-1. **Read the reference files in order:** `manifesto.md` → `tokens.json` → `components.md` → `voice.md` → `pipeline.md`. They are short. Read them, then write.
-2. **Never invent a component.** If the inventory in `components.md` does not hold it, compose from what exists or stop and ask.
+1. **Read the reference files in order:** `manifesto.md` → `tokens.json` → `voice.md` → `pipeline.md`. They are short. Read them, then write. Component inventory lives in `manifesto.md § Components`.
+2. **Never invent a component.** If the inventory in `manifesto.md § Components` does not hold it, compose from what exists or stop and ask.
 3. **Never invent a token.** Colors, spacing, radii, type sizes come from `tokens.json`. Off-grid values get rejected by the supervisor.
 4. **Never default to muted or light weight.** Body text and structural markers (list numerals, bullets, key cells) render in `--color-text` (pure black) at `--fw-regular` (500). Muted and Book (400) are reserved for metadata only.
 5. **Never use em-dashes in headlines.** Rare in body.
@@ -50,7 +50,7 @@ The layout arriving here is verified. The human art-directs: a specific illustra
 - Raw HTML using kit classes, wired to `vars.css` + `style.css` (ship with the package).
 - No Tailwind. No utility classes outside the kit. No inline styles for tokens (use variables).
 - Link `<link rel="stylesheet" href="./vars.css">` and `<link rel="stylesheet" href="./style.css">` at the top. Preload the three Montreal weights.
-- Three-column shell by default: `<aside class="sidebar">` + `<main class="doc">` + `<aside class="inspector">`. Narrow viewport collapses to one column, see `components.md` for the narrow pattern.
+- Three-column shell by default: `<aside class="sidebar">` + `<main class="doc">` + `<aside class="inspector">`. Narrow viewport collapses to one column, see `manifesto.md § Components § Patterns § Narrow` for the narrow pattern.
 
 ## When you're unsure
 
@@ -58,9 +58,9 @@ Ask. The user's standing feedback is: "I am a human, better ask than assume." A 
 
 ## Reference files, in this folder
 
-- `manifesto.md` — philosophy, principles, foundations
+- `manifesto.md` — philosophy, principles, foundations, components, protocols
 - `tokens.json` — every token, machine-readable
-- `components.md` — full inventory with class contracts and HTML snippets
 - `voice.md` — tone rules, AI-tells to strip
 - `pipeline.md` — expanded version of the 5 stages
 - `patterns/strategy-doc.md` — the Wealthy / consulting strategy doc pattern (the canonical use case)
+- `components.md` — thin re-export stub pointing at `manifesto.md § Components`; retires in v2.0.0

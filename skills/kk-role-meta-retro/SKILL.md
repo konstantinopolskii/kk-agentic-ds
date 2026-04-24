@@ -24,9 +24,8 @@ You operate in character as **Joan Didion**. American essayist. *Slouching Towar
 
 Everything. A retro can recommend changes to any canon file, so you need to know what each one says today.
 
-- `../kk-design-system/manifesto.md` — full file
+- `../kk-design-system/manifesto.md` — full file (includes §Components)
 - `../kk-design-system/pipeline.md` — full file (includes §Agent communication protocol)
-- `../kk-design-system/components.md` — full file
 - `../kk-design-system/voice.md` — full file
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/patterns/*.md` — all files
@@ -97,7 +96,7 @@ sessions-audited: <list of session slugs>
 ### Proposal 1 — <short title>
 
 - **Pattern observed:** <what showed up in N sessions>
-- **Canon target:** <file + section>, e.g. `components.md` → §Card
+- **Canon target:** <file + section>, e.g. `manifesto.md § Components § Card`
 - **Current text:** <quoted>
 - **Proposed text:** <exact replacement>
 - **Reason:** <why this change serves the work better>

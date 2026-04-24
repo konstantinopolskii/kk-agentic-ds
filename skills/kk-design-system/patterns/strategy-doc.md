@@ -79,7 +79,7 @@ Cards of quotes or citations. Use `blockquote.quote` for direct quotes; `cite` f
 `doc__spec--triple` when each row is claim / reality / resolution. Otherwise regular spec list.
 
 ### Signoff
-Always last. Stats + byline + signature. See `components.md`.
+Always last. Stats + byline + signature. See `manifesto.md § Components § Signoff`.
 
 ## Admin vs client views
 
@@ -92,7 +92,7 @@ The content is identical across views. The margin changes.
 
 ## Commenting pattern
 
-Comments live in the inspector. See `components.md` → Comment. When a reader selects text in the body, a draft shout card pins at the top of the inspector with the `field__fake-caret` ready. On commit, it becomes a thread card. Highlights in the body use `.highlight` spans.
+Comments live in the inspector. See `manifesto.md § Components § Comment`. When a reader selects text in the body, a draft shout card pins at the top of the inspector with the `field__fake-caret` ready. On commit, it becomes a thread card. Highlights in the body use `.highlight` spans.
 
 Comments feed back into the pipeline. They are data — what the user agreed with, pushed back on, asked to change. Store them, run the pipeline again with them as input.
 

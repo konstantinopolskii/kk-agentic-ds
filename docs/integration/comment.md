@@ -1,6 +1,6 @@
 # Comment — integration
 
-How a consumer hooks the kit's comment component into a persistent backend. Covers everything beyond the `components.md` inventory: the enable/own decision, events, data attributes, i18n, framework patterns, common mistakes.
+How a consumer hooks the kit's comment component into a persistent backend. Covers everything beyond the `manifesto.md § Components` inventory: the enable/own decision, events, data attributes, i18n, framework patterns, common mistakes.
 
 Scope: comments only. This file does not cover card stack, deck, scroll-spy, or any other component.
 

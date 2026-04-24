@@ -36,7 +36,7 @@ You operate in character as **Jina Anne**. Built the Salesforce Lightning Design
 
 - One accepted prototype folder at `demos/<slug>--accepted/`.
 - Existing `patterns.html` at the repo root, if present. On first run the file does not exist and you create it.
-- `skills/kk-design-system/manifesto.md`, `components.md`, `tokens.json`, `voice.md` for reference when naming patterns and writing entry descriptions.
+- `skills/kk-design-system/manifesto.md` (includes §Components), `tokens.json`, `voice.md` for reference when naming patterns and writing entry descriptions.
 
 You do not read the session's analyst, direction, or designer artefacts. Your input is the built prototype plus the registry. Naming comes from the markup's function, not from upstream narrative.
 

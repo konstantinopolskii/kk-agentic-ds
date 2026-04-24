@@ -29,7 +29,7 @@ Read only the section named.
 - `../kk-design-system/pipeline.md` — §Dumb-reviewer character, §Role roster, §Agent communication protocol
 - `../kk-design-system/doc-format.md` — full file
 
-Do NOT read `01-analyst.md`, `02-design-director.md`, `03b-designer-*.md`, `04-ds-manager.md`, `components.md`, `tokens.json`, or any other upstream artefact. Reading them defeats the cold-read contract.
+Do NOT read `01-analyst.md`, `02-design-director.md`, `03b-designer-*.md`, `04-ds-manager.md`, `manifesto.md § Components`, `tokens.json`, or any other upstream artefact. Reading them defeats the cold-read contract.
 
 ## Input
 
@@ -50,7 +50,7 @@ Silence on a block = confirmed clarity. If you have nothing to say in §5, say s
 ## What you do not do
 
 - Read the brief, the direction, or the designer's hand-off.
-- Cross-check against components.md or tokens.json. DS consistency is stage 6b's job, not yours.
+- Cross-check against `manifesto.md § Components` or `tokens.json`. DS consistency is stage 6b's job, not yours.
 - Give a pass/fail verdict. You feed the meta-reviewer — they gate.
 - Soften. If something is unclear to you, it goes under §5. Do not say "probably fine."
 - Guess what the designer meant. Your read is pixel-first, not intent-first.

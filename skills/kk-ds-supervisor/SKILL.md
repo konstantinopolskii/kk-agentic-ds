@@ -23,7 +23,7 @@ Read these before judging:
 
 - `../kk-design-system/manifesto.md` — principles, 80/20, chunking, contrast.
 - `../kk-design-system/tokens.json` — every legal color, spacing, radius, type size.
-- `../kk-design-system/components.md` — the component inventory.
+- `../kk-design-system/manifesto.md § Components` — the component inventory.
 - `../kk-design-system/voice.md` — voice + AI-tells inventory.
 - `../kk-design-system/pipeline.md` — §Agent communication protocol
 
@@ -54,7 +54,7 @@ Walk the nesting top-down: screen, panel, card, row.
 ### 3. Inventory — did the draft invent anything?
 
 For every class used, every token referenced, every HTML shape emitted:
-- Is it in `components.md`? If not, flag.
+- Is it in `manifesto.md § Components`? If not, flag.
 - Is it in `tokens.json`? If not, flag.
 - Is there an inline style setting a color, size, or spacing? Flag.
 - Are there utility classes from Tailwind/Bootstrap/etc? Flag.

@@ -38,7 +38,7 @@ Read before changing anything:
 - `../kk-design-system/manifesto.md` — principles apply to every addition.
 - `../kk-design-system/voice.md` — every line of prose, every label, every commit message must pass the AI-tells inventory. Maintainer changes get the same voice scrutiny as consumer output.
 - `../kk-design-system/pipeline.md` — stages 1 through 5 still run. Maintainer work is allowed to expand the inventory during stage 2; it is never allowed to skip stages.
-- `../kk-design-system/components.md` and `../kk-design-system/tokens.json` — the artifacts you are about to edit. Read both before changing either.
+- `../kk-design-system/manifesto.md` (includes §Components) and `../kk-design-system/tokens.json` — the artifacts you are about to edit. Read both before changing either.
 
 ## The evolve protocol — mandatory for every addition, removal, or rename
 
@@ -51,7 +51,7 @@ Say it out loud, in the PR description or the conversation. "The kit has no way 
 Not for the version of the kit that wrote the rule. The rule might be wrong. The code might be wrong. Pick one. Defend it in one sentence.
 
 ### 3. Update the rule and the code in the same PR
-The manifesto and the CSS move together. `SKILL.md` and `components.md` move together. Never one without the other.
+The manifesto and the CSS move together. `SKILL.md` and `manifesto.md § Components` move together. Never one without the other.
 
 ### 4. Log it
 Either in `#backlog` of `index.html` (unresolved, visible) or in `CHANGELOG.md` (shipping). Hidden issues are worse than visible ones.
@@ -65,7 +65,7 @@ Any edit that touches what consumers see must ship with this set. If one is miss
 
 1. **The code** — `vars.css`, `style.css`, or the skill file you're changing.
 2. **The doc** — `index.html`, whichever section owns the rule (manifesto foundations, component page, voice rules, whichever applies).
-3. **The skill reference files** — `skills/kk-design-system/tokens.json`, `components.md`, `voice.md`, `manifesto.md`. These are what the agent reads. Drift between CSS and skill reference files is the worst failure mode, because the agent trusts the skill files.
+3. **The skill reference files** — `skills/kk-design-system/tokens.json`, `voice.md`, `manifesto.md` (which carries §Components). These are what the agent reads. Drift between CSS and skill reference files is the worst failure mode, because the agent trusts the skill files. `components.md` survives as a re-export stub until v2.0.0 — edits to the inventory land in `manifesto.md § Components`, not in the stub.
 4. **`CHANGELOG.md`** — one entry, in the format: Added / Removed / Moved.
 5. **`package.json`** + **`.claude-plugin/plugin.json`** version bump, in lockstep. Semver:
    - **Major** — removed a component, renamed a class, changed a skill's `description` trigger phrase, broke a consumer's selector.
@@ -105,7 +105,7 @@ After any visual or component change, invoke `kk-ds-supervisor` against the affe
 
 ## Hidden failure modes — watch for these
 
-- **Drift between CSS and skill reference files.** The agent reads `tokens.json` and `components.md`, not the raw CSS. Add a token to `vars.css` but forget `tokens.json`, and the agent will keep rejecting the new token as off-grid even after it ships to consumers.
+- **Drift between CSS and skill reference files.** The agent reads `tokens.json` and `manifesto.md § Components`, not the raw CSS. Add a token to `vars.css` but forget `tokens.json`, and the agent will keep rejecting the new token as off-grid even after it ships to consumers.
 - **Doc change without skill change.** Update `#ai-tells` in `index.html` but not `voice.md`, and humans reading the doc see the new rule while agents do not. The two surfaces diverge silently.
 - **Version bump without CHANGELOG.** The GitHub release body reads from `CHANGELOG.md`. Silent bumps ship empty release notes and Renovate PRs with no context.
 - **Local edits inside a consumer's `node_modules` or git submodule.** Never. Land changes here, tag, release.

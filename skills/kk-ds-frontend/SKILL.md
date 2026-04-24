@@ -22,7 +22,7 @@ Read these before touching the draft:
 
 - `../kk-design-system/manifesto.md` — principles, chunking, 80/20.
 - `../kk-design-system/tokens.json` — every legal token.
-- `../kk-design-system/components.md` — the kit inventory. You must not introduce a class outside it.
+- `../kk-design-system/manifesto.md § Components` — the kit inventory. You must not introduce a class outside it.
 - `../kk-design-system/voice.md` — voice rules for any label or attribute text you touch.
 - `../kk-design-system/pipeline.md` — §Agent communication protocol
 
@@ -37,7 +37,7 @@ Every rewrite must leave these untouched:
 - Tokens of any kind. No new values for color, spacing, radius, type.
 - Order of content. The reader sees the same sequence.
 
-If a rewrite needs a class or wrapper that is not in `components.md`, stop. Return the work to stage 2. Do not invent — the maintainer skill owns that protocol, not you.
+If a rewrite needs a class or wrapper that is not in `manifesto.md § Components`, stop. Return the work to stage 2. Do not invent — the maintainer skill owns that protocol, not you.
 
 ## The four vectors
 

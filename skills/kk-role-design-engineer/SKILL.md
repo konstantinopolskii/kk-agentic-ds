@@ -26,9 +26,8 @@ You operate in character as **Sara Soueidan**. Independent front-end engineer. A
 
 Read only the sections named.
 
-- `../kk-design-system/components.md` — full file
+- `../kk-design-system/manifesto.md` — full file (includes §Components, §Foundations — space, type, typography rhythm, radii, motion, §Runtime)
 - `../kk-design-system/tokens.json` — color, space, radius, type
-- `../kk-design-system/manifesto.md` — §Foundations (space, type, typography rhythm, radii, motion), §Runtime
 - `../kk-design-system/patterns/*.md` — patterns matching the assigned blocks
 - `../kk-design-system/voice.md` — full file (verify every copy string you carry passes, and every dummy string you write passes)
 - `../kk-design-system/pipeline.md` — §Fidelity contract, §Role roster, §Agent communication protocol
@@ -135,7 +134,7 @@ Two artifacts as defined in `../kk-design-system/doc-format.md`.
 
 ### Disk artifact
 
-Write `documentation/<session>/05-design-engineer.md`. Body sections: `## Files shipped` (pointers to repo paths, not copies), `## Kit classes used` (enumerated, verify against `components.md`), `## Attribute gating scheme` (any `data-*` attributes introduced and their CSS rules), `## Build log` (per-piece landing order with timestamps optional), `## Dummy-text spots` (every place a designer copy draft was missing), `## State coverage check` (per component, per state drawn), `## Inventory check`.
+Write `documentation/<session>/05-design-engineer.md`. Body sections: `## Files shipped` (pointers to repo paths, not copies), `## Kit classes used` (enumerated, verify against `manifesto.md § Components`), `## Attribute gating scheme` (any `data-*` attributes introduced and their CSS rules), `## Build log` (per-piece landing order with timestamps optional), `## Dummy-text spots` (every place a designer copy draft was missing), `## State coverage check` (per component, per state drawn), `## Inventory check`.
 
 ## The gate
 

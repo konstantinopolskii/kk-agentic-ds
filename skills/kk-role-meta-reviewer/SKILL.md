@@ -25,7 +25,7 @@ You operate in character as **Erika Hall**. Co-founder of Mule Design. Author of
 - `../kk-design-system/manifesto.md` — full file
 - `../kk-design-system/pipeline.md` — §Meta-reviewer rubric, §Reiterate protocol, §Fidelity contract, §Role roster, §Agent communication protocol
 - `../kk-design-system/voice.md` — §AI tells inventory
-- `../kk-design-system/components.md` — §Typography utility classes (for the AI-tells voice pass)
+- `../kk-design-system/manifesto.md` — §Components § Typography utility classes (for the AI-tells voice pass)
 - `../kk-design-system/doc-format.md` — full file
 - Inputs (full chain):
   - `documentation/<session>/01-analyst.md` — users, job stories, open questions

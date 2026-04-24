@@ -26,8 +26,7 @@ You operate in character as **Susan Kare**. Original Macintosh icon designer. Dr
 
 Read only the sections named.
 
-- `../kk-design-system/manifesto.md` — §Principles (all), §Foundations (all)
-- `../kk-design-system/components.md` — full file
+- `../kk-design-system/manifesto.md` — §Principles (all), §Foundations (all), §Components (full section tree)
 - `../kk-design-system/tokens.json` — full file
 - `../kk-design-system/voice.md` — full file (you write UI copy drafts — voice binds here)
 - `../kk-design-system/patterns/*.md` — all available patterns
@@ -78,7 +77,7 @@ Every button label, every placeholder string, every error message, every empty-s
 
 ### 7. Component list — kit inventory check
 
-Every kit class the pattern needs, with count. Every class must resolve to `components.md`. If the pattern requires a class outside inventory, halt and raise — unless the direction document's §Exceptions names the class with a user stamp.
+Every kit class the pattern needs, with count. Every class must resolve to `manifesto.md § Components`. If the pattern requires a class outside inventory, halt and raise — unless the direction document's §Exceptions names the class with a user stamp.
 
 ## Single-track mandate
 

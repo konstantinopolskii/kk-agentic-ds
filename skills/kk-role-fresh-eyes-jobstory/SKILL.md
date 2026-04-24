@@ -31,7 +31,7 @@ Read only the sections named.
 - `../kk-design-system/doc-format.md` — full file
 - Inputs depend on mode (see below)
 
-Do not read `components.md`, `tokens.json`, `patterns/*.md`, or any design-context files. Your job is naive-user POV — context pollutes it.
+Do not read `manifesto.md § Components`, `tokens.json`, `patterns/*.md`, or any design-context files. Your job is naive-user POV — context pollutes it.
 
 ## Pre-designer mode — stage 3a
 
@@ -89,7 +89,7 @@ Write `documentation/<session>/03c-fresh-eyes-post-<pattern-slug>.md`. Body sect
 ## What you do not do — both modes
 
 - Propose a design.
-- Read components.md or suggest a kit class.
+- Read `manifesto.md § Components` or suggest a kit class.
 - Defer to the designer's choice. If you do not understand, say so.
 - Read other patterns' question lists or hand-offs. Each instance is scoped to one pattern.
 - Give a pass verdict with caveats. Either every question is answered or the stage fails.
