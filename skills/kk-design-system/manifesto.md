@@ -69,7 +69,7 @@ Selection renders inverted — `--color-text` background, `--color-bg` text. No 
 
 ### Type
 
-Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas. Three weights used in the kit (regular, medium, bold), seven sizes (66 to 14 px). No italics outside of quotes.
+Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas. Three weights used in the kit (regular, medium, bold), seven sizes (66 to 14 px). No italics in the kit.
 
 One distinction step between two elements: bold vs regular, or big vs small, or black vs muted. Never all three. Never subtle.
 
@@ -122,7 +122,7 @@ Rank binding: every `<h4>` element in kit surfaces carries the `t-subtitle` clas
 
 Title leading matches body leading. `--lh-title` sits at 32, same as `--lh-body`, both at 22 px font size. Inline code plus title text on the same line no longer jumps when the line breaks between them — the title line-box matches the body line-box, so mixed-rank lines stay on a single vertical rhythm. Prior 28 px title leading produced a visible height jog the moment a long title wrapped into a second line or sat next to a body paragraph above.
 
-Quotes render black, Medium 500, italic, body-sized (22 / 32). The italic face carries the citation. Size stays at body rank so a quote reads at the same weight as the prose it interrupts — stepping down to caption under a paragraph or after a horizontal rule leaves the quote looking like metadata. Muting the colour would do the same and contradict the no-muted-by-default rule. A quote is content, not metadata. `.quote` declares size explicitly rather than inheriting from the document root (`body` sits at caption size).
+Quotes render black, Medium 500, body-sized (22 / 32), with a 4 px left border. No italic — the left rule carries the distinction. Size stays at body rank so a quote reads at the same weight as the prose it interrupts — stepping down to caption under a paragraph or after a horizontal rule leaves the quote looking like metadata. Muting the colour would do the same and contradict the no-muted-by-default rule. A quote is content, not metadata. `.quote` declares size explicitly rather than inheriting from the document root (`body` sits at caption size).
 
 Raw HTML blocks embedded in prose carry a muted caption line above naming what the block is, for example `<p class="t-caption t-muted">Example</p>`. Without the caption the embedded block competes with section headings for attention and reads as a standalone callout rather than an illustration of what the pattern looks like.
 
