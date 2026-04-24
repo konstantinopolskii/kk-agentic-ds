@@ -371,6 +371,11 @@ body {
   scroll-margin-top: var(--space-5);
   padding-bottom: var(--space-15);
 }
+.doc > .doc__section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+}
 /* Internal rhythm — asymmetric per Lebedev's rules 12, 13, 14.
    Paragraph-to-paragraph (inner): 20 px. Heading-to-following-paragraph
    (rule 13): matches or exceeds the heading's line-height. Preceding-
