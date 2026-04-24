@@ -2040,30 +2040,40 @@ ol.t-list > li::before {
 }
 
 /* Prose list — used for markdown-rendered `<ul>`/`<ol>` where each
-   item is a sentence or phrase, not a data row. Body-sized, black,
-   Medium 500, with a disc (ul) or decimal (ol) marker in the left
-   gutter. No hairlines between items — hairlines belong to the
-   tabular `.t-list` pattern, not prose. Paragraph rhythm between
-   items reads as continuous prose broken into enumerated beats.
-   Sits at the same size + weight as surrounding body copy so a list
-   inside a markdown article does not visually step down from the
-   paragraphs it breaks. */
+   item is a sentence or phrase, not a data row. Caption-sized to
+   render tight and structured like a registry row pattern. Each item
+   sits on its own row with a 0.5px hairline separating from the next.
+   Disc (ul) or decimal (ol) marker in the left gutter. Spacing and
+   typography aligned with `.t-list` so both tabular and prose lists
+   share the same tight, hairlined row treatment. */
 .t-prose-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding: 0 0 0 var(--space-6);
+  gap: 0;
+  padding: 0;
   margin: 0;
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
   font-weight: var(--fw-regular);
-  letter-spacing: var(--track-tight);
   color: var(--color-text);
+}
+.t-prose-list > li {
+  position: relative;
+  padding: var(--space-3) 0 var(--space-3) var(--space-5);
+}
+.t-prose-list > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: var(--space-5);
+  right: 0;
+  height: 0.5px;
+  background: var(--color-text);
 }
 ul.t-prose-list { list-style: disc; }
 ol.t-prose-list { list-style: decimal; }
-.t-prose-list > li { padding: 0; }
-.t-prose-list > li::marker {
+ul.t-prose-list > li::marker,
+ol.t-prose-list > li::marker {
   color: var(--color-text);
   font-weight: var(--fw-bold);
 }
