@@ -2064,6 +2064,7 @@ ol.t-prose-list { list-style: decimal; }
 .t-prose-list > li { padding: 0; }
 .t-prose-list > li::marker {
   color: var(--color-text);
+  font-weight: var(--fw-bold);
 }
 
 /* Figure — the SVG or image alone, then a micro-muted caption. No
