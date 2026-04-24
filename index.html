@@ -5,78 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Agentic Design System — signed, by Konstantin Konstantinopolskii</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=ideation">
-  <link rel="stylesheet" href="./style.css?v=ideation">
+  <link rel="stylesheet" href="./vars.css?v=md-source">
+  <link rel="stylesheet" href="./style.css?v=md-source">
 </head>
 <body>
   <div class="app" data-view="doc">
     <!-- ================================================================= -->
     <!-- Sidebar: brand, nav groups (scroll-spy targets), footer            -->
+    <!-- TOC is hand-curated. The Inventory + Distribution groups point at -->
+    <!-- hand-written pointer cards; the other groups point at sections    -->
+    <!-- wrapped out of manifesto.md at render time by the post-render     -->
+    <!-- script in main.                                                   -->
     <!-- ================================================================= -->
     <aside class="sidebar" aria-label="Navigation">
       <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
 
       <nav class="sidebar__nav" id="toc">
         <span class="toc__indicator" aria-hidden="true"></span>
-        <section class="nav-group">
-          <h4 class="t-subtitle">Meanings</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#philosophy">Philosophy</a></li>
-            <li class="t-caption"><a href="#why">Why this exists</a></li>
-            <li class="t-caption"><a href="#jobs">Job stories</a></li>
-            <li class="t-caption"><a href="#ttv">Time to value</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Principles</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#signal">Pure signal</a></li>
-            <li class="t-caption"><a href="#expected">Expected patterns</a></li>
-            <li class="t-caption"><a href="#eighty-twenty">Eighty-twenty</a></li>
-            <li class="t-caption"><a href="#chunking">Chunking</a></li>
-            <li class="t-caption"><a href="#contrast">Radical contrast</a></li>
-            <li class="t-caption"><a href="#ipad">The iPad feel</a></li>
-          </ul>
-        </section>
 
         <section class="nav-group">
           <h4 class="t-subtitle">Inventory</h4>
           <ul class="nav-group__items">
-            <li class="t-caption"><a href="#components">Components</a></li>
-            <li class="t-caption"><a href="#patterns">Patterns</a></li>
-            <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
-            <li class="t-caption"><a href="#foundations">Foundations</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Voice</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#ai-tells">No AI tells</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Practice</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#practice">Where it lives</a></li>
-            <li class="t-caption"><a href="#evolve">How to evolve a rule</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Audit</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#backlog">Backlog</a></li>
-            <li class="t-caption"><a href="#ideation">Ideation</a></li>
+            <li class="t-caption"><a href="#inv-components">Components</a></li>
+            <li class="t-caption"><a href="#inv-patterns">Patterns</a></li>
+            <li class="t-caption"><a href="#inv-pipeline">Pipeline</a></li>
+            <li class="t-caption"><a href="#inv-foundations">Foundations</a></li>
           </ul>
         </section>
 
         <section class="nav-group">
           <h4 class="t-subtitle">Distribution</h4>
           <ul class="nav-group__items">
-            <li class="t-caption"><a href="#distribution">Install and ship</a></li>
+            <li class="t-caption"><a href="#inv-practice">Where it lives</a></li>
+            <li class="t-caption"><a href="#inv-distribution">Install and ship</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h4 class="t-subtitle">Meanings</h4>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#why-this-exists">Why this exists</a></li>
+            <li class="t-caption"><a href="#philosophy">Philosophy</a></li>
+            <li class="t-caption"><a href="#job-stories">Job stories</a></li>
+            <li class="t-caption"><a href="#time-to-value">Time to value</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h4 class="t-subtitle">Principles</h4>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#principles">Principles</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h4 class="t-subtitle">Matter</h4>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#foundations">Foundations</a></li>
+            <li class="t-caption"><a href="#components">Components</a></li>
+            <li class="t-caption"><a href="#runtime">Runtime</a></li>
+          </ul>
+        </section>
+
+        <section class="nav-group">
+          <h4 class="t-subtitle">Protocols</h4>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#protocols">Evolve, backlog, ideation</a></li>
+            <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
+            <li class="t-caption"><a href="#documentation-contract">Documentation</a></li>
+            <li class="t-caption"><a href="#ship-discipline">Ship discipline</a></li>
           </ul>
         </section>
 
@@ -96,306 +93,17 @@
     </aside>
 
     <!-- ================================================================= -->
-    <!-- Document: manifesto, foundations philosophy, ai-tells, evolve,     -->
-    <!-- backlog, ideation. Atoms, elements, patterns, and component demos  -->
-    <!-- live in demos/fundamental--accepted/ + patterns.html.              -->
+    <!-- Document: thin shell. Pointer cards sit at the top; the manifesto -->
+    <!-- body renders from markdown via [data-md-src]; signoff closes. No  -->
+    <!-- shell hero — the markdown file's `# Manifesto` carries the page   -->
+    <!-- h1 (data-md-heading-offset="0"), so one hero rules the page.     -->
     <!-- ================================================================= -->
     <main class="doc" id="doc">
-      <h1 class="t-hero">Agentic Design&nbsp;System</h1>
 
-      <p class="doc__intro t-body">
-        A design system for AI-assisted product work. Four layers:
-        meanings, perception, matter, pipeline. Output is screens
-        with low cognitive load and a small component surface.
-      </p>
-      <p class="doc__intro t-body">
-        Agentic because AI does most of the drafting. The rules
-        below exist so a junior agent (or a junior human) ships
-        coherent work before human review.
-      </p>
-      <p class="doc__intro t-body">
-        The kit's atoms, elements, and patterns live in
-        <a href="./demos/fundamental--accepted/index.html">the fundamental demo</a>
-        and
-        <a href="./patterns.html">the patterns registry</a>.
-        This document carries the thinking: philosophy, foundations,
-        voice, protocols.
-      </p>
-
-      <div class="doc__signoff">
-        <div class="doc__signoff-stats">
-          <div class="stat t-caption">
-            <div><span class="t-caption--bold">49</span> sections across nine parts, from meanings to pipeline.</div>
-            <div><span class="t-caption--bold">9</span> components in the kit, enough to cover most SAAS flows.</div>
-          </div>
-          <div class="stat t-caption">
-            <div><span class="t-caption--bold">9</span> color tokens, and not one more. No brand, no status color.</div>
-            <div><span class="t-caption--bold">2</span> radii everywhere. 12px for small things, 24px for cards.</div>
-          </div>
-        </div>
-
-        <div class="doc__signoff-signature">
-          <p class="t-caption">
-            Signed by
-            <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
-            founder at
-            <span class="t-caption--bold">kk.consulting<br /></span>
-            <span class="t-muted">18 April &lsquo;26 at 13:37 Tbilisi Time.</span>
-          </p>
-          <img class="doc__signoff-signature-img" src="signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
-        </div>
-      </div>
-
-      <!-- ================== MEANINGS ==================================== -->
-
-      <h2 class="doc__part">Meanings</h2>
-
-      <article class="doc__section" id="philosophy">
-        <h2 class="t-display">
-          Philosophy<br />
-          <span class="t-display--medium t-muted">The essence</span>
-        </h2>
-        <p class="t-body">
-          A product is a document. The document is the UI. The system
-          treats both as one object. Every rule below serves that.
-        </p>
-      </article>
-
-      <article class="doc__section" id="why">
-        <h2 class="t-display">
-          Why this exists<br />
-          <span class="t-display--medium t-muted">Business to pixels</span>
-        </h2>
-        <p class="t-body">
-          Design verifies the business brief before pixels. If the
-          brief has logical holes, the first task is to push it
-          back. Every element on the final screen maps to a metric
-          or a user problem.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Signal</dt>
-              <dd class="doc__spec-value">What the user came here for. Must be obvious in under a second.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Noise</dt>
-              <dd class="doc__spec-value">Everything else. Ruthlessly isolated, demoted, or removed.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Magic</dt>
-              <dd class="doc__spec-value">Not placed. Emerges after signal is clear and noise is gone. Last step, never first.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="jobs">
-        <h2 class="t-display">
-          Job stories<br />
-          <span class="t-display--medium t-muted">Context, motivation, value</span>
-        </h2>
-        <p class="t-body">
-          A user hires a product for a job. One priority job per
-          screen. Secondary scenarios are isolated or hidden until
-          requested.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Formula</dt>
-              <dd class="doc__spec-value"><span class="t-mono">context + motivation = step &rarr; value</span></dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Example</dt>
-              <dd class="doc__spec-value">Voice transcription during an interview. Context: the interviewer cannot look away. Motivation: don&rsquo;t lose the question. Step: glance. Value: keep flow. So the screen is huge question cards that swipe themselves, every control hidden.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Anti-pattern</dt>
-              <dd class="doc__spec-value">Designing from a component first, then inventing a job to justify it.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="ttv">
-        <h2 class="t-display">
-          Time to value<br />
-          <span class="t-display--medium t-muted">Lead from aha to aha</span>
-        </h2>
-        <p class="t-body">
-          Path length is measured in time to the first insight, not
-          clicks. Cut steps where possible. Deliver value before
-          the first tap when possible.
-        </p>
-      </article>
-
-      <!-- ================== PRINCIPLES =================================== -->
-
-      <h2 class="doc__part">Principles</h2>
-
-      <article class="doc__section" id="signal">
-        <h2 class="t-display">
-          Pure signal<br />
-          <span class="t-display--medium t-muted">Modernism, not decoration</span>
-        </h2>
-        <p class="t-body">
-          Utilitarian modernism, not postmodern complexity. Effort
-          spent decoding the interface is proportional to how bad
-          it is. Beauty is a side effect of clarity.
-        </p>
-      </article>
-
-      <article class="doc__section" id="expected">
-        <h2 class="t-display">
-          Expected patterns<br />
-          <span class="t-display--medium t-muted">Don&rsquo;t make them think</span>
-        </h2>
-        <p class="t-body">
-          Known patterns from the real world and common apps are
-          already loaded in user memory. Reusing them costs nothing.
-          Fighting them raises cognitive load for no gain.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Red button</dt>
-              <dd class="doc__spec-value">Cancel or reset. Red is not used for anything else.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">X in a corner</dt>
-              <dd class="doc__spec-value">Closes the window. Not save, not hide, not minimize.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Back arrow</dt>
-              <dd class="doc__spec-value">Goes back. Never opens a different section.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Hamburger</dt>
-              <dd class="doc__spec-value">Navigation. Nothing else hides behind it.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="eighty-twenty">
-        <h2 class="t-display">
-          Eighty / twenty<br />
-          <span class="t-display--medium t-muted">Fractal attention</span>
-        </h2>
-        <p class="t-body">
-          Primary signal takes 80% of visual weight. Secondary fits
-          in 20%. Fractal: applies to screen, panel, card, row.
-          Empty space counts toward the 80%.
-        </p>
-        <div class="card">
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Screen level</dt>
-              <dd class="doc__spec-value">In a Google Meet call, the participant video is 80%. The control bar is 20%.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Panel level</dt>
-              <dd class="doc__spec-value">Inside that control bar, the central mic / camera buttons plus their empty space grab 80% of the panel&rsquo;s attention.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Card level</dt>
-              <dd class="doc__spec-value">Inside an active inspector card, the primary CTA plus the heading are 80%. Fields, metadata, secondary buttons fit in the remaining 20%.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="chunking">
-        <h2 class="t-display">
-          Chunking<br />
-          <span class="t-display--medium t-muted">Seven, then split</span>
-        </h2>
-        <p class="t-body">
-          Working memory handles about seven items. Beyond that,
-          scanning degrades and the list becomes a wall. When a
-          collection grows past seven, break it into categories.
-          Each category becomes its own shorter list.
-        </p>
-        <p class="t-body">
-          Fractal. Applies to bullet lists, numbered lists, spec
-          rows, nav items, card stacks, menu items, component
-          inventories. Any flat collection.
-        </p>
-        <div class="card">
-          <dl class="doc__spec doc__spec--value">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Sidebar</dt>
-              <dd class="doc__spec-value">44 items</dd>
-              <dd class="doc__spec-value">split into nine nav groups of 1&ndash;9 items.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Color tokens</dt>
-              <dd class="doc__spec-value">9 tokens</dd>
-              <dd class="doc__spec-value">grouped as 2 backgrounds, 2 surface tints, 2 hairlines, 3 text alphas.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Spacing tokens</dt>
-              <dd class="doc__spec-value">12 tokens</dd>
-              <dd class="doc__spec-value">split into micro, standard, macro cards.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Decision tree</dt>
-              <dd class="doc__spec-value">9 questions</dd>
-              <dd class="doc__spec-value">split into structural and explanatory cards.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Checklist</dt>
-              <dd class="doc__spec-value">17 items</dd>
-              <dd class="doc__spec-value">split into four cards: before pixels, tokens and grid, interaction and access, text and voice.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <article class="doc__section" id="contrast">
-        <h2 class="t-display">
-          Radical contrast<br />
-          <span class="t-display--medium t-muted">The enemy is gray mush</span>
-        </h2>
-        <p class="t-body">
-          Gray mush is the default AI failure mode: muted
-          everything, contrast nowhere, signal lost. The cure is
-          hypertrophied contrast &mdash; hero
-          <span class="t-mono">66px</span> against body
-          <span class="t-mono">22px</span>, a 3&times; jump.
-        </p>
-        <p class="t-body">
-          One distinction step between two elements. Bold vs
-          regular, or big vs small, or black vs muted. Never all
-          three at once. Never subtle.
-        </p>
-      </article>
-
-      <article class="doc__section" id="ipad">
-        <h2 class="t-display">
-          The iPad feel<br />
-          <span class="t-display--medium t-muted">Split view, soft inside</span>
-        </h2>
-        <p class="t-body">
-          Three panes in one frame, each with its own scroll. Only
-          the middle column moves during reading. This is iPad
-          split view, not a scrolling document.
-        </p>
-        <p class="t-body">
-          Soft corners on every surface inside. Crisp edges outside,
-          where the document meets the screen. No skeuomorphism, no
-          liquid glass.
-        </p>
-      </article>
-
-      <!-- ================== INVENTORY =================================== -->
-      <!-- Pointer stubs. Full inventory lives in the fundamental demo,     -->
-      <!-- patterns.html, and pipeline.md. One sentence each.               -->
-
+      <!-- ================== INVENTORY POINTER CARDS ===================== -->
       <h2 class="doc__part">Inventory</h2>
 
-      <article class="doc__section" id="components">
+      <article class="doc__section" id="inv-components">
         <h2 class="t-display">
           Components<br />
           <span class="t-display--medium t-muted">Nine in the kit</span>
@@ -412,7 +120,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="patterns">
+      <article class="doc__section" id="inv-patterns">
         <h2 class="t-display">
           Patterns<br />
           <span class="t-display--medium t-muted">Registry at the repo root</span>
@@ -426,7 +134,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="pipeline">
+      <article class="doc__section" id="inv-pipeline">
         <h2 class="t-display">
           Pipeline<br />
           <span class="t-display--medium t-muted">Eight stages, eleven roles</span>
@@ -440,7 +148,7 @@
         </div>
       </article>
 
-      <article class="doc__section" id="foundations">
+      <article class="doc__section" id="inv-foundations">
         <h2 class="t-display">
           Foundations<br />
           <span class="t-display--medium t-muted">Values and swatches</span>
@@ -458,132 +166,10 @@
         </div>
       </article>
 
-      <!-- ================== VOICE ======================================== -->
-      <!-- Voice foundations live in skills/kk-design-system/voice.md.      -->
-      <!-- The ai-tells inventory stays here because the kit treats it as  -->
-      <!-- a public doc: humans read it on the manifesto page.             -->
+      <!-- ================== DISTRIBUTION POINTER CARDS ================== -->
+      <h2 class="doc__part">Distribution</h2>
 
-      <h2 class="doc__part">Voice</h2>
-
-      <article class="doc__section" id="ai-tells">
-        <h2 class="t-display">
-          No AI tells<br />
-          <span class="t-display--medium t-muted">Unmask the agent</span>
-        </h2>
-        <p class="t-caption">
-          Machine-readable source:
-          <a href="./skills/kk-design-system/voice.md">voice.md § No AI tells</a>.
-          The inventory below mirrors it for human readers.
-        </p>
-        <p class="t-body">
-          AI drafts leak the same tics. Cutting them is the fastest
-          way to un-AI a passage. Based on the Wikipedia project&rsquo;s
-          inventory of signs of AI writing; every item below is
-          forbidden in prose and UI text unless the user asks for
-          it explicitly.
-        </p>
-
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Words and verbs to cut</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Filler adjectives</dt>
-              <dd class="doc__spec-value"><span class="t-mono">vibrant, pivotal, intricate, meticulous, robust, seamless, breathtaking, rich, comprehensive, holistic</span>. Cut. If a noun needs an adjective, pick a specific one.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Buzzy nouns</dt>
-              <dd class="doc__spec-value"><span class="t-mono">tapestry, testament, landscape, journey, ecosystem, realm</span>. Metaphors that say nothing. Cut.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">&minus;ing filler verbs</dt>
-              <dd class="doc__spec-value"><span class="t-mono">showcasing, fostering, highlighting, emphasizing, reflecting, contributing to, delving into</span>. Drop the participle; name the action.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Copula avoidance</dt>
-              <dd class="doc__spec-value"><span class="t-mono">serves as, represents, stands as, features, boasts</span>. Use <span class="t-mono">is</span> and <span class="t-mono">has</span>.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Transitions that pad</dt>
-              <dd class="doc__spec-value"><span class="t-mono">Additionally, Moreover, Furthermore, In conclusion</span>. A period or a new paragraph already does the work.</dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Sentence shapes to cut</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">&ldquo;Not just X, but Y&rdquo;</dt>
-              <dd class="doc__spec-value">Artificial urgency. Say both facts directly, one sentence each.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">&ldquo;Not A, but B&rdquo;</dt>
-              <dd class="doc__spec-value">Usually just say B.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Rule of three</dt>
-              <dd class="doc__spec-value">Three-item adjective lists for fake completeness (&ldquo;fast, reliable, and scalable&rdquo;). Cut one, or all.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Elegant variation</dt>
-              <dd class="doc__spec-value">Swapping synonyms to avoid repeating a word. Repeat the word if it&rsquo;s the right one.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Em-dashes for punch</dt>
-              <dd class="doc__spec-value">Forbidden in headlines. Rare in body. A period almost always does the same job.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Moralizing closers</dt>
-              <dd class="doc__spec-value">&ldquo;Ultimately, this reminds us&hellip;&rdquo;, &ldquo;In an ever-evolving world&hellip;&rdquo;. Cut the closer; end on the last fact.</dd>
-            </div>
-          </dl>
-        </div>
-
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Structures and signals to cut</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Summary blocks</dt>
-              <dd class="doc__spec-value">&ldquo;Key takeaways&rdquo;, &ldquo;In summary&rdquo;, post-section recaps. The reader just read it. Cut.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Challenges and future prospects</dt>
-              <dd class="doc__spec-value">Generic closing pattern. &ldquo;Despite challenges, X continues to&hellip;&rdquo;. Cut or replace with a specific fact.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Weasel attribution</dt>
-              <dd class="doc__spec-value">&ldquo;Industry reports show&rdquo;, &ldquo;experts argue&rdquo;, &ldquo;observers note&rdquo;. Name the source or drop the claim.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">&ldquo;Such as&rdquo; exhaustive lists</dt>
-              <dd class="doc__spec-value">Naming five examples proves the category isn&rsquo;t clear. Give one, or name the category.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Title Case headings</dt>
-              <dd class="doc__spec-value">Sentence case in every heading. No Title Case Mid-Sentence Either.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Mechanical boldface</dt>
-              <dd class="doc__spec-value">Bolding every instance of a term turns prose into an instruction manual. Bold the heading, not the concept.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <!-- ================== PRACTICE ===================================== -->
-      <!-- Component inventory, reuse guidance, and the add-new process    -->
-      <!-- live in manifesto.md § Components + the fundamental demo. The   -->
-      <!-- protocol stays here because it governs the manifesto itself.   -->
-
-      <h2 class="doc__part">Practice</h2>
-
-      <article class="doc__section" id="practice">
+      <article class="doc__section" id="inv-practice">
         <h2 class="t-display">
           Where it lives<br />
           <span class="t-display--medium t-muted">Evolve here, inventory out</span>
@@ -596,116 +182,13 @@
           <a class="button button--primary t-subtitle" href="./patterns.html" target="_blank" rel="noopener">Open the registry</a>
           <p class="t-micro t-muted">
             Also: <a href="./skills/kk-design-system/manifesto.md" target="_blank" rel="noopener">manifesto.md &sect; Components</a>,
-            <a href="#evolve">§evolve</a>,
+            <a href="#protocols">§protocols</a>,
             <a href="./skills/kk-ds-maintainer/SKILL.md" target="_blank" rel="noopener">ship protocol</a>.
           </p>
         </div>
       </article>
 
-      <article class="doc__section" id="evolve">
-        <h2 class="t-display">
-          How to evolve a rule<br />
-          <span class="t-display--medium t-muted">When the manifesto drifts</span>
-        </h2>
-        <p class="t-body">
-          Rules in this document are canonical. Code that disagrees
-          with the manifesto is wrong unless the manifesto is. Either
-          the rule updates or the code does &mdash; never both
-          separately, never one silently.
-        </p>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">On conflict</h3>
-          </div>
-          <ol class="t-list">
-            <li>State the conflict out loud. Name the rule, name the code. No silent overrides.</li>
-            <li>Decide which side is right for the product today, not for the version that wrote the rule.</li>
-            <li>Update both in the same PR. The rule moves in the doc; the code moves in the kit.</li>
-            <li>Log the conflict in the <a href="#backlog">Backlog</a> section until it ships.</li>
-            <li>Sign the change.</li>
-          </ol>
-        </div>
-        <p class="t-caption">
-          Unresolved issues live in
-          <a href="#backlog">Backlog</a> openly. Hidden issues are
-          worse than visible ones.
-        </p>
-      </article>
-
-      <!-- ================== AUDIT ======================================= -->
-
-      <h2 class="doc__part">Audit</h2>
-
-      <article class="doc__section" id="backlog">
-        <h2 class="t-display">
-          Backlog<br />
-          <span class="t-display--medium t-muted">Known issues, unresolved</span>
-        </h2>
-        <p class="t-body">
-          Things the prototype does wrong on purpose, unfixed. No
-          priorities; no owners yet. When one lands, move it out of
-          the table and into the section that now describes the
-          fixed behavior.
-        </p>
-        <div class="card">
-          <p class="t-caption t-muted">Empty right now. Last audit cleared the list.</p>
-        </div>
-      </article>
-
-      <article class="doc__section" id="ideation">
-        <h2 class="t-display">
-          Ideation<br />
-          <span class="t-display--medium t-muted">Parked ideas we talked through</span>
-        </h2>
-        <p class="t-body">
-          Ideas the project considered but did not build. Kept here
-          so the reasoning survives and so future sessions don&rsquo;t
-          re-propose them without knowing the history.
-        </p>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Auto-sync inspector comments to Claude</h3>
-          </div>
-          <dl class="doc__spec">
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Goal</dt>
-              <dd class="doc__spec-value">Let Konstantin leave comments in the inspector; have Claude pick them up across sessions and improve the doc automatically.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Option A</dt>
-              <dd class="doc__spec-value">File System Access API. Browser writes threads to <span class="t-mono">comments.json</span>. No server, but Chromium-only and requires a local HTTP server (not <span class="t-mono">file://</span>). First commit needs a file-picker click.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Option B</dt>
-              <dd class="doc__spec-value">Local Node server + SQLite + MCP. Browser posts each comment; Claude reads and resolves through an MCP tool. Works everywhere; needs a running process.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Option C</dt>
-              <dd class="doc__spec-value">Manual export button that downloads a file. Simple. Extra click each time.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Round-trip problem</dt>
-              <dd class="doc__spec-value">When Claude marks a thread resolved, the browser doesn&rsquo;t know. Next write overwrites the resolution unless the browser reads the file first, hides resolved threads on load, and merges state on write. Doable, not cheap.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Parked</dt>
-              <dd class="doc__spec-value">Current volume of review feedback doesn&rsquo;t justify the plumbing. Writing notes directly into the doc or conversation works for now.</dd>
-            </div>
-            <div class="doc__spec-row">
-              <dt class="doc__spec-key">Revisit if</dt>
-              <dd class="doc__spec-value">Reviews start coming in across many sessions and manual capture gets lossy. Then build Option B &mdash; server + SQLite + MCP &mdash; as the path that covers all browsers and handles the round-trip cleanly.</dd>
-            </div>
-          </dl>
-        </div>
-      </article>
-
-      <!-- ================== DISTRIBUTION ================================ -->
-      <!-- Install, update, ship discipline all live in the maintainer     -->
-      <!-- skill's Ship protocol. Pointer only.                            -->
-
-      <h2 class="doc__part">Distribution</h2>
-
-      <article class="doc__section" id="distribution">
+      <article class="doc__section" id="inv-distribution">
         <h2 class="t-display">
           Install and ship<br />
           <span class="t-display--medium t-muted">The maintainer skill owns it</span>
@@ -718,13 +201,45 @@
           <a class="button button--primary t-subtitle" href="./skills/kk-ds-maintainer/SKILL.md" target="_blank" rel="noopener">Open the maintainer skill</a>
         </div>
       </article>
+
+      <!-- ================== MANIFESTO (RENDERED FROM MARKDOWN) ========== -->
+      <!-- manifesto.md renders with offset 0: source `#` lands at h1/t-hero,
+           `##` at h2/t-display, `###` at h3/t-title, `####` at h4/t-subtitle.
+           Post-render, each top-level `##` section gets wrapped into its
+           own .doc__section with a slugified id so scroll-spy tracks it
+           and the sidebar TOC resolves. The shell carries no h1 — the
+           markdown file's `# Manifesto` owns the page title. -->
+      <div id="manifesto-mount" data-md-src="./skills/kk-design-system/manifesto.md" data-md-heading-offset="0"></div>
+
+      <!-- ================== SIGNOFF ==================================== -->
+      <div class="doc__signoff">
+        <div class="doc__signoff-stats">
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">12</span> top-level sections across Meanings, Matter, Protocols.</div>
+            <div><span class="t-caption--bold">9</span> components in the kit, enough to cover most SAAS flows.</div>
+          </div>
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">9</span> color tokens, and not one more. No brand, no status color.</div>
+            <div><span class="t-caption--bold">4</span> radii: 12, 16, 24, and 9999 for pills.</div>
+          </div>
+        </div>
+
+        <div class="doc__signoff-signature">
+          <p class="t-caption">
+            Signed by
+            <span class="t-caption--bold">Konstantin Konstantinopolskii,<br /></span>
+            founder at
+            <span class="t-caption--bold">kk.consulting<br /></span>
+            <span class="t-muted">24 April &lsquo;26 at 12:00 Tbilisi Time.</span>
+          </p>
+          <img class="doc__signoff-signature-img" src="signature.svg" alt="Handwritten signature of Konstantin Konstantinopolskii" />
+        </div>
+      </div>
     </main>
 
     <!-- ================================================================= -->
-    <!-- Inspector: kept as a shell column for the three-pane layout and   -->
-    <!-- for the selection-to-draft comment flow the manifesto describes.  -->
-    <!-- The static demo threads + tweak / templates / share cards moved  -->
-    <!-- out with the slim; drafts still spawn live on text selection.    -->
+    <!-- Inspector: shell column for the selection-to-draft comment flow.  -->
+    <!-- Empty stack; drafts spawn on text selection via kit.js.           -->
     <!-- ================================================================= -->
     <aside class="inspector" aria-label="Comments">
       <section class="inspector__group">
@@ -738,17 +253,97 @@
     </aside>
   </div>
 
-  <!-- Behavioural kit extracted to js/kit.js in 0.7.0. The manifesto
-       page opts into the full comment selection flow (drafts from
-       selections, kebab actions, highlight-active observer). Consumers
-       that ship their own selection handler load kit.js without calling
-       enableCommentSelectionFlow. -->
-  <script src="./js/kit.js"></script>
-  <script>KK.enableCommentSelectionFlow();</script>
+  <!-- ================================================================= -->
+  <!-- Scripts: md.js fetches and renders manifesto.md; the post-render -->
+  <!-- hook wraps each top-level h2 + siblings into its own             -->
+  <!-- .doc__section so scroll-spy tracks and TOC anchors resolve;      -->
+  <!-- then KK.refresh() rescans the DOM.                               -->
+  <!-- kit.js must load first so KK.init fires on DOMContentLoaded, and -->
+  <!-- KK.enableCommentSelectionFlow opts this page into the full flow. -->
+  <!-- ================================================================= -->
+  <script src="./js/kit.js" defer></script>
+  <script src="./js/md.js" defer></script>
+  <script defer>
+    // Slugify heading text to an anchor id. Lowercase, trim, spaces to
+    // hyphens, drop everything outside [a-z0-9-]. Matches the TOC
+    // anchor ids in the sidebar.
+    function slugify(text) {
+      return (text || "")
+        .toLowerCase()
+        .replace(/[–—]/g, "-")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+    }
+
+    // Post-render wrapper. Takes the #manifesto-mount container with
+    // the rendered markdown tree, walks its children, and splits each
+    // h2.t-display + following siblings (until the next h2.t-display)
+    // into its own <article class="doc__section" id="..."></article>.
+    // Content before the first h2 (the # Manifesto h1 + lead paragraph)
+    // stays as a lead-in .doc__section with no id.
+    function wrapManifestoSections() {
+      var mount = document.getElementById("manifesto-mount");
+      if (!mount) return;
+      var doc = mount.parentNode;
+      var children = Array.prototype.slice.call(mount.childNodes);
+
+      var sections = [];
+      var current = null;
+
+      children.forEach(function (node) {
+        var isH2 = node.nodeType === 1
+          && node.tagName === "H2"
+          && node.classList.contains("t-display");
+        if (isH2) {
+          current = document.createElement("article");
+          current.className = "doc__section";
+          var id = slugify(node.textContent);
+          if (id) current.id = id;
+          sections.push(current);
+          current.appendChild(node);
+        } else if (current) {
+          current.appendChild(node);
+        } else {
+          // Content before the first h2 (the hero + opener paragraph).
+          // Seed a lead-in section with no id so scroll-spy does not
+          // latch onto it.
+          if (!sections.length || sections[0].id) {
+            var lead = document.createElement("article");
+            lead.className = "doc__section";
+            sections.unshift(lead);
+          }
+          sections[0].appendChild(node);
+        }
+      });
+
+      // Insert new sections in place of the mount, then remove it.
+      sections.forEach(function (s) { doc.insertBefore(s, mount); });
+      doc.removeChild(mount);
+    }
+
+    document.addEventListener("kk:md-rendered", function () {
+      wrapManifestoSections();
+      // Refresh kit modules so scroll-spy observes the new .doc__section
+      // nodes and the TOC indicator tracks them.
+      if (window.KK && typeof window.KK.refresh === "function") {
+        window.KK.refresh();
+      }
+    });
+
+    // Opt this page into the selection-to-draft comment flow. kit.js's
+    // English-labeled draft builder handles selections; consumers with
+    // their own localized flow skip this call.
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.KK && typeof window.KK.enableCommentSelectionFlow === "function") {
+        window.KK.enableCommentSelectionFlow();
+      }
+    });
+  </script>
 
   <!-- FABs — floating action buttons for narrow views (tablet + phone).
        Sit outside .app to escape overflow:hidden. data-view-target wires
-       them into the existing narrow-view toggle script above. -->
+       them into the existing narrow-view toggle in kit.js. -->
   <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Navigation">
     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
       <rect width="18" height="2" rx="1" fill="currentColor"/>
@@ -759,9 +354,6 @@
   <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Comments">
     <span class="fab__count">0</span>
   </button>
-  <!-- Add-a-comment FAB — visible only on narrow viewports with a live
-       selection in the doc (app[data-selection]). Tapping swaps the
-       view to the inspector and unveils the shout new-comment card. -->
   <button class="fab fab--comment" type="button" aria-label="Add a comment">Add a comment</button>
 </body>
 </html>
