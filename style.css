@@ -443,7 +443,7 @@ body {
 }
 .doc__section > h1,
 .doc__section > .t-hero {
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
 }
 .doc__section > h2,
 .doc__section > .t-display {
