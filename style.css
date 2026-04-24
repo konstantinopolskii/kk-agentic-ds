@@ -372,6 +372,19 @@ body {
   max-width: 612px;
   scroll-margin-top: var(--space-5);
 }
+/* Hero-first article rescue. When a doc__section opens with a t-hero h1
+   (markdown renderer at offset 0, where source `#` lands at hero), the
+   default padding-top 60 + margin-top 20 gives ~92 px above the hero —
+   under the rule-12 2× ratio against the hero's 80 px below-gap. Bump
+   padding-top to 140 so above lands at 172 px (parent gap 12 + margin-
+   top 20 + padding-top 140). Below stays at 80 (rule 13: ≥ hero line-
+   height 66). Ratio 2.15 — clears rule 12. Scoped by :has() so it fires
+   only on articles whose first child is h1/t-hero; articles that open
+   with display or title rank keep the original 60 px padding. */
+.doc__section:has(> h1:first-child),
+.doc__section:has(> .t-hero:first-child) {
+  padding-top: calc(var(--space-20) + var(--space-15));
+}
 /* Internal rhythm — asymmetric per Lebedev's rules 12, 13, 14.
    Paragraph-to-paragraph (inner): 20 px. Heading-to-following-paragraph
    (rule 13): matches or exceeds the heading's line-height. Preceding-

@@ -33,8 +33,6 @@
     </aside>
 
     <main class="doc" id="doc">
-      <h1 class="t-hero">Markdown renderer smoke test</h1>
-
       <p class="doc__intro t-body">
         Three articles below, each fed by a different <code class="t-mono">data-md-src</code>.
         Every article is a <code class="t-mono">doc__section</code> with the same scaffolding
@@ -42,17 +40,19 @@
         when their body is rendered from markdown.
       </p>
 
-      <h2 class="doc__part">Samples</h2>
-
       <!--
         Local serve: browsers block fetch() of file://. From the repo root:
           python3 -m http.server 8765
         Then open http://localhost:8765/demos/md-renderer-smoke/
+
+        Offset is explicit 0 so each article renders its own markdown
+        hierarchy starting at h1/t-hero. The shell carries no page h1 or
+        part label; three article h1s coexist on this internal test page.
       -->
 
-      <article class="doc__section" id="sample-a" data-md-src="./sample-a.md" data-md-heading-offset="2"></article>
-      <article class="doc__section" id="sample-b" data-md-src="./sample-b.md" data-md-heading-offset="2"></article>
-      <article class="doc__section" id="sample-c" data-md-src="./sample-c.md" data-md-heading-offset="2"></article>
+      <article class="doc__section" id="sample-a" data-md-src="./sample-a.md" data-md-heading-offset="0"></article>
+      <article class="doc__section" id="sample-b" data-md-src="./sample-b.md" data-md-heading-offset="0"></article>
+      <article class="doc__section" id="sample-c" data-md-src="./sample-c.md" data-md-heading-offset="0"></article>
     </main>
 
     <aside class="inspector" aria-label="Inspector">
