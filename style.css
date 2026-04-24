@@ -369,7 +369,7 @@ body {
   flex-direction: column;
   max-width: 612px;
   scroll-margin-top: var(--space-5);
-  padding-bottom: var(--space-15);
+  padding-bottom: var(--space-20);
 }
 .doc > .doc__section:first-of-type {
   border-top: none;
