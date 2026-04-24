@@ -312,7 +312,7 @@ body {
      outer page margin ≥ body line-height. `--doc-pad-left` clamp floors
      at 32 px too, so the text block breathes symmetrically at minimum
      viewport. Bottom holds at 80 px for a long final rest. */
-  padding: var(--space-8) var(--doc-pad-right) var(--space-20) var(--doc-pad-left);
+  padding: var(--space-4) var(--doc-pad-right) var(--space-20) var(--doc-pad-left);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
