@@ -386,10 +386,6 @@ body {
 .doc__section > * + * {
   margin-top: var(--space-5);
 }
-.doc__section > .t-hero + *,
-.doc__section > h1 + * {
-  margin-top: var(--space-20);
-}
 .doc__section > .t-display + *,
 .doc__section > .t-title + *,
 .doc__section > .t-subtitle + *,
