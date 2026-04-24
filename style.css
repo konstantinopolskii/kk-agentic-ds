@@ -516,10 +516,10 @@ body {
 
 /* Raw-HTML blocks in prose get air below before the next heading / paragraph. */
 .doc__section > .card {
-  margin-top: var(--space-8);
+  margin: var(--space-8) 0;
 }
 .doc__section > .card--shout {
-  margin-top: var(--space-8);
+  margin: var(--space-8) 0;
 }
 /* Caption inside doc section gets standard top margin. */
 .doc__section > .t-caption,
