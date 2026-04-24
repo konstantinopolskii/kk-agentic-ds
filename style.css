@@ -449,7 +449,7 @@ body {
 }
 .doc__section > h2,
 .doc__section > .t-display {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-5);
 }
 .doc__section > h3,
 .doc__section > .t-title {
