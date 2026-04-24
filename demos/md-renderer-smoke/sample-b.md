@@ -24,10 +24,10 @@ KK.refresh();
 KK.enableCommentSelectionFlow();
 ```
 
+## Horizontal rule
+
+A paragraph above a horizontal rule. The rule below renders from `---` on its own line and acts as an inline separator between this paragraph and the quote that follows.
+
 ---
 
-## After the rule
-
-A paragraph below a horizontal rule. The rule above renders from `---` on its own line.
-
-> A second blockquote. Renders with the kit's `quote` class: hairline rule on the left, black body colour, italic face.
+> A blockquote after the rule. Renders with the kit's `quote` class: solid left rule, body-sized, black.
