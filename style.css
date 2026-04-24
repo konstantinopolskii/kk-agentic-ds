@@ -362,7 +362,7 @@ body {
 }
 
 .doc__section {
-  padding-top: var(--space-4);
+  padding-top: var(--space-8);
   margin-top: var(--space-5);
   border-top: 0.5px solid var(--color-border);
   display: flex;
@@ -446,11 +446,11 @@ body {
   margin-bottom: var(--space-10);
 }
 .doc__section > h2,
-.doc__section > .t-display,
-.doc__section > .t-title {
+.doc__section > .t-display {
   margin-bottom: var(--space-6);
 }
-.doc__section > h3 {
+.doc__section > h3,
+.doc__section > .t-title {
   margin-bottom: 0;
 }
 .doc__section > h4,
