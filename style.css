@@ -519,13 +519,9 @@ body {
 .doc__section > .card--shout {
   margin-bottom: var(--space-8);
 }
-/* Caption that trails a card sits tight to the object it describes. */
-.doc__section > .card + .t-caption,
-.doc__section > .card + .t-caption.t-muted {
-  margin-top: var(--space-3);
-}
-.doc__section > .card--shout + .t-caption,
-.doc__section > .card--shout + .t-caption.t-muted {
+/* Caption inside doc section gets standard top margin. */
+.doc__section > .t-caption,
+.doc__section > .t-caption.t-muted {
   margin-top: var(--space-3);
 }
 
