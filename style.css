@@ -470,14 +470,8 @@ body {
 }
 .doc__section > h4,
 .doc__section > .t-subtitle {
-  /* Below-gap tightened 48 → 40 (var(--space-10)) so rule 12 text-to-
-     text ratio clears 2:1 with leading-slack safety. Prior 96/48 box
-     was exactly 2.0 but measured 1.6 text-to-text (Jobs round 4 defect
-     4) because prev-element descent leading + subtitle ascent leading
-     bias the visual ratio below box. New 96/40 box = 2.40; text ratio
-     lands ≥ 2.20. Rule 13 floor holds (40 ≥ subtitle line-height 24).
-     Matches the 24 px below-gap carried by h2/h3/.t-display/.t-title. */
-  margin-bottom: var(--space-10);
+  /* Below-gap tightened to var(--space-1) (4 px). */
+  margin-bottom: var(--space-1);
 }
 /* When a table sits directly under a heading, the first header row's
    own 12 px top padding stacks under the heading's 40 px below-gap —
