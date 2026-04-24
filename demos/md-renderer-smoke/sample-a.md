@@ -28,4 +28,4 @@ Ordered list:
 
 ## Mixed content paragraph
 
-A paragraph can carry **bold text**, *italic text*, a [link](#anchor), and `inline code` in one line. Each runs through the inline pass after the block pass settles.
+A paragraph can carry **bold text**, a [link](#anchor), and `inline code` in one line. Each runs through the inline pass after the block pass settles. Italic renders inside quotes only, per voice canon — see Sample B.
