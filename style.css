@@ -512,6 +512,23 @@ body {
   margin-top: var(--space-15);
 }
 
+/* Raw-HTML blocks in prose get air below before the next heading / paragraph. */
+.doc__section > .card {
+  margin-bottom: var(--space-8);
+}
+.doc__section > .card--shout {
+  margin-bottom: var(--space-8);
+}
+/* Caption that trails a card sits tight to the object it describes. */
+.doc__section > .card + .t-caption,
+.doc__section > .card + .t-caption.t-muted {
+  margin-top: var(--space-3);
+}
+.doc__section > .card--shout + .t-caption,
+.doc__section > .card--shout + .t-caption.t-muted {
+  margin-top: var(--space-3);
+}
+
 
 /* Part heading — separates one major part from the next. Hero
    size, same as the document's own title. Sections underneath sit

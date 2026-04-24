@@ -124,7 +124,7 @@ Title leading matches body leading. `--lh-title` sits at 32, same as `--lh-body`
 
 Quotes render black, Medium 500, body-sized (22 / 32), with a 4 px left border. No italic — the left rule carries the distinction. Size stays at body rank so a quote reads at the same weight as the prose it interrupts — stepping down to caption under a paragraph or after a horizontal rule leaves the quote looking like metadata. Muting the colour would do the same and contradict the no-muted-by-default rule. A quote is content, not metadata. `.quote` declares size explicitly rather than inheriting from the document root (`body` sits at caption size).
 
-Raw HTML blocks embedded in prose carry a muted caption line above naming what the block is, for example `<p class="t-caption t-muted">Example</p>`. Without the caption the embedded block competes with section headings for attention and reads as a standalone callout rather than an illustration of what the pattern looks like.
+Raw HTML embedded in prose (cards, shout callouts) carries its caption **below** the block, not above. The block is the object; the caption describes it. Caption's `margin-top` is `var(--space-3)` — tighter than a regular paragraph — so the caption reads as tethered to the object above. The block itself carries `margin-bottom: var(--space-8)` so the next heading or paragraph has air.
 
 ### Radii
 

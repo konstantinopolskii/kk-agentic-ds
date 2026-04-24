@@ -4,8 +4,6 @@ Markdown cannot express the kit's card, field, or stat patterns. Authors drop ra
 
 ## Card embedded in markdown
 
-<p class="t-caption t-muted">Example</p>
-
 <div class="card">
   <div class="card__heading">
     <h3 class="t-title">Card from markdown</h3>
@@ -14,11 +12,11 @@ Markdown cannot express the kit's card, field, or stat patterns. Authors drop ra
   <p class="t-body">Body paragraph inside the card. The kit's card CSS still applies. No renderer magic needed beyond passthrough.</p>
 </div>
 
+<p class="t-caption t-muted">Example</p>
+
 ## Prose between raw HTML
 
 A paragraph between two raw HTML blocks. The block pass resumes after the card closes.
-
-<p class="t-caption t-muted">Example</p>
 
 <div class="card card--shout">
   <div class="card__heading">
@@ -27,6 +25,8 @@ A paragraph between two raw HTML blocks. The block pass resumes after the card c
   </div>
   <p class="t-body">Everything inside inverts against the kit's shout surface.</p>
 </div>
+
+<p class="t-caption t-muted">Example</p>
 
 ## Security note
 
