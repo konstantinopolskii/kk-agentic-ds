@@ -28,4 +28,4 @@ Ordered list:
 
 ## Mixed content paragraph
 
-A paragraph can carry **bold text**, a [link](#anchor), and `inline code` in one line. Each runs through the inline pass after the block pass settles. Italic renders inside quotes only, per voice canon — see Sample B.
+A paragraph can carry a [link](#anchor) and `inline code` in one line. Each runs through the inline pass after the block pass settles. Bold and italic render in their sanctioned contexts only — bold in headings, italic in quotes. See Sample B for the quote demo and any heading above for bold.
