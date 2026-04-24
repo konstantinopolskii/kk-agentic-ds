@@ -12,34 +12,15 @@
   <div class="app" data-view="doc">
     <!-- ================================================================= -->
     <!-- Sidebar: brand, nav groups (scroll-spy targets), footer            -->
-    <!-- TOC is hand-curated. The Inventory + Distribution groups point at -->
-    <!-- hand-written pointer cards; the other groups point at sections    -->
-    <!-- wrapped out of manifesto.md at render time by the post-render     -->
-    <!-- script in main.                                                   -->
+    <!-- TOC is hand-curated and carries one structure: the manifesto's    -->
+    <!-- rendered TOC. Pointer cards at the top of the doc are reachable   -->
+    <!-- by scrolling; the sidebar no longer names them twice.             -->
     <!-- ================================================================= -->
     <aside class="sidebar" aria-label="Navigation">
       <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
 
       <nav class="sidebar__nav" id="toc">
         <span class="toc__indicator" aria-hidden="true"></span>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Inventory</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#inv-components">Components</a></li>
-            <li class="t-caption"><a href="#inv-patterns">Patterns</a></li>
-            <li class="t-caption"><a href="#inv-pipeline">Pipeline</a></li>
-            <li class="t-caption"><a href="#inv-foundations">Foundations</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Distribution</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#inv-practice">Where it lives</a></li>
-            <li class="t-caption"><a href="#inv-distribution">Install and ship</a></li>
-          </ul>
-        </section>
 
         <section class="nav-group">
           <h4 class="t-subtitle">Meanings</h4>
@@ -104,10 +85,6 @@
       <h2 class="doc__part">Inventory</h2>
 
       <article class="doc__section" id="inv-components">
-        <h2 class="t-display">
-          Components<br />
-          <span class="t-display--medium t-muted">Nine in the kit</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Components</h3>
@@ -121,10 +98,6 @@
       </article>
 
       <article class="doc__section" id="inv-patterns">
-        <h2 class="t-display">
-          Patterns<br />
-          <span class="t-display--medium t-muted">Registry at the repo root</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Patterns</h3>
@@ -135,10 +108,6 @@
       </article>
 
       <article class="doc__section" id="inv-pipeline">
-        <h2 class="t-display">
-          Pipeline<br />
-          <span class="t-display--medium t-muted">Eight stages, eleven roles</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Pipeline</h3>
@@ -149,10 +118,6 @@
       </article>
 
       <article class="doc__section" id="inv-foundations">
-        <h2 class="t-display">
-          Foundations<br />
-          <span class="t-display--medium t-muted">Values and swatches</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Foundations</h3>
@@ -170,10 +135,6 @@
       <h2 class="doc__part">Distribution</h2>
 
       <article class="doc__section" id="inv-practice">
-        <h2 class="t-display">
-          Where it lives<br />
-          <span class="t-display--medium t-muted">Evolve here, inventory out</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Practice</h3>
@@ -189,10 +150,6 @@
       </article>
 
       <article class="doc__section" id="inv-distribution">
-        <h2 class="t-display">
-          Install and ship<br />
-          <span class="t-display--medium t-muted">The maintainer skill owns it</span>
-        </h2>
         <div class="card">
           <div class="card__heading">
             <h3 class="t-title">Distribution</h3>
@@ -215,12 +172,10 @@
       <div class="doc__signoff">
         <div class="doc__signoff-stats">
           <div class="stat t-caption">
-            <div><span class="t-caption--bold">12</span> top-level sections across Meanings, Matter, Protocols.</div>
-            <div><span class="t-caption--bold">9</span> components in the kit, enough to cover most SAAS flows.</div>
+            <div>Signed, kit v1.3.0.</div>
           </div>
           <div class="stat t-caption">
-            <div><span class="t-caption--bold">9</span> color tokens, and not one more. No brand, no status color.</div>
-            <div><span class="t-caption--bold">4</span> radii: 12, 16, 24, and 9999 for pills.</div>
+            <div>24 April &rsquo;26, Tbilisi.</div>
           </div>
         </div>
 

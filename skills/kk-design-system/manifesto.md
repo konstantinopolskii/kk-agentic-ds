@@ -155,6 +155,8 @@ Quotes render black, Medium 500, body-sized (22 / 32), with a 4 px left border. 
 
 Raw HTML embedded in prose (cards, shout callouts) carries its caption **below** the block, not above. The block is the object; the caption describes it. Caption's `margin-top` is `var(--space-3)` — tighter than a regular paragraph — so the caption reads as tethered to the object above. The block itself carries `margin-bottom: var(--space-8)` so the next heading or paragraph has air.
 
+Shell chrome does not compete with rendered content for heading rank. A page that carries markdown via `data-md-src` must either drop all shell-owned h1/h2/doc__part headings and let the markdown carry the full hierarchy (offset=0), or reserve higher ranks for the shell and set offset to match the depth already claimed. Two heading stacks on one scroll is the canonical hierarchy-collapse failure mode.
+
 ### Radii
 
 Four radii: 12 px for buttons, tiers, switches, fields; 16 px for preview frames and medium surfaces; 24 px for cards and anything that holds content; 9999 px for pills (switch thumbs, avatars, scrollbars). A fifth canonical radius is forbidden. `vars.css` defines the set; `tokens.json` mirrors it.
@@ -657,6 +659,7 @@ Every browser-affecting change ends with a verified console and screenshot in th
 - **Click every interactive affordance on the page once.** Confirm no silent breakage (dead clicks, lost scroll-spy, broken nav anchors, iframe preview stuck).
 - **For the renderer specifically:** a smoke test page with a sample markdown covering every supported construct. Side-by-side render-vs-source. Console clean.
 - Any regression discovered post-ship routes back to the phase owner, not a hotfix patch.
+- **Before shipping a markdown-rendered page, grep the shell for every claim the rendered content also carries.** A page that carries pointer-card copy, nav labels, or signoff stats that restate facts from the rendered body fails the one-home rule on ship. Remove shell-side claims or migrate them to the rendered source.
 
 ### Bundle rule
 
