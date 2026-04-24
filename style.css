@@ -697,11 +697,12 @@ body {
   background: var(--color-border);
   pointer-events: none;
 }
-/* Hairline divider between consecutive non-interactive cards in the inspector. */
-.inspector__group > .card + .card {
+/* Hairline divider between consecutive non-interactive cards in the inspector.
+   Exclude card--heading to avoid divider below heading cards. */
+.inspector__group > .card:not(.card--heading) + .card:not(.card--heading) {
   position: relative;
 }
-.inspector__group > .card + .card::before {
+.inspector__group > .card:not(.card--heading) + .card:not(.card--heading)::before {
   content: "";
   position: absolute;
   top: 0;
@@ -819,7 +820,7 @@ body {
   padding-right: var(--card-inset-x);
 }
 .card__heading {
-  gap: 6px;
+  gap: 4px;
   margin-top: var(--space-2);
 }
 .card__body { gap: var(--space-4); }
