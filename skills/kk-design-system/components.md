@@ -191,30 +191,31 @@ The workhorse for key/value rows inside a card. Three shapes:
 <dl class="doc__spec doc__spec--triple">...</dl>
 ```
 
-## Prose list (.t-prose-list)
 
-Body-sized, disc-or-decimal list for markdown-rendered prose. Each item is a sentence or phrase, not a data row. Paragraph rhythm between items, no hairlines. Markers render in the left gutter (disc on `ul`, decimal on `ol`).
+## List (.t-list)
+
+Caption-sized hairlined list for prose or tabular data. Both `<ul>` (disc marker) and `<ol>` (decimal marker). Hairline separates each item from the next. Used by `js/md.js` for markdown-rendered `- item` and `1. item` blocks.
 
 ```html
-<!-- Unordered. -->
-<ul class="t-prose-list">
-  <li>First item, unmarked.</li>
-  <li>Second item with a <a href="/">link</a>.</li>
+<!-- Unordered list with bullet markers. -->
+<ul class="t-list">
+  <li>First item.</li>
+  <li>Second item.</li>
 </ul>
 
-<!-- Ordered. -->
-<ol class="t-prose-list">
-  <li>Fetch.</li>
-  <li>Render.</li>
-  <li>Inject.</li>
+<!-- Ordered list with decimal markers. -->
+<ol class="t-list">
+  <li>First step.</li>
+  <li>Second step.</li>
 </ol>
 ```
 
 Rules:
-- Sits at body size + body line-height so a list inside a markdown article does not step down from the paragraphs it breaks.
-- No per-item hairlines. Hairlines belong to `.t-list` (tabular registry-row pattern), not prose.
-- `js/md.js` emits this class for markdown `-` and `1.` blocks. Authors rarely hand-write the class.
-- For tabular data lists (registry rows, key-column lists), use `.t-list` instead.
+- Caption size (16 / 24) with hairlines between items.
+- Custom markers: bullet (`ul`) or decimal (`ol`) in the left gutter, bold weight.
+- Single list class for both prose and tabular data patterns.
+- `js/md.js` emits this class automatically for markdown lists.
+
 
 ## Preview surfaces
 

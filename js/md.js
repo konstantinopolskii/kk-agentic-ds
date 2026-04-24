@@ -30,7 +30,7 @@
 
   var CLASS_MAP = {
     h1: "t-hero", h2: "t-display", h3: "t-title", h4: "t-subtitle",
-    p: "t-body", ul: "t-prose-list", ol: "t-prose-list",
+    p: "t-body", ul: "t-list", ol: "t-list",
     blockquote: "quote", table: "registry-table",
     th: "t-caption--bold", td: "t-caption"
   };
@@ -94,15 +94,12 @@
     return html;
   }
 
-  // List: renders a consecutive run of ul or ol items. Prose lists emit
-  // `.t-prose-list`, not `.t-list` — the kit's `.t-list` is a tabular
-  // registry-row pattern (hairlines between items, caption-sized type).
-  // Markdown `- item` and `1. item` are prose patterns: body-sized, disc
-  // or decimal markers, paragraph rhythm between items. One class per
-  // intent keeps both contracts legible.
+  // List: renders a consecutive run of ul or ol items.
+  // Markdown `- item` and `1. item` lists use `.t-list`, the kit's
+  // hairlined registry-row pattern (caption-sized type, disc/decimal markers).
   function renderList(items, ordered) {
     var tag = ordered ? "ol" : "ul";
-    var out = "<" + tag + ' class="t-prose-list">';
+    var out = "<" + tag + ' class="t-list">';
     items.forEach(function (it) { out += "<li>" + inline(it.trim()) + "</li>"; });
     out += "</" + tag + ">";
     return out;
