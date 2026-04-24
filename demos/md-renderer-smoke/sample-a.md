@@ -12,7 +12,7 @@ A body paragraph. The renderer wraps it in `<p class="t-body">`. The surrounding
 
 Short body under a card-level heading. Links render inline: the [fundamental demo](../fundamental--accepted/index.html) lives next door, and the [patterns registry](../../patterns.html) sits at the repo root.
 
-Inline code uses backticks. Under the article's `data-md-heading-offset="0"` contract, source `#` lands at h1 / t-hero, `##` at h2 / t-display, `###` at h3 / t-title, `####` at h4 / t-subtitle. Source `#####` and deeper demote to `<p class="t-caption">` regular because the kit has no heading rank below subtitle.
+Under the article's `data-md-heading-offset="0"` contract, source `#` lands at h1 / t-hero, `##` at h2 / t-display, `###` at h3 / t-title, `####` at h4 / t-subtitle. Source `#####` and deeper demote to `<p class="t-caption">` regular because the kit has no heading rank below subtitle.
 
 ## Lists
 
