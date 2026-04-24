@@ -451,7 +451,7 @@ body {
 }
 .doc__section > h3,
 .doc__section > .t-title {
-  margin-bottom: 0;
+  margin-bottom: var(--space-4);
 }
 .doc__section > h4,
 .doc__section > .t-subtitle {
