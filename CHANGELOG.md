@@ -2,6 +2,19 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.3.3, 2026-04-25
+
+Patch. Two fixes for prose written outside `.book__section` wrappers.
+
+`.book__intro` previously declared `padding-top: var(--space-15)` unconditionally. Multiple intro paragraphs each got 60 px of top-padding, producing a runaway gap between consecutive intros. The padding now scopes to `.book > .book__intro:first-of-type` so only the first intro carries the hero-clear offset; subsequent intros follow the paragraph-rhythm rule.
+
+The basic paragraph-rhythm rule broadens from `.book__section > * + *` to `:is(.book, .book__section) > * + *:not(.book__signoff)`. Prose at `.book` level (intros, ad-hoc demo prose) now inherits the kit's 20 px paragraph rhythm. `.book__section` keeps its structural role; `.book__signoff` keeps its current zero-margin offset.
+
+### Fixed
+- `.book__intro` hero-clearing top-padding scopes to `:first-of-type`. Resolves the runaway gap between consecutive intro paragraphs.
+- Paragraph-rhythm rule broadened to `:is(.book, .book__section) > * + *:not(.book__signoff)`. Prose written without an article wrapper inherits 20 px paragraph rhythm.
+- `canon/components.md § Foundations § Type § Rhythm § Kit addenda` documents the new rhythm-scope rule.
+
 ## 1.3.2, 2026-04-25
 
 Patch. `.t-code` padding stepped from `0 var(--space-1)` to `var(--space-1) var(--space-2)`. The chip now carries 4 px vertical and 8 px horizontal padding so the surface tint reads as a deliberate chip on the line rather than a tight underline. Top equals bottom; horizontal grows enough to give body-size text air without breaking the surrounding line rhythm.

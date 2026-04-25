@@ -94,12 +94,13 @@ Fourteen rules. Each is canonical on every doc surface rendered in the kit.
 
 Rule 12 bites hardest. A heading with equal top and bottom margins visually groups with the wrong paragraph. Rule 13 is the second most-broken: a heading whose next line sits closer than its own line-height reads as cramped.
 
-**Kit addenda.** Four rules the kit layers on top of the fourteen:
+**Kit addenda.** Five rules the kit layers on top of the fourteen:
 
 - **Rule 12 ratio floor.** Top margin at least 2× bottom margin on any heading in a dense text column. 1.5:1 reads roughly equal at the 0.2-second bar; 2:1 reads as clear lead.
 - **Next-sibling margin collapse.** Headings own their below-gap. The next sibling's top margin sits at zero so stacking cannot inflate the below-gap past the 2:1 ratio.
 - **Label-list tightening.** A paragraph ending in `:` followed by a list is a label-list pair. `:has(+ ul)` and `:has(+ ol)` tighten the label's `margin-bottom` to `--space-2` and the list's `margin-top` sits at zero.
 - **Quote treatment.** Quotes render black, Medium 500, body-sized (22 / 32), with a 4 px left border. No italic. A quote is content, not metadata.
+- **Rhythm scope.** Paragraph-rhythm rules apply equivalently to direct children of `.book` and `.book__section`. Prose written outside an article wrapper (intro paragraphs, ad-hoc demo prose) inherits the same 20 px paragraph rhythm. `.book__section` keeps its structural role (anchor target, scroll-spy hook, hairline boundary) but adjacency rules do not depend on the wrapper being there. `.book__intro` carries its hero-clearing top-padding only on `:first-of-type`; subsequent intros follow the rhythm rule.
 
 Deep link: `demos/fundamental--accepted/index.html#type`.
 
