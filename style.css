@@ -345,16 +345,6 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-.book__intro {
-  max-width: 612px;
-}
-.book > .book__intro:first-of-type {
-  /* Hero-to-intro distance must clear the hero's line-height (66 px) per
-     inner-and-outer rule 13. `.book` gap (12) + this padding (60) = 72 ≥ 66.
-     Subsequent .book__intro paragraphs follow the paragraph-rhythm rule
-     below; only the first carries the hero-clear offset. */
-  padding-top: var(--space-15);
-}
 .book__signoff {
   padding-top: var(--space-3);
   display: flex;
@@ -411,12 +401,11 @@ body {
    80 inner — rule 14 holds at the strict equality; the section's
    hairline rule keeps the outer boundary legible where the numbers
    match. */
-/* Paragraph-rhythm rule. Applies to direct children of .book or
-   .book__section equivalently, so prose written outside an article
-   wrapper (intro paragraphs, ad-hoc demo prose) still inherits the
-   kit's 20 px paragraph rhythm. .book__signoff carries its own
-   structural offset and is excluded. */
-:is(.book, .book__section) > * + *:not(.book__signoff) {
+/* Paragraph-rhythm rule. Every prose unit in `.book` lives inside a
+   `.book__section`, including the hero region (h1 + intro paragraphs).
+   Section children carry the 20 px paragraph rhythm; prose at `.book`
+   level is not a supported authoring shape. */
+.book__section > * + * {
   margin-top: var(--space-5);
 }
 .book__section > .t-display + *,
@@ -463,6 +452,8 @@ body {
    `.t-title`, `.t-subtitle`) so the heading itself carries the
    rule-13 below-gap floor (≥ heading line-height) regardless of what
    the next sibling intrinsically declares. */
+.book__section > h1 + *,
+.book__section > .t-hero + *,
 .book__section > h2 + *,
 .book__section > h3 + *,
 .book__section > h4 + *,
@@ -473,7 +464,12 @@ body {
 }
 .book__section > h1,
 .book__section > .t-hero {
-  margin-bottom: var(--space-6);
+  /* Hero-to-intro distance clears the hero's line-height (66 px) per
+     inner-and-outer rule 13. The 60 px below-gap, plus the next
+     paragraph's leading slack, lands above the 66 px floor. Same
+     visual relationship the old `.book__intro` `padding-top` carried,
+     now expressed inside the section. */
+  margin-bottom: var(--space-15);
 }
 .book__section > h2,
 .book__section > .t-display {
@@ -2260,11 +2256,6 @@ ol.t-list > li::before {
      phone-only step between 38 and 66. */
   .t-hero { font-size: 48px; line-height: 48px; }
   .book__part { font-size: 48px; line-height: 48px; }
-
-  /* Intro sits snug against the top of the doc column on phones. The
-     desktop 12 px padding creates a visible gap above the hero that
-     looks wrong at phone scale. */
-  .book__intro { padding-top: 0; }
 
   /* Spec collapses to one column on phones — key and value stack,
      the subgrid inherits, row padding tightens a notch. */

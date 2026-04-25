@@ -21,6 +21,13 @@
  * A container opts out with data-md-heading-offset="0" when the file
  * is the page root. Shifted level caps at h4 so the CLASS_MAP resolves.
  *
+ * Section auto-wrap: the renderer wraps each h2-rooted region in
+ * `<article class="book__section">`. The first article spans the
+ * source's h1, preamble, and intro paragraphs (everything before the
+ * first h2). Each subsequent h2 starts a new article. Hand-authored
+ * markup follows the same convention — every prose unit lives inside
+ * a `.book__section`. See `canon/patterns.md § Book structure`.
+ *
  * Security: markdown source is author-controlled (lives in the repo).
  * Raw HTML passthrough is by design. If this ever renders user-submitted
  * markdown, add a sanitiser at the render boundary.
@@ -92,6 +99,29 @@
     });
     html += "</tbody></table>";
     return html;
+  }
+
+  // Section auto-wrap. Splits the rendered HTML on every <h2 ...> opener
+  // and wraps each h2-rooted region in <article class="book__section">.
+  // The first article spans pre-h2 content (h1, preamble, intros). Each
+  // subsequent h2 starts a new article. Source markdown without an h2
+  // wraps as a single section.
+  function wrapInSections(html) {
+    var parts = html.split(/(<h2\b[^>]*>)/);
+    if (parts.length === 1) {
+      var only = parts[0].trim();
+      return only ? '<article class="book__section">' + parts[0] + "</article>" : "";
+    }
+    var sections = [];
+    if (parts[0].trim()) {
+      sections.push('<article class="book__section">' + parts[0] + "</article>");
+    }
+    for (var i = 1; i < parts.length; i += 2) {
+      var h2tag = parts[i];
+      var content = parts[i + 1] || "";
+      sections.push('<article class="book__section">' + h2tag + content + "</article>");
+    }
+    return sections.join("\n");
   }
 
   // List: renders a consecutive run of ul or ol items.
@@ -239,7 +269,7 @@
       out.push('<p class="t-body">' + inline(pbuf.join(" ")) + "</p>");
     }
 
-    return unstash(out.join("\n"));
+    return wrapInSections(unstash(out.join("\n")));
   }
 
   // Fetch + inject one container. Heading offset defaults to +1 — the

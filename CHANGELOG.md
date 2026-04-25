@@ -2,6 +2,27 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.4.0, 2026-04-25
+
+Section convention universalized. Every prose unit in `.book` lives inside an `<article class="book__section">`, including the hero region (h1 + intro paragraphs). The previous `.book__intro` class is removed. The markdown renderer (`js/md.js`) auto-wraps each h2-rooted region in a section, so hand-authored and markdown-rendered docs share one structural model.
+
+### Breaking
+- `.book__intro` class removed. Hand-authored markup using `<p class="book__intro">` migrates to plain `<p class="t-body">` inside an `<article class="book__section">` with the surrounding h1.
+- `js/md.js` now wraps each h2-rooted region in `<article class="book__section">`. Consumer CSS targeting flat md-rendered structure (e.g., `.book > p` or `.book > h2`) needs to retarget through the new section wrapper.
+
+### Added
+- `canon/patterns.md § Book structure`: new pattern entry documenting the universal section convention, with HTML snippet and rules.
+- `js/md.js` auto-wraps sections. The first section spans h1 + preamble + intros; each h2 starts a new section.
+
+### Removed
+- `.book__intro` class and its three CSS rules (base, `:first-of-type` modifier, narrow `@media` reset).
+- The 1.3.3 `:is(.book, .book__section) > * + *:not(.book__signoff)` paragraph-rhythm broadening. Sections own the rhythm rules; prose at `.book` level is no longer a supported authoring shape.
+- `canon/components.md § Rhythm § Kit addenda § "Rhythm scope"` bullet (added in 1.3.3, no longer needed).
+
+### Changed
+- `.book__section > h1, .book__section > .t-hero` margin-bottom stepped from `var(--space-6)` (24 px) to `var(--space-15)` (60 px). Hero clears its own line-height when followed by an intro paragraph inside the section.
+- Rule-12 rescue extended to h1 and `.t-hero`. The hero's bottom-margin is now the sole determinant of hero-to-paragraph distance inside a section.
+
 ## 1.3.3, 2026-04-25
 
 Patch. Two fixes for prose written outside `.book__section` wrappers.

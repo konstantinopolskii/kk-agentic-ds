@@ -2,6 +2,40 @@
 
 When composing any layout, start here. Three top-level patterns carry the shells every kit surface uses. Drill into `components.md` when a pattern uses a part we need to customize.
 
+## Book structure
+
+Every prose unit in `.book` lives inside an `<article class="book__section">`. The first section is the hero section: h1 plus the intro paragraphs that frame the doc. Each subsequent section is a named topic, its h2 anchorable, scroll-spy-trackable. Reach for this structure on every doc surface the kit renders, hand-authored or markdown-rendered.
+
+```html
+<main class="book">
+  <article class="book__section">
+    <h1 class="t-hero">Document title</h1>
+    <p class="t-body">Intro paragraph one.</p>
+    <p class="t-body">Intro paragraph two.</p>
+  </article>
+
+  <article class="book__section" id="opening">
+    <h2 class="t-display">First named section</h2>
+    <p class="t-body">Section prose.</p>
+  </article>
+
+  <!-- more sections -->
+
+  <div class="book__signoff">
+    <!-- author + signature -->
+  </div>
+</main>
+```
+
+Rules:
+
+- One rule path. Prose-rhythm rules scope to `.book__section >`. Everything inside a section gets the rhythm automatically. No exception classes, no special-case CSS for prose at `.book` level.
+- First `.book__section` flushes against the top of `.book`. No top border, no top padding, handled by the `:first-of-type` selector.
+- Hero clears its own line-height via the section's heading rules. 60 px below the hero, the hero-to-intro gap.
+- Subsequent sections carry a hairline top border, 32 px top padding, 20 px top margin.
+- `.book__signoff` sits at `.book` level, outside any article. Same rule for hand-authored as for md-rendered docs.
+- Markdown source: `js/md.js` auto-wraps each h2-rooted region in a section. Authors do not write the article wrapper in source markdown. The renderer does it.
+
 ## Three columns (default shell)
 
 Sidebar on the left, book in the middle, inspector on the right. Only the middle column scrolls during reading. This is the shell every kit canon file renders inside. Use it for any surface where the reader needs a map, a primary reading surface, and a margin for actions or references.
@@ -115,7 +149,7 @@ Preview: [demos/fundamental--accepted/patterns/narrow.html](../../../demos/funda
 
 ## Registry of additional patterns
 
-Twelve compositions sliced out of shipped prototypes. Each row points at a live preview. Drill into `components.md` for the individual parts.
+Twelve compositions sliced out of shipped prototypes plus one structural wrapper. Each sliced row points at a live preview. The structural wrapper has no preview slice. Drill into `components.md` for the individual parts.
 
 <table class="registry-table">
   <thead>
@@ -125,6 +159,10 @@ Twelve compositions sliced out of shipped prototypes. Each row points at a live 
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td class="t-body"><span class="t-code">book__section</span></td>
+      <td class="t-body">Structural article wrapping every prose unit. First section holds the hero; each h2 starts a new section.</td>
+    </tr>
     <tr>
       <td class="t-body"><a href="../../../demos/fundamental--accepted/patterns/three-column-shell.html"><span class="t-code">three-column-shell</span></a></td>
       <td class="t-body">Sidebar, book, inspector. The default kit shell, full slice.</td>
@@ -181,10 +219,10 @@ Twelve compositions sliced out of shipped prototypes. Each row points at a live 
 <div class="book__signoff">
   <div class="book__signoff-stats">
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">4</span> top-level patterns.</div>
+      <div><span class="t-caption--bold">5</span> top-level patterns.</div>
     </div>
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">12</span> registry compositions.</div>
+      <div><span class="t-caption--bold">13</span> registry compositions.</div>
     </div>
   </div>
   <div class="book__signoff-signature">
