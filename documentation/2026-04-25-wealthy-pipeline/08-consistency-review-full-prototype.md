@@ -174,17 +174,33 @@ The 6a rerun on the original review-state slice surfaced six structural unclarit
 
 **Five of six closed; one partial.** The highlight-cross-promotion partial is acceptable — the kit's runtime mechanic handles it; visual hint at rest would require a kit-level CSS change.
 
-## Persistent flow gaps (worth a future cycle)
+## Persistent flow gaps — final pass landed
 
-Three gaps the build did not resolve:
+Three gaps surfaced in the first review pass; two landed in a second tightening; one accepted as design-honest.
 
-1. **Stage 4 streaming visualisation.** `t-subtle` on streaming subsections reads as "muted draft text" not as "actively being written". A small `tag` "Streaming" inline near each unfinished heading would announce the wait state more clearly.
+### 1. Stage 4 streaming visualisation — **landed**
 
-2. **Stage 1 hero discontinuity.** "New strategy" → "Strategy for Sofia" jumps at stage 2. Intentional (it's the brief commit moment) but visually jarring on sequential read. Accept or replace stage 1's hero with `Strategy for Sofia` from the start.
+Was: `t-subtle` on streaming subsection headings (read as muted draft text).
 
-3. **Stage 7/8 inspector density.** Late states carry 3–4 inspector groups. Honest but reads against the "inspector compresses" promise. Each group earns its slot; question is whether the cumulative weight needs visual rhythm tightening (e.g., a thin divider, or sectioned scrollable panes).
+Now: `<h3 class="t-title">Рынок <span class="tag">Streaming</span></h3>` for the active section, `<span class="tag">Queued</span>` for the next two. Bodies stay `t-subtle` with terse placeholder copy ("Tokens landing.", "Up next."). At 0.2 seconds the operator reads section-name + state-tag inline.
 
-None of the three are HALT-class. All are stage-3b designer reruns + targeted stage-5 patches.
+### 2. Stage 1 hero discontinuity — **landed**
+
+Was: "New strategy" at stage 1, "Strategy for Sofia" at stage 2+.
+
+Now: "Strategy for Sofia" from stage 1 onward. The Client field in the brief form already shows Sofia's name — the hero matches the operator's selection. The intro paragraph updated to "Confirm the materials. Check the depth. Commit the brief." (action language without the "new" temporal marker).
+
+### 3. Stage 7/8 inspector density — **accepted**
+
+Late states carry 3–4 inspector groups. Reads against the "inspector compresses" promise but is design-honest — post-delivery surfaces have multiple concurrent jobs (share, inbox, edit log on operator; next steps, subscription, free path, review on client). Collapsing them would mix surfaces with different update cadences and lose the clarity of separate affordances.
+
+Decision: keep the density. The promise of "inspector compresses" holds for stages 1–6 (the operator's workflow). The post-delivery and client states are different shapes by design.
+
+## Verdict
+
+Eight stages plus client view. Doc-first art direction held across every state. Six of six 06a structural unclarities addressed (five closed, one partial — highlight cross-promotion is kit-runtime). Voice clean. Inventory clean. Cross-stage navigation works. Two final flow-gap tightenings landed.
+
+The flow reads as one document growing, then sealing, then delivered to the right reader. The shell stays. The doc dominates. The inspector reflects the moment.
 
 ## Verdict
 
