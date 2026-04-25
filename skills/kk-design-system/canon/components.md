@@ -554,14 +554,16 @@ Inline (`.t-code`):
 - Surface chip via `--color-surface-strong`. Radius via `--radius-sm`.
 - Padding `--space-1` (4 px) horizontal, zero vertical, hugging the line.
 - Color `--color-text-muted` (gray, 50% black).
+- Font-family `--font-body` (Commissioner). The kit has one typeface; `<code>` elements override the browser's default monospace.
 - Font-weight regular (`--fw-regular`, 500).
 - Font-size and leading inherit from the surrounding line.
 
 Block (`.t-code--block`):
 
 - Multi-line code paragraph. Color, weight, size match `.t-code`.
+- Font-family `--font-body` (Commissioner). Same typeface as surrounding prose.
 - Left rail: 4 px solid `--color-border` (gray hairline). Mirrors the `.quote` shape but in gray, not black.
-- Padding-left clears the rail. Padding top and bottom for breathing room.
+- Padding-left clears the rail. Padding top and bottom equal for breathing room — top never exceeds bottom.
 - No surface chip. The rail carries the affordance.
 
 Replaces `.t-mono` and `.tag--inline`. The kit no longer ships those classes.

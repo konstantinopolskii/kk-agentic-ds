@@ -2,6 +2,14 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.3.1, 2026-04-25
+
+Patch. `.t-code` and `.t-code--block` now declare `font-family: var(--font-body)` explicitly. Default browser styling for the `<code>` element falls back to monospace; the kit ships one typeface (Commissioner), so the override forces every `.t-code` instance onto the kit's body font regardless of which element carries the class. Resolves the visual asymmetry where a `<code>` chip rendered in monospace appeared top-heavy against Commissioner prose — a baseline mismatch, not a padding bug. `canon/components.md § Code` documents the rule.
+
+### Fixed
+- `.t-code` and `.t-code--block` carry an explicit `font-family: var(--font-body)`. `<code>` elements no longer default to browser monospace inside kit-rendered surfaces.
+- `canon/components.md § Code` mentions the font-family rule and notes that block padding stays symmetric (top never exceeds bottom).
+
 ## 1.3.0, 2026-04-25
 
 Content-architecture rework. Breaking: `.doc` and `.doc__*` wrapper classes rename to `.book` / `.book__*` across CSS, JS, HTML, markdown snippets, and skill canon loads. Every consumer selector targeting `.doc` breaks. The 2026-04-24 content-architecture session replaces the earlier (rejected, unshipped) 1.3.0 markdown-as-source content with a thin manifesto (200 lines from 685), a `canon/` folder (components, patterns, voice), and a `pipeline/` folder (pipeline, protocols). Patterns now live in `canon/patterns.md` with an embedded registry table that absorbs the root `patterns.html` file. The repo-root `index.html` rebuilds as a three-column hallway: sidebar TOC + rendered manifesto in the middle column + eight pointer cards in the inspector (six canon + two demos). Renderer infrastructure (`js/md.js`, `demos/md-renderer-smoke/`) carries forward unchanged. Scope-triggered rename; replay-clean content, no destructive git ops.
