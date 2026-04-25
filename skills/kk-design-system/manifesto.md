@@ -93,7 +93,7 @@ Eleven role skills drive the pipeline. Each role operates in character as a name
 
 Eight stages across three phases. Think (stages 1–2) produces approved intent plus direction with per-pattern tasks. Design (stages 3a–3c, N designers in parallel) produces high-fidelity per-pattern answers to fresh-eyes questions. Build (stages 4–7) produces a shipping prototype, three cold-read audits across jobstory, DS, voice, plus strict meta-review. Meta-retro runs on demand; reiterate-from-any-stage is user-triggered.
 
-Pipeline entry matches scope. A typo enters at stage 3b against an affected pattern. A kit refactor enters at stage 1 plus stage 5. A new page walks all eight. Nothing forces the full walk on work that does not need it.
+Every kit-touching session starts by picking a path. Read `pipeline/pipeline.md § Entry point matching — the recipe map` before code touches disk. Default is the full walk; deviations need a stamp. Architectural impact picks the recipe, not diff size — a three-line CSS edit can still walk the canon path if it changes structural behavior.
 
 Full stages, gates, inputs, outputs at `pipeline/pipeline.md`.
 

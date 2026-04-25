@@ -2,6 +2,15 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.4.2, 2026-04-25
+
+Patch. Manifesto §Pipeline gains one paragraph naming the session-open rule: read `pipeline/pipeline.md § Entry point matching — the recipe map` before code touches disk, default is the full walk, deviations need a stamp, architectural impact picks the recipe (not diff size).
+
+The directive lives in canon now instead of memory. Memory shrinks to a single pointer at manifesto. Every role skill that already loads manifesto (analyst, director, designer, design engineer, meta-reviewer) inherits the rule automatically. Fresh-eyes keeps its cold-read contract — it does not need the recipe map.
+
+### Added
+- `manifesto.md § Pipeline`: one-paragraph directive naming the session-open rule.
+
 ## 1.4.1, 2026-04-25
 
 Patch. Two fixes for the v1.4.0 section-convention rollout, surfaced by the retrospective stage 6b consistency-DS pass.
