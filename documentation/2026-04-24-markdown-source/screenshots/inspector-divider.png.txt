@@ -1,0 +1,28 @@
+Screenshot Documentation: Inspector Divider Rule Implementation
+Date: 2026-04-23
+URL: http://localhost:8765/demos/md-renderer-smoke/
+
+CSS Rule Applied:
+.inspector__group > .card + .card {
+  position: relative;
+}
+.inspector__group > .card + .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--card-inset-x);
+  right: var(--card-inset-x);
+  height: 0.5px;
+  background: var(--color-border);
+  pointer-events: none;
+}
+
+Visual Result:
+- "Notes" heading card (unaffected - first card in group)
+- [Hairline divider (0.5px dark) respecting card-inset-x]
+- "Renderer is dumb" card
+- [Hairline divider (0.5px dark) respecting card-inset-x]
+- "Watch for errors" card
+
+The dividers are 0.5px height, use --color-border token, and respect the horizontal inset
+(--card-inset-x) to avoid crossing the rounded corners of the cards.
