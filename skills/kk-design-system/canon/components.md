@@ -552,7 +552,7 @@ Inline code, tokens, and chip-like phrase emphasis. One class for all inline cod
 Inline (`.t-code`):
 
 - Surface chip via `--color-surface-strong`. Radius via `--radius-sm`.
-- Padding `--space-1` (4 px) horizontal, zero vertical, hugging the line.
+- Padding `--space-1` (4 px) vertical, `--space-2` (8 px) horizontal. Top equals bottom; horizontal opens the chip enough to read at body size.
 - Color `--color-text-muted` (gray, 50% black).
 - Font-family `--font-body` (Commissioner). The kit has one typeface; `<code>` elements override the browser's default monospace.
 - Font-weight regular (`--fw-regular`, 500).

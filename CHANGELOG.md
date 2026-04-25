@@ -2,6 +2,13 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.3.2, 2026-04-25
+
+Patch. `.t-code` padding stepped from `0 var(--space-1)` to `var(--space-1) var(--space-2)`. The chip now carries 4 px vertical and 8 px horizontal padding so the surface tint reads as a deliberate chip on the line rather than a tight underline. Top equals bottom; horizontal grows enough to give body-size text air without breaking the surrounding line rhythm.
+
+### Fixed
+- `.t-code` padding sits at `var(--space-1) var(--space-2)` (4 px vertical, 8 px horizontal). `canon/components.md § Code` updated.
+
 ## 1.3.1, 2026-04-25
 
 Patch. `.t-code` and `.t-code--block` now declare `font-family: var(--font-body)` explicitly. Default browser styling for the `<code>` element falls back to monospace; the kit ships one typeface (Commissioner), so the override forces every `.t-code` instance onto the kit's body font regardless of which element carries the class. Resolves the visual asymmetry where a `<code>` chip rendered in monospace appeared top-heavy against Commissioner prose — a baseline mismatch, not a padding bug. `canon/components.md § Code` documents the rule.
