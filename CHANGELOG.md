@@ -2,6 +2,15 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.5.0, 2026-04-25
+
+Minor. Manifesto h1 changes from `# The KK Agentic Design System` to `# The Agentic Design System`. The "KK" prefix drops. Initials bound the system to a person; the system stands on its own.
+
+Shipped as Haiku-path exception per maintainer call — single-line canon edit, no pipeline review loop. Other surfaces that carry "KK" in branding (package.json description, plugin.json description, repo README, signature blocks) are unaffected this round; downstream rebrand is a separate session if KK wants it.
+
+### Changed
+- `manifesto.md` h1: `# The KK Agentic Design System` → `# The Agentic Design System`.
+
 ## 1.4.2, 2026-04-25
 
 Patch. Manifesto §Pipeline gains one paragraph naming the session-open rule: read `pipeline/pipeline.md § Entry point matching — the recipe map` before code touches disk, default is the full walk, deviations need a stamp, architectural impact picks the recipe (not diff size).

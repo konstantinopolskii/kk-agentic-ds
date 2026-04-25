@@ -1,4 +1,4 @@
-# The KK Agentic Design System
+# The Agentic Design System
 
 A design system for AI-assisted product work. A thin set of components, rules, and role skills that ship coherent screens before human review. Three readers: the maintainer shipping tags, the pipeline agent loading canon at role spawn, the human at the repo root discovering the system.
 
