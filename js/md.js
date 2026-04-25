@@ -269,7 +269,12 @@
       out.push('<p class="t-body">' + inline(pbuf.join(" ")) + "</p>");
     }
 
-    return wrapInSections(unstash(out.join("\n")));
+    // Wrap before unstash. Raw HTML blocks are sentinel tokens during the
+    // wrap pass, so the regex split on <h2> only finds md-emitted heading
+    // tags. Unstashing afterward restores raw HTML inside whichever section
+    // it landed in. Reversing the order would let an <h2> nested inside a
+    // raw HTML block split that block mid-way.
+    return unstash(wrapInSections(out.join("\n")));
   }
 
   // Fetch + inject one container. Heading offset defaults to +1 — the

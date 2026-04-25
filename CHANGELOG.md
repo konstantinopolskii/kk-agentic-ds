@@ -2,6 +2,18 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.4.1, 2026-04-25
+
+Patch. Two fixes for the v1.4.0 section-convention rollout, surfaced by the retrospective stage 6b consistency-DS pass.
+
+`js/md.js` `render()` returned `wrapInSections(unstash(out.join("\n")))` — wrap ran AFTER unstash. Any raw HTML block containing an `<h2>` would split mid-block under the section regex. Reversed to `unstash(wrapInSections(out.join("\n")))` so raw HTML stays inside whichever section it lands in.
+
+`index.html` post-render hook still ran the legacy `wrapBookSections()` function. With md.js now auto-wrapping, the hook walked the already-wrapped articles, found no top-level h2 children, double-wrapped every section inside one outer lead article, and never stamped slug ids. Sidebar TOC anchors broke. Replaced the function body with `stampSectionIds()`. The walker is idempotent: it finds each `<article class="book__section">`'s inner `<h2 class="t-display">` and copies the slug onto the article id. Lead article (h1) keeps no id.
+
+### Fixed
+- `js/md.js` wrap-before-unstash order. Raw HTML blocks no longer split mid-block under the section regex.
+- `index.html` post-render hook. Replaced legacy wrap with `stampSectionIds()`. Sidebar TOC anchors resolve again.
+
 ## 1.4.0, 2026-04-25
 
 Section convention universalized. Every prose unit in `.book` lives inside an `<article class="book__section">`, including the hero region (h1 + intro paragraphs). The previous `.book__intro` class is removed. The markdown renderer (`js/md.js`) auto-wraps each h2-rooted region in a section, so hand-authored and markdown-rendered docs share one structural model.

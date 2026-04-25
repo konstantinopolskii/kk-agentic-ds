@@ -159,9 +159,11 @@
 
   <!-- ================================================================ -->
   <!-- Scripts: kit.js first (auto-init on DOMContentLoaded); md.js     -->
-  <!-- fetches the manifesto into .book. Post-render hook wraps each    -->
-  <!-- top-level ## into its own .book__section with a slug id so       -->
-  <!-- scroll-spy tracks and sidebar TOC anchors resolve.               -->
+  <!-- fetches the manifesto into .book and auto-wraps each h2-rooted  -->
+  <!-- region in <article class="book__section">. The post-render hook -->
+  <!-- here is idempotent: it walks the already-wrapped sections and   -->
+  <!-- copies each section's h2 slug onto the article id so the        -->
+  <!-- sidebar TOC + scroll-spy resolve.                                -->
   <!-- ================================================================ -->
   <script src="./js/kit.js" defer></script>
   <script src="./js/md.js" defer></script>
@@ -175,42 +177,26 @@
         .replace(/\s+/g, "-");
     }
 
-    function wrapBookSections() {
+    // md.js produces <article class="book__section"> elements as direct
+    // children of .book. The first article carries h1 + preamble. Each
+    // subsequent article opens with an h2.t-display. This pass walks the
+    // sections and stamps each h2-rooted article with a slug id derived
+    // from its heading text. The lead article (h1) does not get an id.
+    function stampSectionIds() {
       var book = document.querySelector(".book");
       if (!book) return;
-      var children = Array.prototype.slice.call(book.childNodes);
-      var sections = [];
-      var current = null;
-
-      children.forEach(function (node) {
-        var isH2 = node.nodeType === 1
-          && node.tagName === "H2"
-          && node.classList.contains("t-display");
-        if (isH2) {
-          current = document.createElement("article");
-          current.className = "book__section";
-          var id = slugify(node.textContent);
-          if (id) current.id = id;
-          sections.push(current);
-          current.appendChild(node);
-        } else if (current) {
-          current.appendChild(node);
-        } else {
-          if (!sections.length || sections[0].id) {
-            var lead = document.createElement("article");
-            lead.className = "book__section";
-            sections.unshift(lead);
-          }
-          sections[0].appendChild(node);
-        }
+      var sections = book.querySelectorAll(":scope > article.book__section");
+      Array.prototype.forEach.call(sections, function (section) {
+        if (section.id) return;
+        var h2 = section.querySelector(":scope > h2.t-display");
+        if (!h2) return;
+        var id = slugify(h2.textContent);
+        if (id) section.id = id;
       });
-
-      book.innerHTML = "";
-      sections.forEach(function (s) { book.appendChild(s); });
     }
 
     document.addEventListener("kk:md-rendered", function () {
-      wrapBookSections();
+      stampSectionIds();
       if (window.KK && typeof window.KK.refresh === "function") {
         window.KK.refresh();
       }

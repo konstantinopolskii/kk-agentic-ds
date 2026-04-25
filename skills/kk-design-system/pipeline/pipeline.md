@@ -293,17 +293,25 @@ Spawning owner:
 
 Wall-clock cost stays at one stage per phase, not N.
 
-### Entry point matching
+### Entry point matching — the recipe map
 
-Pipeline entry points, from lightest to heaviest:
+Every kit-touching session names its pipeline recipe before code touches disk. The default is the full walk; deviations need a stamp. Architectural impact picks the recipe, not diff size.
 
-- **Typo or copy tweak.** Stage 3b only for the affected pattern (designer re-drafts the string). Stage 6a + 6b + 7 follow if the copy lands in the shipped prototype; otherwise stop at 3b.
-- **Kit refactor (like kit.js extraction).** Stage 1 (analyst decomposes) + stage 5 in DS-engineer mode (design engineer implements) + stage 6b + stage 7. Pattern design phase skipped; the direction doc §Exceptions block is populated directly by the user.
-- **New component in an existing page.** Stages 2-7.
-- **New page or flow.** Stages 1-7 (full walk).
-- **Retro.** Meta only.
+**Default — full walk.** Stages 1 → 2 → 3a/b/c × N → 4 → 5 → 6a + 6b + 6c → 7. New pages, new flows, new components, new conventions, anything that touches structural behavior. The canonical path.
 
-Entry point is declared at session start and recorded in `documentation/<session>/README.md`.
+**Docs / canon / maintainer rework.** The 1.3.0 content-architecture session shape. Touches canon `.md` files (`manifesto.md`, `canon/components.md`, `canon/patterns.md`, `canon/voice.md`, `pipeline/pipeline.md`, `pipeline/protocols.md`) or maintainer-facing structure (folder layout, file moves, conventions). Pattern blocks are doc surfaces, not UI features. Stage 6a skipped per kit-internal review adaptation. Stages 1 → 2 → 3a/b/c × N → 4 → 5 → 6b + 6c → 7. Mid-build reiterate after stage 7 FAIL is expected.
+
+**Kit refactor (like the kit.js extraction).** Stage 1 + stage 5 in DS-engineer mode + stage 6b + stage 7. Pattern design phase skipped; the direction doc §Exceptions block is populated directly by the human.
+
+**New component in an existing page.** Stages 2 to 7.
+
+**Typo or copy tweak.** Stage 3b only for the affected pattern. Stage 6a + 6b + 7 follow if the copy lands in the shipped prototype; otherwise stop at 3b.
+
+**Haiku short-fix.** Single CSS rule edit, single content tweak, padding or value adjustment. NO new component, NO new token, NO new convention, NO canon prose rewrite. Single Haiku agent ships fix + commit + tag. No 6b / 6c / 7 review loop. v1.3.1 and v1.3.2 used this path. When unsure between Haiku-path and full walk, default to full walk.
+
+**Retro.** Meta only.
+
+Entry point is declared at session start and recorded in `documentation/<session>/README.md`. Diff size is a misleading signal — a small CSS edit can be architecturally wrong (the 1.3.3 `:is()` broadening was three lines and got reverted at first sight). When a change touches a canon file, modifies kit JS behavior, adds or removes a CSS class, or introduces a new pattern or rule, walk the canon path.
 
 ### Post-pipeline pattern discovery
 
