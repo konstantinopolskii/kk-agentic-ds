@@ -8,9 +8,14 @@ Kit version: v1.5.0 (commit `cb3733b`).
 
 ## Outcome
 
-**Shipped 2026-04-26.** Operator review state slice at `demos/wealthy-pipeline/index.html`. Stage 7 meta-reviewer PASS on rerun (all six rubric items) after one reiterate cycle: copy revision at 3b for four patterns, engineer patch at 5, voice re-clear at 6c.
+**Two artefacts ship.**
 
-Path: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5] → 3b × 4 (copy revisions) → 5 (patch) → 6c (reaudit) → 7 (rerun) [PASS].
+1. **Original review-state slice** — `prototypes/wealthy-pipeline-review/index.html`. Single-file demo of the operator's review state. Stage 7 PASS on rerun after copy revisions. Moved from `demos/` since unaccepted.
+2. **Full 8-state prototype** — `prototypes/wealthy-pipeline/`. Index + 7 operator stages + client view. Each stage in its own file. Six of six 06a structural unclarities addressed (five closed, one partial). Cross-stage navigation via Pipeline group in inspector.
+
+Path: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5] → 3b × 4 (copy revisions) → 5 (patch) → 6c (reaudit) → 7 (rerun) [PASS] → 6a (cold-read rerun) [6 structural unclarities] → expansion (8 states) + structural fixes → consistency review.
+
+Three persistent flow gaps named in `08-consistency-review-full-prototype.md` for next cycle.
 
 ## File index
 
@@ -37,8 +42,10 @@ Path: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5
 | [03c-fresh-eyes-post-signoff-shout-pending.md](./03c-fresh-eyes-post-signoff-shout-pending.md) | 3c | fresh-eyes-jobstory (post) | 8/8 PASS. |
 | [04-ds-manager.md](./04-ds-manager.md) | 4 | ds-manager | Per-block component map + 4 canon corrections + 18-piece build-order task split. Inventory pass. |
 | [05-design-engineer.md](./05-design-engineer.md) | 5 | design-engineer | Built `demos/wealthy-pipeline/index.html` (814 lines) — 18 pieces all DONE, inventory pass, no invention. |
-| [demos/wealthy-pipeline/index.html](../../demos/wealthy-pipeline/index.html) | 5 | (artefact) | The slice. Single-file demo, embedded consumer JS. |
+| [prototypes/wealthy-pipeline-review/index.html](../../prototypes/wealthy-pipeline-review/index.html) | 5 | (artefact, moved) | Original review-state slice (was at demos/wealthy-pipeline; relocated to prototypes/ since unaccepted). |
+| [prototypes/wealthy-pipeline/](../../prototypes/wealthy-pipeline/) | post-pipeline | (artefact, full) | Full 8-state prototype: index + 7 operator stages + client view. Each stage is its own HTML file. |
 | [06a-consistency-jobstory.md](./06a-consistency-jobstory.md) | 6a | consistency-jobstory | Cold-read jobstory — 9 blocks, 6 unclarity flags (heaviest: agent-reply-as-replacement invisible). |
 | [06b-consistency-ds.md](./06b-consistency-ds.md) | 6b | consistency-ds | Cold-read DS — 9 blocks audited, 5 flags (heaviest: `book__signoff-stats` outside `book__signoff`). |
 | [06c-voice.md](./06c-voice.md) | 6c | voice-reviewer | Cold-read voice — ~70 strings audited, 6 flags + 1 typo + 1 borderline. |
-| [07-meta-reviewer.md](./07-meta-reviewer.md) | 7 | meta-reviewer | Rubric — 5/6 PASS; FAIL on item 5 (unaddressed 6c flags). User routes via reiterate protocol. |
+| [07-meta-reviewer.md](./07-meta-reviewer.md) | 7 | meta-reviewer | Rubric — 5/6 PASS; FAIL on item 5 (unaddressed 6c flags). User routes via reiterate protocol. PASS on rerun after copy revisions. |
+| [08-consistency-review-full-prototype.md](./08-consistency-review-full-prototype.md) | post-pipeline | orchestrator | Critical consistency review across all 8 states + client view. 5/6 06a structural unclarities closed; 3 flow gaps named for next cycle. |

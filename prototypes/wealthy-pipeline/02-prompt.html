@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../../vars.css" />
+  <link rel="stylesheet" href="../../style.css" />
+  <title>Strategy for Sofia — prompt</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Strategy</div>
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+        <section class="nav-group">
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#brief">Brief</a></li>
+            <li class="t-caption"><a href="#prompt">Prompt</a></li>
+          </ul>
+        </section>
+      </nav>
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        <a href="index.html">Preview index</a>
+      </footer>
+    </aside>
+
+
+    <main class="book" id="doc">
+
+      <article class="book__section">
+        <h1 class="t-hero">Strategy for Sofia</h1>
+        <p class="t-body">The agent drafted the research prompt from the brief plus the attached materials. Read it. Edit if it reads thin. Approve.</p>
+      </article>
+
+      <article class="book__section" id="brief">
+        <h2 class="t-display">Brief</h2>
+        <p class="t-body">Audit and strategy for Sofia, solo SaaS founder.</p>
+        <div class="card">
+          <dl class="book__spec">
+            <div class="book__spec-row"><dt class="book__spec-key">Transcription</dt><dd class="book__spec-value">Nelli call, 2026-04-15</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">CV</dt><dd class="book__spec-value">sofia-cv.pdf</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">Mentor notes</dt><dd class="book__spec-value">3 paragraphs</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">Depth</dt><dd class="book__spec-value">Deep</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="book__section" id="prompt">
+        <h2 class="t-display">Prompt</h2>
+        <p class="t-body">Edit any line below. Approve to fire research.</p>
+
+        <div class="card">
+          <p class="t-body">Research solo SaaS founder operations for Sofia Hlazunova, three months past MVP, five paying customers at $400 average. Pull retention benchmarks for $79–$149 SMB SaaS, warm-intro conversion rates for early-stage founders, and customer-development frameworks for solo operators. Prioritise sources from the last 18 months. Look for the gap between cold outreach and warm-intro channels, and the case for partnerships with VC fund portfolios. Skip generic project-management content.</p>
+          <button class="button button--primary t-subtitle" data-action="approve-prompt">Approve prompt</button>
+          <button class="button t-subtitle" data-action="redo-prompt">Redo prompt</button>
+        </div>
+      </article>
+
+    </main>
+
+
+    <aside class="inspector" aria-label="Pipeline + stage">
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Pipeline</h2>
+        </header>
+        <div class="card">
+          <dl class="book__spec">
+            <div class="book__spec-row"><dt class="book__spec-key">✓</dt><dd class="book__spec-value t-muted"><a href="01-brief.html">1. Brief</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">●</dt><dd class="book__spec-value"><a href="02-prompt.html"><span class="t-caption--bold">2. Prompt</span></a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="03-research.html">3. Research</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="04-draft.html">4. Draft</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="05-review.html">5. Review</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="06-signoff.html">6. Signoff</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="07-delivered-operator.html">7. Delivered</a></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Stage</h2>
+        </header>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Approve the prompt the agent drafted</h3>
+            <p class="t-caption">Edit any line directly. Approve fires research with the final text. Redo asks the agent for a fresh draft from the brief.</p>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+  <script src="../../js/kit.js" defer></script>
+</body>
+</html>

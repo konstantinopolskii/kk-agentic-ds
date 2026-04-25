@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../../vars.css" />
+  <link rel="stylesheet" href="../../style.css" />
+  <title>Strategy for Sofia — research</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Strategy</div>
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+        <section class="nav-group">
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#brief">Brief</a></li>
+            <li class="t-caption"><a href="#prompt">Prompt</a></li>
+            <li class="t-caption"><a href="#research-1">Research</a></li>
+          </ul>
+        </section>
+      </nav>
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        <a href="index.html">Preview index</a>
+      </footer>
+    </aside>
+
+
+    <main class="book" id="doc">
+
+      <article class="book__section">
+        <h1 class="t-hero">Strategy for Sofia</h1>
+        <p class="t-body">12 sources accepted, 3 pruned. Greenlight to fire the strategy draft, or add another research run with a sharpened prompt.</p>
+      </article>
+
+      <article class="book__section" id="brief">
+        <h2 class="t-display">Brief</h2>
+        <p class="t-body">Audit and strategy for Sofia, solo SaaS founder.</p>
+        <div class="card">
+          <dl class="book__spec">
+            <div class="book__spec-row"><dt class="book__spec-key">Transcription</dt><dd class="book__spec-value">Nelli call, 2026-04-15</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">CV</dt><dd class="book__spec-value">sofia-cv.pdf</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">Mentor notes</dt><dd class="book__spec-value">3 paragraphs</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">Depth</dt><dd class="book__spec-value">Deep</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="book__section" id="prompt">
+        <h2 class="t-display">Prompt</h2>
+        <div class="card">
+          <p class="t-body t-muted">Research solo SaaS founder operations for Sofia Hlazunova, three months past MVP, five paying customers at $400 average. Pull retention benchmarks, warm-intro conversion, customer-development frameworks. Prioritise last 18 months.</p>
+        </div>
+      </article>
+
+      <article class="book__section" id="research-1">
+        <h2 class="t-display">Research</h2>
+        <p class="t-body">12 sources accepted, 3 pruned.</p>
+
+        <div class="card">
+          <dl class="book__spec">
+            <div class="book__spec-row"><dt class="book__spec-key">1</dt><dd class="book__spec-value">a16z — solo founder operations report 2025</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">2</dt><dd class="book__spec-value">First Round Review — early-stage SaaS retention benchmarks</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">3</dt><dd class="book__spec-value">Stripe Atlas — DACH SaaS pricing study</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">4</dt><dd class="book__spec-value">Lenny's Newsletter — warm-intro conversion rates</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">5</dt><dd class="book__spec-value">Reforge — customer-development for solo founders</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">6</dt><dd class="book__spec-value">SaaStr — pricing for $79–$149 SMB SaaS</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">7</dt><dd class="book__spec-value">OpenView — net retention for early-stage SaaS</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">8</dt><dd class="book__spec-value">Y Combinator — founder operations playbook</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">9</dt><dd class="book__spec-value">Berlin Tech Network — founder community report</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">10</dt><dd class="book__spec-value">Notion — solo founder churn case study</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">11</dt><dd class="book__spec-value">EU Startups — DACH early-stage market sizing</dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">12</dt><dd class="book__spec-value">DealRoom — EU SaaS funding rounds 2025</dd></div>
+          </dl>
+        </div>
+
+        <div class="card">
+          <button class="button button--primary t-subtitle" data-action="greenlight-research">Greenlight findings</button>
+          <button class="button t-subtitle" data-action="add-research">Add research</button>
+          <button class="button t-subtitle" data-action="redo-research">Redo research</button>
+        </div>
+      </article>
+
+    </main>
+
+
+    <aside class="inspector" aria-label="Pipeline + stage">
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Pipeline</h2>
+        </header>
+        <div class="card">
+          <dl class="book__spec">
+            <div class="book__spec-row"><dt class="book__spec-key">✓</dt><dd class="book__spec-value t-muted"><a href="01-brief.html">1. Brief</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">✓</dt><dd class="book__spec-value t-muted"><a href="02-prompt.html">2. Prompt</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key">●</dt><dd class="book__spec-value"><a href="03-research.html"><span class="t-caption--bold">3. Research</span></a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="04-draft.html">4. Draft</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="05-review.html">5. Review</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="06-signoff.html">6. Signoff</a></dd></div>
+            <div class="book__spec-row"><dt class="book__spec-key t-muted">·</dt><dd class="book__spec-value t-muted"><a href="07-delivered-operator.html">7. Delivered</a></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Stage</h2>
+        </header>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">12 sources accepted, 3 pruned</h3>
+            <p class="t-caption">Skim the spec list. Greenlight to draft the strategy. Add research to spawn another run with a sharpened prompt. Redo replaces this run wholesale.</p>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+  <script src="../../js/kit.js" defer></script>
+</body>
+</html>

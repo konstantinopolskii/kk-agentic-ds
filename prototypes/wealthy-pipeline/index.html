@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../../vars.css" />
+  <link rel="stylesheet" href="../../style.css" />
+  <title>Wealthy pipeline — preview</title>
+  <style>
+    body { margin: 0; background: var(--color-bg-muted); }
+  </style>
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Wealthy pipeline</div>
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <h4 class="t-subtitle">Preview</h4>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#overview">Overview</a></li>
+            <li class="t-caption"><a href="#stages">Stages</a></li>
+            <li class="t-caption"><a href="#notes">Notes</a></li>
+          </ul>
+        </section>
+      </nav>
+      <footer class="sidebar__footer t-caption">
+        2026, kk.consulting<br />
+        Wealthy pipeline preview
+      </footer>
+    </aside>
+
+
+    <main class="book" id="doc">
+
+      <article class="book__section">
+        <h1 class="t-hero">Wealthy pipeline preview</h1>
+        <p class="t-body">Eight states of one document. Seven operator stages plus the client view. Every state lives in its own file under this folder. Open any to see how the doc accumulates as the operator walks brief to delivered.</p>
+        <p class="t-body">The shell stays. Three columns, only the middle scrolls. The book column dominates; the inspector compresses. The doc reads as a document the whole time, never as a form, never as a console.</p>
+      </article>
+
+      <article class="book__section" id="overview">
+        <h2 class="t-display">Overview</h2>
+        <p class="t-body">A consulting strategy ships in a document. The operator owns the pen across seven stages — brief, prompt, research, draft, review, signoff, delivered. The client receives the signed document at their own URL with a different inspector — next steps, subscription tiers, transcript, review.</p>
+        <p class="t-body">Doc body is shared across the two surfaces. The right inspector swaps per role. No conditional UI inside a shared card; different cards per role.</p>
+      </article>
+
+      <article class="book__section" id="stages">
+        <h2 class="t-display">Stages</h2>
+
+        <div class="card-stack">
+
+          <a class="card card--interactive card--selectable" href="01-brief.html" data-state="active">
+            <div class="card__heading">
+              <h3 class="t-title">1 of 7 · Brief</h3>
+              <p class="t-caption">Operator picks the client, attaches notes, picks depth. Commits the brief.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="02-prompt.html">
+            <div class="card__heading">
+              <h3 class="t-title">2 of 7 · Prompt</h3>
+              <p class="t-caption">Agent drafts the research prompt. Operator edits and approves.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="03-research.html">
+            <div class="card__heading">
+              <h3 class="t-title">3 of 7 · Research</h3>
+              <p class="t-caption">Sources land. Operator skims, prunes, greenlights or asks for more.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="04-draft.html">
+            <div class="card__heading">
+              <h3 class="t-title">4 of 7 · Draft</h3>
+              <p class="t-caption">Agent writes the strategy. Tokens stream into the doc body.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="05-review.html">
+            <div class="card__heading">
+              <h3 class="t-title">5 of 7 · Review</h3>
+              <p class="t-caption">Operator selects text, opens threads, runs Apply comments, approves replacements.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="06-signoff.html">
+            <div class="card__heading">
+              <h3 class="t-title">6 of 7 · Signoff</h3>
+              <p class="t-caption">Operator signs. Doc reflows to delivered shape with stats and signature.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="07-delivered-operator.html">
+            <div class="card__heading">
+              <h3 class="t-title">7 of 7 · Delivered, operator</h3>
+              <p class="t-caption">Share URL ready. Inbox holds client comments. Patch path open for typos.</p>
+            </div>
+          </a>
+
+          <a class="card card--interactive card--selectable" href="08-delivered-client.html">
+            <div class="card__heading">
+              <h3 class="t-title">+ Client view</h3>
+              <p class="t-caption">What Sofia opens at the share URL. Next steps, subscription, transcript, review.</p>
+            </div>
+          </a>
+
+        </div>
+      </article>
+
+      <article class="book__section" id="notes">
+        <h2 class="t-display">Notes</h2>
+        <p class="t-body">Each stage file mocks one snapshot of the document. Content does not persist between files; opening a stage shows that stage's rest state with plausible mock content.</p>
+        <p class="t-body">Stage 5 (Review) carries the full comment-thread mechanic with selection-driven drafts, agent-replied threads marked as Replacement, Approve handler, and reply-with-why refusal on empty submit. Other stages carry static content for visual reference.</p>
+        <p class="t-body">The art direction is Document first. Across every stage the book column dominates; the inspector compresses to a stage card and a context card. The signoff shout is the only inverted surface in the book column. Threads are marginalia.</p>
+      </article>
+
+    </main>
+
+
+    <aside class="inspector" aria-label="Preview navigator">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Preview</h2>
+        </header>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Eight files</h3>
+            <p class="t-caption">One folder. One doc walked through every stage. Click any card on the left to open that snapshot.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Direction</h2>
+        </header>
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Document first</h3>
+            <p class="t-caption">Doc dominates. Inspector compresses. Threads are marginalia. The signoff is the seal, never a console.</p>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <script src="../../js/kit.js" defer></script>
+</body>
+</html>
