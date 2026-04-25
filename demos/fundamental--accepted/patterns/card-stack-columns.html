@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css" />
+  <link rel="stylesheet" href="../../../style.css" />
+  <title>Card stack — columns</title>
+  <style>
+    body { margin: 0; padding: var(--space-6); background: var(--color-bg); }
+  </style>
+</head>
+<body>
+  <div class="card-stack card-stack--columns">
+    <div class="card">
+      <div class="card__heading">
+        <h3 class="t-title">Free</h3>
+        <p class="t-caption">For getting started.</p>
+      </div>
+      <button class="button t-subtitle">Pick free</button>
+    </div>
+    <div class="card">
+      <div class="card__heading">
+        <h3 class="t-title">Pro</h3>
+        <p class="t-caption">For working teams.</p>
+      </div>
+      <button class="button button--primary t-subtitle">Pick pro</button>
+    </div>
+    <div class="card">
+      <div class="card__heading">
+        <h3 class="t-title">Team</h3>
+        <p class="t-caption">For shipping at scale.</p>
+      </div>
+      <button class="button t-subtitle">Pick team</button>
+    </div>
+  </div>
+  <script src="../../../js/kit.js" defer></script>
+</body>
+</html>

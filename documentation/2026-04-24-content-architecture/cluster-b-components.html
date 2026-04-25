@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cluster B — 11 components shipped but missing from the allowlist</title>
+<link rel="stylesheet" href="../../vars.css">
+<link rel="stylesheet" href="../../style.css">
+<style>
+  /* Override the kit's `html, body { overflow: hidden }` (style.css:81) — that
+     rule exists for the three-pane app shell. This page is a single scroll surface. */
+  html, body { overflow: visible !important; height: auto !important; }
+
+  /* Demo-only chrome. Not part of the kit. */
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans, system-ui, sans-serif);
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-8) calc(var(--space-20) * 2);
+    max-width: 1320px;
+  }
+  .lead { margin-bottom: var(--space-12); }
+  .lead h1 { margin: 0 0 var(--space-4) 0; }
+  .lead p { max-width: 72ch; margin: 0 0 var(--space-3) 0; }
+
+  .demo {
+    padding: var(--space-8) 0;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+  .demo:last-of-type { border-bottom: none; }
+  .demo > h2 { margin: 0 0 var(--space-5) 0; }
+
+  .demo__grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) 300px;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  @media (max-width: 1180px) {
+    .demo__grid {
+      grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+    }
+    .demo__grid > .demo__comment {
+      grid-column: 1 / -1;
+      max-width: 600px;
+    }
+  }
+  .demo__meta dl { margin: 0; }
+  .demo__meta dt {
+    font-size: var(--fs-micro);
+    line-height: var(--lh-micro);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-1) 0;
+    text-transform: none;
+  }
+  .demo__meta dd {
+    margin: 0 0 var(--space-3) 0;
+    font-size: var(--fs-caption);
+    line-height: var(--lh-caption);
+  }
+  .demo__meta code {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    background: var(--color-surface-overlay);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  .demo__flags {
+    font-size: var(--fs-micro);
+    line-height: var(--lh-micro);
+    color: var(--color-text-muted);
+    margin: var(--space-4) 0 0 0;
+    padding-top: var(--space-3);
+    border-top: 0.5px solid var(--color-border);
+  }
+  .demo__flags strong { color: var(--color-text); font-weight: var(--fw-bold); }
+
+  .demo__stage {
+    background: var(--color-surface-overlay);
+    border-radius: var(--radius-md);
+    padding: var(--space-8);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo__stage--column {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+  .demo__stage--narrow {
+    background: var(--color-bg);
+    height: 320px;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  /* Demo overrides — show components that are normally hidden or positioned off-stage. */
+  .demo__stage--narrow .fab { display: inline-flex; position: absolute; }
+  .demo__stage .toc__indicator { left: 0; }
+
+  /* Phone-shape preview frame for the FAB demo so floating buttons sit in a real container. */
+  .demo__phone {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg);
+    border-radius: var(--radius-md);
+  }
+
+  /* Side-by-side comparison layout. Two stages share the right column. */
+  .demo__compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .demo__compare > .demo__stage {
+    margin: 0;
+    padding: var(--space-6);
+  }
+  .demo__compare-label {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    font-size: var(--fs-micro);
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin: 0;
+    z-index: 5;
+  }
+  .demo__compare-label--keep { color: var(--color-text); font-weight: var(--fw-bold); }
+
+  /* Deck-card radius variants for the comparison. */
+  .deck--radius-24 .deck-card { border-radius: 24px; }
+
+  /* FAB shadow override for the comparison. */
+  .fab--no-shadow { box-shadow: none !important; }
+
+  /* Cluster-A discussion sections — same shape as a demo. */
+  .demo--ca .demo__stage { background: var(--color-bg); }
+
+  /* Comment column — third column on each grid section. Hosts the kit's
+     comment-thread pattern verbatim. No overrides on .card / .comment-thread /
+     .comment-msg / .field / .field__input — those classes do their own job. */
+  .demo__comment {
+    position: sticky;
+    top: var(--space-6);
+  }
+  .demo__comment--standalone {
+    margin-top: var(--space-6);
+    max-width: 600px;
+    position: static;
+  }
+
+  /* Floating copy-all button. Sits bottom-right, full black, no shadow (kit-compliant). */
+  .copy-all-btn {
+    position: fixed;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    z-index: 100;
+    background: var(--color-text);
+    color: var(--color-bg);
+    padding: var(--space-3) var(--space-5);
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-caption);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity var(--dur-fast) var(--ease-out),
+                transform var(--dur-fast) var(--ease-out);
+  }
+  .copy-all-btn:hover { opacity: 0.9; }
+  .copy-all-btn:active { transform: scale(0.96); }
+  .copy-all-btn[data-state="empty"] { opacity: 0.5; }
+  .copy-all-btn__count {
+    display: inline-block;
+    margin-left: var(--space-2);
+    padding: 2px 8px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-micro);
+  }
+
+  /* Keyframes inventory rows. */
+  .keyframe-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-4) var(--space-6);
+    padding: var(--space-4) 0;
+    border-bottom: 0.5px solid var(--color-border);
+    align-items: baseline;
+  }
+  .keyframe-row:last-child { border-bottom: none; }
+  .keyframe-row__name {
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: var(--fs-caption);
+    color: var(--color-text);
+    font-weight: var(--fw-bold);
+  }
+  .keyframe-row__body { font-size: var(--fs-caption); line-height: var(--lh-caption); }
+  .keyframe-row__body p { margin: 0 0 var(--space-1) 0; }
+  .keyframe-row__flag {
+    color: var(--color-text);
+    font-size: var(--fs-micro);
+    background: var(--color-surface-strong);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: var(--fw-bold);
+  }
+</style>
+</head>
+<body>
+
+  <header class="lead">
+    <h1 class="t-display">Cluster B + visual decisions on related Cluster A items</h1>
+    <p class="t-body">
+      First half of the page (sections 1–11): the 11 CSS prefixes that ship in
+      <code>style.css</code> but aren't named in <code>canon/components.md § Forbidden</code>.
+      Either the allowlist gets the missing 11 entries (cheap, restores consistency) or the
+      components get deleted from the kit (real refactor).
+    </p>
+    <p class="t-body">
+      Second half (sections 12 onward): three Cluster A items pulled forward for visual judgment —
+      the <code>.fab</code> drop shadow, the <code>.deck-card</code> radius (20 px vs 24 px),
+      and the <code>.t-mono</code> / <code>.tag--inline</code> cleanup with possible unification.
+      Plus an inventory of every keyframe in the kit so the blur-policy decision lands on real data.
+    </p>
+    <p class="t-caption t-muted">
+      Source of every defect note: <code>documentation/2026-04-24-content-architecture/06b-consistency-ds.md</code>.
+      Source of every keyframe: <code>style.css</code> grep <code>@keyframes</code>.
+    </p>
+  </header>
+
+  <!-- 1. toc -->
+  <section class="demo">
+    <h2 class="t-title">1. <code>toc</code> — sidebar active-section indicator</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A 4 px wide, 22 px tall black bar that slides up and down the sidebar to mark which section of the doc you're reading.</dd>
+          <dt>Where it lives</dt>
+          <dd>Inside <code>.sidebar__nav</code>. JS reads scroll position; CSS does the motion.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.toc__indicator</code>, <code>.is-positioned</code>, <code>.is-tracking</code></dd>
+          <dt>Kill cost</dt>
+          <dd>The sidebar loses its "you are here" signal. Active group still tints its heading black, so it's not catastrophic — but the sliding bar is the most concrete navigational affordance the kit has.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none on the indicator itself. (Adjacent sidebar nav rail uses 18 px padding which is off-grid — but that's a <code>sidebar</code> issue, not a <code>toc</code> issue.)</p>
+      </div>
+      <div class="demo__stage demo__stage--column" style="background: var(--color-bg);">
+        <div style="position: relative; padding-left: 18px; min-height: 140px;">
+          <div class="toc__indicator is-positioned" style="position: absolute; left: 0; top: 6px; opacity: 1;"></div>
+          <p class="t-caption" style="margin: 0; padding: var(--space-1) 0; font-weight: var(--fw-bold);">Active section</p>
+          <p class="t-caption" style="margin: 0; padding: var(--space-1) 0; color: var(--color-text-muted);">Other section</p>
+          <p class="t-caption" style="margin: 0; padding: var(--space-1) 0; color: var(--color-text-muted);">Yet another</p>
+          <p class="t-caption" style="margin: 0; padding: var(--space-1) 0; color: var(--color-text-muted);">And one more</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. fab -->
+  <section class="demo">
+    <h2 class="t-title">2. <code>fab</code> — floating action buttons (narrow viewports)</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>Three floating circle/pill buttons that appear only on tablet and phone. Left = nav (hamburger). Right = inspector (with comment count). Center = "add comment" pill, shown when text is selected.</dd>
+          <dt>Where</dt>
+          <dd><code>position: fixed</code>, bottom corners. Hidden on desktop.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.fab</code>, <code>.fab--nav</code>, <code>.fab--inspector</code>, <code>.fab--comment</code>, <code>.fab__count</code></dd>
+          <dt>Kill cost</dt>
+          <dd>You lose the ability to switch columns on tablet/phone. Without these, the narrow-viewport story breaks — there's no other way to swap views.</dd>
+          <dt>Visual decision</dt>
+          <dd>Currently ships with <code>box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15)</code> at line 2167 — forbidden by manifesto's "no drop shadows" rule. Compare both versions on the right. With the shadow, the FAB lifts off the surface and reads more obviously tappable. Without, it sits flat against the column, relying on color contrast (full black on light bg) alone.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> drop shadow on <code>.fab</code> (Cluster A, line 2167). This page is now where you decide it.</p>
+      </div>
+      <div class="demo__compare">
+        <div class="demo__stage demo__stage--narrow">
+          <p class="demo__compare-label">Current — drop shadow (forbidden)</p>
+          <div class="demo__phone">
+            <button class="fab fab--nav" aria-label="Nav">
+              <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="0" y1="2" x2="18" y2="2"/>
+                <line x1="0" y1="7" x2="18" y2="7"/>
+                <line x1="0" y1="12" x2="18" y2="12"/>
+              </svg>
+            </button>
+            <button class="fab fab--comment">Add comment</button>
+            <button class="fab fab--inspector" aria-label="Inspector">
+              <span class="fab__count">3</span>
+            </button>
+          </div>
+        </div>
+        <div class="demo__stage demo__stage--narrow">
+          <p class="demo__compare-label">Proposed — no shadow (rule-compliant)</p>
+          <div class="demo__phone">
+            <button class="fab fab--nav fab--no-shadow" aria-label="Nav">
+              <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="0" y1="2" x2="18" y2="2"/>
+                <line x1="0" y1="7" x2="18" y2="7"/>
+                <line x1="0" y1="12" x2="18" y2="12"/>
+              </svg>
+            </button>
+            <button class="fab fab--comment fab--no-shadow">Add comment</button>
+            <button class="fab fab--inspector fab--no-shadow" aria-label="Inspector">
+              <span class="fab__count">3</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. tier -->
+  <section class="demo">
+    <h2 class="t-title">3. <code>tier</code> — side-by-side choice cards inside an inspector card</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>Two or more flat surface cards laid horizontally. Each is a clickable choice. Hover darkens the surface; active scales 0.98.</dd>
+          <dt>Where</dt>
+          <dd>Used inside an inspector card to offer side-by-side options (e.g. plan tiers, theme variants).</dd>
+          <dt>Selectors</dt>
+          <dd><code>.tiers</code> (the row), <code>.tier</code> (each card)</dd>
+          <dt>Kill cost</dt>
+          <dd>Low. The pattern can be expressed as a row of <code>.card</code> with hover, but you'd need to add the right modifier for the side-by-side rhythm.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> 21 px right-padding on <code>.tier</code> at line 1050 — off-grid (Cluster A).</p>
+      </div>
+      <div class="demo__stage" style="display: block;">
+        <div class="tiers">
+          <div class="tier">
+            <p class="t-caption" style="margin: 0 0 var(--space-1) 0; font-weight: var(--fw-bold);">Free</p>
+            <p class="t-micro t-muted" style="margin: 0;">For getting started.</p>
+          </div>
+          <div class="tier">
+            <p class="t-caption" style="margin: 0 0 var(--space-1) 0; font-weight: var(--fw-bold);">Pro</p>
+            <p class="t-micro t-muted" style="margin: 0;">For working teams.</p>
+          </div>
+          <div class="tier">
+            <p class="t-caption" style="margin: 0 0 var(--space-1) 0; font-weight: var(--fw-bold);">Team</p>
+            <p class="t-micro t-muted" style="margin: 0;">For shipping at scale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. deck -->
+  <section class="demo">
+    <h2 class="t-title">4. <code>deck</code> — fanned 3D card stack</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A horizontal row of cards tilted away in perspective. The active one rotates flat and grows. Browse-then-pick.</dd>
+          <dt>Where</dt>
+          <dd>Used for theme presets, swatch flips, tier choices where the reader wants to skim before committing. Distinct from <code>.card-stack</code> (vertical, equal surfaces).</dd>
+          <dt>Selectors</dt>
+          <dd><code>.deck</code>, <code>.deck-card</code>, <code>.deck-card.active</code>, <code>.deck-card__select</code>, <code>.deck-card__check</code></dd>
+          <dt>Kill cost</dt>
+          <dd>High visual loss. The fan-and-rotate motion is one of the kit's signature affordances. No replacement pattern exists.</dd>
+          <dt>Visual decision — radius</dt>
+          <dd>Current <code>.deck-card</code> uses <code>border-radius: 20px</code> — a fifth, off-spec value. The kit allows 12 / 16 / 24 / 9999. The natural snap-to-grid replacement is 24 px. Side-by-side on the right: 20 (current) vs 24 (kit-spec). 24 looks slightly more pillowed; 20 is tighter. Both work.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Other defects on <code>.deck-card</code> (Cluster A):</strong> hard-coded <code>#cccccc</code> bg (line 1768) — fix to a kit token. 300 ms transition (line 1789) — snap to <code>--dur-slow</code> (320 ms) which is the closest kit token. 10 px check glyph (line 1830) — snap to 8 or 12. −190 px right-margin (line 1775) — this is the fan geometry; snapping it changes the visual rhythm. Keep or accept as a geometry exception?</p>
+      </div>
+      <div class="demo__compare">
+        <div class="demo__stage" style="display: block; padding: var(--space-12) var(--space-6) var(--space-8); height: 260px; overflow: visible;">
+          <p class="demo__compare-label">Current — 20 px radius</p>
+          <div class="deck" style="padding-right: 180px; transform: scale(0.8); transform-origin: top left;">
+            <div class="deck-card">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme A</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">Default.</p>
+            </div>
+            <div class="deck-card active">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme B</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">High contrast.</p>
+              <span class="tag deck-card__select">
+                <span class="deck-card__check"></span>
+                Choose
+              </span>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme C</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">Low contrast.</p>
+            </div>
+          </div>
+        </div>
+        <div class="demo__stage" style="display: block; padding: var(--space-12) var(--space-6) var(--space-8); height: 260px; overflow: visible;">
+          <p class="demo__compare-label demo__compare-label--keep">Proposed — 24 px radius (kit-spec)</p>
+          <div class="deck deck--radius-24" style="padding-right: 180px; transform: scale(0.8); transform-origin: top left;">
+            <div class="deck-card">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme A</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">Default.</p>
+            </div>
+            <div class="deck-card active">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme B</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">High contrast.</p>
+              <span class="tag deck-card__select">
+                <span class="deck-card__check"></span>
+                Choose
+              </span>
+            </div>
+            <div class="deck-card">
+              <p class="t-caption" style="margin: 0; font-weight: var(--fw-bold);">Theme C</p>
+              <p class="t-micro t-muted" style="margin: var(--space-1) 0 0 0;">Low contrast.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. highlight -->
+  <section class="demo">
+    <h2 class="t-title">5. <code>highlight</code> — inline text mark</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A subtle background fill behind a span of text. Marks a passage that has a thread/comment attached. The <code>--active</code> variant inverts to full-black background, white text.</dd>
+          <dt>Where</dt>
+          <dd>Inline inside paragraphs in <code>.book</code>. Clicking promotes the owning thread in the inspector.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.highlight</code>, <code>.highlight.highlight--active</code></dd>
+          <dt>Kill cost</dt>
+          <dd>You lose the visual link between body text and inspector threads. Comments would have to be located by scroll position alone.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none.</p>
+      </div>
+      <div class="demo__stage demo__stage--column" style="background: var(--color-bg); padding: var(--space-8);">
+        <p class="t-body" style="margin: 0;">
+          Most of this paragraph reads plain. <span class="highlight">This span has a thread attached</span> and clicking it opens the comment in the inspector.
+        </p>
+        <p class="t-body" style="margin: 0;">
+          When that thread is the active one, the highlight becomes <span class="highlight highlight--active">an inverted black-on-white mark</span> so the reader can see which span the inspector is currently showing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. figure -->
+  <section class="demo">
+    <h2 class="t-title">6. <code>figure</code> — image or SVG with a caption</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A wrapper for an image or SVG plus a micro-sized muted caption underneath. No surface, no radius — just the image and its label.</dd>
+          <dt>Where</dt>
+          <dd>Inside cards or directly in body prose where a diagram needs to land.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.figure</code></dd>
+          <dt>Kill cost</dt>
+          <dd>Low. Plain HTML <code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code> with utility classes can replace it. But there's no reason to delete a 6-line CSS rule.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none.</p>
+      </div>
+      <div class="demo__stage" style="display: block;">
+        <figure class="figure">
+          <svg viewBox="0 0 240 80" style="height: 80px; width: 240px;">
+            <rect x="2" y="2" width="76" height="76" fill="none" stroke="currentColor" stroke-width="1"/>
+            <rect x="82" y="2" width="76" height="76" fill="currentColor"/>
+            <rect x="162" y="2" width="76" height="76" fill="none" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <figcaption>Three squares. The middle one is filled. A figure caption.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. aside -->
+  <section class="demo">
+    <h2 class="t-title">7. <code>aside</code> — inline parenthetical</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>An inline span set in muted text at 0.85× the surrounding size. Reads as parenthetical without using parentheses.</dd>
+          <dt>Where</dt>
+          <dd>Inside running prose in body copy.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.aside</code></dd>
+          <dt>Kill cost</dt>
+          <dd>Low. Could be replaced by parentheses, but that pulls the reader's eye more than this softer beat.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> uses <code>0.85em</code> which isn't a kit token (sub-pixel typographic — acceptable but bypasses the type scale).</p>
+      </div>
+      <div class="demo__stage demo__stage--column" style="background: var(--color-bg); padding: var(--space-8);">
+        <p class="t-body" style="margin: 0;">
+          The kit ships nine color tokens <span class="aside">two backgrounds, two surfaces, two hairlines, three text alphas</span> and refuses to ship a tenth. This sentence has an inline aside in the middle of it that reads as a softer beat.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. quote -->
+  <section class="demo">
+    <h2 class="t-title">8. <code>quote</code> — block quotation</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A pulled passage with a 4 px hairline rail on the left, body-sized type, optional <code>&lt;cite&gt;</code> below set in micro.</dd>
+          <dt>Where</dt>
+          <dd>Inside body prose in any <code>.book</code>.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.quote</code> (on <code>&lt;blockquote&gt;</code>), with <code>&lt;cite&gt;</code> child</dd>
+          <dt>Kill cost</dt>
+          <dd>Low. Standard HTML <code>&lt;blockquote&gt;</code> can be styled via the cascade. But the rule contains careful Rule 14 rescue logic for spacing with adjacent paragraphs and headings — losing it means re-engineering that.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none. (The <code>font-style: italic</code> rule is commented out; current quote is regular weight, no italic — consistent with the manifesto's "no italic" rule.)</p>
+      </div>
+      <div class="demo__stage" style="display: block;">
+        <blockquote class="quote">
+          The kit must work even if dragged through the mud. AK-47 over M16.
+          <cite>Manifesto, opening line</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. divider -->
+  <section class="demo">
+    <h2 class="t-title">9. <code>divider</code> — hairline horizontal rule</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A 0.5 px hairline that breaks sections inline with text. Same weight as every other hairline in the kit.</dd>
+          <dt>Where</dt>
+          <dd>Inside body prose, on <code>&lt;hr&gt;</code> tags.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.divider</code></dd>
+          <dt>Kill cost</dt>
+          <dd>Low. Could just style the <code>&lt;hr&gt;</code> tag globally. But the explicit class is cheap insurance.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none.</p>
+      </div>
+      <div class="demo__stage demo__stage--column" style="background: var(--color-bg); padding: var(--space-8);">
+        <p class="t-body" style="margin: 0;">A paragraph above the divider.</p>
+        <hr class="divider">
+        <p class="t-body" style="margin: 0;">A paragraph below the divider.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. avatar -->
+  <section class="demo">
+    <h2 class="t-title">10. <code>avatar</code> — initial disc</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A 24 px circle with a single bold initial inside. Used for author bylines in signoff blocks and comment threads.</dd>
+          <dt>Where</dt>
+          <dd>In <code>.book__signoff</code> and inside comment threads. Currently shipped in the signoff block of every kit doc.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.avatar</code></dd>
+          <dt>Kill cost</dt>
+          <dd>Medium. The signoff block uses it. If you delete <code>.avatar</code>, every doc's signature breaks. You'd need to redesign the signoff.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> none.</p>
+      </div>
+      <div class="demo__stage" style="gap: var(--space-4);">
+        <span class="avatar">K</span>
+        <span class="avatar">A</span>
+        <span class="avatar">M</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. checkbox -->
+  <section class="demo">
+    <h2 class="t-title">11. <code>checkbox</code> — custom checkbox</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What it is</dt>
+          <dd>A 16 px square box with a custom check glyph (same clip-path as the deck check). Used as a real form control with native semantics.</dd>
+          <dt>Where</dt>
+          <dd>In forms inside cards. Note: the kit's manifesto direction is <em>switch over checkbox</em> for binary toggles — checkbox stays for true multi-select lists.</dd>
+          <dt>Selectors</dt>
+          <dd><code>.checkbox</code> (label wrapper), <code>.checkbox input</code></dd>
+          <dt>Kill cost</dt>
+          <dd>Low — if the kit has truly committed to switches everywhere. But multi-select still needs a checkbox; killing it forces native browser checkboxes back in, which break the rest of the visual rhythm.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Defects:</strong> 1 px border (line 1923) breaks the kit's 0.5 px hairline rhythm — Cluster A.</p>
+      </div>
+      <div class="demo__stage" style="gap: var(--space-6);">
+        <label class="checkbox">
+          <input type="checkbox">
+          <span class="t-caption">Unchecked</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" checked>
+          <span class="t-caption">Checked</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. t-mono and tag--inline -->
+  <section class="demo">
+    <h2 class="t-title">12. <code>.t-mono</code> + <code>.tag--inline</code> — clean up and possibly unify</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>What's there now</dt>
+          <dd><code>.t-mono</code>: kit-font (Commissioner) at <strong>weight 600</strong>, letter-spacing 0. Used for code, tokens, refs in body prose. The class name says "mono" but the font isn't monospace — it's a semantic marker for code-voice, not a font swap.</dd>
+          <dd><code>.tag--inline</code>: surface chip + uppercase + bold + 0.8em + 0.2 px tracking. The 0.8em existed because uppercase reads visually larger; once uppercase goes, the size compensation goes with it.</dd>
+          <dt>Confirmed decisions</dt>
+          <dd>Keep <code>font-weight: 600</code> on <code>.t-mono</code> as a documented exception to the 400/500/700 rule. Update <code>tokens.json</code> + components.md to name 600 as the kit's fourth weight, used only here.</dd>
+          <dd>Drop <code>text-transform: uppercase</code> from <code>.tag--inline</code>. Drop <code>font-size: 0.8em</code> back to body size. Drop <code>letter-spacing: 0.2px</code> (existed only to track the caps).</dd>
+          <dt>Naming question</dt>
+          <dd>"<code>t-mono</code>" lies — it's not monospace. "<code>tag--inline</code>" lies once uppercase is gone — it's not really a metadata tag anymore, it's a code chip. Both serve the same semantic: <strong>"this short phrase is code, not prose"</strong>. The difference is just whether it sits on a surface (chip) or rides bare on the body weight bump.</dd>
+          <dt>Three rename options</dt>
+          <dd><strong>A. Keep separate, rename t-mono.</strong> <code>.t-mono</code> → <code>.t-code</code>. <code>.tag--inline</code> stays as is (cleaned up). Two unrelated classes, honest names.</dd>
+          <dd><strong>B. Unify under a code family.</strong> <code>.t-mono</code> → <code>.t-code</code>. <code>.tag--inline</code> → <code>.t-code--chip</code>. Modifier signals the relationship; both share the same root.</dd>
+          <dd><strong>C. Single class, single modifier.</strong> Just <code>.t-code</code> for bare. Drop <code>.tag--inline</code>'s surface treatment entirely — if a phrase needs more visual weight, that's a sign it should be a real button or callout, not an inline chip. Most aggressive simplification.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Recommendation:</strong> option B. Honest naming, the relationship is documented in the modifier, no behavior is lost.</p>
+      </div>
+      <div class="demo__compare" style="grid-template-columns: 1fr;">
+        <div class="demo__stage" style="display: block; background: var(--color-bg); padding: var(--space-6) var(--space-8);">
+          <p class="demo__compare-label">Current</p>
+          <p class="t-body" style="margin: var(--space-6) 0 var(--space-3) 0;">
+            Bare body prose with a <span class="t-mono">--space-4</span> token reference using <code>.t-mono</code>.
+            Then a <span class="tag--inline">SHIPPING</span> chip using <code>.tag--inline</code> in the wild.
+          </p>
+        </div>
+        <div class="demo__stage" style="display: block; background: var(--color-bg); padding: var(--space-6) var(--space-8);">
+          <p class="demo__compare-label demo__compare-label--keep">Proposed — option B (rename + cleanup)</p>
+          <p class="t-body" style="margin: var(--space-6) 0 var(--space-3) 0;">
+            Bare body prose with a <span class="t-mono">--space-4</span> token reference (now <code>.t-code</code>).
+            Then an
+            <span class="tag--inline" style="font-size: 1em; letter-spacing: normal; text-transform: none; padding: 2px var(--space-2);">in progress</span>
+            chip (now <code>.t-code--chip</code>) — same surface, body size, no caps.
+          </p>
+          <p class="t-caption t-muted" style="margin: var(--space-4) 0 0 0;">
+            The chip variant feels right when the phrase needs to read as a <em>thing</em>, not as code. Bare <code>.t-code</code> is for actual tokens/refs; chip is for inline labels and statuses.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Keyframes inventory -->
+  <section class="demo">
+    <h2 class="t-title">13. Animation inventory — every keyframe in the kit</h2>
+    <div class="demo__grid">
+      <div class="demo__meta">
+        <dl>
+          <dt>Why this list</dt>
+          <dd>You said: blur is OK if (a) the admin authorizes it, or (b) it reuses an existing animation pattern. To make rule (b) enforceable, the existing patterns have to be named.</dd>
+          <dt>The blur question</dt>
+          <dd>One of the seven keyframes uses <code>filter: blur(4px)</code> as a transient effect (not a resting glass surface). That's the keyframe Cluster A flagged. With the new policy ("blur is OK if reusing existing pattern"), this keyframe becomes the canonical blur pattern — anyone wanting blur reuses it instead of inventing.</dd>
+          <dt>Total count</dt>
+          <dd>7 keyframes. All driven by the kit's motion tokens (<code>--dur-fast</code> 120ms, <code>--dur-base</code> 200ms, <code>--dur-slow</code> 320ms, <code>--dur-long</code> 760ms). Source: <code>style.css</code>, grep <code>@keyframes</code>.</dd>
+        </dl>
+        <p class="demo__flags"><strong>Decision needed:</strong> codify these 7 as the kit's animation registry in <code>canon/components.md § Motion</code>? New animations require either reusing one of these or admin approval.</p>
+      </div>
+      <div class="demo__stage" style="display: block; background: var(--color-bg); padding: var(--space-6) var(--space-8);">
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">fake-caret-blink</p>
+          <div class="keyframe-row__body">
+            <p>1.06 s, <code>steps(1, end)</code>, infinite. Pure opacity 1 ↔ 0.</p>
+            <p class="t-muted">Used on <code>.field__fake-caret</code> inside active comment-new and comment-thread cards. Marks where typing will land before the field has focus.</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">menu-in</p>
+          <div class="keyframe-row__body">
+            <p><code>--dur-fast</code> (120 ms), <code>--ease-out</code>. Opacity 0 → 1 with scale 0.94 → 1.</p>
+            <p class="t-muted">Used on <code>.comment__menu-popover</code> when the kebab opens. Gentle pop from the top-right corner.</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">inspector-card-focus <span class="keyframe-row__flag">contains blur</span></p>
+          <div class="keyframe-row__body">
+            <p><code>--dur-long</code> (760 ms), <code>--ease-swing</code>. From: scale(0.88) skewY(-3°) opacity(0.4) <strong>blur(4px)</strong>. To: scale(1) skewY(0) opacity(1) blur(0).</p>
+            <p class="t-muted">Used on <code>.inspector .card--interactive[data-state="active"]</code> when a card promotes to active. The blur is transient — clears in 760 ms — not a resting glass surface. Under the new policy, this becomes the canonical "blur reveal" pattern. Anyone needing blur reuses this animation rather than inventing.</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">check-in</p>
+          <div class="keyframe-row__body">
+            <p><code>--dur-base</code> (200 ms), <code>--ease-spring</code>. Opacity 0 → 1, scale 0 → 1.</p>
+            <p class="t-muted">Used on <code>.deck-card__check</code> when a deck card is chosen. The checkmark springs in once per choice — gestural confirmation.</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">reveal-from-left</p>
+          <div class="keyframe-row__body">
+            <p>Inline-attached by JS, 320 ms, ease-out. translateX(-12px) scale(0.96) → 0 / 1.</p>
+            <p class="t-muted">Used on the sidebar when it becomes visible (initial load or <code>data-view="nav"</code> swap).</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">reveal-from-right</p>
+          <div class="keyframe-row__body">
+            <p>Inline-attached by JS, 320 ms, ease-out. translateX(12px) scale(0.96) → 0 / 1.</p>
+            <p class="t-muted">Used on the inspector when it becomes visible.</p>
+          </div>
+        </div>
+        <div class="keyframe-row">
+          <p class="keyframe-row__name">reveal-from-below</p>
+          <div class="keyframe-row__body">
+            <p>Inline-attached by JS, 320 ms, ease-out. translateY(16px) scale(0.98) → 0 / 1.</p>
+            <p class="t-muted">Used on the doc/book column when it becomes visible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Summary -->
+  <section class="demo" style="border-top: 0.5px solid var(--color-border); border-bottom: none; padding-top: var(--space-10);">
+    <h2 class="t-title">Summary — every decision on this page</h2>
+
+    <h3 class="t-subtitle" style="margin: var(--space-8) 0 var(--space-3) 0;">Cluster B — the 11 prefixes</h3>
+    <dl class="t-body" style="display: grid; grid-template-columns: 140px 1fr; gap: var(--space-3) var(--space-6); margin: 0;">
+      <dt style="font-weight: var(--fw-bold);">High loss to kill</dt>
+      <dd><code>fab</code> (narrow viewports break), <code>deck</code> (signature affordance), <code>highlight</code> (no link between body and threads).</dd>
+      <dt style="font-weight: var(--fw-bold);">Medium loss</dt>
+      <dd><code>toc</code> (sidebar loses sliding cue), <code>avatar</code> (signoff block redesign needed), <code>checkbox</code> (multi-select breaks).</dd>
+      <dt style="font-weight: var(--fw-bold);">Low loss</dt>
+      <dd><code>tier</code>, <code>figure</code>, <code>aside</code>, <code>quote</code>, <code>divider</code> — replaceable with utility composition or native HTML, but no compelling reason to delete.</dd>
+    </dl>
+    <p class="t-body" style="margin-top: var(--space-4);">
+      <strong>Recommendation:</strong> add all 11 to the allowlist. Update components.md so the contract matches reality.
+    </p>
+
+    <h3 class="t-subtitle" style="margin: var(--space-8) 0 var(--space-3) 0;">Cluster A — visual decisions surfaced on this page</h3>
+    <dl class="t-body" style="display: grid; grid-template-columns: 200px 1fr; gap: var(--space-3) var(--space-6); margin: 0;">
+      <dt style="font-weight: var(--fw-bold);"><code>.fab</code> drop shadow</dt>
+      <dd>See section 2. Two versions rendered side-by-side. Kill the shadow for rule compliance, or accept it as a documented exception?</dd>
+      <dt style="font-weight: var(--fw-bold);"><code>.deck-card</code> radius</dt>
+      <dd>See section 4. 20 px (current, off-spec) vs 24 px (kit-spec). Snap to 24.</dd>
+      <dt style="font-weight: var(--fw-bold);"><code>.deck-card</code> color</dt>
+      <dd>Hard-coded <code>#cccccc</code> → swap to a kit token (<code>--color-surface-strong</code> or <code>--color-border</code>).</dd>
+      <dt style="font-weight: var(--fw-bold);"><code>.deck-card</code> motion</dt>
+      <dd>300 ms transition → snap to <code>--dur-slow</code> (320 ms).</dd>
+      <dt style="font-weight: var(--fw-bold);">Off-grid spacings</dt>
+      <dd>18 / 6 / 3 / 14 / 21 / 70 / 1 px / 0.5px-vs-3px-underline → all snap to 4 px grid. Confirmed: grid only.</dd>
+      <dt style="font-weight: var(--fw-bold);"><code>.t-mono</code> weight 600</dt>
+      <dd>Keep as documented exception. Update tokens.json + components.md to name 600 as the kit's fourth weight, used only here.</dd>
+      <dt style="font-weight: var(--fw-bold);"><code>.tag--inline</code></dt>
+      <dd>Drop uppercase, drop 0.8em, drop letter-spacing. Body-size surface chip with bold weight on a kit-token surface.</dd>
+      <dt style="font-weight: var(--fw-bold);">Naming</dt>
+      <dd>Option B — rename <code>.t-mono</code> → <code>.t-code</code>, rename <code>.tag--inline</code> → <code>.t-code--chip</code>. Honest names, explicit relationship.</dd>
+      <dt style="font-weight: var(--fw-bold);">Blur policy</dt>
+      <dd>Existing keyframe <code>inspector-card-focus</code> becomes the canonical blur pattern. New blur usage either reuses this animation or requires admin approval. Document this rule + the seven-keyframe registry in components.md § Motion.</dd>
+    </dl>
+
+    <h3 class="t-subtitle" style="margin: var(--space-8) 0 var(--space-3) 0;">What stays parked for a future Cluster A session</h3>
+    <p class="t-body">
+      Lebedev mentions in code comments at lines 194 / 312 / 333 / 380 (already covered by Cluster D for the markdown surfaces). Sub-pixel decorations like 0.2 px letter-spacing on the cleaned <code>.tag--inline</code>. Anything else not surfaced on this page.
+    </p>
+  </section>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'cluster-b-replies-v2';
+
+    // Pre-filled Claude messages, one per section. Indexed by appearance order
+    // of <section class="demo"> in the DOM. null skips the pre-fill.
+    const PROMPTS = [
+      // 1. toc
+      "Recommend keeping. The sliding bar is the kit's most concrete navigational cue — without it, the sidebar loses its 'you are here' signal. Add the `toc-` prefix to the allowlist in components.md. Agree?",
+      // 2. fab
+      "The drop shadow at line 2167 violates the manifesto's 'no drop shadows' rule. Both versions are rendered side-by-side. My recommendation: kill the shadow — the black FAB on light bg has enough contrast to read tappable on its own. Agree, or keep the shadow as a documented exception?",
+      // 3. tier
+      "Add `tier` to the allowlist. Cleanup needed alongside: 21 px right-padding (off-grid). Snap to 20 or 24 px? The asymmetry is the design question — does the right side need to read tighter for some reason, or was 21 just an accident?",
+      // 4. deck
+      "Two judgments here. (a) Keep the deck pattern — it's a signature kit affordance with no replacement. (b) Snap radius from 20 to 24 px to match kit-spec. Both rendered above. Agree on both, or want to push back on either?",
+      // 5. highlight
+      "Recommend keeping. Kill it and the link between body text and inspector threads breaks — comments would have to be located by scroll position alone. Add `highlight` to the allowlist.",
+      // 6. figure
+      "Trivial to delete, but no reason to. Add `figure` to the allowlist.",
+      // 7. aside
+      "0.85em is sub-pixel typography that bypasses the kit's type scale. Acceptable as a typographic mass-balance trick (smaller text reads as parenthetical) but technically off-token. Keep with the exception, or refactor to use `--fs-micro`?",
+      // 8. quote
+      "Keep. The Rule 14 spacing rescue (margins after paragraphs, headings, hr) is non-trivial — throwing it away to save 6 lines of CSS isn't worth it. Add `quote` to the allowlist.",
+      // 9. divider
+      "Cheapest possible class to keep — 4 lines of CSS. Add `divider` to the allowlist.",
+      // 10. avatar
+      "Keep. The signoff block (which ships in every kit doc) depends on it. Killing avatar means redesigning every signoff. Add `avatar` to the allowlist.",
+      // 11. checkbox
+      "Keep for true multi-select. Switch is for binary toggles only. The 1 px border (line 1923) breaks the kit's 0.5 px hairline rhythm — fix that as part of Cluster A. Confirm both: keep checkbox + fix border?",
+      // 12. t-mono / tag--inline
+      "Three rename options on the page (sections A, B, C). My recommendation: option B — rename `.t-mono` → `.t-code` and `.tag--inline` → `.t-code--chip`. Honest names, explicit family relationship via the modifier. Confirm B, or pick A or C?",
+      // 13. animation inventory
+      "Codify these 7 keyframes as the kit's animation registry in `components.md § Motion`. Blur policy: permitted only when reusing `inspector-card-focus` or admin-approved. Agree on the registry + blur rule?",
+      // Summary
+      "Anything missing from this page? Decisions you want me to revisit before you copy the answer back to the main session?"
+    ];
+
+    const load = () => {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch { return {}; }
+    };
+    const save = (data) => {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+      catch { /* localStorage may be disabled — non-fatal */ }
+    };
+
+    const stored = load();
+    const sections = Array.from(document.querySelectorAll('.demo'));
+
+    sections.forEach((section, i) => {
+      const headingEl = section.querySelector('h2');
+      const headingText = headingEl ? headingEl.textContent.trim() : ('Section ' + (i + 1));
+      const sectionKey = 's' + i;
+      const prompt = PROMPTS[i] || '';
+
+      // Inject the kit's comment-thread pattern verbatim — same shape as
+      // demos/fundamental--accepted/patterns/comment-thread.html. The card
+      // ships data-state="active" so .card__collapsible is open and the
+      // .comment-thread__reply field auto-lights to black.
+      const wrap = document.createElement('div');
+      wrap.className = 'demo__comment';
+      wrap.dataset.key = sectionKey;
+      wrap.dataset.heading = headingText;
+      wrap.dataset.prompt = prompt;
+      wrap.innerHTML =
+        '<div class="comment-stack">' +
+          '<div class="card card--interactive comment-thread" data-state="active">' +
+            '<div class="card__collapsible">' +
+              '<div class="card__collapsible-inner">' +
+                '<div class="comment-thread__list">' +
+                  '<div class="comment-msg" data-message-id="claude-1" data-author-role="agent">' +
+                    '<div class="comment-msg__header">' +
+                      '<div class="t-subtitle">Claude</div>' +
+                    '</div>' +
+                    '<p class="t-caption" data-prompt-body></p>' +
+                  '</div>' +
+                '</div>' +
+                '<label class="field comment-thread__reply">' +
+                  '<input class="t-caption field__input" type="text" placeholder="Your reply…" data-reply-input />' +
+                  '<span class="field__fake-caret" aria-hidden="true"></span>' +
+                '</label>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      // textContent so the prompt's punctuation can't accidentally inject HTML.
+      wrap.querySelector('[data-prompt-body]').textContent = prompt;
+
+      const grid = section.querySelector('.demo__grid');
+      if (grid) {
+        grid.appendChild(wrap);
+      } else {
+        wrap.classList.add('demo__comment--standalone');
+        section.appendChild(wrap);
+      }
+
+      const input = wrap.querySelector('[data-reply-input]');
+
+      if (stored[sectionKey]) {
+        input.value = stored[sectionKey];
+      }
+
+      input.addEventListener('input', () => {
+        const all = load();
+        const v = input.value.trim();
+        if (v) {
+          all[sectionKey] = input.value;
+        } else {
+          delete all[sectionKey];
+        }
+        save(all);
+        updateButton();
+      });
+    });
+
+    // Floating copy button.
+    const btn = document.createElement('button');
+    btn.className = 'copy-all-btn';
+    btn.type = 'button';
+    btn.innerHTML = '<span data-label>Copy all comments</span><span class="copy-all-btn__count" data-count>0</span>';
+    document.body.appendChild(btn);
+
+    function countReplied() {
+      let n = 0;
+      document.querySelectorAll('[data-reply-input]').forEach(input => {
+        if (input.value.trim()) n++;
+      });
+      return n;
+    }
+
+    function updateButton(label) {
+      const n = countReplied();
+      btn.dataset.state = n === 0 ? 'empty' : 'ready';
+      const countEl = btn.querySelector('[data-count]');
+      const labelEl = btn.querySelector('[data-label]');
+      if (countEl) countEl.textContent = n;
+      if (labelEl) labelEl.textContent = label || 'Copy all comments';
+    }
+
+    function flash(label) {
+      updateButton(label);
+      clearTimeout(flash._t);
+      flash._t = setTimeout(() => updateButton(), 1800);
+    }
+
+    btn.addEventListener('click', () => {
+      const blocks = [];
+      document.querySelectorAll('.demo__comment').forEach(wrap => {
+        const input = wrap.querySelector('[data-reply-input]');
+        const reply = (input?.value || '').trim();
+        if (!reply) return;
+        const heading = wrap.dataset.heading || 'Section';
+        const prompt = wrap.dataset.prompt || '';
+        const block =
+          '### ' + heading + '\n\n' +
+          '**Claude:** ' + prompt + '\n\n' +
+          '**Konstantin:** ' + reply;
+        blocks.push(block);
+      });
+
+      if (blocks.length === 0) {
+        flash('No replies yet');
+        return;
+      }
+
+      const text =
+        '# Cluster B page — KK feedback\n\n' +
+        '_Pulled from cluster-b-components.html. Each block: my prompt + your reply. Sections without a reply are omitted._\n\n' +
+        blocks.join('\n\n---\n\n') + '\n';
+
+      const done = () => flash('Copied ' + blocks.length + (blocks.length === 1 ? ' reply' : ' replies'));
+      const fail = () => flash('Copy failed');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fail);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); }
+        catch { fail(); }
+        finally { document.body.removeChild(ta); }
+      }
+    });
+
+    updateButton();
+  })();
+</script>
+
+</body>
+</html>

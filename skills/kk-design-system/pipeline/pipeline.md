@@ -6,63 +6,63 @@ Entry point matches scope. A new page walks all eight stages. A copy tweak enter
 
 The point: AI agents draft most of our work. Without gates they produce gray mush, invent components, and ship the first plausible draft. The pipeline enforces breadth at the think phase, question-driven fidelity at the design phase, cold-read audits and strict rubric at the build phase. Each stage writes its own documentation artifact so retros never replay the conversation.
 
-## Phase 1 — Think
+## Phase 1. Think
 
-### Stage 1 — Analyst
+### Stage 1. Analyst
 
 - **Role skill:** `kk-role-analyst`
 - **Model:** Sonnet. **Character:** Margaret Hamilton.
 - **Input:** User brief plus referenced materials (files, transcripts, tickets).
-- **Output:** Decomposed brief — users, job stories (`context + motivation = step → value`), priority scenarios, open questions.
+- **Output:** Decomposed brief covering users, job stories (`context + motivation = step → value`), priority scenarios, open questions.
 - **Canon load:** `manifesto.md` (philosophy, job stories).
 - **Gate:** Human approves the brief. Every open question stamped.
 - **Self-doc:** `documentation/<session>/01-analyst.md`
 
 The analyst pushes back. If the brief has holes, they surface here. No pixels yet.
 
-### Stage 2 — Design Director
+### Stage 2. Design Director
 
 - **Role skill:** `kk-role-design-director`
 - **Model:** Opus. **Character:** Charlotte Perriand.
 - **Input:** Approved brief from stage 1.
 - **Output, round one:** Five or more directions, each with a one-line intent, primary signal, guardrails, expected kit surface.
-- **Output, round two (after user picks):** Direction document — aligned direction, named pattern blocks (N per session), exceptions register, rejected-directions archive, alignment transcript.
-- **Canon load:** `manifesto.md` (full file, including §Components — patterns, card, typography), `tokens.json`, `patterns/*`.
+- **Output, round two (after user picks):** Direction document carrying the aligned direction, named pattern blocks (N per session), exceptions register, rejected-directions archive, alignment transcript.
+- **Canon load:** `manifesto.md` (full file, including §Components covering patterns, card, typography), `tokens.json`, `patterns/*`.
 - **Gate 2a:** Human picks one direction. Others archive.
 - **Gate 2b:** Human stamps pattern blocks + any exceptions. Round-two direction document locked.
 - **Self-doc:** `documentation/<session>/02-design-director.md`
 
-Breadth on round one, commitment on round two. The pattern-block naming is the handoff contract — downstream designers spawn one per block.
+Breadth on round one, commitment on round two. The pattern-block naming is the handoff contract. Downstream designers spawn one per block.
 
-## Phase 2 — Design
+## Phase 2. Design
 
 Per-pattern, question-driven. N pattern blocks means N parallel designer tracks. Each pattern walks a three-substage loop.
 
-### Stage 3a — Fresh-eyes pre-designer (N parallel, one per pattern)
+### Stage 3a. Fresh-eyes pre-designer (N parallel, one per pattern)
 
 - **Role skill:** `kk-role-fresh-eyes-jobstory` (pre-designer mode)
 - **Model:** Haiku. **Character:** Steve Jobs.
 - **Input:** Direction doc's pattern block + analyst job story.
-- **Output:** Question list per pattern — what I'd want to see first, what I'd try to do, what this is for, unclarities, 0.2-second self-evidence check.
+- **Output:** Question list per pattern, what to look for first, what to try, what this is for, unclarities, 0.2-second self-evidence check.
 - **Canon load:** `pipeline.md` §Dumb-reviewer character + §Fidelity contract only.
 - **Gate:** None. Feeds stage 3b.
 - **Self-doc:** `documentation/<session>/03a-fresh-eyes-pre-<pattern-slug>.md`
 
-Naive user POV. Zero design context — reading `manifesto.md § Components` would break the cold-read contract.
+Naive user POV. Zero design context. Reading `manifesto.md § Components` would break the cold-read contract.
 
-### Stage 3b — Designer (N parallel, one per pattern)
+### Stage 3b. Designer (N parallel, one per pattern)
 
 - **Role skill:** `kk-role-designer`
 - **Model:** Sonnet. **Character:** Hella Jongerius.
 - **Input:** Direction doc + 3a question list for this pattern.
-- **Output:** Per-pattern hand-off — question-to-answer map, states (rest/hover/focus/active/disabled/loading/empty/error), interaction variants, edge cases, example content, UI copy drafts, kit-inventory check.
+- **Output:** Per-pattern hand-off carrying question-to-answer map, states (rest/hover/focus/active/disabled/loading/empty/error), interaction variants, edge cases, example content, UI copy drafts, kit-inventory check.
 - **Canon load:** `manifesto.md` (full file, including §Components), `tokens.json`, `voice.md`, `patterns/*`.
 - **Gate:** Stage 3c pass. Unanswered 3a questions fail and re-dispatch to this stage.
 - **Self-doc:** `documentation/<session>/03b-designer-<pattern-slug>.md`
 
-Single track. Strict kit inventory unless the direction doc's §Exceptions carries a user-stamped override for this pattern. UI copy drafts ship downstream — there is no separate copywriter.
+Single track. Strict kit inventory unless the direction doc's §Exceptions carries a user-stamped override for this pattern. UI copy drafts ship downstream. There is no separate copywriter.
 
-### Stage 3c — Fresh-eyes post-designer (N parallel, one per pattern)
+### Stage 3c. Fresh-eyes post-designer (N parallel, one per pattern)
 
 - **Role skill:** `kk-role-fresh-eyes-jobstory` (post-designer mode)
 - **Model:** Haiku. **Character:** Steve Jobs.
@@ -72,9 +72,9 @@ Single track. Strict kit inventory unless the direction doc's §Exceptions carri
 - **Gate:** All patterns must pass 3c before stage 4 runs. Fails return to 3b with the gap list.
 - **Self-doc:** `documentation/<session>/03c-fresh-eyes-post-<pattern-slug>.md`
 
-## Phase 3 — Build
+## Phase 3. Build
 
-### Stage 4 — DS Manager
+### Stage 4. DS Manager
 
 - **Role skill:** `kk-role-ds-manager`
 - **Model:** Sonnet. **Character:** Muriel Cooper.
@@ -84,9 +84,9 @@ Single track. Strict kit inventory unless the direction doc's §Exceptions carri
 - **Gate:** Inventory check passes, or halts back to 3b with a named pattern.
 - **Self-doc:** `documentation/<session>/04-ds-manager.md`
 
-Catalogue, not draw. Copy briefs out of scope — designers own UI copy.
+Catalogue, not draw. Copy briefs out of scope. Designers own UI copy.
 
-### Stage 5 — Design Engineer
+### Stage 5. Design Engineer
 
 - **Role skill:** `kk-role-design-engineer`
 - **Model:** Sonnet. **Character:** Sara Soueidan.
@@ -96,21 +96,21 @@ Catalogue, not draw. Copy briefs out of scope — designers own UI copy.
 - **Gate:** Stages 6a + 6b run in parallel on the built files. Then stage 7.
 - **Self-doc:** `documentation/<session>/05-design-engineer.md`
 
-Piece-by-piece means the human can peek mid-build. Short feedback loop. No placeholder-comment-for-copywriter convention — copywriter stage is gone.
+Piece-by-piece means the human can peek mid-build. Short feedback loop. No placeholder-comment-for-copywriter convention. Copywriter stage is gone.
 
-### Stage 6a — Consistency — jobstory
+### Stage 6a. Consistency, jobstory
 
 - **Role skill:** `kk-role-consistency-jobstory`
 - **Model:** Haiku. **Character:** Steve Jobs.
 - **Input:** Built prototype files only. Zero upstream context.
-- **Output:** Per-block cold read — what I see, what I can do, what this is for, what's great, what could be better.
+- **Output:** Per-block cold read, what is on screen, what looks doable, what this is for, what is great, what could be better.
 - **Canon load:** `pipeline.md` §Dumb-reviewer character only.
 - **Gate:** No direct gate. Output feeds stage 7.
 - **Self-doc:** `documentation/<session>/06a-consistency-jobstory.md`
 
-Cold means cold. Reading the brief or direction doc would pollute the read — the reviewer's guesses are the signal.
+Cold means cold. Reading the brief or direction doc would pollute the read. The reviewer's guesses are the signal.
 
-### Stage 6b — Consistency — DS
+### Stage 6b. Consistency, DS
 
 - **Role skill:** `kk-role-consistency-ds`
 - **Model:** Haiku. **Character:** Dieter Rams.
@@ -122,7 +122,7 @@ Cold means cold. Reading the brief or direction doc would pollute the read — t
 
 Dumb-about-layout, strict-about-inventory.
 
-### Stage 6c — Voice
+### Stage 6c. Voice
 
 - **Role skill:** `kk-role-voice-reviewer`
 - **Model:** Haiku. **Character:** George Orwell.
@@ -134,11 +134,11 @@ Dumb-about-layout, strict-about-inventory.
 
 Cold-reads strings against canon. Does not rewrite; names the defect.
 
-### Stage 7 — Meta-reviewer
+### Stage 7. Meta-reviewer
 
 - **Role skill:** `kk-role-meta-reviewer`
 - **Model:** Opus. **Character:** Anna Wintour.
-- **Input:** Full chain — 01 + 02 + every 03b + 05 + 06a + 06b + 06c + the built prototype.
+- **Input:** Full chain. 01 + 02 + every 03b + 05 + 06a + 06b + 06c + the built prototype.
 - **Output:** Rubric-gated issue list. PASS or FAIL verdict with per-item evidence.
 - **Canon load:** `manifesto.md`, `voice.md`, `pipeline.md` §Meta-reviewer rubric + §Reiterate protocol + §Fidelity contract.
 - **Gate:** PASS ships. FAIL routes user to §Reiterate protocol.
@@ -146,12 +146,12 @@ Cold-reads strings against canon. Does not rewrite; names the defect.
 
 Rejects "it's fine" replies. A rubric item is either answered with evidence (file:line citation) or left open. Open items fail the build until the user acts.
 
-## Meta — retro
+## Meta. Retro
 
 - **Role skill:** `kk-role-meta-retro`
 - **Model:** Opus. **Character:** Joan Didion.
 - **Input:** All session documentation in `documentation/<session>/*`.
-- **Output:** `proposals/<date>-retro.md` — proposed updates to `manifesto.md`, `pipeline.md`, `voice.md`, `tokens.json`. Never edits canon directly.
+- **Output:** `proposals/<date>-retro.md`. Proposed updates to `manifesto.md`, `pipeline.md`, `voice.md`, `tokens.json`. Never edits canon directly.
 - **Trigger:** On-demand only. User calls the retro when something feels off.
 - **Gate:** Human accepts or rejects each proposal. Accepted proposals route to `kk-ds-maintainer`.
 
@@ -161,9 +161,9 @@ Rejects "it's fine" replies. A rubric item is either answered with evidence (fil
 
 High-fidelity output earns its label by answering questions a naive user of the job story would ask. Stages 3a → 3b → 3c run the loop:
 
-1. **3a Fresh-eyes pre-designer** reads the direction doc + pattern tasks and writes one list of naive jobstory-user questions per pattern block. Zero design context — strictly user POV.
+1. **3a Fresh-eyes pre-designer** reads the direction doc + pattern tasks and writes one list of naive jobstory-user questions per pattern block. Zero design context, strictly user POV.
 2. **3b Designer** answers every question in ASCII, across all relevant states (rest / hover / focus / active / disabled / loading / empty / error), interaction variants, edge cases, example content, UI copy drafts.
-3. **3c Fresh-eyes post-designer** validates each original question was answered. Unanswered questions fail the stage — returns to 3b with the gap list.
+3. **3c Fresh-eyes post-designer** validates each original question was answered. Unanswered questions fail the stage. Returns to 3b with the gap list.
 
 The contract: every user-facing ambiguity surfaced at 3a has an answer in the 3b output. Cases the designer cannot answer without user input bubble up to a user gate, not a silent guess. Fidelity = answered questions, not pixel count.
 
@@ -172,7 +172,7 @@ The contract: every user-facing ambiguity surfaced at 3a has an answer in the 3b
 The user may re-enter the pipeline at any prior stage after meta-review. On meta-reviewer issue list, two user paths:
 
 - **(a) Fix + re-dispatch.** User picks issues to fix + names the stage to reiterate. That stage reruns with the issue list as added input. Downstream stages rerun from that point.
-- **(b) Ship with named exception.** User green-lights ship ignoring named issues. Each exception carries a one-line reason in the session README under §Exceptions shipped. Meta-reviewer cannot override (a) into (b) — only the user can.
+- **(b) Ship with named exception.** User green-lights ship ignoring named issues. Each exception carries a one-line reason in the session README under §Exceptions shipped. Meta-reviewer cannot override (a) into (b). Only the user can.
 
 Reiteration cannot originate from a role. Meta-reviewer flags; role-to-role handoff does not skip stages. The user is the only loop trigger.
 
@@ -191,41 +191,41 @@ Meta-reviewer rejects "it's fine" replies. A rubric item is either answered with
 
 ### Dumb-reviewer character
 
-Every Haiku "dumb" reviewer operates in character as **Steve Jobs himself**. Expects extremely self-evident, clear, simple design understandable in 0.2 seconds just by looking — no thinking, no hover-to-learn, no tooltip archaeology. Anything that takes a moment to parse is a defect. Does not excuse complexity. Does not justify. Does not read role briefs or direction docs to fill gaps.
+Every Haiku "dumb" reviewer operates in character as **Steve Jobs himself**. Expects self-evident design understandable in 0.2 seconds just by looking. No thinking, no hover-to-learn, no tooltip archaeology. Anything that takes a moment to parse is a defect. Does not excuse complexity. Does not justify. Does not read role briefs or direction docs to fill gaps.
 
-**Output shape — five sections, every dumb-reviewer invocation:**
+**Output shape, five sections, every dumb-reviewer invocation:**
 
-1. **What I see.** Literal description. "Three cards stacked. Top one has a dark title and a checkmark. Middle one has an input with grey text. Bottom one is empty."
-2. **What I can do.** Guessed affordances from visuals alone. "I can probably click the top card. The input looks typable. The bottom card seems dead."
-3. **What this is for — my guess at the job + flow.** Best guess at what user is doing here, which step of which flow, and what likely comes next — from the pixels alone. "Feels like someone's writing a strategy brief. I'd guess this is near the start. Click the button, probably research kicks off. Maybe."
-4. **What's great.** Self-evident clarity, quiet weight, calm. Specific elements — not general praise.
-5. **What could be better.** Anything that pulled the eye wrong, took over 0.2s to parse, looked clickable but wasn't, looked dead but was alive, read as jargon, needed a label the designer didn't provide. Specific, ungenerous.
+1. **What is on screen.** Literal description. "Three cards stacked. Top one has a dark title and a checkmark. Middle one has an input with grey text. Bottom one is empty."
+2. **What looks doable.** Guessed affordances from visuals alone. "Top card looks clickable. The input looks typable. The bottom card seems dead."
+3. **What this is for, the guess at job and flow.** Best guess at what the user is doing here, which step of which flow, what likely comes next, from the pixels alone. "Feels like someone is writing a strategy brief. Probably near the start. Click the button, probably research kicks off. Maybe."
+4. **What is great.** Self-evident clarity, quiet weight, calm. Specific elements, not general praise.
+5. **What could be better.** Anything that pulled the eye wrong, took over 0.2s to parse, looked clickable but was not, looked dead but was alive, read as jargon, needed a label the designer did not provide. Specific, ungenerous.
 
-Reviewer never defers. If a block feels unclear, it says unclear. If a mechanic is hidden, it says hidden. If the job or flow is ambiguous at 0.2s, the guess will reveal the ambiguity — that's the point. Silence on a block = confirmed clarity.
+Reviewer never defers. If a block feels unclear, it says unclear. If a mechanic is hidden, it says hidden. If the job or flow is ambiguous at 0.2s, the guess will reveal the ambiguity. That's the point. Silence on a block = confirmed clarity.
 
-Character applies to the fresh-eyes jobstory reviewer (both pre- and post-designer modes) and to the consistency-jobstory reviewer. Two other Haiku reviewers wear different characters tied to their domain lenses — **Dieter Rams** for consistency-DS (kit-pattern conformance) and **George Orwell** for voice (voice conformance). Both share the strict-when-canon-breaks instinct of Jobs but apply it through their own canonical frame, not the 0.2-second user-clarity frame.
+Character applies to the fresh-eyes jobstory reviewer (both pre- and post-designer modes) and to the consistency-jobstory reviewer. Two other Haiku reviewers wear different characters tied to their domain lenses. **Dieter Rams** for consistency-DS (kit-pattern conformance) and **George Orwell** for voice (voice conformance). Both share the strict-when-canon-breaks instinct of Jobs but apply it through their own canonical frame, not the 0.2-second user-clarity frame.
 
 ### Role roster
 
-Each role operates in character as a specific person. Gender codes tier: women for Opus + Sonnet (clever roles), men for Haiku (dumb-reviewer roles). Characters are hints for voice, not costume — the skill contract still governs the work.
+Each role operates in character as a specific person. Gender codes tier: women for Opus + Sonnet (clever roles), men for Haiku (dumb-reviewer roles). Characters are hints for voice, not costume. The skill contract still governs the work.
 
 | Stage | Role | Model | Character | Why this person |
 |---|---|---|---|---|
 | 1 | Analyst | Sonnet | **Margaret Hamilton** | Apollo software engineer. Coined "software engineering". Decomposition and edge-case rigor refuse to ship systems with unspecified paths. |
 | 2 | Design Director | Opus | **Paula Scher** | Pentagram partner behind The Public Theater, Citi, Tiffany, MoMA. Brings multiple directions to the client and commits hard to one so the system can cohere. |
 | 3a + 3c | Fresh-eyes jobstory | Haiku | **Steve Jobs** | 0.2-second clarity bar. Reads as the intended user, ungenerously. |
-| 3b | Designer | Sonnet | **Susan Kare** | Original Macintosh icon designer. Drew every state of every icon — trash full and empty, spinning watch, Happy Mac, Sad Mac — in full variant sets at 16×16. |
+| 3b | Designer | Sonnet | **Susan Kare** | Original Macintosh icon designer. Drew every state of every icon (trash full and empty, spinning watch, Happy Mac, Sad Mac) in full variant sets at 16×16. |
 | 4 | DS Manager | Sonnet | **Muriel Cooper** | First art director of MIT Press. Catalogued decades of academic publishing into one visual system without inventing beyond its vocabulary. |
 | 5 | Design Engineer | Sonnet | **Sara Soueidan** | Front-end craft writer. Ships accessible components piece by piece, state by state, honors the platform before reaching for abstractions. |
-| 6a | Consistency — jobstory | Haiku | **Steve Jobs** | Same 0.2s bar as 3a/3c — read cold, report what a Steve Jobs reads upfront. |
-| 6b | Consistency — DS | Haiku | **Dieter Rams** | Braun designer. Ten Principles of Good Design. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
-| 6c | Voice | Haiku | **George Orwell** | "Politics and the English Language" author. Six rules for clear prose — ancestor of the AI-tells inventory. Names jargon, cuts padding, refuses vague abstraction. |
-| 7 | Meta-reviewer | Opus | **Erika Hall** | Mule Design co-founder. *Just Enough Research*, *Conversational Design*. Evidence-gated critique that rejects "it's fine" — the design is finished when the last reason to remove something is gone. |
-| — | Meta-retro | Opus | **Joan Didion** | Essayist. *Slouching Towards Bethlehem*, *The White Album*. Observes the pattern that was there all along and names it without flinching. |
-| — (post) | Pattern discoverer | Sonnet | **Jina Anne** | Built Salesforce Lightning Design System. Founded the Design Systems Conference. Co-spec'd the W3C Design Tokens work. Cataloguer whose craft is naming and inventorying systems — the same craft this role runs on accepted prototypes. |
-| — | Maintainer | Sonnet | **Rachel Andrew** | CSS Grid spec co-editor at W3C. Former Smashing Magazine editor-in-chief. Ships spec revisions with bundle discipline, semver by blast radius, tag and push before close. |
+| 6a | Consistency, jobstory | Haiku | **Steve Jobs** | Same 0.2s bar as 3a/3c. Read cold, report what a Steve Jobs reads upfront. |
+| 6b | Consistency, DS | Haiku | **Dieter Rams** | Braun designer. Ten Principles of Good Design. Strict kit-pattern conformance, flags inventory drift, calls off-grid spacing on sight. |
+| 6c | Voice | Haiku | **George Orwell** | "Politics and the English Language" author. Six rules for clear prose, ancestor of the AI-tells inventory. Names jargon, cuts padding, refuses vague abstraction. |
+| 7 | Meta-reviewer | Opus | **Erika Hall** | Mule Design co-founder. *Just Enough Research*, *Conversational Design*. Evidence-gated critique that rejects "it's fine". The design is finished when the last reason to remove something is gone. |
+| meta | Meta-retro | Opus | **Joan Didion** | Essayist. *Slouching Towards Bethlehem*, *The White Album*. Observes the pattern that was there all along and names it without flinching. |
+| post | Pattern discoverer | Sonnet | **Jina Anne** | Built Salesforce Lightning Design System. Founded the Design Systems Conference. Co-spec'd the W3C Design Tokens work. Cataloguer whose craft is naming and inventorying systems, the same craft this role runs on accepted prototypes. |
+| any | Maintainer | Sonnet | **Rachel Andrew** | CSS Grid spec co-editor at W3C. Former Smashing Magazine editor-in-chief. Ships spec revisions with bundle discipline, semver by blast radius, tag and push before close. |
 
-Steve Jobs appears twice (3a/3c and 6a) deliberately — same dumb-reader character at different stages, not two different men. Dieter Rams is a separate dumb character because the consistency-DS reviewer has a distinct lens (pattern conformance, not user clarity).
+Steve Jobs appears twice (3a/3c and 6a) deliberately. Same dumb-reader character at different stages, not two different men. Dieter Rams is a separate dumb character because the consistency-DS reviewer has a distinct lens (pattern conformance, not user clarity).
 
 Each role's own `SKILL.md` repeats the character in frontmatter (`character: {name, voice}`) and expands on the match in a §Character body section. The roster above is the single-source summary; the skill file carries the operating reference the agent reads at invocation.
 
@@ -237,14 +237,14 @@ Rules:
 
 - Drop articles (a / an / the), filler (just, really, basically, actually, simply), pleasantries (sure, certainly, happy to), hedging.
 - Fragments OK. Short synonyms. Technical terms stay exact.
-- Unchanged surfaces — never compressed: code blocks, file paths, URLs, error strings, frontmatter keys and values, blockquoted raw user input.
-- Structured design artefacts — never compressed: ASCII flow mockups, JSON component trees, hand-off tables, rubric verdicts. Designer outputs render untouched.
+- Unchanged surfaces, never compressed: code blocks, file paths, URLs, error strings, frontmatter keys and values, blockquoted raw user input.
+- Structured design artefacts, never compressed: ASCII flow mockups, JSON component trees, hand-off tables, rubric verdicts. Designer outputs render untouched.
 - Auto-clarity carve-out: drop caveman for multi-step sequences where fragment order risks misread, destructive confirmations, or when the human asks for clarification. Resume after the clear part.
 
 Override by user:
 
-- `stop caveman` — revert to full prose for the rest of the session.
-- `/caveman lite` or `/caveman ultra` — switch intensity.
+- `stop caveman`. Revert to full prose for the rest of the session.
+- `/caveman lite` or `/caveman ultra`. Switch intensity.
 
 Scope boundary: this protocol governs agent-to-user conversation. `voice.md` governs rendered document prose and UI labels. When writing to an artefact (documentation file, prototype copy, signed deliverable), `voice.md` wins. When replying in conversation, this protocol wins. Source inspiration: [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman).
 
@@ -269,20 +269,20 @@ gate: <gate result>
 ---
 ```
 
-Body carries: raw user input verbatim where the stage received one, agent output summary, reasoning for non-obvious decisions, gate result. Artifact pointers, not copies — build files live in their repo location, the doc links.
+Body carries: raw user input verbatim where the stage received one, agent output summary, reasoning for non-obvious decisions, gate result. Artifact pointers, not copies. Build files live in their repo location, the doc links.
 
 `README.md` is maintained by the analyst at stage 1, appended by each subsequent stage. The README's §Exceptions shipped section is created on first use when the user ships via reiterate path (b).
 
 ### Vertical slice rule
 
-High-fidelity prototype covers one page or one flow per pass. Pattern: `page → flow → next page → flow`. A session that tries to cover the whole product in one run is bloated and untestable — halt it and split.
+High-fidelity prototype covers one page or one flow per pass. Pattern: `page → flow → next page → flow`. A session that tries to cover the whole product in one run is bloated and untestable. Halt it and split.
 
 ### Parallel spawning
 
 Three parallel moments in pipeline-v3:
 
-- **Stage 3a, 3b, 3c** — N instances per stage, one per pattern block named in the direction doc. All three substages run parallel across patterns; each pattern's 3a → 3b → 3c loop is sequential within that pattern.
-- **Stage 6a + 6b + 6c** — three cold-read reviewers, in parallel on the same built prototype. Each has its own canonical frame (jobstory clarity, kit-pattern conformance, voice conformance) and carries its own character.
+- **Stage 3a, 3b, 3c.** N instances per stage, one per pattern block named in the direction doc. All three substages run parallel across patterns; each pattern's 3a → 3b → 3c loop is sequential within that pattern.
+- **Stage 6a + 6b + 6c.** Three cold-read reviewers, in parallel on the same built prototype. Each has its own canonical frame (jobstory clarity, kit-pattern conformance, voice conformance) and carries its own character.
 
 Spawning owner:
 
@@ -297,26 +297,26 @@ Wall-clock cost stays at one stage per phase, not N.
 
 Pipeline entry points, from lightest to heaviest:
 
-- **Typo or copy tweak** — stage 3b only for the affected pattern (designer re-drafts the string). Stage 6a + 6b + 7 follow if the copy lands in the shipped prototype; otherwise stop at 3b.
-- **Kit refactor (like kit.js extraction)** — stage 1 (analyst decomposes) + stage 5 in DS-engineer mode (design engineer implements) + stage 6b + stage 7. Pattern design phase skipped; the direction doc §Exceptions block is populated directly by the user.
-- **New component in an existing page** — stages 2-7.
-- **New page or flow** — stages 1-7 (full walk).
-- **Retro** — meta only.
+- **Typo or copy tweak.** Stage 3b only for the affected pattern (designer re-drafts the string). Stage 6a + 6b + 7 follow if the copy lands in the shipped prototype; otherwise stop at 3b.
+- **Kit refactor (like kit.js extraction).** Stage 1 (analyst decomposes) + stage 5 in DS-engineer mode (design engineer implements) + stage 6b + stage 7. Pattern design phase skipped; the direction doc §Exceptions block is populated directly by the user.
+- **New component in an existing page.** Stages 2-7.
+- **New page or flow.** Stages 1-7 (full walk).
+- **Retro.** Meta only.
 
 Entry point is declared at session start and recorded in `documentation/<session>/README.md`.
 
 ### Post-pipeline pattern discovery
 
-Pattern discovery sits outside the eight-stage walk. It is a post-pipeline pass, triggered by the `--accepted` suffix on a prototype folder. `kk-role-pattern-discoverer` runs once per accepted prototype against `demos/<slug>--accepted/`, slices qualifying compositions to `demos/<slug>--accepted/patterns/<pattern-slug>.html`, and appends rows to the registry table inside `skills/kk-design-system/canon/patterns.md` for anything not already catalogued. First-accepted wins on cross-prototype dedup — repeat patterns add a usage citation to the existing entry rather than creating a second one. The discoverer never edits canon.
+Pattern discovery sits outside the eight-stage walk. It is a post-pipeline pass, triggered by the `--accepted` suffix on a prototype folder. `kk-role-pattern-discoverer` runs once per accepted prototype against `demos/<slug>--accepted/`, slices qualifying compositions to `demos/<slug>--accepted/patterns/<pattern-slug>.html`, and appends rows to the registry table inside `skills/kk-design-system/canon/patterns.md` for anything not already catalogued. First-accepted wins on cross-prototype dedup. Repeat patterns add a usage citation to the existing entry rather than creating a second one. The discoverer never edits canon.
 
 ### Kit-internal review adaptation
 
-Pipeline-v3 review stages were designed for product-shaped artifacts. Kit-internal artifacts — `fundamental`, a slimmed `index.html`, future in-repo docs — need an adapted sweep because there is no analyst jobstory for the cold read at 6a to gate against.
+Pipeline-v3 review stages were designed for product-shaped artifacts. Kit-internal artifacts (`fundamental`, a slimmed `index.html`, future in-repo docs) need an adapted sweep because there is no analyst jobstory for the cold read at 6a to gate against.
 
-- **Stage 6a — consistency jobstory:** skipped for kit-internal artifacts. No analyst jobstory exists, so the 0.2-second cold read has nothing to compare against at stage 7.
-- **Stage 6b — consistency DS:** runs. Kit-pattern conformance applies to anything using the kit.
-- **Stage 6c — voice:** runs. Voice audit applies to any visible prose.
-- **Stage 7 — meta-reviewer:** runs on an adjusted rubric. Drop the 6a-vs-analyst comparison item. Add an artifact-specific completeness item, stated in the session README at walk start (for `fundamental`: "every atom present, every element present, no catalog ceremony retained").
+- **Stage 6a, consistency jobstory:** skipped for kit-internal artifacts. No analyst jobstory exists, so the 0.2-second cold read has nothing to compare against at stage 7.
+- **Stage 6b, consistency DS:** runs. Kit-pattern conformance applies to anything using the kit.
+- **Stage 6c, voice:** runs. Voice audit applies to any visible prose.
+- **Stage 7, meta-reviewer:** runs on an adjusted rubric. Drop the 6a-vs-analyst comparison item. Add an artifact-specific completeness item, stated in the session README at walk start (for `fundamental`: "every atom present, every element present, no catalog ceremony retained").
 
 The adaptation is scope-triggered. A session opened against a kit-internal artifact declares the adapted sweep in `documentation/<session>/README.md`; product-shaped sessions run the unadjusted pipeline.
 
@@ -324,7 +324,7 @@ The adaptation is scope-triggered. A session opened against a kit-internal artif
 
 Agents like to patch. When stage 7 fails, the tempting fix is to tweak the built output. That is how drift enters. Reiterate protocol names the stage that owns each failure. Return there. Rebuild from kit parts, not from the broken draft.
 
-Second failure mode: stage 3c passing with hollow answers. "Answered" means the designer's 03b has a visible answer in ASCII or copy, not a sentence saying "this is handled". Reviewer at 3c enforces shape, not just presence — if the answer is a deflection, mark unanswered and return.
+Second failure mode: stage 3c passing with hollow answers. "Answered" means the designer's 03b has a visible answer in ASCII or copy, not a sentence saying "this is handled". Reviewer at 3c enforces answer shape. A deflection marks unanswered and returns.
 
 ## Documentation contract
 
@@ -334,8 +334,8 @@ Shared by every role skill in the pipeline. Each role's `SKILL.md` references th
 
 Every role produces two artifacts, both mandatory.
 
-1. **Conversation return** — a short structured message the human reads in under a minute.
-2. **Disk artifact** — a file under `documentation/<session>/NN-<role>.md` that preserves raw user input plus the role's output for retros.
+1. **Conversation return.** A short structured message the human reads in under a minute.
+2. **Disk artifact.** A file under `documentation/<session>/NN-<role>.md` that preserves raw user input plus the role's output for retros.
 
 A role has not delivered until both exist.
 
@@ -343,7 +343,7 @@ A role has not delivered until both exist.
 
 At the top of stage 1 the analyst coins the session slug. Format: `YYYY-MM-DD-<short-product-slug>`. Example: `2026-04-22-wealthy-alpha`. Every stage in the same session writes into `documentation/<slug>/`.
 
-### Disk artifact — frontmatter spec
+### Disk artifact frontmatter spec
 
 Every `NN-<role>.md` file starts with this block:
 
@@ -358,18 +358,18 @@ gate: <gate result, e.g. "user approved", "passed to stage 2", "failed - returne
 ---
 ```
 
-Keep values short — one line each. Anything longer lives in the body.
+Keep values short. One line each. Anything longer lives in the body.
 
-### Disk artifact — body structure
+### Disk artifact body structure
 
 Every body starts with a one-sentence description of what the stage did, then these sections in order:
 
-1. `## Raw input` — Verbatim user message in a blockquote. If the stage received a file, reference the path and include a short digest. If the stage received prior-stage output, point to that file.
-2. `## <role-specific section>` — The role's actual output. What sections exist here depends on the role; each role skill documents its own set.
-3. `## Gate` — Pass or fail. On fail, name which earlier stage owns the failure.
-4. `## Hand-off` — Which stage runs next, and what file path it will read.
+1. `## Raw input`. Verbatim user message in a blockquote. If the stage received a file, reference the path and include a short digest. If the stage received prior-stage output, point to that file.
+2. `## <role-specific section>`. The role's actual output. What sections exist here depends on the role; each role skill documents its own set.
+3. `## Gate`. Pass or fail. On fail, name which earlier stage owns the failure.
+4. `## Hand-off`. Which stage runs next, and what file path it will read.
 
-### Conversation return — shape
+### Conversation return shape
 
 Short enough to fit in one screen. Markdown, no preamble. Sections match the role's purpose but stay tight:
 
@@ -422,7 +422,7 @@ Build artifacts (HTML, CSS, JS, Figma files) live in their own repo locations. T
 
 ### Raw input verbatim
 
-The raw input section of every artifact preserves the user's message exactly as typed. Do not summarize, restyle, or translate. A retro reconstructs what the user actually said — the model's interpretation of their words lives in the role sections below, clearly separated.
+The raw input section of every artifact preserves the user's message exactly as typed. Do not summarize, restyle, or translate. A retro reconstructs what the user actually said. The model's interpretation of their words lives in the role sections below, clearly separated.
 
 ### Archive, do not delete
 

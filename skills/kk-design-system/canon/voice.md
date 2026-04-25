@@ -25,9 +25,9 @@ Short sentences, periods, no hedges. If a paragraph doesn't end in a decision, c
 
 ## Muted text
 
-Forbidden by default. Allowed only for metadata — bylines, captions, hairlines — or when the user explicitly asks. Structural markers like list numerals, bullets, key cells sit in full black at medium weight.
+Forbidden by default. Allowed only for metadata (bylines, captions, hairlines) or when the user explicitly asks. Structural markers like list numerals, bullets, key cells sit in full black at medium weight.
 
-## No AI tells — strip every item below
+## No AI tells. Strip every item below
 
 AI drafts leak the same tics. Cutting them is the fastest way to un-AI a passage. Based on the Wikipedia project's inventory of signs of AI writing; every item below is forbidden in prose and UI text unless the user asks for it explicitly.
 

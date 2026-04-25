@@ -57,7 +57,7 @@
   function inline(text) {
     // Inline code. Stash the rendered span so inner * or _ are left alone.
     text = text.replace(/`([^`\n]+)`/g, function (_, code) {
-      return stash('<code class="t-mono">' + escHtml(code) + "</code>");
+      return stash('<code class="t-code">' + escHtml(code) + "</code>");
     });
     // Bold. Run before italic so ** is not eaten by the * rule.
     text = text.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
@@ -137,7 +137,7 @@
         i++;
         while (i < lines.length && !/^```/.test(lines[i])) { buf.push(lines[i]); i++; }
         i++;
-        out.push('<pre><code class="t-mono">' + escHtml(buf.join("\n")) + "</code></pre>");
+        out.push('<pre><code class="t-code t-code--block">' + escHtml(buf.join("\n")) + "</code></pre>");
         continue;
       }
 

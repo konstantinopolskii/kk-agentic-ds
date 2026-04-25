@@ -6,7 +6,7 @@ This book is reference. Inventory first, foundations second, components third, k
 
 ## Using the snippets
 
-Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, and `js/kit.js` loaded. Snippets do not stand alone — their job is to show the exact class structure a consumer copies into a kit-wrapped surface.
+Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, and `js/kit.js` loaded. Snippets do not stand alone. Their job is to show the exact class structure a consumer copies into a kit-wrapped surface.
 
 ## Component registry
 
@@ -24,6 +24,7 @@ Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, an
 | `book__signoff` | Canonical document ending. | `demos/fundamental--accepted/index.html#signoff` |
 | `book__spec` | Key and value rows inside a card. | `demos/fundamental--accepted/index.html#spec-list` |
 | `t-list` | Hairlined prose list. `<ul>` or `<ol>`. | `demos/fundamental--accepted/index.html#lists` |
+| `t-code` | Inline code chip. `.t-code--block` for paragraphs. | `demos/fundamental--accepted/index.html#code` |
 | `preview-frame` | Scaled iframe for doc surfaces. | `demos/fundamental--accepted/index.html#preview-frame` |
 | `registry-table` | Dense two-column inventory for kit docs. | `demos/fundamental--accepted/index.html#registry-table` |
 
@@ -40,14 +41,20 @@ No skeuomorphic surfaces. Depth comes from hierarchy and spacing, not from effec
 - No glass or translucency.
 - No blur.
 
-Each fakes light or depth the screen cannot carry; each trades clarity for decoration. Deep link: `demos/fundamental--accepted/index.html#material`.
+Each fakes light or depth the screen cannot carry. Each trades clarity for decoration.
+
+**FAB exception.** A soft drop shadow is permitted on an active element rendered on a black or inverted surface, where the shadow is the affordance that lifts the element off its background. The floating action button at narrow viewports qualifies because its rest state sits on a black background. No other component clears this bar without a maintainer stamp.
+
+**Flat-geometry box-shadow.** A `box-shadow` with zero blur is a flat-color geometry extension, not a depth illusion. Used on `.highlight` to widen the mark beyond the text bounding box without breaking line rhythm. Permitted on the same logic as the FAB exception: the shadow is shape, not light.
+
+Deep link: `demos/fundamental--accepted/index.html#material`.
 
 ### Color
 
 Nine tokens. Two backgrounds, two surface tints, two hairlines, three text alphas. No brand, no status colors, no accent.
 
 - Text renders black at Medium 500. Full weight for body and structural markers.
-- `t-muted` and `t-subtle` are metadata only — bylines, captions, hairlines, placeholders.
+- `t-muted` and `t-subtle` are metadata only. Bylines, captions, hairlines, placeholders.
 - One distinction step per pair. Stacking color tiers creates gray mush.
 - Selection renders inverted: `--color-text` background, `--color-bg` text. No native blue.
 - If text is ambiguous without color, rewrite the text.
@@ -56,15 +63,15 @@ Deep link: `demos/fundamental--accepted/index.html#color`.
 
 ### Type
 
-Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas. Three weights used in the kit (Regular 500, Medium 500, Bold 700), seven sizes (66 to 14 px). No italics.
+Commissioner. A variable font (SIL OFL 1.1) by Kostas Bartsokas. The kit ships three weights only: 400, 500, 700, across seven sizes (66 to 14 px). No 600. No italics.
 
+- 400 reads as Regular. 500 reads as Medium. 700 reads as Bold. Regular sits on Medium 500 by default; 400 is permitted only on metadata or when the user explicitly requests it.
 - One distinction step between two elements: bold vs regular, or big vs small, or black vs muted. Never all three.
-- Regular sits on Medium 500. Light weight (400 Book) is forbidden unless the content is metadata or the user asks.
 - No inline `font-size`, `font-weight`, or `color`. Pick a utility class.
 - Every heading rank stays at Bold 700. Weight step only lands at the bottom of the stack, where `#####` demotes to 16 px Regular caption.
 - Every `<h4>` in a kit surface carries `t-subtitle`. `<h3 class="t-subtitle">` is not a valid pairing.
 
-#### Rhythm — inner and outer theory
+#### Rhythm. Inner and outer theory
 
 Space inside a group never exceeds space between groups. When that relation inverts, the eye mis-parses structure and the page reads wrong. Name: inner and outer theory.
 
@@ -110,10 +117,10 @@ Deep link: `demos/fundamental--accepted/index.html#space`.
 
 Four values.
 
-- `12 px` — buttons, tiers, switches, fields.
-- `16 px` — preview frames and medium surfaces.
-- `24 px` — cards and anything that holds content.
-- `9999 px` — pills, switch thumbs, avatars, scrollbars.
+- `12 px`. Buttons, tiers, switches, fields.
+- `16 px`. Preview frames and medium surfaces.
+- `24 px`. Cards and anything that holds content.
+- `9999 px`. Pills, switch thumbs, avatars, scrollbars.
 
 A fifth canonical radius is forbidden. `vars.css` defines the set; `tokens.json` mirrors it.
 
@@ -132,6 +139,56 @@ Default: `200ms × ease-out` on `transform` and `opacity` only.
 
 Deep link: `demos/fundamental--accepted/index.html#motion`.
 
+#### Animation registry
+
+Seven keyframes ship in the kit. Every motion in a kit surface either reuses one of these or runs the evolve protocol to add an eighth.
+
+**fake-caret-blink.**
+
+- Mechanics. 1.06 s, `steps(1, end)`, infinite. Pure opacity 1 ↔ 0.
+- Why it exists. Marks where typing will land before the field has focus, without competing with the cursor of a focused field elsewhere on screen.
+- Applications. Placeholder cursor inside `.field__fake-caret` on unfocused comment-new and comment-thread reply inputs.
+
+**menu-in.**
+
+- Mechanics. `--dur-fast` (120 ms), `--ease-out`. Opacity 0 → 1, scale 0.94 → 1.
+- Why it exists. Pop affordance for a popover the user just summoned. Fast enough to read as immediate, slow enough to register the origin corner.
+- Applications. `.comment__menu-popover` open animation when the kebab toggles.
+
+**inspector-card-focus.**
+
+- Mechanics. `--dur-long` (760 ms), `--ease-swing`. From scale 0.88, skewY −3°, opacity 0.4, blur 4 px to scale 1, skewY 0, opacity 1, blur 0.
+- Why it exists. Promotes the active card from the stack with enough drama to read as a state change. The blur is transient, not a resting glass surface, and clears inside the same animation.
+- Applications. `.inspector .card--interactive[data-state="active"]` when a card promotes to active. Canonical blur pattern: any other animation needing blur reuses this keyframe.
+
+**check-in.**
+
+- Mechanics. `--dur-base` (200 ms), `--ease-spring`. Opacity 0 → 1, scale 0 → 1.
+- Why it exists. Gestural confirmation when a choice lands. Spring overshoot reads as a small celebration without being loud.
+- Applications. `.deck-card__check` when a deck card is chosen.
+
+**reveal-from-left.**
+
+- Mechanics. 320 ms, `--ease-out`. translateX −12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Why it exists. The sidebar comes in from its own side of the screen. The motion reads as the column entering from where it lives, not floating up from the page.
+- Applications. Sidebar reveal on initial paint or when `data-view="nav"` swaps in at narrow viewport.
+
+**reveal-from-right.**
+
+- Mechanics. 320 ms, `--ease-out`. translateX 12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Why it exists. The inspector comes in from its own side. Mirrors the sidebar reveal so the two columns read as a pair.
+- Applications. Inspector reveal on initial paint or when `data-view="inspector"` swaps in at narrow viewport.
+
+**reveal-from-below.**
+
+- Mechanics. 320 ms, `--ease-out`. translateY 16 px, scale 0.98, opacity 0 → translateY 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Why it exists. The book column has no side of its own. It rises into place from below the fold so the first paint reads as content arriving.
+- Applications. Doc/book column reveal on initial paint at narrow viewport.
+
+**Blur policy.** Blur is permitted in the kit only via reuse of `inspector-card-focus`, or via maintainer-stamped exception. New keyframes must justify their need against this list before they are added.
+
+**New-animation policy.** A new motion request first tries to fit one of the seven keyframes above. Only when none matches is a new keyframe added. Either way, the decision is documented inside this registry.
+
 ## Typography utility classes
 
 Use these on any element. No inline styles.
@@ -147,7 +204,6 @@ Use these on any element. No inline styles.
 | `t-caption` | 16 / 24 · Medium 500 | UI labels, body inside cards. |
 | `t-caption--bold` | 16 / 24 · Bold 700 | Emphasized caption. |
 | `t-micro` | 14 / 20 · Medium 500 | Captions, citations, metadata. |
-| `t-mono` | inherited · Medium 500 | Inline tokens, values, durations. |
 | `t-muted` | opacity to `--color-text-muted` | Metadata only. |
 | `t-subtle` | opacity to `--color-text-subtle` | Placeholders only. |
 
@@ -187,7 +243,7 @@ Every widget is a card. Transparent at rest, 3% on hover/focus/active. No border
 <div class="card card--shout">
   <div class="card__heading">
     <h3 class="t-title">Shout card</h3>
-    <p class="t-caption t-muted">For the moments that matter.</p>
+    <p class="t-caption t-muted">One per column. Inverts everything inside.</p>
   </div>
   <button class="button button--primary t-subtitle">Commit the choice</button>
 </div>
@@ -224,7 +280,7 @@ A label and a value sharing one row. No box, no outline. `0.5 px` divider betwee
 Rules:
 
 - Hover fills the row with 3%.
-- Focus inverts the row — black surface, white text, white caret.
+- Focus inverts the row. Black surface, white text, white caret.
 - Placeholders are real examples, not labels.
 - Used in: card, spec list.
 
@@ -286,7 +342,7 @@ Rules:
 
 - One label per switch. The label names the setting, not the state.
 - `9999 px` radius on the thumb. `12 px` radius on the track.
-- Keyboard-operable — `<input type="checkbox">` under the hood.
+- Keyboard-operable via `<input type="checkbox">` under the hood.
 - Used in: field, spec list, card.
 
 Deep link: `demos/fundamental--accepted/index.html#switches`.
@@ -398,7 +454,7 @@ Canonical document ending. Stats + byline + handwritten signature SVG. Every doc
 
 Rules:
 
-- `book__signoff-stats` grids into three columns. Two or four `.stat` children are valid — never three.
+- `book__signoff-stats` grids into three columns. Two or four `.stat` children are valid. Never three.
 - Two-stat shape leaves the right column empty for asymmetric breathing room.
 - Four-stat shape fills two rows.
 - Byline carries author name, role, organization. Timestamp in `t-muted`.
@@ -477,6 +533,41 @@ Rules:
 
 Deep link: `demos/fundamental--accepted/index.html#lists`.
 
+## Code
+
+Inline code, tokens, and chip-like phrase emphasis. One class for all inline code shapes. No bold, no caps, no scale shift, no letter-spacing.
+
+```html
+<!-- Inline. Surface chip hugging the line. -->
+<p class="t-body">Spacing token <span class="t-code">--space-4</span> resolves to 16 px.</p>
+
+<!-- Block. Multi-line code paragraph with a left rail. -->
+<pre class="t-code t-code--block">
+.card {
+  border-radius: var(--radius-lg);
+}
+</pre>
+```
+
+Inline (`.t-code`):
+
+- Surface chip via `--color-surface-strong`. Radius via `--radius-sm`.
+- Padding `--space-1` (4 px) horizontal, zero vertical, hugging the line.
+- Color `--color-text-muted` (gray, 50% black).
+- Font-weight regular (`--fw-regular`, 500).
+- Font-size and leading inherit from the surrounding line.
+
+Block (`.t-code--block`):
+
+- Multi-line code paragraph. Color, weight, size match `.t-code`.
+- Left rail: 4 px solid `--color-border` (gray hairline). Mirrors the `.quote` shape but in gray, not black.
+- Padding-left clears the rail. Padding top and bottom for breathing room.
+- No surface chip. The rail carries the affordance.
+
+Replaces `.t-mono` and `.tag--inline`. The kit no longer ships those classes.
+
+Deep link: `demos/fundamental--accepted/index.html#code`.
+
 ## Kit-doc primitives
 
 These two primitives render inside kit docs only. Product prose does not reach for them.
@@ -529,7 +620,7 @@ Document-surface primitive for dense two-column inventories on kit registry page
 Rules:
 
 - `.registry-table` carries the full table reset. No per-cell inline styles.
-- First column reserves 30% width and forbids wrapping — the class or token name column.
+- First column reserves 30% width and forbids wrapping. The class or token name column.
 - Header row uses `--color-border-strong`; body rows use `--color-border`. Last body row drops its border so the table ends flush with following prose.
 - Links inside a registry table inherit `--color-text` and underline on hover or focus.
 - Kit docs only. Product prose does not render inventory tables.
@@ -539,7 +630,7 @@ Deep link: `demos/fundamental--accepted/index.html#registry-table`.
 
 ## Forbidden
 
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`.
+- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`, `toc-`, `fab`, `deck`, `highlight`, `figure`, `quote`, `divider`, `avatar`.
 - Inline styles for tokens. Use `var(--token-name)`.
 - New color, spacing, or radius values outside `tokens.json`.
 - Drop shadows, glass, blur, gradients.

@@ -126,13 +126,27 @@ body {
 }
 .t-muted { color: var(--color-text-muted); }
 .t-subtle { color: var(--color-text-subtle); }
-/* .t-mono is a semantic marker for token / value / code-ish text.
-   No tabular-nums (forcing digit widths makes "1 0" look stretched in
-   a proportional font), no ss01 stylistic set (adds unwanted spacing).
-   Letter-spacing resets to 0 so code reads cleanly even inside body
-   copy that carries -0.01em tracking. Uses Commissioner (kit font) at 600
-   (semibold) instead of monospace to maintain visual consistency. */
-.t-mono { font-family: inherit; font-weight: 600; letter-spacing: 0; }
+
+/* .t-code is the inline code/token chip. Soft surface, muted text, regular
+   weight. Font-size and leading inherit so the chip sits on the surrounding
+   line without breaking rhythm. Replaces .t-mono (which carried a forbidden
+   600 weight). */
+.t-code {
+  background: var(--color-surface-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-1);
+  color: var(--color-text-muted);
+  font-weight: var(--fw-regular);
+}
+
+/* .t-code--block is the block-level code rail. No surface chip; the left
+   border carries the affordance. Block padding clears the body rhythm. */
+.t-code--block {
+  color: var(--color-text-muted);
+  font-weight: var(--fw-regular);
+  border-left: 4px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+}
 
 /* =========================================================================
    App shell — three-pane layout, iPad-style split view
@@ -191,7 +205,7 @@ body {
      and the 4 px gap between the indicator's right edge and the
      nav-row's box is the "gap between indicator and nav" token.
      Top padding 32 clears the sidebar header's t-title line-height
-     (28 px) per Lebedev rule 9: outer margin ≥ line-height. */
+     (28 px) per inner-and-outer rule 9: outer margin ≥ line-height. */
   padding: var(--space-8) var(--col-pad-x) var(--space-5) var(--space-2);
   display: flex;
   flex-direction: column;
@@ -237,7 +251,7 @@ body {
               opacity var(--dur-base) var(--ease-out);
 }
 .sidebar__footer {
-  padding: var(--space-5) 18px 0;  /* 18 = 4 bar + 14 gap, matches nav rows */
+  padding: var(--space-5) var(--space-4) 0;  /* 16 = 4 bar + 12 gap, matches nav rows */
   color: var(--color-text-muted);
 }
 
@@ -254,8 +268,8 @@ body {
 .nav-group:not(:last-of-type)::after {
   content: "";
   position: absolute;
-  left: 18px;
-  right: 18px;
+  left: var(--space-4);
+  right: var(--space-4);
   bottom: 0;
   height: 0.5px;
   background: var(--color-border);
@@ -266,13 +280,13 @@ body {
   flex-direction: column;
   gap: 0;
 }
-/* Nav rows share one inset rhythm — heading and every item carry
-   padding-left 18 (= 4 px indicator bar + 14 px gap to text) and
-   padding-right 18 (symmetric hover surface). Vertical stays tag-
-   tight at 4 px. */
+/* Nav rows share one inset rhythm. Heading and every item carry
+   padding-left 16 (= 4 px indicator bar + 12 px gap to text) and
+   padding-right 16 (symmetric hover surface). Vertical stays tag-
+   tight at 4 px. Snapped from 18 to 16 to clear the 4 px grid. */
 .nav-group > h3,
 .nav-group > h4 {
-  padding: var(--space-1) 18px;
+  padding: var(--space-1) var(--space-4);
   color: var(--color-text-muted);
   transition: color var(--dur-base) var(--ease-out);
 }
@@ -281,7 +295,7 @@ body {
 
 .nav-group__items a {
   display: block;
-  padding: var(--space-1) 18px;
+  padding: var(--space-1) var(--space-4);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   transition: background-color var(--dur-fast) var(--ease-out),
@@ -309,7 +323,7 @@ body {
    ========================================================================= */
 .book {
   background: var(--color-bg);
-  /* Top padding rides the body line-height (32 px) per Lebedev's rule 9:
+  /* Top padding rides the body line-height (32 px) per inner-and-outer rule 9:
      outer page margin ≥ body line-height. `--doc-pad-left` clamp floors
      at 32 px too, so the text block breathes symmetrically at minimum
      viewport. Bottom holds at 80 px for a long final rest. */
@@ -330,7 +344,7 @@ body {
 .book__intro {
   max-width: 612px;
   /* Hero-to-intro distance must clear the hero's line-height (66 px) per
-     Lebedev rule 13. `.book` gap (12) + this padding (60) = 72 ≥ 66. */
+     inner-and-outer rule 13. `.book` gap (12) + this padding (60) = 72 ≥ 66. */
   padding-top: var(--space-15);
 }
 .book__signoff {
@@ -377,7 +391,7 @@ body {
   padding-top: 0;
   margin-top: 0;
 }
-/* Internal rhythm — asymmetric per Lebedev's rules 12, 13, 14.
+/* Internal rhythm — asymmetric per inner-and-outer rules 12, 13, 14.
    Paragraph-to-paragraph (inner): 20 px. Heading-to-following-paragraph
    (rule 13): matches or exceeds the heading's line-height. Preceding-
    paragraph-to-heading (rule 12): strictly ≥ 2× the space below, so
@@ -641,7 +655,7 @@ body {
 .registry-table a:focus-visible {
   text-decoration: underline;
   text-decoration-thickness: 0.5px;
-  text-underline-offset: 3px;
+  text-underline-offset: var(--space-1);
 }
 
 /* =========================================================================
@@ -656,7 +670,7 @@ body {
 .inspector__group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 /* =========================================================================
@@ -913,7 +927,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -1012,9 +1026,9 @@ body {
 .field--row {
   flex-direction: row;
   align-items: baseline;
-  gap: 6px;
+  gap: var(--space-2);
 }
-.field__label { width: 70px; flex-shrink: 0; }
+.field__label { width: 72px; flex-shrink: 0; }
 .field__value {
   flex: 1;
   color: var(--color-text-muted);
@@ -1037,32 +1051,13 @@ body {
 }
 
 /* =========================================================================
-   Tiers — side-by-side choice cards inside an inspector card
-   ========================================================================= */
-.tiers {
-  display: flex;
-  gap: var(--space-3);
-}
-.tier {
-  flex: 1;
-  background: var(--color-surface-overlay);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3) 21px var(--space-3) var(--space-3);
-  cursor: pointer;
-  transition: background-color var(--dur-fast) var(--ease-out),
-              transform var(--dur-fast) var(--ease-out);
-}
-.tier:hover { background: var(--color-surface-strong); }
-.tier:active { transform: scale(0.98); }
-
-/* =========================================================================
    Button — full-width caption on a surface
    ========================================================================= */
 .button {
   background: var(--color-surface-overlay);
   color: var(--color-text);
   border-radius: var(--radius-sm);
-  padding: 14px var(--space-6);
+  padding: var(--space-4) var(--space-6);
   text-align: center;
   width: 100%;
   transition: background-color var(--dur-fast) var(--ease-out),
@@ -1209,7 +1204,7 @@ body {
 .comment-thread__ellipsis {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: var(--space-1);
   padding: var(--space-3) var(--card-inset-x);
 }
 .comment-thread__ellipsis span {
@@ -1292,7 +1287,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: var(--space-1);
   width: 16px;
   height: 16px;
   color: var(--color-text-muted);
@@ -1314,8 +1309,8 @@ body {
 .comment__menu > span {
   content: "";
   display: block;
-  width: 2.5px;
-  height: 2.5px;
+  width: var(--space-1);
+  height: var(--space-1);
   border-radius: 50%;
   background: currentColor;
 }
@@ -1332,8 +1327,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   border-radius: var(--radius-sm);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
-              0 0 0 0.5px var(--color-border);
+  border: 0.5px solid var(--color-border);
   display: none;
   flex-direction: column;
   transform-origin: top right;
@@ -1350,7 +1344,7 @@ body {
   to   { opacity: 1; transform: scale(1); }
 }
 .comment__menu-item {
-  padding: 6px var(--space-4);
+  padding: var(--space-2) var(--space-4);
   text-align: left;
   cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease-out);
@@ -1383,7 +1377,7 @@ body {
 .comment-stack {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
 }
 
 /* =========================================================================
@@ -1452,7 +1446,26 @@ body {
 .card-stack {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-2);
+}
+
+/* Card stack — columns variant. Cards arranged horizontally for parallel
+   comparison (pricing tiers, theme presets, plan choices). At narrow
+   viewport, the columns collapse to vertical stack. Same DOM, no class swap.
+   Replaces the legacy .tier / .tiers shape. */
+.card-stack--columns {
+  flex-direction: row;
+  gap: var(--space-4);
+}
+.card-stack--columns > .card {
+  flex: 1 1 0;
+  min-width: 0;
+}
+@media (max-width: 768px) {
+  .card-stack--columns {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
 }
 /* First card is always on: its surface is showing, its collapsible
    (if interactive) is open. Subsequent cards are minimized. The
@@ -1606,24 +1619,6 @@ body {
 }
 .tag--bold { color: var(--color-text); }
 
-/* Inline tag — gray surface chip used in running body text.
-   Uppercase + tracked to read as metadata rather than prose. The
-   font-size is relative (em, not a token) so the chip always sits a
-   notch smaller than the copy it's embedded in — uppercase + bold
-   already read visually larger at the same px, so 0.8 em brings the
-   cap-height back into line with the surrounding lowercase. */
-.tag--inline {
-  display: inline;
-  padding: 4px var(--space-2);
-  border-radius: 6px;
-  background: var(--color-surface-overlay);
-  font-size: 0.8em;
-  font-weight: var(--fw-bold);
-  letter-spacing: 0.2px;
-  text-transform: uppercase;
-  color: inherit;
-}
-
 /* =========================================================================
    Highlight — text the reader has marked. One universal rule, two
    states, mirrored from the card-stack model:
@@ -1656,6 +1651,11 @@ body {
   margin: 0;
   border-radius: 2px;
   cursor: pointer;
+  /* Vertical extension: flat geometry, no blur. The mark grows 4 px above
+     and below the line-box so the highlight reads as a deliberate band,
+     not a translucent ghost over the cap-height. */
+  box-shadow: 0 4px 0 0 var(--color-surface-overlay),
+              0 -4px 0 0 var(--color-surface-overlay);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -1765,14 +1765,14 @@ body {
   --color-surface-overlay: rgba(0, 0, 0, 0.03);
   --color-surface-strong:  rgba(0, 0, 0, 0.06);
   --color-border:          rgba(0, 0, 0, 0.1);
-  background: #cccccc;
+  background: var(--color-surface-strong);
   color: #000000;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  margin-right: -190px;
+  margin-right: -188px;
   transform: perspective(120px) rotateY(52deg) rotateX(8deg);
   transform-origin: left center;   /* cards fan from their left edge */
   -webkit-transform-style: preserve-3d;
@@ -1780,13 +1780,13 @@ body {
   scale: 0.75;
   /* Two easings on one element, intentionally different:
      rotation settles (ease-out), margin springs (cubic spring).
-     The tilt is functional — it lands. The spread is physical — it pops.
-     Background rides the same 300 ms / ease-out so the gray → white
+     The tilt is functional, it lands. The spread is physical, it pops.
+     Background rides the same dur-slow / ease-out so the gray to white
      swap on promotion stays in lockstep with the tilt and scale. */
-  transition: transform 300ms var(--ease-out),
-              scale 300ms var(--ease-out),
-              background-color 300ms var(--ease-out),
-              margin-right 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform var(--dur-slow) var(--ease-out),
+              scale var(--dur-slow) var(--ease-out),
+              background-color var(--dur-slow) var(--ease-out),
+              margin-right var(--dur-slow) cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
   isolation: isolate;
 }
@@ -1827,8 +1827,8 @@ body {
    so the keyframes run once per choice — confirmation of the gesture. */
 .deck-card__check {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: var(--space-3);
+  height: var(--space-3);
   background: currentColor;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   flex-shrink: 0;
@@ -1856,7 +1856,7 @@ body {
    ========================================================================= */
 .quote {
   padding: 0 0 0 var(--space-4);
-  border-left: 4px solid var(--color-border);
+  border-left: 4px solid var(--color-text);
   color: var(--color-text);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
@@ -1906,37 +1906,6 @@ body {
 .quote > cite::before { content: "— "; }
 
 /* =========================================================================
-   Checkbox — custom, accessible
-   ========================================================================= */
-.checkbox {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  cursor: pointer;
-  user-select: none;
-}
-.checkbox input {
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border-strong);
-  background: transparent;
-  flex-shrink: 0;
-  display: grid;
-  place-content: center;
-  transition: background-color var(--dur-fast) var(--ease-out);
-}
-.checkbox input:checked { background: var(--color-text); border-color: var(--color-text); }
-.checkbox input:checked::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: var(--color-bg);
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
-
-/* =========================================================================
    Avatar — tiny initial disc for author bylines
    ========================================================================= */
 .avatar {
@@ -1970,13 +1939,12 @@ body {
 }
 
 /* =========================================================================
-   Prose patterns — lists, figure, spec.
-   Every new pattern here is opt-in via class. For tokens, mono, and
-   muted text, I reuse the existing .t-mono and .t-muted utilities
-   rather than inventing aliases. For quotes, I reuse the existing
-   .quote component (hairline-ified below). For citations and notes,
-   I compose utilities directly in the HTML. Four patterns earn their
-   own class; the rest ride on what the kit already provides.
+   Prose patterns: lists, figure, spec.
+   Every new pattern here is opt-in via class. For inline code and tokens,
+   we reuse .t-code and .t-muted utilities rather than invent aliases. For
+   quotes, we reuse the existing .quote component (hairline-ified below).
+   For citations and notes, we compose utilities directly in the HTML. Four
+   patterns earn their own class; the rest ride on what the kit provides.
    ========================================================================= */
 
 /* Lists — each li reads as a row, same as a book__spec row. A 0.5px
@@ -2049,8 +2017,7 @@ ol.t-list > li::before {
   gap: var(--space-2);
   margin: 0;
 }
-.figure > img,
-.figure > svg {
+.figure > *:not(figcaption) {
   width: 100%;
   display: block;
 }
@@ -2058,14 +2025,6 @@ ol.t-list > li::before {
   font-size: var(--fs-micro);
   line-height: var(--lh-micro);
   color: var(--color-text-muted);
-}
-
-/* Inline aside — a softer beat inside a sentence. Size drops one
-   notch below the surrounding copy so the aside reads as
-   parenthetical without using parentheses. */
-.aside {
-  color: var(--color-text-muted);
-  font-size: 0.85em;
 }
 
 /* Spec — a two-column key/value table rendered inside a card. The
@@ -2164,6 +2123,7 @@ ol.t-list > li::before {
   align-items: center;
   justify-content: center;
   z-index: 100;
+  /* Permitted: shadow on inverted/black-bg active surfaces. See manifesto § Material. */
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   transition: transform var(--dur-fast) var(--ease-out),
               opacity var(--dur-fast) var(--ease-out);
@@ -2261,7 +2221,7 @@ ol.t-list > li::before {
     padding-left: var(--space-6);
     padding-right: var(--space-6);
   }
-  .sidebar .nav-group__items a { padding-top: 6px; padding-bottom: 6px; }
+  .sidebar .nav-group__items a { padding-top: var(--space-2); padding-bottom: var(--space-2); }
   .sidebar .nav-group:not(:last-of-type)::after {
     left: 0;
     right: 0;
@@ -2282,8 +2242,10 @@ ol.t-list > li::before {
     gap: var(--space-4);
   }
 
-  /* Hero sits smaller on phones so the intro doesn't eat the first screen. */
-  .t-hero,
+  /* Hero sits smaller on phones so the intro doesn't eat the first screen.
+     Utility-class override inside the narrow breakpoint; 48 px is the
+     phone-only step between 38 and 66. */
+  .t-hero { font-size: 48px; line-height: 48px; }
   .book__part { font-size: 48px; line-height: 48px; }
 
   /* Intro sits snug against the top of the doc column on phones. The
