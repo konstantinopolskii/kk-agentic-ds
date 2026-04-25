@@ -8,7 +8,9 @@ Kit version: v1.5.0 (commit `cb3733b`).
 
 ## Outcome
 
-To be filled at ship.
+**Shipped 2026-04-26.** Operator review state slice at `demos/wealthy-pipeline/index.html`. Stage 7 meta-reviewer PASS on rerun (all six rubric items) after one reiterate cycle: copy revision at 3b for four patterns, engineer patch at 5, voice re-clear at 6c.
+
+Path: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5] → 3b × 4 (copy revisions) → 5 (patch) → 6c (reaudit) → 7 (rerun) [PASS].
 
 ## File index
 
@@ -16,4 +18,27 @@ To be filled at ship.
 |---|---|---|---|
 | [00-brief.md](../2026-04-22-wealthy-alpha/00-brief.md) | 0 | user | Original ask (re-used from prior session per user stamp). |
 | [wealthy-pipeline-handoff.md](file:///Users/kostyantinopolskii/Downloads/wealthy-pipeline-handoff.md) | 0 | user | Canonical product spec. Two surfaces, seven stages, comment data model, voice rules. Written against kit v0.4.0; superseded by v1.5.0 head. |
-| [01-analyst.md](./01-analyst.md) | 1 | analyst | Decomposition — 2 users, 2 job stories, 6 priority scenarios, 13 open questions. Gate open. |
+| [01-analyst.md](./01-analyst.md) | 1 | analyst | Decomposition — 2 users, 2 job stories, 6 priority scenarios, 13 open questions. Autonomous-mode stamps applied per canon. Gate passed. |
+| [02-design-director.md](./02-design-director.md) | 2 | design-director | 6 directions probed; "Document first" picked per canon scoring. 5 pattern blocks named. Exceptions register empty. Gate passed. |
+| [03a-fresh-eyes-pre-strategy-doc-body.md](./03a-fresh-eyes-pre-strategy-doc-body.md) | 3a | fresh-eyes-jobstory (pre) | 10 questions on the book-column composition. |
+| [03a-fresh-eyes-pre-per-section-control.md](./03a-fresh-eyes-pre-per-section-control.md) | 3a | fresh-eyes-jobstory (pre) | 7 questions on the per-section control card. |
+| [03a-fresh-eyes-pre-inspector-stage-card.md](./03a-fresh-eyes-pre-inspector-stage-card.md) | 3a | fresh-eyes-jobstory (pre) | 7 questions on the inspector stage indicator. |
+| [03a-fresh-eyes-pre-inspector-comment-stack.md](./03a-fresh-eyes-pre-inspector-comment-stack.md) | 3a | fresh-eyes-jobstory (pre) | 10 questions on the inspector comment stack. |
+| [03a-fresh-eyes-pre-signoff-shout-pending.md](./03a-fresh-eyes-pre-signoff-shout-pending.md) | 3a | fresh-eyes-jobstory (pre) | 8 questions on the signoff shout (pre-sign state). |
+| [03b-designer-strategy-doc-body.md](./03b-designer-strategy-doc-body.md) | 3b | designer | Book-column composition. 10/10 answered. 28 copy drafts. |
+| [03b-designer-per-section-control.md](./03b-designer-per-section-control.md) | 3b | designer | Per-section control card. 7/7 answered. 12 copy drafts. |
+| [03b-designer-inspector-stage-card.md](./03b-designer-inspector-stage-card.md) | 3b | designer | Ambient stage indicator. 7/7 answered. 8 copy drafts. |
+| [03b-designer-inspector-comment-stack.md](./03b-designer-inspector-comment-stack.md) | 3b | designer | Comment stack with draft, threads, replies. 10/10 answered. 22 copy drafts. |
+| [03b-designer-signoff-shout-pending.md](./03b-designer-signoff-shout-pending.md) | 3b | designer | Pre-sign book-column shout. 8/8 answered. 14 copy drafts. |
+| [03c-fresh-eyes-post-strategy-doc-body.md](./03c-fresh-eyes-post-strategy-doc-body.md) | 3c | fresh-eyes-jobstory (post) | 10/10 PASS. |
+| [03c-fresh-eyes-post-per-section-control.md](./03c-fresh-eyes-post-per-section-control.md) | 3c | fresh-eyes-jobstory (post) | 7/7 PASS. |
+| [03c-fresh-eyes-post-inspector-stage-card.md](./03c-fresh-eyes-post-inspector-stage-card.md) | 3c | fresh-eyes-jobstory (post) | 7/7 PASS. |
+| [03c-fresh-eyes-post-inspector-comment-stack.md](./03c-fresh-eyes-post-inspector-comment-stack.md) | 3c | fresh-eyes-jobstory (post) | 10/10 PASS. |
+| [03c-fresh-eyes-post-signoff-shout-pending.md](./03c-fresh-eyes-post-signoff-shout-pending.md) | 3c | fresh-eyes-jobstory (post) | 8/8 PASS. |
+| [04-ds-manager.md](./04-ds-manager.md) | 4 | ds-manager | Per-block component map + 4 canon corrections + 18-piece build-order task split. Inventory pass. |
+| [05-design-engineer.md](./05-design-engineer.md) | 5 | design-engineer | Built `demos/wealthy-pipeline/index.html` (814 lines) — 18 pieces all DONE, inventory pass, no invention. |
+| [demos/wealthy-pipeline/index.html](../../demos/wealthy-pipeline/index.html) | 5 | (artefact) | The slice. Single-file demo, embedded consumer JS. |
+| [06a-consistency-jobstory.md](./06a-consistency-jobstory.md) | 6a | consistency-jobstory | Cold-read jobstory — 9 blocks, 6 unclarity flags (heaviest: agent-reply-as-replacement invisible). |
+| [06b-consistency-ds.md](./06b-consistency-ds.md) | 6b | consistency-ds | Cold-read DS — 9 blocks audited, 5 flags (heaviest: `book__signoff-stats` outside `book__signoff`). |
+| [06c-voice.md](./06c-voice.md) | 6c | voice-reviewer | Cold-read voice — ~70 strings audited, 6 flags + 1 typo + 1 borderline. |
+| [07-meta-reviewer.md](./07-meta-reviewer.md) | 7 | meta-reviewer | Rubric — 5/6 PASS; FAIL on item 5 (unaddressed 6c flags). User routes via reiterate protocol. |

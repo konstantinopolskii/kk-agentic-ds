@@ -4,7 +4,7 @@ stage: 1
 role: analyst
 input: documentation/2026-04-22-wealthy-alpha/00-brief.md + /Users/kostyantinopolskii/Downloads/wealthy-pipeline-handoff.md
 output: decomposed brief — 2 users, 2 job stories, 6 priority scenarios, 13 open questions, default full-walk entry
-gate: open — awaiting human stamps on open questions
+gate: passed — autonomous-mode stamps applied per canon (user authorised full-pipeline auto-run)
 ---
 
 Decomposed the original Wealthy brief plus the canonical handoff into users, job stories, priority scenarios, and the open questions that block stage 2.
@@ -189,7 +189,7 @@ Default full walk per `pipeline.md § Entry point matching`. Stages 1 → 2 → 
 
 ## Gate
 
-Open. Stage 2 (`kk-role-design-director`) does not run until every Q1–Q13 carries an explicit human stamp. Defaults named where handoff §10 already proposed one (Q7, Q8, Q12, Q13) — those just need a "yes" to confirm or an alternative to overwrite.
+Passed — autonomous-mode stamps applied per canon (see `## Locked decisions` below). User authorised full-pipeline auto-run; analyst gates closed. Stage 2 (`kk-role-design-director`) fires next.
 
 ## Hand-off
 
@@ -197,4 +197,75 @@ Open. Stage 2 (`kk-role-design-director`) does not run until every Q1–Q13 carr
 
 ## Locked decisions
 
-(To be filled at gate.)
+User authorised autonomous run of stages 2 → 7 with all decisions made per `manifesto.md` principles, `voice.md`, `pipeline.md § Vertical slice rule`, and `wealthy-pipeline-handoff.md` defaults. Analyst stamps each Q below with its canon-anchored answer.
+
+### Q1 — vertical slice for stage 5 → **(a) operator review state only**
+
+**Stamp:** the high-fidelity stage-5 build covers ONE flow — the operator's review state. Single screen, every relevant interaction state (rest, hover, focus, active, disabled, loading, empty, error) for the components on it.
+
+**Reasoning:** `pipeline.md § Vertical slice rule` is strict — "one page or one flow per pass. A session that tries to cover the whole product in one run is bloated and untestable. Halt it and split." Operator review is the densest single moment in the brief — exercises selection→highlight→thread→approve/reject as the kit's hardest interaction pattern, and the comment loop is the product's load-bearing mechanic per handoff §5. Client surface ships in a follow-up session. Out-of-slice questions (Q2, Q4, Q5, Q6, Q9, Q10) defer to that follow-up.
+
+### Q2 — tier names + pricing visibility → **deferred**
+
+Out of slice (client surface). Re-asked at the start of the client-view session.
+
+### Q3 — research pricing on operator brief card → **deferred**
+
+Out of slice (review state runs after brief commit). Re-asked when brief state ships.
+
+### Q4 — Boostie integration depth → **deferred**
+
+Out of slice (client surface).
+
+### Q5 — transcript shape and gating → **deferred**
+
+Out of slice (client surface).
+
+### Q6 — review form shape → **deferred**
+
+Out of slice (client surface).
+
+### Q7 — agent reply tone → **(a) operator's voice**
+
+**Stamp:** agent-proposed replacements inside threads render in the operator's voice.
+
+**Reasoning:** handoff §10 default. `voice.md § Shape` requires consistent register across the doc; a tonal seam between operator-written prose and agent-written replacement breaks that. Operator-voice replacement drops into the body cleanly when approved.
+
+### Q8 — patch path post-signoff → **deferred**
+
+Out of slice (post-signoff). Default carried in handoff (§10 prefers yes-with-edit-log) is not ruled on this session.
+
+### Q9 — free-path content shape → **deferred**
+
+Out of slice (client surface).
+
+### Q10 — free vs paid boundary on client view → **deferred**
+
+Out of slice (client surface).
+
+### Q11 — comment-as-training-signal UI surface → **backend-only**
+
+**Stamp:** no UI marker on the operator surface for "this draft drew on N prior reviews".
+
+**Reasoning:** `manifesto.md § Pure signal` — "effort spent decoding the interface is proportional to how bad it is." A counter line that does not change the operator's next action is noise, not signal. Backend persists per handoff §5.2 regardless.
+
+### Q12 — multitenancy → **default — Konstantin only, signature.svg from kit, no operator switcher**
+
+**Stamp:** stage-5 build mocks Konstantin as the sole operator. Signature glyph = `signature.svg` from the kit. No operator switcher. Author handle = "Konstantin Konstantinopolskii".
+
+**Reasoning:** handoff §10 says plan-not-build. `manifesto.md § Job stories` — "one priority job per screen". Multitenancy is a secondary scenario, isolated per the manifesto rule.
+
+### Q13 — kit head + exceptions register → **default — kit v1.5.0 head, exceptions register empty**
+
+**Stamp:** build against kit v1.5.0 head (commit `cb3733b`). Direction doc's §Exceptions register starts empty. Anything the kit lacks halts to user gate before stage 5 — no silent invention.
+
+**Reasoning:** `pipeline.md § Reiterate protocol` requires exceptions to carry user-stamped paper trail. Starting empty enforces the discipline; the design director may populate at stage 2 if the slice forces an exception, with a one-line reason.
+
+### Autonomous-mode policy (carried forward to stages 2–7)
+
+The user's authorisation: "DO ALL DECISIONS ACCORDING TO OUR PRINCIPLES. FOLLOW THE SOUL AND LOGIC AND PATTERNS AND COMPONENTS." Each downstream stage operates the same way:
+
+- Gate-style decisions made by the role per canon, with reasoning recorded in that stage's `## Locked decisions` block.
+- Any decision the role cannot make from canon halts to user gate (no silent guess) — but only if the decision genuinely cannot be canon-anchored.
+- Stage 2's gate 2a (human picks one direction) is replaced by the design director self-picking per canon and recording reasoning. Same for 2b (pattern blocks + exceptions).
+- Stage 7 meta-reviewer remains the last canonical check; FAIL routes to user, not silent reiterate.
