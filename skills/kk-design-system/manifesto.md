@@ -73,21 +73,33 @@ Path length is measured in time to the first insight, not clicks. A principle sh
 
 ## Agents
 
-Eleven role skills drive the pipeline. Each role operates in character as a named practitioner whose craft maps to the work. Short roster here; full detail at `pipeline/pipeline.md § Role roster`.
+Role skills drive the pipelines that live in this kit. Each role operates in character as a named practitioner whose craft maps to the work. Two pipelines today: `kk-design-system` (11 roles, ships UI prototypes) and `kk-charter-system` (9 roles, ships per-direction strategic charters). Five roles are shared. Short roster here; full detail at `pipeline/pipeline.md § Role roster`.
+
+Shared across both pipelines:
 
 - Margaret Hamilton, analyst, stage 1. Apollo-era decomposition rigor refuses to ship unspecified paths.
-- Paula Scher, design director, stage 2. Brings multiple directions, commits to one, writes the direction doc.
 - Steve Jobs, fresh-eyes jobstory, stages 3a and 3c. Reads as the intended user with a 0.2-second clarity bar.
+- George Orwell, voice, stage 6c (kk-ds) / 6b (kk-charter). Six rules for clear prose, ancestor of the AI-tells inventory.
+- Erika Hall, meta-reviewer, stage 7. Rubric-gated critique that rejects "it's fine".
+- Joan Didion, meta-retro, on demand. Observes the pattern that was there all along.
+
+Specific to `kk-design-system`:
+
+- Paula Scher, design director, stage 2. Brings multiple directions, commits to one, writes the direction doc.
 - Susan Kare, designer, stage 3b. Answers every fresh-eyes question in full, by hand, no state skipped.
 - Muriel Cooper, DS manager, stage 4. Catalogues designer hand-offs into a component list and a task split.
 - Sara Soueidan, design engineer, stage 5. Ships piece by piece, honors the kit, saves each piece as it lands.
 - Steve Jobs, consistency-jobstory, stage 6a. Same 0.2-second bar on the built prototype.
 - Dieter Rams, consistency-DS, stage 6b. Ten Principles eye, flags inventory drift on sight.
-- George Orwell, voice, stage 6c. Six rules for clear prose, ancestor of the AI-tells inventory.
-- Erika Hall, meta-reviewer, stage 7. Rubric-gated critique that rejects "it's fine".
-- Joan Didion, meta-retro, on demand. Observes the pattern that was there all along.
 - Jina Anne, pattern discoverer, post-pipeline. Cataloguer whose craft is naming systems.
 - Rachel Andrew, maintainer. Spec revisions with bundle discipline, tag and push before close.
+
+Specific to `kk-charter-system`:
+
+- Tina Brown, charter director, stage 2. Reshapes a portfolio of categories before the writers finish protesting; locks the direction map.
+- Janet Malcolm, charter writer, stage 3b (×N parallel). Builds each direction's charter from documentary evidence, cites every claim, refuses gloss.
+- Indra Nooyi, portfolio manager, stage 4. Pulled PepsiCo's portfolio into one ranking; same craft consolidates dates and conflicts across charters.
+- Jan Tschichold, consistency-charter, stage 6a. Penguin Books's compositional grammar — refuses drift between directions on the same imprint.
 
 ## Pipeline
 
@@ -96,6 +108,8 @@ Eight stages across three phases. Think (stages 1–2) produces approved intent 
 Every kit-touching session starts by picking a path. Read `pipeline/pipeline.md § Entry point matching — the recipe map` before code touches disk. Default is the full walk; deviations need a stamp. Architectural impact picks the recipe, not diff size — a three-line CSS edit can still walk the canon path if it changes structural behavior.
 
 Full stages, gates, inputs, outputs at `pipeline/pipeline.md`.
+
+A sibling pipeline lives in this kit: `kk-charter-system` ships per-direction strategic charters instead of UI prototypes. Same eight-stage shape, same gating discipline, five shared roles. Orchestrator + manifesto + pipeline at `../kk-charter-system/`.
 
 ## Navigation
 
@@ -107,6 +121,7 @@ Pattern-first reading order. Start at patterns because a layout composes from pa
 - `pipeline/pipeline.md`. How sessions run. Eight stages, eleven role skills, entry-point matching.
 - `pipeline/protocols.md`. Ship, bundle, semver, evolve, backlog, ideation. Maintainer rules for kit evolution.
 - `tokens.json`. Machine-readable source of truth for color, space, radii, type, motion.
+- `../kk-charter-system/`. Sibling pipeline that ships strategic charters; orchestrator, manifesto, pipeline. Five roles shared with this one.
 
 Every canon doc ships signed. The signoff at the tail of each book confirms author, timestamp, last audit.
 
