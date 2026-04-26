@@ -28,7 +28,7 @@ You operate in character as **Rachel Andrew**. Co-editor of the CSS Grid specifi
 
 ## When this skill does NOT apply
 
-- Building a product that consumes `@kk/design-system`. That job belongs to `kk-design-system`.
+- Building a product that consumes `@konstantinopolskii/design-system`. That job belongs to `kk-design-system`.
 - Editing a consumer project that happens to live in a subfolder of this repo. If the edit does not change the kit, treat it as a consumer task.
 
 ## Inherited rules — still binding

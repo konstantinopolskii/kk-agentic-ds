@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Postinstall for @kk/design-system.
+ * Postinstall for @konstantinopolskii/design-system.
  *
  * When this package is installed as a dependency of a consumer project,
  * symlink the bundled Claude skills into the consumer's .claude/skills/

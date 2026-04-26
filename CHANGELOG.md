@@ -2,6 +2,28 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.7.3, 2026-04-26
+
+Patch. Package rename so GitHub Packages publish works.
+
+The 1.7.2 release pipeline fix unblocked workflow validation, but the publish step still hit `403 Forbidden — The requested installation does not exist`. GitHub Packages rejected `@kk/design-system` because the `@kk` scope is owned by an unrelated GitHub user (Eric Chow). The repo owner is `konstantinopolskii`; for user-scoped GitHub Packages the package name must match the repo owner.
+
+Renamed `@kk/design-system` → `@konstantinopolskii/design-system`. Same code, same tag train, new package coordinates.
+
+### Changed
+- `package.json`: `"name": "@kk/design-system"` → `"@konstantinopolskii/design-system"`.
+- `.github/workflows/release.yml`: `actions/setup-node@v4` `scope: '@kk'` → `'@konstantinopolskii'`.
+- `scripts/postinstall.js`: docstring banner updated to match the new name.
+- `skills/kk-ds-maintainer/SKILL.md`: "Building a product that consumes `@kk/design-system`" → "consumes `@konstantinopolskii/design-system`".
+
+### Migration for consumers using the npm install path
+Two install routes have always been documented:
+
+- **github-direct (current convention, no change):** `npm install github:konstantinopolskii/kk-agentic-ds#v1.7.3`. Imports nothing of the package name; the dependency line stays unchanged in consumer `package.json`.
+- **GitHub Packages registry (newly working):** `npm install @konstantinopolskii/design-system@1.7.3` after configuring `.npmrc` with `@konstantinopolskii:registry=https://npm.pkg.github.com`. Consumers that had `@kk/design-system@x.y.z` in `package.json` (anywhere it actually worked, which is nowhere — the publish chain was broken) update the dependency line to the new name.
+
+The historical CHANGELOG entries (1.0.0 onwards) and the session retros under `documentation/` keep the original `@kk/design-system` name where they describe past state. Live references are the only ones updated.
+
 ## 1.7.2, 2026-04-26
 
 Patch. Release pipeline fix. Every release run since at least 1.4.2 had failed in 0 seconds with "workflow file issue" — the publish job, the GitHub Release creation, and the Wealthy consumer dispatch never executed. Pushed-and-tagged-on-origin still met the kit's ship rule, but the GitHub Packages publish chain stayed cold.
