@@ -1,0 +1,21 @@
+# Kit-internal — not for consumers.
+# These directories carry session retros, work-in-progress prototypes,
+# and proposal drafts. They explain how the kit was built; consumers
+# only need what the kit ships.
+documentation/
+prototypes/
+proposals/
+
+# Local-only project config.
+.claude/
+.github/
+
+# Local cruft.
+.DS_Store
+*.log
+node_modules/
+bencium-claude-code-design-skill/
+
+# Source-control noise.
+.git/
+.gitignore
