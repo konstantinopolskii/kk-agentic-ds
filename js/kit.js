@@ -23,6 +23,18 @@
  *                                     that own their own selection handler
  *                                     should NOT call this — it would
  *                                     create duplicate drafts.
+ *   KK.extractComments()            — array of threads + anchor metadata
+ *                                     + messages, walked from the live
+ *                                     DOM. Always available; returns []
+ *                                     when no comment-stack present.
+ *   KK.copyComments()               — extractComments() + clipboard write
+ *                                     of the same JSON. Returns the array
+ *                                     so a consumer can also pipe it to
+ *                                     a network call.
+ *   KK.clearSavedComments()         — adapter.clear() + reload. Stays
+ *                                     a silent no-op when persistence
+ *                                     is disabled (no adapter resolved,
+ *                                     no `.comment-stack`, etc).
  *
  * Config on window.KK.config.i18n (0.8.0):
  *   Consumers set their own strings BEFORE this script loads. Example:
@@ -36,6 +48,18 @@
  *     </script>
  *     <script src="../js/kit.js"></script>
  *   Defaults ship in English so a consumer that sets nothing still works.
+ *
+ * Config on window.KK.config.persist (0.14.0):
+ *   Comment persistence runs by default whenever a `.comment-stack`
+ *   exists. Snapshot is the stack's innerHTML; restore re-wraps doc
+ *   highlights via the kit's existing kkAnchor* dataset on each thread.
+ *     enabled: true  — set false on DB-backed apps that own state.
+ *     key:    'kk:comments:' + location.pathname — override per page.
+ *     adapter: 'localStorage' (default) | 'none' | { load, save, clear }
+ *   The custom-adapter object lets a consumer route persistence into
+ *   their own store. `load` returns the snapshot or null; `save` takes
+ *   the snapshot; `clear` removes it. See docs/integration/comment.md
+ *   for the full pattern.
  *
  * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
  * inspector card stack, comment kebab menus, 3D card stack deck.
@@ -72,7 +96,7 @@
   // config wins; our defaults fill the gaps. Same pattern as every
   // config-merge kit that ships a default dictionary.
   var existing = global.KK || {};
-  var KK = { version: '0.13.0', initialized: false };
+  var KK = { version: '0.14.0', initialized: false };
   Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
   KK.config = KK.config || {};
   KK.config.i18n = Object.assign({
@@ -81,6 +105,11 @@
     deckChoose: 'Choose',
     deckChosen: 'Chosen'
   }, KK.config.i18n || {});
+  KK.config.persist = Object.assign({
+    enabled: true,
+    key: 'kk:comments:' + (typeof location !== 'undefined' ? location.pathname : '/'),
+    adapter: 'localStorage'
+  }, KK.config.persist || {});
 
   // Minimal HTML-attribute escape. Used when injecting user-provided
   // i18n strings into innerHTML attribute contexts. textContent paths
@@ -102,7 +131,9 @@
     narrowView: false,
     columnReveal: false,
     inspectorStack: false,
-    commentMenus: false
+    commentMenus: false,
+    commentApi: false,
+    commentPersistence: false
   };
   var scrollSpyObserver = null;
 
@@ -1325,6 +1356,197 @@
   }
 
   // ================================================================
+  // Comment API: extract + copy. Walks the live DOM at call time, so
+  // it works regardless of persistence config. Each thread pairs with
+  // its anchor metadata plus messages. Same shape as the kk:comment
+  // event so consumers see one schema across both surfaces.
+  // ================================================================
+  function extractCommentsFromDom() {
+    var stack = document.querySelector('.comment-stack');
+    if (!stack) return [];
+    var threads = stack.querySelectorAll('.comment-thread');
+    var out = [];
+    for (var i = 0; i < threads.length; i++) {
+      var t = threads[i];
+      var listMsgs = t.querySelectorAll('.comment-thread__list > .comment-msg');
+      var messages = [];
+      for (var j = 0; j < listMsgs.length; j++) {
+        var m = listMsgs[j];
+        var sub = m.querySelector('.t-subtitle');
+        var body = m.querySelector('p.t-caption');
+        messages.push({
+          messageId: m.dataset.messageId || '',
+          author:    sub  ? sub.textContent.trim()  : '',
+          body:      body ? body.textContent.trim() : '',
+          role:      m.getAttribute('data-author-role') || 'user'
+        });
+      }
+      out.push({
+        threadId:     t.getAttribute('data-thread-id') || '',
+        resolved:     t.getAttribute('data-resolved') === 'true',
+        archived:     t.getAttribute('data-archived') === 'true',
+        anchorQuote:  t.dataset.kkAnchorQuote  || '',
+        anchorPrefix: t.dataset.kkAnchorPrefix || '',
+        anchorSuffix: t.dataset.kkAnchorSuffix || '',
+        sectionSlug:  t.dataset.kkSectionSlug  || '',
+        cluster:      t.dataset.kkCluster      || null,
+        messages:     messages
+      });
+    }
+    return out;
+  }
+
+  function initCommentApi() {
+    if (bound.commentApi) return;
+    KK.extractComments = extractCommentsFromDom;
+    KK.copyComments = function () {
+      var data = extractCommentsFromDom();
+      var json = JSON.stringify(data, null, 2);
+      if (global.navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(json);
+      }
+      return data;
+    };
+    // Default no-op. initCommentPersistence overrides with the real
+    // adapter-bound implementation when persistence resolves. This way
+    // `KK.clearSavedComments()` is always callable; it just does nothing
+    // when there is nothing to clear.
+    if (!KK.clearSavedComments) {
+      KK.clearSavedComments = function () {};
+    }
+    bound.commentApi = true;
+  }
+
+  // ================================================================
+  // Comment persistence. Default-on whenever a `.comment-stack` and a
+  // doc surface (`.book` or `#doc`) coexist. Snapshot is the stack's
+  // innerHTML plus a savedAt timestamp; restore re-wraps doc highlights
+  // via the kit's existing kkAnchor* dataset on each thread/draft.
+  //
+  // Adapter resolution:
+  //   'none'             — bail. DB-backed apps that own state.
+  //   { load,save,clear} — custom store. All three required.
+  //   anything else      — built-in localStorage adapter at config.key.
+  // ================================================================
+  function resolvePersistAdapter(cfg) {
+    if (cfg.adapter === 'none') return null;
+    if (cfg.adapter && typeof cfg.adapter === 'object') {
+      var a = cfg.adapter;
+      if (typeof a.load  === 'function' &&
+          typeof a.save  === 'function' &&
+          typeof a.clear === 'function') return a;
+      return null;
+    }
+    var key = cfg.key;
+    return {
+      load: function () {
+        try {
+          var raw = global.localStorage && localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) { return null; }
+      },
+      save: function (snap) {
+        try { localStorage.setItem(key, JSON.stringify(snap)); } catch (e) {}
+      },
+      clear: function () {
+        try { localStorage.removeItem(key); } catch (e) {}
+      }
+    };
+  }
+
+  // Re-wrap a single quote inside the given scope. Single-text-node match
+  // only — selections that crossed element boundaries on first wrap won't
+  // restore as a contiguous span. The thread itself restores fine; just
+  // the doc-side highlight is lost. Same trade-off as the original
+  // agreement.html implementation this module generalises.
+  function rewrapQuoteInScope(scope, quote, threadId) {
+    if (!scope || !quote) return;
+    var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) {
+      // Skip text already inside a highlight (idempotent restore).
+      if (node.parentElement && node.parentElement.closest('.highlight')) continue;
+      var idx = node.data.indexOf(quote);
+      if (idx < 0) continue;
+      var mid = node.splitText(idx);
+      mid.splitText(quote.length);
+      var span = document.createElement('span');
+      span.className = 'highlight';
+      span.setAttribute('data-comment-id', threadId);
+      span.appendChild(document.createTextNode(mid.data));
+      mid.parentNode.replaceChild(span, mid);
+      return;
+    }
+  }
+
+  function rewrapAllHighlights(doc, stack) {
+    var threads = stack.querySelectorAll(
+      '.comment-thread[data-thread-id], .card.comment-new[data-thread-id]'
+    );
+    for (var i = 0; i < threads.length; i++) {
+      var t = threads[i];
+      var id = t.getAttribute('data-thread-id');
+      var quote = t.dataset.kkAnchorQuote || '';
+      if (!id || !quote) continue;
+      var sectionId = t.dataset.kkSectionSlug || '';
+      var scope = sectionId ? document.getElementById(sectionId) : null;
+      if (!scope) scope = doc;
+      rewrapQuoteInScope(scope, quote, id);
+    }
+  }
+
+  function initCommentPersistence() {
+    if (bound.commentPersistence) return;
+
+    var cfg = KK.config.persist;
+    if (!cfg || cfg.enabled === false) return;
+
+    var adapter = resolvePersistAdapter(cfg);
+    if (!adapter) return;
+
+    var doc = document.querySelector('.book') || document.getElementById('doc');
+    var stack = document.querySelector('.comment-stack');
+    if (!doc || !stack) return;
+
+    bound.commentPersistence = true;
+
+    // Restore. Accept any snapshot with a string `stack` field — v is
+    // optional and assumed 1 when absent, so pre-0.14.0 inline-script
+    // snapshots (e.g., the explee agreement) restore on first load.
+    var snapshot = null;
+    try { snapshot = adapter.load(); } catch (e) { snapshot = null; }
+    var compatibleSchema = !snapshot || snapshot.v == null || snapshot.v === 1;
+    if (snapshot && compatibleSchema && typeof snapshot.stack === 'string') {
+      stack.innerHTML = snapshot.stack;
+      rewrapAllHighlights(doc, stack);
+    }
+
+    // Save observer. 200 ms debounce; characterData true so mid-typing
+    // drafts persist between reloads.
+    var saveTimer = null;
+    function scheduleSave() {
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        adapter.save({
+          v: 1,
+          savedAt: Date.now(),
+          stack: stack.innerHTML
+        });
+      }, 200);
+    }
+    new MutationObserver(scheduleSave).observe(stack, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    KK.clearSavedComments = function () {
+      adapter.clear();
+      location.reload();
+    };
+  }
+
+  // ================================================================
   // Public API
   // ================================================================
   KK.init = function () {
@@ -1334,6 +1556,8 @@
     initColumnReveal();
     initInspectorStack();
     initCommentMenus();
+    initCommentApi();
+    initCommentPersistence();
     initDeck();
     KK.initialized = true;
   };
@@ -1354,6 +1578,8 @@
     initColumnReveal();
     initInspectorStack();
     initCommentMenus();
+    initCommentApi();
+    initCommentPersistence();
     initDeck();
   };
 

@@ -2,6 +2,45 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.6.0, 2026-04-26
+
+Minor. Comment persistence ships in the kit. Default-on whenever a `.comment-stack` and a doc surface coexist on the page. Snapshot is the stack's `innerHTML`; restore re-wraps doc highlights via the kit's existing `kkAnchorQuote / kkAnchorPrefix / kkAnchorSuffix / kkAnchorSectionSlug` thread metadata. Drafts persist mid-typing (200 ms debounce on stack mutations).
+
+Three adapter shapes:
+
+- `'localStorage'` (default). Reads + writes JSON at `kk:comments:<location.pathname>`. Override via `config.persist.key`.
+- `'none'`. Bail. DB-backed apps that route `kk:comment` events to their own backend set this.
+- `{ load, save, clear }`. Custom store. Routes the snapshot through the consumer's adapter.
+
+Two new always-on public methods walk the live DOM:
+
+- `KK.extractComments()`. Array of threads with anchor metadata plus messages, matching the `kk:comment` event shape.
+- `KK.copyComments()`. Same array; also writes pretty-printed JSON to `navigator.clipboard`.
+
+`KK.clearSavedComments()` calls the adapter's `clear()` and reloads the page.
+
+Source artifact: the inline persistence script at the bottom of the Explee partnership proposal (`/explee/agreement/agreement.html` lines 452-597). Generalised and moved into the kit. Pages that ran the inline script can drop it after upgrade and pass `config.persist.key = 'explee_agreement_comments_v1'` (or whatever their key was) so existing reader comments survive the upgrade. Snapshots without a `v` field read as v1, so pre-0.14.0 inline-script saves restore on first load.
+
+Switch persistence off when the backend owns state. Set `enabled: false` (or `adapter: 'none'`) so localStorage does not shadow your DB. Same flag for dev iteration when stale cache masks your edits.
+
+`js/kit.js` internal version `0.13.0 → 0.14.0`.
+
+### Added
+- `js/kit.js`: `initCommentApi()` exposes `KK.extractComments()` + `KK.copyComments()`. Always-on, no opt-in. Walks the DOM at call time. Returns the `kk:comment` event shape per thread.
+- `js/kit.js`: `initCommentPersistence()` restores stack `innerHTML` from the resolved adapter, re-wraps doc highlights from each thread's `kkAnchor*` dataset, then binds a 200 ms debounced `MutationObserver` on the stack to persist on every mutation. Bails when `enabled: false`, when adapter is `'none'`, when the adapter object is malformed, or when `.comment-stack` / `.book` is missing.
+- `js/kit.js`: `KK.clearSavedComments()` calls `adapter.clear()` and reloads. Stays a silent no-op when persistence is disabled.
+- `js/kit.js`: `KK.config.persist` config namespace. Keys: `enabled`, `key`, `adapter`. Defaults: `enabled: true`, `key: 'kk:comments:' + location.pathname`, `adapter: 'localStorage'`.
+- `docs/integration/comment.md § Persistence`: full pattern.
+
+### Changed
+- `js/kit.js` header docstring: documents `KK.extractComments`, `KK.copyComments`, `KK.clearSavedComments`, plus the `KK.config.persist` block.
+- `js/kit.js` version field: `0.13.0 → 0.14.0`.
+- `KK.init` and `KK.refresh` call `initCommentApi()` and `initCommentPersistence()` alongside the existing modules. Both new modules are idempotent.
+
+### Migration
+- Pre-0.14.0 inline persistence scripts can be removed after upgrade. Pass `config.persist.key` to keep existing localStorage entries alive across the swap.
+- DB-backed consumers (the Wealthy portal pattern) must set `config.persist.enabled = false` or `adapter: 'none'` to avoid localStorage shadowing the DB.
+
 ## 1.5.1, 2026-04-26
 
 Patch. Packaging hygiene. Consumers installing via `npm install --save github:konstantinopolskii/kk-agentic-ds` were pulling in `prototypes/`, `documentation/`, `proposals/`, `.github/`, and `.claude/` because no `.npmignore` filtered the github clone. Eighteen megabytes of session retros plus work-in-progress prototypes landed in their `node_modules`. Confusing and noisy.

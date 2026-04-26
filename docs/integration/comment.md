@@ -152,6 +152,128 @@ Overrides go on `window.KK.config`. Set **before** `js/kit.js` loads.
 
 Four i18n keys in 0.13.0. Kit merges with English defaults — partial overrides work.
 
+## Persistence
+
+Default-on as of 0.14.0. When the kit finds a `.comment-stack` plus a `.book` or `#doc` surface, it restores comments from `localStorage` on load and writes a debounced snapshot on every mutation. Drafts persist mid-typing. Highlights re-wrap from the kit's existing anchor metadata stored on each thread's dataset.
+
+### Default configuration
+
+```js
+window.KK = {
+  config: {
+    persist: {
+      enabled: true,
+      key:     'kk:comments:' + location.pathname,
+      adapter: 'localStorage'
+    }
+  }
+};
+```
+
+A consumer that sets nothing gets the defaults.
+
+### Three adapter shapes
+
+`'localStorage'`. Built-in. Reads + writes JSON at `config.key`. Single-domain per-page persistence.
+
+`'none'`. No reads, no writes. Same effect as `enabled: false`. Use this when the backend owns state (any DB-backed app). The Wealthy portal pattern below sets `'none'` because the `kk:comment` listener already routes to Postgres.
+
+```html
+<script>
+  window.KK = { config: { persist: { adapter: 'none' } } };
+</script>
+<script src="../js/kit.js"></script>
+```
+
+Custom adapter object. Supply `load`, `save`, `clear`. Routes the kit's snapshot through your own store. The shape fits IndexedDB, a remote-sync cache, or any hybrid the consumer rolls.
+
+```js
+window.KK = {
+  config: {
+    persist: {
+      adapter: {
+        load:  function () { /* return snapshot or null */ },
+        save:  function (snapshot) { /* { v: 1, savedAt, stack } */ },
+        clear: function () { /* remove */ }
+      }
+    }
+  }
+};
+```
+
+The kit calls `load()` once on init and `save(snapshot)` after every batch of stack mutations (200 ms debounce). `clear()` runs only when the consumer calls `KK.clearSavedComments()`.
+
+### Snapshot shape
+
+```json
+{
+  "v": 1,
+  "savedAt": 1735012345678,
+  "stack": "<innerHTML of the .comment-stack>"
+}
+```
+
+The threads inside the stack carry their own anchor metadata via the `data-kk-anchor-*` dataset attributes the kit sets at draft time. Restore reads those attributes to re-wrap doc highlights. No separate highlights array needed.
+
+### Restore contract
+
+1. `adapter.load()` returns the snapshot or null.
+2. Stack `innerHTML` is replaced with `snapshot.stack`.
+3. Each `.comment-thread[data-thread-id]` and `.card.comment-new[data-thread-id]` in the restored stack walks its `dataset.kkAnchorSectionSlug` to find the section, walks text nodes inside, and re-wraps the first single-text-node match for `dataset.kkAnchorQuote` as `<span class="highlight" data-comment-id="…">`.
+4. The kit's existing init scan stamps any messages lacking `data-message-id`. Server-rendered ids pass through.
+
+Selections that originally crossed element boundaries (e.g., across `<strong>`) wrap as multiple spans on first paint but restore as a single-node match only. The thread restores intact; the doc-side highlight is lost. Single-text-node selections survive.
+
+### Extract and copy
+
+Always available, no opt-in. Walks the live DOM each call.
+
+```js
+KK.extractComments();  // → array of threads matching kk:comment shape
+KK.copyComments();     // → same array; also writes pretty-printed JSON
+                       //   to navigator.clipboard
+KK.clearSavedComments(); // adapter.clear() + location.reload()
+```
+
+`extractComments()` returns this per-thread shape:
+
+```js
+{
+  threadId:     'c1735012345-123',
+  resolved:     false,
+  archived:     false,
+  anchorQuote:  'selected text',
+  anchorPrefix: '…up to 20 chars before',
+  anchorSuffix: '20 chars after…',
+  sectionSlug:  'targeting',
+  cluster:      'strategy',
+  messages: [
+    { messageId: 'm1735012346-456', author: 'Konstantin', body: '...', role: 'user' }
+  ]
+}
+```
+
+Same field names as the `kk:comment` event payload. One schema across both surfaces.
+
+### When to switch persistence off
+
+- Backend owns state. Set `enabled: false` (or `adapter: 'none'`) so localStorage does not shadow your DB.
+- Multi-user shared doc. Browser-local storage is per-device; mixing it with a server-shared doc produces stale state on reload.
+- Dev iteration. Set `enabled: false` while editing the doc body so a stale cache does not shadow your edits.
+
+### Migration from inline persistence scripts (pre-0.14.0)
+
+Pages that ran their own inline localStorage script (the agreement.html pattern from the explee proposal) can drop the inline script after upgrading to 0.14.0. Keep the storage key consistent across versions if you want existing reader comments to survive: pass the old key via `config.persist.key`.
+
+```html
+<script>
+  window.KK = { config: { persist: { key: 'explee_agreement_comments_v1' } } };
+</script>
+<script src="../js/kit.js"></script>
+```
+
+If keys differ, old localStorage entries linger but are not read; users see a blank stack on first load after upgrade.
+
 ## Consumer patterns
 
 ### Flask + vanilla JS
