@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Comment persistence demo</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+
+  <!--
+    Mode switch via URL params. Set BEFORE kit.js loads so config merge
+    picks the values up. Three modes:
+      ?persist=on      (default)        — localStorage adapter, default-on.
+      ?persist=off                      — kit's localStorage stays cold.
+      ?persist=memory                   — custom in-memory adapter.
+                                          Resets every full reload; survives
+                                          history navigation within the tab.
+  -->
+  <script>
+    (function () {
+      var mode = new URLSearchParams(location.search).get('persist') || 'on';
+      window.KK = window.KK || {};
+      window.KK.config = window.KK.config || {};
+
+      if (mode === 'off') {
+        window.KK.config.persist = { enabled: false };
+        return;
+      }
+
+      if (mode === 'memory') {
+        var inMem = null;
+        window.KK.config.persist = {
+          adapter: {
+            load:  function () { return inMem; },
+            save:  function (snap) { inMem = snap; },
+            clear: function () { inMem = null; }
+          }
+        };
+        return;
+      }
+
+      // mode === 'on' uses the kit's defaults; nothing to set.
+    })();
+  </script>
+</head>
+<body>
+  <div class="app" data-view="doc">
+
+    <!-- ================================================================= -->
+    <!-- Sidebar                                                            -->
+    <!-- ================================================================= -->
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Comment<br />persistence</div>
+
+      <nav class="sidebar__nav" id="toc">
+        <span class="toc__indicator" aria-hidden="true"></span>
+
+        <section class="nav-group">
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#how-to-try">How to try it</a></li>
+            <li class="t-caption"><a href="#what-persists">What persists</a></li>
+            <li class="t-caption"><a href="#switch-off">Switching it off</a></li>
+            <li class="t-caption"><a href="#custom-adapter">Custom adapter</a></li>
+            <li class="t-caption"><a href="#api">Public API</a></li>
+            <li class="t-caption"><a href="#anchor">Anchor metadata</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <footer class="sidebar__footer t-caption">
+        kit 1.6.0, demo
+      </footer>
+    </aside>
+
+    <!-- ================================================================= -->
+    <!-- Doc                                                                -->
+    <!-- ================================================================= -->
+    <main class="book" id="doc">
+
+      <article class="book__section">
+        <h1 class="t-hero">Comment persistence</h1>
+        <p class="t-body">
+          Highlight any sentence in this doc. A draft opens in the inspector. Write a comment and hit enter. Reload the page. The thread and the highlight survive.
+        </p>
+        <p class="t-body">
+          The kit ships a <code class="t-code">localStorage</code> adapter by default. Snapshots write 200 ms after the last mutation; the next load restores the stack and re-wraps doc highlights from each thread's existing anchor metadata.
+        </p>
+        <p class="t-body">
+          Three URL modes test the three adapter shapes: <code class="t-code">?persist=on</code> (default), <code class="t-code">?persist=off</code> (kit stays cold), <code class="t-code">?persist=memory</code> (custom in-memory adapter, resets on full reload).
+        </p>
+      </article>
+
+      <article class="book__section" id="how-to-try">
+        <h2 class="t-display">
+          How to try it<br />
+          <span class="t-display--medium">Five steps, end to end</span>
+        </h2>
+        <p class="t-body">
+          Highlight the next paragraph, then the one after that. A separate draft opens for each selection. Type a sentence into either field, hit enter, and watch the thread land in the stack on the right.
+        </p>
+        <p class="t-body">
+          This sentence is a good first target. Drag across it now.
+        </p>
+        <p class="t-body">
+          This second sentence runs across an em-dash and a few words to test that the highlight survives the kind of body prose the kit actually ships.
+        </p>
+        <p class="t-body">
+          Reload the page. Both threads come back, highlights and all. Replies inside a thread persist the same way. Drafts persist mid-typing because the save observer watches character data on the stack.
+        </p>
+      </article>
+
+      <article class="book__section" id="what-persists">
+        <h2 class="t-display">
+          What persists<br />
+          <span class="t-display--medium">The full comment loop</span>
+        </h2>
+        <p class="t-body">
+          Threads with anchor, author, and body. Replies inside a thread. Resolved threads (Approve from the kebab) and archived threads (Archive thread from the kebab). Drafts mid-typing. Highlights on the doc body, re-wrapped from the anchor metadata each thread carries on its dataset.
+        </p>
+        <p class="t-body">
+          The snapshot is the stack's <code class="t-code">innerHTML</code> plus a <code class="t-code">savedAt</code> timestamp. No separate highlights array. The thread's <code class="t-code">data-kk-anchor-quote</code> is the source of truth for re-wrapping.
+        </p>
+      </article>
+
+      <article class="book__section" id="switch-off">
+        <h2 class="t-display">
+          Switching it off<br />
+          <span class="t-display--medium">For DB-backed apps</span>
+        </h2>
+        <p class="t-body">
+          Apps that route the <code class="t-code">kk:comment</code> event to their own backend should not also write to localStorage. Set <code class="t-code">enabled: false</code> before kit.js loads:
+        </p>
+        <pre class="t-code--block"><code>&lt;script&gt;
+  window.KK = { config: { persist: { enabled: false } } };
+&lt;/script&gt;
+&lt;script src="../../js/kit.js"&gt;&lt;/script&gt;</code></pre>
+        <p class="t-body">
+          Append <code class="t-code">?persist=off</code> to this page's URL to see the off-switch live. The stack stays empty across reloads. <code class="t-code">KK.clearSavedComments()</code> stays callable; it just does nothing.
+        </p>
+      </article>
+
+      <article class="book__section" id="custom-adapter">
+        <h2 class="t-display">
+          Custom adapter<br />
+          <span class="t-display--medium">Three methods, your store</span>
+        </h2>
+        <p class="t-body">
+          Pass an object carrying <code class="t-code">load</code>, <code class="t-code">save</code>, and <code class="t-code">clear</code>. The kit calls <code class="t-code">load()</code> once at init, <code class="t-code">save(snapshot)</code> on every batch of stack mutations (200 ms debounce), and <code class="t-code">clear()</code> only when the consumer calls <code class="t-code">KK.clearSavedComments()</code>:
+        </p>
+        <pre class="t-code--block"><code>window.KK = {
+  config: {
+    persist: {
+      adapter: {
+        load:  function () { /* return snapshot or null */ },
+        save:  function (snap) { /* { v: 1, savedAt, stack } */ },
+        clear: function () { /* remove */ }
+      }
+    }
+  }
+};</code></pre>
+        <p class="t-body">
+          Append <code class="t-code">?persist=memory</code> to this page's URL to see a custom adapter at work. Snapshots live in a JS variable. The stack survives history navigation within the tab. A full reload resets the cache.
+        </p>
+      </article>
+
+      <article class="book__section" id="api">
+        <h2 class="t-display">
+          Public API<br />
+          <span class="t-display--medium">Three always-on methods</span>
+        </h2>
+        <p class="t-body">
+          Three methods walk the live DOM each call:
+        </p>
+        <p class="t-body">
+          <code class="t-code">KK.extractComments()</code> returns an array of threads with anchor metadata plus messages. Same shape as the <code class="t-code">kk:comment</code> event payload. <code class="t-code">KK.copyComments()</code> returns the same array and writes pretty-printed JSON to the clipboard. <code class="t-code">KK.clearSavedComments()</code> wipes the adapter and reloads.
+        </p>
+        <p class="t-body">
+          Three buttons in the inspector run each method against this page. Open the browser console first; output lands there.
+        </p>
+      </article>
+
+      <article class="book__section" id="anchor">
+        <h2 class="t-display">
+          Anchor metadata<br />
+          <span class="t-display--medium">How highlights find their way home</span>
+        </h2>
+        <p class="t-body">
+          Each thread mirrors the selection that made it. The kit writes <code class="t-code">data-kk-anchor-quote</code>, <code class="t-code">-prefix</code>, <code class="t-code">-suffix</code>, and <code class="t-code">-section-slug</code> onto the thread at draft commit. Restore reads those attributes, finds the section, walks text nodes for the first single-node match, and wraps it as <code class="t-code">&lt;span class="highlight" data-comment-id="…"&gt;</code>.
+        </p>
+        <p class="t-body">
+          Selections that crossed element boundaries on first wrap (across a <code class="t-code">&lt;strong&gt;</code>, for example) restore as a single-node match only. The thread restores intact; the doc-side highlight is partially lost. Same trade-off as the original inline-script implementation.
+        </p>
+      </article>
+
+      <div class="book__signoff">
+        <div class="book__signoff-stats">
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">3</span> adapter shapes.</div>
+          </div>
+          <div class="stat t-caption">
+            <div><span class="t-caption--bold">200 ms</span> save debounce.</div>
+          </div>
+        </div>
+
+        <div class="book__signoff-signature">
+          <p class="t-caption">
+            Demo for <span class="t-caption--bold">kit 1.6.0,</span><br />
+            <span class="t-caption--bold">Comment persistence</span><br />
+            <span>2026-04-26.</span>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- Inspector                                                          -->
+    <!-- ================================================================= -->
+    <aside class="inspector" aria-label="Comments">
+
+      <div class="card card--interactive">
+        <div class="card__heading">
+          <h3 class="t-title">How to use this page</h3>
+          <p class="t-caption">Highlight any sentence on the left to draft a comment. Reload to see persistence. Switch modes via URL: <code class="t-code">?persist=off</code> or <code class="t-code">?persist=memory</code>.</p>
+        </div>
+        <div class="card__collapsible">
+          <div class="card__collapsible-inner">
+            <ol class="t-list">
+              <li>Highlight a sentence in the doc.</li>
+              <li>A draft opens here. Type, hit enter.</li>
+              <li>Reload. The thread and highlight come back.</li>
+              <li>Hit a kebab to reply, archive, or delete.</li>
+              <li>Use the buttons below to extract, copy, or clear.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--interactive" id="api-panel">
+        <div class="card__heading">
+          <h3 class="t-title">Run the public API</h3>
+          <p class="t-caption">Output lands in the browser console. Open it before clicking.</p>
+        </div>
+        <div class="card__collapsible">
+          <div class="card__collapsible-inner">
+            <p class="t-body">
+              Each button runs against the current state of the comment stack on this page.
+            </p>
+            <div class="card__cta">
+              <button class="button t-subtitle" type="button" data-action="extract">Extract comments</button>
+              <button class="button t-subtitle" type="button" data-action="copy">Copy as JSON</button>
+              <button class="button button--primary t-subtitle" type="button" data-action="clear">Clear and reload</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-stack"></div>
+    </aside>
+  </div>
+
+  <!-- FABs for tablet + phone -->
+  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+      <rect width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <button class="fab fab--comment" data-view-target="inspector" type="button" aria-label="Open the comment stack">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M2 4h14v8H7l-3 3v-3H2V4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+  </button>
+
+  <script src="../../js/kit.js"></script>
+  <script>
+    if (window.KK && typeof window.KK.enableCommentSelectionFlow === 'function') {
+      window.KK.enableCommentSelectionFlow();
+    }
+
+    // Wire the three API buttons to the public methods. Console is the
+    // output surface so consumers can inspect the array shape directly.
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      var action = btn.getAttribute('data-action');
+      if (action === 'extract') {
+        var arr = window.KK.extractComments();
+        console.log('extractComments returned', arr.length, 'thread(s):', arr);
+        return;
+      }
+      if (action === 'copy') {
+        var arr = window.KK.copyComments();
+        console.log('copyComments wrote JSON to clipboard.', arr.length, 'thread(s).');
+        return;
+      }
+      if (action === 'clear') {
+        window.KK.clearSavedComments();
+        return;
+      }
+    });
+  </script>
+</body>
+</html>

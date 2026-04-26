@@ -2,6 +2,25 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.6.1, 2026-04-26
+
+Patch. Demo for the 1.6.0 comment persistence feature lands at `demos/comment-persistence/index.html`. Self-contained kit-internal page exercising the full loop: selection → draft → commit → reload → restore. Three URL modes test the three adapter shapes:
+
+- `?persist=on` (default). The kit's `localStorage` adapter.
+- `?persist=off`. `KK.config.persist.enabled = false` set before kit.js loads.
+- `?persist=memory`. Custom in-memory adapter (`{ load, save, clear }` against a JS variable).
+
+Three buttons inside the inspector wire to the public API: Extract comments, Copy as JSON, Clear and reload. Output for the first two lands in the browser console.
+
+Root `index.html` gains a ninth pointer card surfacing the demo. Kit `js/kit.js` is unchanged from 1.6.0.
+
+### Added
+- `demos/comment-persistence/index.html`. Three-column shell with a comment stack. Demonstrates 1.6.0 persistence end-to-end. URL modes: `on` / `off` / `memory`.
+- Root `index.html` Demos group: ninth card linking the new demo.
+
+### Changed
+- Root `index.html` FAB count badge: `8 → 9`.
+
 ## 1.6.0, 2026-04-26
 
 Minor. Comment persistence ships in the kit. Default-on whenever a `.comment-stack` and a doc surface coexist on the page. Snapshot is the stack's `innerHTML`; restore re-wraps doc highlights via the kit's existing `kkAnchorQuote / kkAnchorPrefix / kkAnchorSuffix / kkAnchorSectionSlug` thread metadata. Drafts persist mid-typing (200 ms debounce on stack mutations).
