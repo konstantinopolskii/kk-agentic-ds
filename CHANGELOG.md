@@ -2,6 +2,39 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.7.0, 2026-04-26
+
+Minor. Comments are a default kit affordance. Any page that renders the kit's three-column shell (`.app` containing `.book` or `#doc`) gets a `.comment-stack` injected when one is missing, plus an `.inspector` to host it if the consumer did not ship one. The selection-to-draft flow auto-enables alongside, so highlight-to-comment works without consumer code. Persistence keeps its 1.6.0 rules.
+
+Three opt-out switches:
+
+- `comments.enabled: false`. No injection, no selection auto-enable, no persistence on the would-be-mounted stack.
+- `comments.autoMount: false`. No DOM injection. The consumer ships their own `.inspector` and `.comment-stack`.
+- `comments.autoEnable: false`. No auto-call of `enableCommentSelectionFlow`. The consumer owns selection.
+
+Backward compatibility:
+
+- Pages already carrying `.comment-stack` skip auto-mount. No change.
+- Pages already calling `KK.enableCommentSelectionFlow()` keep working. The flow's `commentFlowEnabled` sentinel short-circuits the auto-enable's second call.
+- Pages using `.app` for a non-doc surface (no `.book`, no `#doc`) skip auto-mount.
+- Pages without `.app` skip auto-mount.
+
+The behavioural change applies to one shape: a page using `.app` + `.book`/`#doc` but NOT carrying its own `.comment-stack`. Pre-1.7.0, that page had no comment functionality. Post-1.7.0, the kit injects the stack and auto-enables selection. Set `comments.autoMount: false` (or `comments.enabled: false`) to keep the old absence.
+
+`js/kit.js` internal version `0.14.0 → 0.15.0`.
+
+### Added
+- `js/kit.js`: `autoMountCommentSurface()`. When `comments.enabled` and `comments.autoMount` are both true, `.app` exists, `.book`/`#doc` exists, and no `.comment-stack` is present, the function reuses the page's `.inspector` (or creates a fresh one with `aria-label="Comments"`) and appends a `<div class="comment-stack">`. Idempotent via `bound.commentMount`.
+- `js/kit.js`: `autoEnableCommentSelectionFlow()`. Calls `initCommentSelectionFlow` when `comments.enabled` and `comments.autoEnable` hold and a `.comment-stack` plus a `.book`/`#doc` exist. Idempotent via `bound.commentAutoEnable`. Existing explicit `KK.enableCommentSelectionFlow()` calls remain idempotent through the flow's own `commentFlowEnabled` sentinel.
+- `js/kit.js`: `KK.config.comments` namespace. Keys: `enabled`, `autoMount`, `autoEnable`. Defaults all `true`.
+- `docs/integration/comment.md § Comments default`: new section documenting the three switches plus the auto-mount detection rules.
+
+### Changed
+- `js/kit.js` header docstring: documents `KK.config.comments` and notes that `KK.enableCommentSelectionFlow()` runs automatically by default.
+- `js/kit.js` version: `0.14.0 → 0.15.0`.
+- `KK.init` and `KK.refresh` reorder: `autoMountCommentSurface()` runs after `initNarrowView` and before `initColumnReveal` so an injected inspector participates in the staggered reveal. `autoEnableCommentSelectionFlow()` runs after `initCommentPersistence` so the flow binds to a restored stack.
+- `demos/comment-persistence/index.html`: removed the redundant `KK.enableCommentSelectionFlow()` call. Auto-enable now does the work. The demo proves the new default by shipping zero call-site code.
+
 ## 1.6.1, 2026-04-26
 
 Patch. Demo for the 1.6.0 comment persistence feature lands at `demos/comment-persistence/index.html`. Self-contained kit-internal page exercising the full loop: selection → draft → commit → reload → restore. Three URL modes test the three adapter shapes:

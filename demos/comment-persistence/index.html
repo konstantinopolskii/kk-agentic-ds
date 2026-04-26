@@ -275,9 +275,10 @@
 
   <script src="../../js/kit.js"></script>
   <script>
-    if (window.KK && typeof window.KK.enableCommentSelectionFlow === 'function') {
-      window.KK.enableCommentSelectionFlow();
-    }
+    // No KK.enableCommentSelectionFlow() call. As of 1.7.0 the kit
+    // auto-enables the selection flow on every page with a comment
+    // stack and a book surface, so the demo proves the new default
+    // by shipping zero call-site code for it.
 
     // Wire the three API buttons to the public methods. Console is the
     // output surface so consumers can inspect the array shape directly.

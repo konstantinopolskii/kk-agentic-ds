@@ -14,15 +14,19 @@
  *                                     Global handlers are bound once;
  *                                     subsequent calls only pick up new
  *                                     iterable elements.
- *   KK.enableCommentSelectionFlow() — opt-in. Wires selection-to-draft +
+ *   KK.enableCommentSelectionFlow() — wires selection-to-draft +
  *                                     highlight-active observer + kebab
  *                                     actions + add-comment FAB + click-
- *                                     highlight-promote-thread. Required
- *                                     for pages that demo the full comment
- *                                     loop (the manifesto). Prototypes
- *                                     that own their own selection handler
- *                                     should NOT call this — it would
- *                                     create duplicate drafts.
+ *                                     highlight-promote-thread. As of
+ *                                     0.15.0 this runs automatically
+ *                                     whenever `KK.config.comments.
+ *                                     autoEnable` is true (the default)
+ *                                     and a `.comment-stack` is present.
+ *                                     Explicit calls remain valid and
+ *                                     idempotent. Prototypes that own
+ *                                     their own selection handler should
+ *                                     set `comments.autoEnable: false`
+ *                                     to avoid duplicate drafts.
  *   KK.extractComments()            — array of threads + anchor metadata
  *                                     + messages, walked from the live
  *                                     DOM. Always available; returns []
@@ -61,6 +65,19 @@
  *   the snapshot; `clear` removes it. See docs/integration/comment.md
  *   for the full pattern.
  *
+ * Config on window.KK.config.comments (0.15.0):
+ *   Comments are a default kit affordance. Any page with `.app`
+ *   containing `.book` or `#doc` gets a comment surface auto-mounted
+ *   when one is missing, and the selection-to-draft flow auto-enables.
+ *     enabled:    true — false disables every layer (mount + enable +
+ *                        persistence on the would-be-mounted stack).
+ *     autoMount:  true — false suppresses DOM injection. Consumer ships
+ *                        their own `.inspector` + `.comment-stack`.
+ *     autoEnable: true — false suppresses the auto-call of
+ *                        enableCommentSelectionFlow. Consumer owns
+ *                        selection (the prototype-alpha pattern).
+ *   Pages with an existing `.comment-stack` skip auto-mount cleanly.
+ *
  * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
  * inspector card stack, comment kebab menus, 3D card stack deck.
  *
@@ -96,7 +113,7 @@
   // config wins; our defaults fill the gaps. Same pattern as every
   // config-merge kit that ships a default dictionary.
   var existing = global.KK || {};
-  var KK = { version: '0.14.0', initialized: false };
+  var KK = { version: '0.15.0', initialized: false };
   Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
   KK.config = KK.config || {};
   KK.config.i18n = Object.assign({
@@ -110,6 +127,11 @@
     key: 'kk:comments:' + (typeof location !== 'undefined' ? location.pathname : '/'),
     adapter: 'localStorage'
   }, KK.config.persist || {});
+  KK.config.comments = Object.assign({
+    enabled: true,
+    autoMount: true,
+    autoEnable: true
+  }, KK.config.comments || {});
 
   // Minimal HTML-attribute escape. Used when injecting user-provided
   // i18n strings into innerHTML attribute contexts. textContent paths
@@ -133,7 +155,9 @@
     inspectorStack: false,
     commentMenus: false,
     commentApi: false,
-    commentPersistence: false
+    commentPersistence: false,
+    commentMount: false,
+    commentAutoEnable: false
   };
   var scrollSpyObserver = null;
 
@@ -1547,17 +1571,74 @@
   }
 
   // ================================================================
+  // Comment auto-mount. Comments are a default kit affordance: any
+  // page with `.app` containing `.book` or `#doc` gets a `.comment-
+  // stack` injected when one is missing, plus an `.inspector` to host
+  // it if the consumer did not ship one. Pages without `.app` skip
+  // the injection. The kit will not add columns to layouts that did
+  // not opt into the three-column shell.
+  //
+  // Idempotent. Bails when `comments.enabled` or `comments.autoMount`
+  // is explicitly false, or when an existing `.comment-stack` is
+  // already present.
+  // ================================================================
+  function autoMountCommentSurface() {
+    if (bound.commentMount) return;
+    var cfg = KK.config.comments;
+    if (!cfg || cfg.enabled === false || cfg.autoMount === false) return;
+
+    var app = document.querySelector('.app');
+    if (!app) return;
+    var doc = app.querySelector('.book') || app.querySelector('#doc');
+    if (!doc) return;
+    if (document.querySelector('.comment-stack')) {
+      bound.commentMount = true;
+      return;
+    }
+
+    var inspector = app.querySelector('.inspector');
+    if (!inspector) {
+      inspector = document.createElement('aside');
+      inspector.className = 'inspector';
+      inspector.setAttribute('aria-label', 'Comments');
+      app.appendChild(inspector);
+    }
+    var stack = document.createElement('div');
+    stack.className = 'comment-stack';
+    inspector.appendChild(stack);
+    bound.commentMount = true;
+  }
+
+  // Auto-call initCommentSelectionFlow when criteria hold. Decoupled
+  // from the explicit KK.enableCommentSelectionFlow API so existing
+  // pages that call enable directly remain idempotent (the flow's
+  // own commentFlowEnabled sentinel short-circuits the second call).
+  function autoEnableCommentSelectionFlow() {
+    if (bound.commentAutoEnable) return;
+    var cfg = KK.config.comments;
+    if (!cfg || cfg.enabled === false || cfg.autoEnable === false) return;
+    if (!document.querySelector('.comment-stack')) return;
+    if (!document.querySelector('.book') && !document.getElementById('doc')) return;
+    bound.commentAutoEnable = true;
+    initCommentSelectionFlow();
+  }
+
+  // ================================================================
   // Public API
   // ================================================================
   KK.init = function () {
     if (KK.initialized) return;
     initScrollSpy();
     initNarrowView();
+    // Mount runs BEFORE columnReveal so an injected `.inspector`
+    // participates in the staggered reveal cascade.
+    autoMountCommentSurface();
     initColumnReveal();
     initInspectorStack();
     initCommentMenus();
     initCommentApi();
     initCommentPersistence();
+    autoEnableCommentSelectionFlow();
     initDeck();
     KK.initialized = true;
   };
@@ -1575,11 +1656,13 @@
   KK.refresh = function () {
     initScrollSpy();
     initNarrowView();
+    autoMountCommentSurface();
     initColumnReveal();
     initInspectorStack();
     initCommentMenus();
     initCommentApi();
     initCommentPersistence();
+    autoEnableCommentSelectionFlow();
     initDeck();
   };
 

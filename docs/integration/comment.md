@@ -4,6 +4,58 @@ How a consumer hooks the kit's comment component into a persistent backend. Cove
 
 Scope: comments only. This file does not cover card stack, deck, scroll-spy, or any other component.
 
+## Comments default
+
+As of 1.7.0 comments are a kit default. Any page that ships the kit's three-column shell (`.app` containing `.book` or `#doc`) gets a `.comment-stack` injected when one is missing, plus an `.inspector` to host it if the consumer did not ship one. The selection-to-draft flow auto-enables alongside, so highlight-to-comment works without consumer code.
+
+A page using the kit shell needs zero comment wiring:
+
+```html
+<div class="app" data-view="doc">
+  <main class="book"> <!-- prose --> </main>
+</div>
+<script src="../js/kit.js"></script>
+```
+
+Persistence runs by the 1.6.0 rules (`localStorage` adapter, default-on). Consumers wanting a different layer set `KK.config.persist` per `§ Persistence`.
+
+### Three opt-out switches
+
+Set on `window.KK.config.comments` before `js/kit.js` loads.
+
+```js
+window.KK = {
+  config: {
+    comments: {
+      enabled:    true,   // master switch.
+      autoMount:  true,   // false = no DOM injection.
+      autoEnable: true    // false = no auto-call of enableCommentSelectionFlow.
+    }
+  }
+};
+```
+
+`comments.enabled: false`. No injection, no selection auto-enable. The kit returns to its pre-1.7.0 inert state on a page that did not ship its own comment surface.
+
+`comments.autoMount: false`. Kit will not inject. The consumer ships their own `.inspector` and `.comment-stack` (or none). Selection auto-enables when the stack is present.
+
+`comments.autoEnable: false`. Kit injects the stack but stays out of selection. The consumer binds their own handler. Same path as the prototype-alpha pattern under `§ The enable-or-own decision § Path B`.
+
+### When auto-mount runs
+
+The kit auto-mounts when every condition holds:
+
+1. `comments.enabled !== false` and `comments.autoMount !== false`.
+2. `document.querySelector('.app .book')` or `.app #doc` resolves.
+3. `document.querySelector('.comment-stack')` does NOT resolve.
+
+Mount sequence:
+
+1. Find or create `.inspector`. Existing one reused; otherwise a new `<aside class="inspector" aria-label="Comments">` appends to `.app`.
+2. Append `<div class="comment-stack"></div>` to the inspector.
+
+Pages that already render `.comment-stack` skip auto-mount cleanly. Pages without `.app` skip auto-mount; the kit will not add a column to a layout that did not opt into the three-column shell.
+
 ## The enable-or-own decision
 
 Two paths. Pick one. Do not mix.
