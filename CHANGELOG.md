@@ -2,6 +2,23 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.5.1, 2026-04-26
+
+Patch. Packaging hygiene. Consumers installing via `npm install --save github:konstantinopolskii/kk-agentic-ds` were pulling in `prototypes/`, `documentation/`, `proposals/`, `.github/`, and `.claude/` because no `.npmignore` filtered the github clone. Eighteen megabytes of session retros plus work-in-progress prototypes landed in their `node_modules`. Confusing and noisy.
+
+Two changes close the gap:
+
+- `package.json` `files[]` adds `demos/` and `CHANGELOG.md`. Demos belong in the package (consumer-facing reference); the kit had been silently omitting them from registry installs.
+- New `.npmignore` blocklists kit-internal directories so github installs match registry installs. Belt-and-suspenders against newer npm versions that may not honor `files[]` for git installs in every case.
+
+Verified with `npm pack --dry-run`: 55 files, 236 kB packed, 662 kB unpacked. No prototypes, no documentation, no proposals.
+
+### Changed
+- `package.json` `files[]`: + `demos/`, + `CHANGELOG.md`.
+
+### Added
+- `.npmignore` excluding `documentation/`, `prototypes/`, `proposals/`, `.claude/`, `.github/`, plus local cruft.
+
 ## 1.5.0, 2026-04-25
 
 Minor. Manifesto h1 changes from `# The KK Agentic Design System` to `# The Agentic Design System`. The "KK" prefix drops. Initials bound the system to a person; the system stands on its own.
