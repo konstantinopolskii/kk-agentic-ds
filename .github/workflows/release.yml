@@ -4,17 +4,26 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish (e.g. v1.7.1). Leave blank to use the current ref.'
+        required: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@kk'
 
@@ -26,6 +35,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           body_path: CHANGELOG.md
           draft: false
           prerelease: false
@@ -33,16 +43,18 @@ jobs:
   notify-consumers:
     needs: publish
     runs-on: ubuntu-latest
+    env:
+      DISPATCH_TOKEN: ${{ secrets.CONSUMER_DISPATCH_TOKEN }}
     steps:
       - name: Dispatch update to Wealthy
-        if: ${{ secrets.CONSUMER_DISPATCH_TOKEN != '' }}
+        if: env.DISPATCH_TOKEN != ''
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.CONSUMER_DISPATCH_TOKEN }}
+          token: ${{ env.DISPATCH_TOKEN }}
           repository: kk-consulting/wealthy
           event-type: kk-design-system-updated
           client-payload: |
             {
-              "version": "${{ github.ref_name }}",
-              "changelog_url": "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+              "version": "${{ github.event.inputs.tag || github.ref_name }}",
+              "changelog_url": "https://github.com/${{ github.repository }}/releases/tag/${{ github.event.inputs.tag || github.ref_name }}"
             }

@@ -1,9 +1,12 @@
 {
   "name": "@kk/design-system",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "Agentic Design System by Konstantin Konstantinopolskii. Tokens, components, voice rules, shared kit.js behaviour (scroll-spy, deck, card stack, comment menus, column reveal), and the eight-stage pipeline-v3 (eleven role skills plus meta-retro, character-coded and model-tiered) for the kk.consulting document pipeline.",
   "license": "UNLICENSED",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "author": "Konstantin Konstantinopolskii <k.konstantinopolskiy@gmail.com>",
   "homepage": "https://github.com/konstantinopolskii/kk-agentic-ds",
   "repository": {

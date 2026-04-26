@@ -2,6 +2,26 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.7.2, 2026-04-26
+
+Patch. Release pipeline fix. Every release run since at least 1.4.2 had failed in 0 seconds with "workflow file issue" — the publish job, the GitHub Release creation, and the Wealthy consumer dispatch never executed. Pushed-and-tagged-on-origin still met the kit's ship rule, but the GitHub Packages publish chain stayed cold.
+
+Three defects in `.github/workflows/release.yml` and one in `package.json`:
+
+1. `permissions:` carried only `contents: write`. `npm publish` to GitHub Packages needs `packages: write`. Added.
+2. The `notify-consumers` step gated on `if: ${{ secrets.CONSUMER_DISPATCH_TOKEN != '' }}`. GitHub Actions blocks direct `secrets.*` references in `if:` expressions at the workflow-validation layer — the run failed before any job started. Replaced with the env-indirection pattern (`env.DISPATCH_TOKEN != ''`).
+3. No `workflow_dispatch` trigger. Re-running a release for an older tag required a fresh tag push. Added a manual trigger with a tag input so backfills are possible.
+4. `package.json` carried `"private": true`. `npm publish` refuses to push private packages. Replaced with `"publishConfig": { "registry": "https://npm.pkg.github.com", "access": "restricted" }` — pins publication to GitHub Packages and prevents accidental public-npm push.
+
+After this lands, the release run for v1.7.2 should publish `@kk/design-system@1.7.2` to GitHub Packages, create a Release page from the CHANGELOG, and (when `CONSUMER_DISPATCH_TOKEN` is configured as a repo secret) dispatch `kk-design-system-updated` to `kk-consulting/wealthy`. Older tags v1.6.0 through v1.7.1 can be backfilled via the new `workflow_dispatch` trigger by passing the tag name.
+
+### Changed
+- `.github/workflows/release.yml`: `permissions: { contents: write, packages: write }`. Step-level `if: ${{ secrets.X != '' }}` replaced with job-level `env: DISPATCH_TOKEN: ${{ secrets.CONSUMER_DISPATCH_TOKEN }}` plus step-level `if: env.DISPATCH_TOKEN != ''`. Added `workflow_dispatch.inputs.tag` and threaded it through `actions/checkout@v4` ref + `softprops/action-gh-release@v2` tag_name + the dispatch payload.
+- `package.json`: `"private": true` → `"publishConfig": { "registry": "https://npm.pkg.github.com", "access": "restricted" }`.
+
+### Backfill (manual, post-merge)
+After this commit + tag is pushed, re-run the release workflow once per missing version via the Actions tab → Release → Run workflow → enter tag (e.g., `v1.6.0`). One run per tag publishes that version to GitHub Packages and creates its Release page.
+
 ## 1.7.1, 2026-04-26
 
 Patch. Two additions on top of 1.7.0: declarative opt-out via html data attributes, and a hidden copy target inside the inspector.
