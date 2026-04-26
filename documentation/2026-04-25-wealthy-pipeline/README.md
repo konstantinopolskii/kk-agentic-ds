@@ -8,14 +8,20 @@ Kit version: v1.5.0 (commit `cb3733b`).
 
 ## Outcome
 
-**Two artefacts ship.**
+**Project closed 2026-04-26. Prototypes NOT accepted.**
 
-1. **Original review-state slice** — `prototypes/wealthy-pipeline-review/index.html`. Single-file demo of the operator's review state. Stage 7 PASS on rerun after copy revisions. Moved from `demos/` since unaccepted.
-2. **Full 8-state prototype** — `prototypes/wealthy-pipeline/`. Index + 7 operator stages + client view. Each stage in its own file. Six of six 06a structural unclarities addressed (five closed, one partial). Cross-stage navigation via Pipeline group in inspector.
+Two artefacts on disk for retro reference, neither promoted to `demos/<slug>--accepted/`:
 
-Path: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5] → 3b × 4 (copy revisions) → 5 (patch) → 6c (reaudit) → 7 (rerun) [PASS] → 6a (cold-read rerun) [6 structural unclarities] → expansion (8 states) + structural fixes → consistency review.
+1. `prototypes/wealthy-pipeline-review/` — review-state slice, stage 7 PASS on rerun after copy revisions.
+2. `prototypes/wealthy-pipeline/` — full 8-state prototype (index + 7 operator stages + client view).
 
-Three persistent flow gaps named in `08-consistency-review-full-prototype.md` for next cycle.
+**Why not accepted.** Breadth-first across 8 states left every section and pattern undercooked. Voice clean, inventory clean, art direction held — but per-state fidelity did not reach ship bar. Each state read as outline rather than finished surface.
+
+**Next.** Future sessions kick off per-stage strategies one at a time, each running the full pipeline (1 → 7) on a single state to ship-ready depth. Patterns improve as they ship, accepted prototype by accepted prototype. The kit's `--accepted` convention stays disciplined.
+
+Path traversed: 1 → 2 → 3a/b/c × 5 → 4 → 5 → 6a + 6b + 6c → 7 [FAIL on item 5] → 3b × 4 (copy revisions) → 5 (patch) → 6c (reaudit) → 7 (rerun) [PASS] → 6a cold-read rerun [6 structural unclarities] → expansion to 8 states + structural fixes → consistency review → expansion-pass review surfaces depth deficit → close.
+
+Retro learning recorded in user's auto-memory: broad multi-state runs trade depth for coverage; prefer per-state deep-fidelity sessions when patterns matter.
 
 ## File index
 
