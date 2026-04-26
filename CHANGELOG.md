@@ -2,6 +2,36 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.7.1, 2026-04-26
+
+Patch. Two additions on top of 1.7.0: declarative opt-out via html data attributes, and a hidden copy target inside the inspector.
+
+Declarative html data-attribute opt-out. Three attributes on `<html>` mirror `KK.config.comments.{enabled, autoMount, autoEnable}`. No `<script>` block needed for the common "turn comments off on this page" case.
+
+```html
+<html data-kk-comments="off">         <!-- comments.enabled: false  -->
+<html data-kk-comments-mount="off">   <!-- comments.autoMount: false -->
+<html data-kk-comments-enable="off">  <!-- comments.autoEnable: false -->
+```
+
+Values: `"off"` / `"on"` / absent. Precedence: kit defaults → html data attributes → explicit JS config. A consumer can therefore ship a global default via the data attribute and override per-page in a `<script>` block.
+
+The attributes live on `<html>`, not on `.app`. `.app` is a layout class; document-level config belongs at the document root.
+
+Hidden copy-comments target. The kit injects an aria-hidden, opacity-0 `<h2 data-kk-action="copy-comments">Comments</h2>` at the top of every inspector that hosts a `.comment-stack`. Click the top ~24 px strip and `KK.copyComments()` fires (pretty-printed JSON to the clipboard, console-log of the array length). Devs find the trigger via DevTools or by grepping the kit. Readers do not see it. Marked "for now". Removable without breaking consumer code.
+
+`js/kit.js` internal version `0.15.0 → 0.15.1`.
+
+### Added
+- `js/kit.js`: `readCommentsDataAttributes()` reads `<html data-kk-comments[-mount|-enable]>` into a middle layer of the `KK.config.comments` merge. Kit defaults stay first, html data attributes second, explicit JS config wins.
+- `js/kit.js`: `initCommentSecretCopy()` injects a hidden `<h2 data-kk-action="copy-comments">Comments</h2>` into the inspector and binds a delegated `click` handler that calls `KK.copyComments()`. Idempotent via `bound.commentSecret`. Inline-styled, no new CSS class.
+- `docs/integration/comment.md § Comments default § Declarative html data-attribute opt-out`: new subsection.
+
+### Changed
+- `js/kit.js` header docstring: documents the html data attributes (precedence, values, placement rationale) and the hidden copy target.
+- `js/kit.js` version: `0.15.0 → 0.15.1`.
+- `KK.init` and `KK.refresh` call `initCommentSecretCopy()` after `autoEnableCommentSelectionFlow()`.
+
 ## 1.7.0, 2026-04-26
 
 Minor. Comments are a default kit affordance. Any page that renders the kit's three-column shell (`.app` containing `.book` or `#doc`) gets a `.comment-stack` injected when one is missing, plus an `.inspector` to host it if the consumer did not ship one. The selection-to-draft flow auto-enables alongside, so highlight-to-comment works without consumer code. Persistence keeps its 1.6.0 rules.

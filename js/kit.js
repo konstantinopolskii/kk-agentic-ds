@@ -34,7 +34,13 @@
  *   KK.copyComments()               — extractComments() + clipboard write
  *                                     of the same JSON. Returns the array
  *                                     so a consumer can also pipe it to
- *                                     a network call.
+ *                                     a network call. As of 0.15.1 the
+ *                                     kit also injects a hidden click
+ *                                     target labelled "Comments" at the
+ *                                     top of the inspector; clicking it
+ *                                     fires this method. Devs find the
+ *                                     trigger via DevTools (search for
+ *                                     data-kk-action="copy-comments").
  *   KK.clearSavedComments()         — adapter.clear() + reload. Stays
  *                                     a silent no-op when persistence
  *                                     is disabled (no adapter resolved,
@@ -78,6 +84,17 @@
  *                        selection (the prototype-alpha pattern).
  *   Pages with an existing `.comment-stack` skip auto-mount cleanly.
  *
+ * Declarative html data-attribute opt-out (0.15.1):
+ *   Three attributes on `<html>` provide a no-script-tag opt-out path.
+ *   Map 1:1 to the JS knobs above.
+ *     <html data-kk-comments="off">          → comments.enabled=false
+ *     <html data-kk-comments-mount="off">    → comments.autoMount=false
+ *     <html data-kk-comments-enable="off">   → comments.autoEnable=false
+ *   Values: "off" / "on" / absent. Anything else is ignored.
+ *   Precedence: kit defaults < html data attrs < explicit JS config.
+ *   A consumer can therefore ship a global default via the html
+ *   attribute and override per-page with `<script>KK.config = ...</script>`.
+ *
  * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
  * inspector card stack, comment kebab menus, 3D card stack deck.
  *
@@ -113,7 +130,7 @@
   // config wins; our defaults fill the gaps. Same pattern as every
   // config-merge kit that ships a default dictionary.
   var existing = global.KK || {};
-  var KK = { version: '0.15.0', initialized: false };
+  var KK = { version: '0.15.1', initialized: false };
   Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
   KK.config = KK.config || {};
   KK.config.i18n = Object.assign({
@@ -127,11 +144,30 @@
     key: 'kk:comments:' + (typeof location !== 'undefined' ? location.pathname : '/'),
     adapter: 'localStorage'
   }, KK.config.persist || {});
+  // Read the html data-attribute opt-outs (0.15.1) into a middle layer
+  // between kit defaults and the consumer's explicit JS config. Same
+  // precedence convention as every other config namespace: defaults
+  // first, then declarative inherited values, then explicit overrides.
   KK.config.comments = Object.assign({
     enabled: true,
     autoMount: true,
     autoEnable: true
-  }, KK.config.comments || {});
+  }, readCommentsDataAttributes(), KK.config.comments || {});
+
+  function readCommentsDataAttributes() {
+    if (typeof document === 'undefined' || !document.documentElement) return {};
+    var d = document.documentElement.dataset || {};
+    function map(v) {
+      if (v === 'off') return false;
+      if (v === 'on')  return true;
+      return undefined;
+    }
+    var out = {};
+    var e = map(d.kkComments);        if (e !== undefined) out.enabled    = e;
+    var m = map(d.kkCommentsMount);   if (m !== undefined) out.autoMount  = m;
+    var a = map(d.kkCommentsEnable);  if (a !== undefined) out.autoEnable = a;
+    return out;
+  }
 
   // Minimal HTML-attribute escape. Used when injecting user-provided
   // i18n strings into innerHTML attribute contexts. textContent paths
@@ -157,7 +193,8 @@
     commentApi: false,
     commentPersistence: false,
     commentMount: false,
-    commentAutoEnable: false
+    commentAutoEnable: false,
+    commentSecret: false
   };
   var scrollSpyObserver = null;
 
@@ -1624,6 +1661,48 @@
   }
 
   // ================================================================
+  // Hidden copy-comments target (0.15.1).
+  //
+  // Injects an aria-hidden, opacity-0 <h2 data-kk-action="copy-comments">
+  // labelled "Comments" at the top of any inspector that hosts a
+  // .comment-stack. Click the top ~24 px strip → KK.copyComments()
+  // fires. Devs find the trigger by searching the DOM for the
+  // data-kk-action attribute or the literal "Comments" heading text.
+  // ================================================================
+  function initCommentSecretCopy() {
+    if (bound.commentSecret) return;
+    var stack = document.querySelector('.comment-stack');
+    if (!stack) return;
+    var inspector = stack.closest('.inspector');
+    if (!inspector) return;
+
+    if (!inspector.querySelector('[data-kk-action="copy-comments"]')) {
+      var heading = document.createElement('h2');
+      heading.textContent = 'Comments';
+      heading.setAttribute('aria-hidden', 'true');
+      heading.setAttribute('data-kk-action', 'copy-comments');
+      heading.style.cssText =
+        'position:absolute;top:0;left:0;right:0;' +
+        'height:24px;margin:0;padding:0;' +
+        'opacity:0;font-size:0;line-height:0;' +
+        'cursor:default;z-index:1;';
+      if (getComputedStyle(inspector).position === 'static') {
+        inspector.style.position = 'relative';
+      }
+      inspector.insertBefore(heading, inspector.firstChild);
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-kk-action="copy-comments"]')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof KK.copyComments === 'function') KK.copyComments();
+    });
+
+    bound.commentSecret = true;
+  }
+
+  // ================================================================
   // Public API
   // ================================================================
   KK.init = function () {
@@ -1639,6 +1718,7 @@
     initCommentApi();
     initCommentPersistence();
     autoEnableCommentSelectionFlow();
+    initCommentSecretCopy();
     initDeck();
     KK.initialized = true;
   };
@@ -1663,6 +1743,7 @@
     initCommentApi();
     initCommentPersistence();
     autoEnableCommentSelectionFlow();
+    initCommentSecretCopy();
     initDeck();
   };
 

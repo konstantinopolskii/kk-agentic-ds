@@ -41,6 +41,22 @@ window.KK = {
 
 `comments.autoEnable: false`. Kit injects the stack but stays out of selection. The consumer binds their own handler. Same path as the prototype-alpha pattern under `§ The enable-or-own decision § Path B`.
 
+### Declarative html data-attribute opt-out (1.7.1)
+
+Three attributes on `<html>` mirror the JS knobs. Use these when a `<script>` block is heavier than needed (static HTML files, page-level kill-switch in a CMS template).
+
+```html
+<html data-kk-comments="off">         <!-- = comments.enabled: false  -->
+<html data-kk-comments-mount="off">   <!-- = comments.autoMount: false -->
+<html data-kk-comments-enable="off">  <!-- = comments.autoEnable: false -->
+```
+
+Values: `"off"` / `"on"` / absent. Anything else is ignored.
+
+Precedence (lowest to highest): kit defaults → html data attributes → explicit `KK.config.comments.*` JS. A consumer can ship a global default via the html attribute and override per-page with a `<script>` block before kit.js loads.
+
+The attributes live on `<html>`, not on `.app`. `.app` is a layout class; document-level configuration belongs at the document root.
+
 ### When auto-mount runs
 
 The kit auto-mounts when every condition holds:
