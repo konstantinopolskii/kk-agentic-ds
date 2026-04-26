@@ -2,6 +2,35 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.8.0, 2026-04-26
+
+Minor. Edit-a-comment, plus a persistence rehydration fix for markdown-backed docs.
+
+Edit a comment. Every message kebab carries a new Edit item between Approve and Reply. Edit collapses the whole thread into a single field-card prefilled with the targeted message's body — same surface treatment as a draft. Enter commits the new text back to that message, re-forms the thread, and dispatches `kk:comment` with `{ action: 'edit', threadId, messageId, text }`. Escape — and any data-state demote (clicking another card in the inspector) — cancels without firing the event.
+
+The edit slot lives at thread level (sibling of `.comment-thread__preview` and `.card__collapsible`) and animates with the same grid-rows pattern the kit uses for `.card__collapsible`. CSS hides preview + collapsible while `data-editing="true"`, reveals the edit slot. Threads built before 0.16.0 (restored from a snapshot, or hand-authored markup) lazily get the slot injected on first edit, so the feature works against any restore.
+
+Persistence rehydration on `kk:md-rendered`. Pages that source their `.book` from markdown via `js/md.js` previously lost every doc-side highlight on reload: kit ran `rewrapAllHighlights` once at DOMContentLoaded against a still-empty `.book`, then md.js wrote the markdown in afterwards and never triggered a second pass. Now `initCommentPersistence` also listens for `kk:md-rendered` and re-runs the rewrap. Idempotent — the rewrap skips text already inside an existing `.highlight`, so a second pass through stable HTML is a no-op. Threads + highlights survive on every md-driven page (the kit's own `index.html`, the project-os prototype, any consumer wired the same way).
+
+`js/kit.js` internal version `0.15.1 → 0.16.0`.
+
+### Added
+- `js/kit.js`: `enterEditMode`, `exitEditMode`, `ensureEditSlot` inside `initCommentSelectionFlow`. Edit kebab item in `buildMessage`. `Edit` branch in the kebab-item click handler. Edit-input branch in the keydown handler (Enter commits, Escape cancels). Edit-input branch in the input handler (mirrors typed text into the `value` attribute so a mid-edit snapshot rehydrates with intact text). Mutation observer cleans up `data-editing` when the thread leaves active state. Type-anywhere-to-focus picks the edit field when the active thread is editing.
+- `js/kit.js`: `kk:md-rendered` listener inside `initCommentPersistence` re-runs `rewrapAllHighlights(doc, stack)` after md.js renders.
+- `style.css`: `.comment-thread__edit` + `.comment-thread__edit-inner` + `.comment-thread__edit-field` with the grid-rows expand animation, the auto-lit (white-on-black) field treatment, and the `⏎` glyph + right-padding shift on `:has(.field__input:not(:placeholder-shown))`.
+- `docs/integration/comment.md`: new `### action: 'edit'` section with payload shape and consumer-side semantics. Version-history row for 0.16.0.
+- `demos/fundamental--accepted/index.html`, `patterns/comment-thread.html`, `patterns/comments-group.html`: Edit kebab item added to every static `.comment__menu-popover`.
+
+### Changed
+- `js/kit.js` header docstring: documents `action: 'edit'` in the events list.
+- `js/kit.js` version: `0.15.1 → 0.16.0`.
+- `js/kit.js` `buildThread`: pre-injects `.comment-thread__edit` so freshly built threads carry the edit slot before any Edit click. Pre-0.16 restores still work via `ensureEditSlot`.
+- `docs/integration/comment.md`: removed the now-shipped `'update'` line from "Future additions"; renamed the section heading from "not in 0.13.0" to "not yet in the kit".
+
+### Migration
+
+None for consumers using `kk:comment` only. The new event is additive — existing handlers that branch on `action` will silently ignore `'edit'` unless they add a case for it. Consumers persisting message bodies should add an `'edit'` branch that overwrites the `text` for the named `messageId`.
+
 ## 1.7.3, 2026-04-26
 
 Patch. Package rename so GitHub Packages publish works.

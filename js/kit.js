@@ -108,6 +108,7 @@
  *                    anchorPrefix, anchorSuffix, cluster, sectionSlug,
  *                    text }
  *                  { action: 'reply',   threadId, messageId, text }
+ *                  { action: 'edit',    threadId, messageId, text }
  *                  { action: 'delete',  threadId, messageId, threadRemoved }
  *                  { action: 'approve', threadId, messageId, replacementText,
  *                    anchorQuote, anchorPrefix, anchorSuffix, cluster,
@@ -130,7 +131,7 @@
   // config wins; our defaults fill the gaps. Same pattern as every
   // config-merge kit that ships a default dictionary.
   var existing = global.KK || {};
-  var KK = { version: '0.15.1', initialized: false };
+  var KK = { version: '0.16.0', initialized: false };
   Object.keys(existing).forEach(function (k) { KK[k] = existing[k]; });
   KK.config = KK.config || {};
   KK.config.i18n = Object.assign({
@@ -972,6 +973,7 @@
         '<p class="t-caption"></p>' +
         '<div class="comment__menu-popover" role="menu">' +
           '<button class="comment__menu-item comment__menu-item--approve t-caption" type="button" role="menuitem">Approve</button>' +
+          '<button class="comment__menu-item t-caption" type="button" role="menuitem">Edit</button>' +
           '<button class="comment__menu-item t-caption" type="button" role="menuitem">Reply</button>' +
           '<button class="comment__menu-item t-caption" type="button" role="menuitem">Archive thread</button>' +
           '<button class="comment__menu-item t-caption" type="button" role="menuitem">Delete</button>' +
@@ -1010,6 +1012,13 @@
       if (threadId) thread.dataset.threadId = threadId;
       thread.innerHTML =
         '<div class="comment-thread__preview"></div>' +
+        '<div class="comment-thread__edit">' +
+          '<div class="comment-thread__edit-inner">' +
+            '<label class="field comment-thread__edit-field">' +
+              '<input class="t-caption field__input" type="text" />' +
+            '</label>' +
+          '</div>' +
+        '</div>' +
         '<div class="card__collapsible">' +
           '<div class="card__collapsible-inner">' +
             '<div class="comment-thread__list"></div>' +
@@ -1022,6 +1031,98 @@
       thread.querySelector('.comment-thread__list').appendChild(buildMessage(author, body));
       renderPreview(thread);
       return thread;
+    }
+
+    // Edit mode (0.16.0). Kebab → Edit collapses the whole thread into a
+    // single field-card prefilled with the targeted message's body. Enter
+    // commits the new text back to that message, exits edit. Escape and
+    // any data-state demote (clicking outside the card) cancel.
+    //
+    // The edit slot lives at thread level (sibling of preview + collapsible)
+    // so it isn't constrained by the collapsible's grid-row animation. CSS
+    // hides preview + collapsible while data-editing="true" and reveals the
+    // edit slot. data-state stays "active" so the field's :focus-within
+    // inversion and the existing card-active stack rules keep applying.
+    //
+    // Threads restored from a snapshot built before 0.16.0 do not carry the
+    // edit slot. ensureEditSlot lazily injects one on first edit so the
+    // edit feature works against any restore.
+    function ensureEditSlot(thread) {
+      var slot = thread.querySelector(':scope > .comment-thread__edit');
+      if (slot) return slot;
+      slot = document.createElement('div');
+      slot.className = 'comment-thread__edit';
+      slot.innerHTML =
+        '<div class="comment-thread__edit-inner">' +
+          '<label class="field comment-thread__edit-field">' +
+            '<input class="t-caption field__input" type="text" />' +
+          '</label>' +
+        '</div>';
+      var collapsible = thread.querySelector(':scope > .card__collapsible');
+      if (collapsible) thread.insertBefore(slot, collapsible);
+      else thread.appendChild(slot);
+      return slot;
+    }
+
+    function enterEditMode(thread, msg) {
+      if (!thread || !msg) return;
+      var bodyEl = msg.querySelector('.t-caption');
+      var bodyText = bodyEl ? (bodyEl.textContent || '') : '';
+      var slot = ensureEditSlot(thread);
+      var input = slot.querySelector('.field__input');
+      input.value = bodyText;
+      // Mirror to the value attribute so a snapshot taken mid-edit
+      // restores with the typed text intact (innerHTML serializes the
+      // attribute, not the live DOM property).
+      input.setAttribute('value', bodyText);
+      thread.setAttribute('data-editing', 'true');
+      thread.setAttribute('data-edit-message-id', msg.dataset.messageId || '');
+      requestAnimationFrame(function () {
+        input.focus();
+        var len = input.value.length;
+        try { input.setSelectionRange(len, len); } catch (e) {}
+      });
+    }
+
+    function exitEditMode(thread, opts) {
+      if (!thread) return;
+      var commit = !!(opts && opts.commit);
+      var slot = thread.querySelector(':scope > .comment-thread__edit');
+      var input = slot && slot.querySelector('.field__input');
+      var msgId = thread.getAttribute('data-edit-message-id') || '';
+      thread.removeAttribute('data-editing');
+      thread.removeAttribute('data-edit-message-id');
+
+      if (!commit || !input) {
+        if (input) {
+          input.value = '';
+          input.removeAttribute('value');
+        }
+        return;
+      }
+
+      var newText = input.value.trim();
+      input.value = '';
+      input.removeAttribute('value');
+
+      if (!newText || !msgId) return;
+      var list = thread.querySelector('.comment-thread__list');
+      var msg = list && list.querySelector('.comment-msg[data-message-id="' + msgId + '"]');
+      if (!msg) return;
+      var bodyEl = msg.querySelector('.t-caption');
+      if (bodyEl && bodyEl.textContent !== newText) {
+        bodyEl.textContent = newText;
+        renderPreview(thread);
+        commentStack.dispatchEvent(new CustomEvent('kk:comment', {
+          bubbles: true,
+          detail: {
+            action:    'edit',
+            threadId:  thread.dataset.threadId || '',
+            messageId: msgId,
+            text:      newText
+          }
+        }));
+      }
     }
 
     // Collect the ±20-char context around the first occurrence of `quote`
@@ -1118,6 +1219,21 @@
           return;
         }
       }
+      var editInput = e.target.closest('.comment-thread__edit .field__input');
+      if (editInput) {
+        var editThread = editInput.closest('.comment-thread');
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          exitEditMode(editThread, { commit: true });
+          return;
+        }
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          exitEditMode(editThread, { commit: false });
+          return;
+        }
+      }
+
       var replyInput = e.target.closest('.comment-thread__reply .field__input');
       if (replyInput && e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -1147,10 +1263,21 @@
 
     commentStack.addEventListener('input', function (e) {
       var di = e.target.closest('.card.comment-new .comment-new__field .field__input');
-      if (!di) return;
-      var draft = di.closest('.card.comment-new');
-      var preview = draft && draft.querySelector('.comment-new__preview');
-      if (preview) preview.textContent = di.value;
+      if (di) {
+        var draft = di.closest('.card.comment-new');
+        var preview = draft && draft.querySelector('.comment-new__preview');
+        if (preview) preview.textContent = di.value;
+        return;
+      }
+      // Sync the value attribute on the edit field so the snapshot
+      // taken by the persistence MutationObserver carries the typed
+      // text on reload. innerHTML serialization reads attributes, not
+      // live properties; without this, a mid-edit reload comes back
+      // with the field reset to the original message body.
+      var ei = e.target.closest('.comment-thread__edit .field__input');
+      if (ei) {
+        ei.setAttribute('value', ei.value);
+      }
     });
 
     document.addEventListener('keydown', function (e) {
@@ -1168,7 +1295,12 @@
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       var activeCard = inspector.querySelector('.comment-stack .card--interactive[data-state="active"]');
       if (!activeCard) return;
-      var inp = activeCard.querySelector('.comment-new__field .field__input, .comment-thread__reply .field__input');
+      var inp;
+      if (activeCard.getAttribute('data-editing') === 'true') {
+        inp = activeCard.querySelector('.comment-thread__edit .field__input');
+      } else {
+        inp = activeCard.querySelector('.comment-new__field .field__input, .comment-thread__reply .field__input');
+      }
       if (!inp || document.activeElement === inp) return;
       var ae = document.activeElement;
       if (ae && ae.tagName) {
@@ -1216,6 +1348,14 @@
         var card = m.target;
         if (!card.classList || !card.classList.contains('card--interactive')) return;
         var isActive = card.getAttribute('data-state') === 'active';
+
+        // Cancel an in-flight edit when the thread leaves active state
+        // (typically because the user clicked another card). No commit;
+        // matches the empty-draft dismiss policy: explicit Enter is the
+        // only commit path.
+        if (!isActive && card.getAttribute('data-editing') === 'true') {
+          exitEditMode(card, { commit: false });
+        }
 
         // Empty-draft dismiss runs first and independent of thread id.
         // The demo ships a static .card.comment-new without a
@@ -1298,6 +1438,15 @@
         }
         var reply = thread.querySelector('.comment-thread__reply .field__input');
         if (reply) requestAnimationFrame(function () { reply.focus(); });
+        return;
+      }
+
+      if (label === 'Edit') {
+        if (!msg) return;
+        if (thread.getAttribute('data-state') !== 'active') {
+          thread.click();
+        }
+        enterEditMode(thread, msg);
         return;
       }
 
@@ -1581,6 +1730,15 @@
       stack.innerHTML = snapshot.stack;
       rewrapAllHighlights(doc, stack);
     }
+
+    // md.js rebuilds `.book` after we restored. The first-pass rewrap
+    // ran against an empty doc, so the highlights never landed. Re-run
+    // each time md.js fires kk:md-rendered. Idempotent: rewrap skips
+    // text already inside an existing .highlight, so a second pass
+    // through stable HTML is a no-op.
+    document.addEventListener('kk:md-rendered', function () {
+      rewrapAllHighlights(doc, stack);
+    });
 
     // Save observer. 200 ms debounce; characterData true so mid-typing
     // drafts persist between reloads.

@@ -138,6 +138,21 @@ Fires when a user hits Enter in an active thread's reply input.
 }
 ```
 
+### `action: 'edit'`
+
+Fires when a user commits an edit from a message kebab's Edit item (Enter inside the edit field).
+
+```js
+{
+  action:    'edit',
+  threadId:  'c1735012345-123',
+  messageId: 'm1735012789-012',  // the edited message's id
+  text:      'updated body'
+}
+```
+
+Edit collapses the whole thread into a single field-card prefilled with the targeted message's body. Enter commits and re-forms the thread with the new text. Escape — and any data-state demote (clicking another card) — cancels without firing the event. The edit is purely a body-text update; the thread's anchor, message id, and reply chain stay intact. Consumer takes `text` and overwrites the message row in their own store.
+
 ### `action: 'delete'`
 
 Fires when a user clicks a kebab's Delete item.
@@ -531,15 +546,15 @@ Mount the controller once at the app shell:
 
 | Version | Change |
 |---|---|
+| 0.16.0 | Added `action: 'edit'`. Kebab menu now carries Approve / Edit / Reply / Archive thread / Delete. Edit collapses the whole thread into a single field-card prefilled with the targeted message's body; Enter commits and re-forms the thread, Escape (or clicking another card) cancels. Persistence rehydration also re-runs against `kk:md-rendered` so threads anchored to markdown-rendered docs survive a reload (the first-pass rewrap on an empty `.book` previously left highlights orphaned). |
 | 0.13.0 | Added `action: 'approve'` and `action: 'archive'`. Kebab menu now carries Approve / Reply / Archive thread / Delete. Approve reads the thread's last list message as the replacement and is gated on `data-author-role="agent"`. Archive sets `data-archived="true"`; thread retained, hidden from the stack. Approved thread collapses to a single resolved row under `data-resolved="true"`. Anchor triple + cluster + sectionSlug mirrored onto `.comment-thread` dataset so Approve re-emits the full payload. |
 | 0.11.0 | Added `action: 'delete'`. All three actions now carry `messageId`. `buildMessage` stamps `data-message-id`; init scan assigns ids to any pre-rendered messages. |
 | 0.10.0 | Added `kk:comment` event with `new` and `reply` actions. `anchorPrefix`/`anchorSuffix` capture. `[data-cluster]` ancestor read. |
 | 0.8.0  | `KK.config.i18n.addComment` and `reply` overridable. |
 | 0.7.0  | Kit behaviour extracted from `index.html` into `js/kit.js`. `enableCommentSelectionFlow()` exposed. |
 
-## Future additions — not in 0.13.0
+## Future additions — not yet in the kit
 
 - Re-surface UI for archived threads. Data is preserved under `data-archived="true"`; a future release will add the inspector toggle that un-hides them.
-- `action: 'update'` — when a message's text is edited (edit UX not shipped).
 
 Will land when a consumer needs them. Not pre-built.

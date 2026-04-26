@@ -1255,6 +1255,72 @@ body {
   display: none;
 }
 
+/* Edit mode (0.16.0) — kebab → Edit collapses the whole thread into a
+   single field-card prefilled with the targeted message's body. Same
+   grid-rows animation pattern as .card__collapsible: the wrapper holds
+   1fr / 0fr, the inner has overflow:hidden + min-height:0 so the field
+   clips cleanly while transitioning. Sibling of preview + collapsible
+   so the existing card-active rules do not have to fight the open
+   state — the edit slot is its own row in the card. */
+.comment-thread__edit {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--dur-base) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
+}
+.comment-thread__edit-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+.comment-thread__edit-field::after {
+  display: none;
+}
+.comment-thread[data-editing="true"] > .comment-thread__edit {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.comment-thread[data-editing="true"] > .comment-thread__preview {
+  display: none;
+}
+.comment-thread[data-editing="true"] > .card__collapsible {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+/* Field stays lit while editing even before the input gains focus —
+   matches the .comment-thread__reply auto-lit rule so the transition
+   into edit mode lands on the same surface treatment. */
+.card.comment-thread[data-editing="true"] .comment-thread__edit-field {
+  background: var(--color-text);
+}
+.card.comment-thread[data-editing="true"] .comment-thread__edit-field .field__input {
+  color: var(--color-bg);
+}
+.card.comment-thread[data-editing="true"] .comment-thread__edit-field:has(.field__input:not(:placeholder-shown))::after {
+  content: "⏎";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: var(--space-3);
+  bottom: auto;
+  left: auto;
+  width: auto;
+  height: auto;
+  background: none;
+  transform: translateY(-50%);
+  font-size: 14px;
+  line-height: 1;
+  font-weight: var(--fw-bold);
+  -webkit-text-stroke: 0.2px currentColor;
+  color: #000000;
+  opacity: 1;
+  pointer-events: none;
+}
+.card.comment-thread[data-editing="true"] .comment-thread__edit-field .field__input:not(:placeholder-shown) {
+  padding-right: var(--space-5);
+}
+
 /* Fake caret — a blinking indicator shown inside an auto-lit comment
    field whose input isn't actually focused. The reader sees "this is
    where typing goes" without JS ever calling .focus(), so any text

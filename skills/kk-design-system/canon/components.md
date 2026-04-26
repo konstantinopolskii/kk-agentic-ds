@@ -387,7 +387,7 @@ Rules:
 - Two shapes only. Draft uses `card--shout`. Thread uses `card--interactive`.
 - Every `.comment-msg` carries `data-message-id`. Kit stamps it at creation time; consumers pre-rendering server HTML can seed the id.
 - Agent-authored messages carry `data-author-role="agent"`. Consumers set it at render time; kit never classifies messages itself.
-- Kebab menu carries four actions: Approve, Reply, Archive thread, Delete. Approve is hidden unless the thread's last list message has `data-author-role="agent"`.
+- Kebab menu carries five actions: Approve, Edit, Reply, Archive thread, Delete. Approve is hidden unless the thread's last list message has `data-author-role="agent"`. Edit collapses the whole thread into a single field-card prefilled with the targeted message's body; Enter commits and re-forms the thread, Escape (or clicking another card) cancels.
 - Archive sets `data-archived="true"` on the thread. DOM retained, hidden via CSS.
 - Used in: inspector, three columns.
 - Runtime events, config keys, and consumer integration patterns: `docs/integration/comment.md`.
