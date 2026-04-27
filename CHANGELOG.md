@@ -2,6 +2,30 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.9.0, 2026-04-26
+
+Minor. Sibling pipeline. The kit now hosts two pipelines instead of one — `kk-design-system` (existing, ships UI prototypes) and `kk-charter-system` (new, ships per-direction strategic charters). Same eight-stage shape, same gating discipline, same kit canon. Five roles share between them; four new role skills are charter-pipeline-only.
+
+The new pipeline runs against KK's strategic-document workflow (charter rebuild for direction-level work). Same flywheel as the design pipeline: brief enters, named roles each operate on an artefact, gates check rubric, the result ships when meta-reviewer accepts. Outputs target a project's `outputs/` folder; canonical paths only with operator stamp.
+
+The `kk-design-system` pipeline is unchanged. Existing consumers see no breaking changes — same canon paths, same eleven role skills, same release-dispatch shape. The kit's manifesto and pipeline doc now carry the expanded roster (single table, new `Pipeline` column reading `kk-ds`, `kk-charter`, or `both`) so the cross-pipeline reuse is legible at a glance.
+
+### Added
+- `skills/kk-charter-system/` — orchestrator (`SKILL.md` + `manifesto.md` + `pipeline.md`). The charter pipeline definition: when to invoke, eight stages, role mapping, gate criteria, return routing.
+- `skills/kk-role-charter-director/` — Stage 2. Tina Brown. Picks the direction list and writes the direction map; the strategic editorial decision before any per-direction charter is written.
+- `skills/kk-role-charter-writer/` — Stage 3b ×N. Janet Malcolm. Writes one direction's charter from documentary evidence; cites every claim; refuses gloss. One subagent per direction; fan-out parallel.
+- `skills/kk-role-portfolio-manager/` — Stage 4. Indra Nooyi. Cross-direction operations view: consolidated time-bound table, dependency graph, resource conflicts, sequencing, blocking open questions.
+- `skills/kk-role-consistency-charter/` — Stage 6a. Jan Tschichold. Strict consistency audit on the consolidated draft against manifesto, glossary, and audit chain. Off-canon = fail.
+
+### Changed
+- `skills/kk-design-system/manifesto.md` §Agents — reorganised into shared / kk-ds-specific / kk-charter-specific groups. Added `../kk-charter-system/` pointer in §Pipeline and §Navigation.
+- `skills/kk-design-system/pipeline/pipeline.md` — opening note that `kk-charter-system` is a sibling pipeline. §Role roster table now carries a `Pipeline` column (`kk-ds` / `kk-charter` / `both`) and lists the four new charter-pipeline rows. The Voice row reflects the stage divergence (6c in kk-ds, 6b in kk-charter).
+- `skills/kk-charter-system/manifesto.md` §Anti-patterns → "Disclosing clients" — added the partner-relationship exception. Cross-direction operators / partners / contributors KK has named in comments may appear in charter prose; supervision-client names still live in `wealthy`. Test: is this person paying KK for supervision? If yes, name lives in `wealthy`.
+- `package.json` — `description` reframed to name both pipelines. `files` extended with the five new skill directories so the package ships them.
+
+### Migration
+None required. No breaking changes to canon paths, role roster of `kk-design-system`, or release-dispatch contract. Consumers of the kit can ignore the charter pipeline entirely; it has no runtime cost on the design path.
+
 ## 1.8.0, 2026-04-26
 
 Minor. Edit-a-comment, plus a persistence rehydration fix for markdown-backed docs.

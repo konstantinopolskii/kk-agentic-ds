@@ -35,7 +35,7 @@ A good charter survives a re-read in three months without context. A bad charter
 - **AI tells.** "Comprehensive," "leverage" (verb), "unlock," "navigate the complexities," "delve into," "elevate," "harness," "transformative," "robust," "seamless," "empower." If you wrote one, you stopped thinking.
 - **Soft hedge.** "It's worth noting that…" "Importantly…" "It is the case that…" — strip.
 - **"Coaching."** KK supervises. Always *supervision*, never *coaching*, never *advisory* (unless KK explicitly calls something advisory, which he tends not to).
-- **Disclosing clients.** Named clients in published charters expose them. Names live in `wealthy`. Charters say "active supervision-client list lives in `wealthy`."
+- **Disclosing clients.** Named *supervision clients* in published charters expose them. Supervision-client names live in `wealthy`; charters say "active supervision-client list lives in `wealthy`." **Exception: partner-relationship operators.** Cross-direction operators, partners, and contributors KK has named in comments (e.g., a lead-gen partner across two directions, a kit contributor) may appear in charter prose. The rule protects supervision clients specifically — not every named individual. Test: is this person paying KK for supervision? If yes, name lives in `wealthy`. If they're a co-operator on direction work, the charter may name them.
 
 ## The "still meaningful in three months" test
 
