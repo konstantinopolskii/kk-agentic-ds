@@ -289,13 +289,23 @@ body {
    padding-right 16 (symmetric hover surface). Vertical stays tag-
    tight at 4 px. Snapped from 18 to 16 to clear the 4 px grid. */
 .nav-group > h3,
-.nav-group > h4 {
+.nav-group > h4,
+.nav-group > a.nav-group__head {
   padding: var(--space-1) var(--space-4);
   color: var(--color-text-muted);
   transition: color var(--dur-base) var(--ease-out);
 }
+/* Auto-generated bold label is an anchor (clickable + scroll-spy
+   target) but visually parity with the legacy h4.t-subtitle: same
+   padding, same color treatment, no underline, no link-blue, full
+   block so it owns the row. */
+.nav-group > a.nav-group__head {
+  display: block;
+  text-decoration: none;
+}
 .nav-group.is-active > h3,
-.nav-group.is-active > h4 { color: var(--color-text); }
+.nav-group.is-active > h4,
+.nav-group.is-active > a.nav-group__head { color: var(--color-text); }
 
 .nav-group__items a {
   display: block;
@@ -312,6 +322,8 @@ body {
    am right now" across the whole section before the reader commits
    to a specific link. */
 .nav-group:hover > h3,
+.nav-group:hover > h4,
+.nav-group:hover > a.nav-group__head,
 .nav-group:hover .nav-group__items a { color: var(--color-text); }
 
 /* Item-level hover — same mechanic as the form fields: padding
@@ -2292,6 +2304,8 @@ ol.t-list > li::before {
     padding-right: var(--space-6);
   }
   .sidebar .nav-group > h3,
+  .sidebar .nav-group > h4,
+  .sidebar .nav-group > a.nav-group__head,
   .sidebar .nav-group__items a {
     padding-left: var(--space-6);
     padding-right: var(--space-6);

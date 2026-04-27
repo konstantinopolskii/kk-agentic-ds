@@ -95,6 +95,16 @@
  *   A consumer can therefore ship a global default via the html
  *   attribute and override per-page with `<script>KK.config = ...</script>`.
  *
+ * Sidebar TOC auto-fill (1.10.0):
+ *   The kit reads the rendered .book heading rank and writes the sidebar
+ *   TOC into <nav class="sidebar__nav">. Three modes resolve from heading
+ *   structure: multi-h1 (each h1 article = bold label), mixed (h2 = label,
+ *   h3 = items, lead h1 article skipped), flat (h2s as flat list). Stamps
+ *   ids on book__section + h2/h3 direct children. Hand-authored ids win.
+ *   Per-element opt-out: <nav class="sidebar__nav" data-nav="manual">
+ *   short-circuits the generator and leaves hand-curated content alone.
+ *   See docs/integration/sidebar-nav.md for the full pattern.
+ *
  * Auto-init covers: scroll-spy, narrow-view toggle, column reveal,
  * inspector card stack, comment kebab menus, 3D card stack deck.
  *
@@ -180,6 +190,20 @@
       .replace(/</g, '&lt;');
   }
 
+  // Slug helper. Lowercased, ASCII-only, hyphenated. Stamps ids on
+  // every book__section + every direct h2 / h3 child so the auto-nav
+  // generator (and the URL hash for shared deep links) has a target
+  // for each navigable heading. Replaces the inline copy that lived
+  // in index.html before 1.10.0.
+  function slugify(text) {
+    return (text || '')
+      .toLowerCase()
+      .replace(/[–—]/g, '-')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
   // Module-level sentinels. Each auto-init module sets its flag the
   // first time it binds global handlers. Subsequent calls (via
   // KK.refresh) skip re-binding but still pick up new iterable
@@ -226,31 +250,35 @@
     var firstId = firstSections[0] && firstSections[0].id;
 
     function setActive(id) {
-      var activeLi = null;
-      // Live query so SPA-added nav links pick up state.
+      var activeAnchor = null;
+      // Live query so SPA-added nav links pick up state. The is-active
+      // class lands on the anchor's parent (an <li> for items, the
+      // <section class="nav-group"> for bold labels) so the existing
+      // CSS cascades light up the heading and the items in the same
+      // group on either kind of selection.
       nav.querySelectorAll('a[href^="#"]').forEach(function (a) {
         var key = a.getAttribute('href').slice(1);
-        var li = a.parentElement;
         var on = key === id;
-        li.classList.toggle('is-active', on);
-        if (on) activeLi = li;
+        var p = a.parentElement;
+        if (p) p.classList.toggle('is-active', on);
+        if (on) activeAnchor = a;
       });
       nav.querySelectorAll('.nav-group').forEach(function (group) {
-        group.classList.toggle('is-active', activeLi && group.contains(activeLi));
+        group.classList.toggle('is-active', !!(activeAnchor && group.contains(activeAnchor)));
       });
-      moveIndicator(activeLi);
-      scrollActiveIntoView(activeLi);
+      moveIndicator(activeAnchor);
+      scrollActiveIntoView(activeAnchor);
     }
 
     // Keep the active nav group inside the sidebar's viewport as the
     // reader scrolls the doc. Scroll by whole .nav-group, not by
     // individual <li>: line-by-line scrolling jitters; group-at-a-time
     // gives larger, readable jumps.
-    function scrollActiveIntoView(activeLi) {
-      if (!activeLi) return;
-      var sidebar = activeLi.closest('.sidebar');
+    function scrollActiveIntoView(activeEl) {
+      if (!activeEl) return;
+      var sidebar = activeEl.closest('.sidebar');
       if (!sidebar || getComputedStyle(sidebar).display === 'none') return;
-      var group = activeLi.closest('.nav-group') || activeLi;
+      var group = activeEl.closest('.nav-group') || activeEl;
       var sRect = sidebar.getBoundingClientRect();
       var gRect = group.getBoundingClientRect();
       if (gRect.top >= sRect.top && gRect.bottom <= sRect.bottom) return;
@@ -263,17 +291,22 @@
       sidebar.scrollTo({ top: sidebar.scrollTop + delta, behavior: 'smooth' });
     }
 
-    function moveIndicator(activeLi) {
+    // Indicator measures the active anchor's own rect — tight on the
+    // single row, whether that row is an item <li><a> or a bold label
+    // <a class="nav-group__head"> sitting directly inside its section.
+    // Measuring the parent would stretch the indicator across the whole
+    // nav-group when a bold label is active.
+    function moveIndicator(activeEl) {
       if (!indicator) return;
-      if (!activeLi) {
+      if (!activeEl) {
         indicator.classList.remove('is-positioned');
         return;
       }
       var navRect = nav.getBoundingClientRect();
-      var liRect = activeLi.getBoundingClientRect();
-      var top = liRect.top - navRect.top;
+      var elRect = activeEl.getBoundingClientRect();
+      var top = elRect.top - navRect.top;
       indicator.style.transform = 'translate3d(0,' + top + 'px,0)';
-      indicator.style.height = liRect.height + 'px';
+      indicator.style.height = elRect.height + 'px';
       if (!indicator.classList.contains('is-positioned')) {
         indicator.classList.add('is-positioned');
         // One frame later, turn on sliding transitions so the first
@@ -310,8 +343,10 @@
     scrollSpyObserver = observer;
 
     global.addEventListener('resize', function () {
-      var active = nav.querySelector('.nav-group__items li.is-active');
-      if (active) moveIndicator(active);
+      var activeAnchor = nav.querySelector(
+        '.nav-group__items li.is-active > a, .nav-group.is-active > a.nav-group__head'
+      );
+      if (activeAnchor) moveIndicator(activeAnchor);
     });
 
     nav.addEventListener('click', function (e) {
@@ -1861,10 +1896,210 @@
   }
 
   // ================================================================
+  // Sidebar TOC generator (1.10.0). Builds the sidebar table of
+  // contents from the rendered .book DOM. Source of truth: the
+  // heading rank inside each top-level book__section. Replaces the
+  // hand-curated <section class="nav-group"> blocks that every
+  // consuming page used to copy.
+  //
+  // Rule (locked at 2026-04-27-auto-sidebar-nav stage 1):
+  //   ≥2 top-level book__section whose primary heading is h1
+  //                   → bold label = each h1; items = h2-rooted
+  //                     nested book__sections under each h1.
+  //   1 such section (or 0), ≥1 top-level book__section that
+  //   has an h3 direct child anywhere in .book
+  //                   → bold label = each non-lead section's h2;
+  //                     items = its h3 direct children.
+  //                     h2 with no h3 children stands alone as label.
+  //   otherwise        → flat list of each non-lead section's h2,
+  //                     no group label.
+  //
+  // Lead-article exclusion (single-h1 mode only): the article whose
+  // primary heading is h1 is the page intro, not a navigable section.
+  //
+  // Opt-out: <nav class="sidebar__nav" data-nav="manual"> short-
+  // circuits the pass. Hand-curated content stays untouched.
+  //
+  // Idempotent. Runs from KK.init() (DOMContentLoaded) and from
+  // KK.refresh() (kk:md-rendered, SPA swaps). Each pass clears every
+  // child of the nav except .toc__indicator and rebuilds.
+  // ================================================================
+  function getPrimaryHeading(section) {
+    return section.querySelector('h1, h2, h3');
+  }
+
+  // Heading text minus any post-<br> sub-label. The kit's static-body
+  // pages sometimes split a heading like
+  //   <h2>Switching it off<br /><span class="t-display--medium">For DB-backed apps</span></h2>
+  // The bold sub-label is visual rhythm; the nav and the slug want only
+  // the primary text. Walks child nodes until the first BR and joins
+  // their textContent.
+  function headingLabel(h) {
+    if (!h) return '';
+    var label = '';
+    for (var i = 0; i < h.childNodes.length; i++) {
+      var n = h.childNodes[i];
+      if (n.nodeName === 'BR') break;
+      label += (n.textContent || '');
+    }
+    return label.trim();
+  }
+
+  function stampHeadingIds(book) {
+    var allSections = book.querySelectorAll('article.book__section');
+    Array.prototype.forEach.call(allSections, function (section) {
+      if (!section.id) {
+        var h = getPrimaryHeading(section);
+        if (h) {
+          var id = slugify(headingLabel(h));
+          if (id) section.id = id;
+        }
+      }
+      // Stamp ids on direct heading children so the nav can target
+      // them with #hash links. Skips already-stamped headings so
+      // hand-authored ids win.
+      section.querySelectorAll(':scope > h2, :scope > h3').forEach(function (h) {
+        if (!h.id) {
+          var id = slugify(headingLabel(h));
+          if (id) h.id = id;
+        }
+      });
+    });
+  }
+
+  function buildSidebarToc() {
+    var nav = document.getElementById('toc');
+    if (!nav) return;
+    if (nav.getAttribute('data-nav') === 'manual') return;
+
+    var book = document.querySelector('.book') || document.getElementById('doc');
+    if (!book) return;
+
+    stampHeadingIds(book);
+
+    var topSections = Array.prototype.slice.call(
+      book.querySelectorAll(':scope > article.book__section')
+    );
+    if (topSections.length === 0) return;
+
+    function topHeadingTag(section) {
+      var h = getPrimaryHeading(section);
+      return h ? h.tagName : null;
+    }
+
+    var h1Sections = topSections.filter(function (s) {
+      return topHeadingTag(s) === 'H1';
+    });
+    var multiH1 = h1Sections.length >= 2;
+
+    var anyH3 = topSections.some(function (s) {
+      return s.querySelector(':scope > h3') !== null;
+    });
+
+    // Clear nav, preserving the indicator span.
+    var indicator = nav.querySelector('.toc__indicator');
+    Array.prototype.slice.call(nav.children).forEach(function (child) {
+      if (child !== indicator) nav.removeChild(child);
+    });
+    if (!indicator) {
+      indicator = document.createElement('span');
+      indicator.className = 'toc__indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      nav.appendChild(indicator);
+    }
+
+    function makeGroup(headLabel, headHref, items) {
+      var section = document.createElement('section');
+      section.className = 'nav-group';
+      if (headLabel && headHref) {
+        var head = document.createElement('a');
+        head.className = 't-subtitle nav-group__head';
+        head.setAttribute('href', '#' + headHref);
+        head.textContent = headLabel;
+        section.appendChild(head);
+      }
+      if (items && items.length) {
+        var ul = document.createElement('ul');
+        ul.className = 'nav-group__items';
+        items.forEach(function (it) {
+          if (!it.label || !it.href) return;
+          var li = document.createElement('li');
+          li.className = 't-caption';
+          var a = document.createElement('a');
+          a.setAttribute('href', '#' + it.href);
+          a.textContent = it.label;
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        if (ul.children.length) section.appendChild(ul);
+      }
+      return section;
+    }
+
+    if (multiH1) {
+      topSections.forEach(function (s) {
+        var primary = getPrimaryHeading(s);
+        if (!primary || primary.tagName !== 'H1') return;
+        var label = headingLabel(primary);
+        var href = s.id;
+        if (!href || !label) return;
+
+        // Items: nested book__sections whose own primary heading is h2.
+        // md.js wraps each h2-rooted region inside the outer article;
+        // the outer article's h1-rooted intro is one of those nested
+        // sections, with primary = h1 — skip it as the lead.
+        var nested = Array.prototype.slice.call(
+          s.querySelectorAll(':scope article.book__section')
+        );
+        var items = nested.map(function (inner) {
+          var h = getPrimaryHeading(inner);
+          if (!h || h.tagName !== 'H2') return null;
+          return { label: headingLabel(h), href: inner.id };
+        }).filter(Boolean);
+
+        nav.appendChild(makeGroup(label, href, items));
+      });
+    } else if (anyH3) {
+      topSections.forEach(function (s) {
+        var primary = getPrimaryHeading(s);
+        if (!primary) return;
+        if (primary.tagName === 'H1') return; // lead article
+
+        var label = headingLabel(primary);
+        var href = s.id;
+        if (!href || !label) return;
+
+        var h3s = Array.prototype.slice.call(s.querySelectorAll(':scope > h3'));
+        var items = h3s.map(function (h3) {
+          return { label: headingLabel(h3), href: h3.id };
+        }).filter(function (it) { return it.label && it.href; });
+
+        nav.appendChild(makeGroup(label, href, items));
+      });
+    } else {
+      var items = topSections.map(function (s) {
+        var primary = getPrimaryHeading(s);
+        if (!primary) return null;
+        if (primary.tagName === 'H1') return null; // lead article
+        return { label: headingLabel(primary), href: s.id };
+      }).filter(function (it) { return it && it.label && it.href; });
+
+      if (items.length) {
+        nav.appendChild(makeGroup(null, null, items));
+      }
+    }
+  }
+
+  // ================================================================
   // Public API
   // ================================================================
   KK.init = function () {
     if (KK.initialized) return;
+    // Build the sidebar TOC before scroll-spy initializes so the
+    // observer's first setActive pass finds the new anchors. On
+    // markdown-body pages the .book is empty at DOMContentLoaded; the
+    // generator no-ops and runs again on kk:md-rendered.
+    buildSidebarToc();
     initScrollSpy();
     initNarrowView();
     // Mount runs BEFORE columnReveal so an injected `.inspector`
@@ -1892,6 +2127,7 @@
   // cards, new nav items, or new comment threads into the page. Safe to
   // over-call; there is no teardown and no double-binding.
   KK.refresh = function () {
+    buildSidebarToc();
     initScrollSpy();
     initNarrowView();
     autoMountCommentSurface();
@@ -1914,6 +2150,13 @@
   } else {
     KK.init();
   }
+
+  // md.js dispatches kk:md-rendered after every markdown article in
+  // the page finishes loading. The kit's auto-nav, scroll-spy, and
+  // section-id stamper all need to re-run against the freshly-rendered
+  // DOM. Bound once at module load so consumers no longer need a per-
+  // page post-render hook.
+  document.addEventListener('kk:md-rendered', KK.refresh);
 
   global.KK = KK;
 })(window);

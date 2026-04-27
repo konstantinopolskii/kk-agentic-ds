@@ -5,54 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Agentic Design System. Signed, by Konstantin Konstantinopolskii.</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=1.3.0">
-  <link rel="stylesheet" href="./style.css?v=1.3.0">
+  <link rel="stylesheet" href="./vars.css?v=1.10.0">
+  <link rel="stylesheet" href="./style.css?v=1.10.0">
 </head>
 <body>
   <div class="app" data-view="doc">
 
     <!-- ============================================================== -->
-    <!-- Sidebar: brand + scroll-spy TOC of the currently-rendered book -->
-    <!-- Only internal nav lives here. Cross-book nav lives in the      -->
-    <!-- inspector pointer cards. Nav groups are hand-curated per book. -->
+    <!-- Sidebar: brand + scroll-spy TOC. Kit auto-fills the nav from   -->
+    <!-- the rendered .book heading rank (1.10.0). Opt-out per consumer -->
+    <!-- by setting data-nav="manual" on the sidebar__nav element.      -->
     <!-- ============================================================== -->
     <aside class="sidebar" aria-label="Navigation">
       <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
 
       <nav class="sidebar__nav" id="toc">
         <span class="toc__indicator" aria-hidden="true"></span>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Meanings</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#why-this-exists">Why this exists</a></li>
-            <li class="t-caption"><a href="#philosophy">Philosophy</a></li>
-            <li class="t-caption"><a href="#job-stories">Job stories</a></li>
-            <li class="t-caption"><a href="#time-to-value">Time to value</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Principles</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#principles">Principles</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Agents</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#agents">Agents</a></li>
-            <li class="t-caption"><a href="#pipeline">Pipeline</a></li>
-          </ul>
-        </section>
-
-        <section class="nav-group">
-          <h4 class="t-subtitle">Navigation</h4>
-          <ul class="nav-group__items">
-            <li class="t-caption"><a href="#navigation">Reading order</a></li>
-          </ul>
-        </section>
       </nav>
 
       <footer class="sidebar__footer t-caption">
@@ -168,48 +136,12 @@
   <!-- ================================================================ -->
   <!-- Scripts: kit.js first (auto-init on DOMContentLoaded); md.js     -->
   <!-- fetches the manifesto into .book and auto-wraps each h2-rooted  -->
-  <!-- region in <article class="book__section">. The post-render hook -->
-  <!-- here is idempotent: it walks the already-wrapped sections and   -->
-  <!-- copies each section's h2 slug onto the article id so the        -->
-  <!-- sidebar TOC + scroll-spy resolve.                                -->
+  <!-- region in <article class="book__section">. kit.js listens for   -->
+  <!-- kk:md-rendered itself and stamps section + heading ids, builds  -->
+  <!-- the sidebar TOC, and refreshes scroll-spy. No per-page hook.    -->
   <!-- ================================================================ -->
   <script src="./js/kit.js" defer></script>
   <script src="./js/md.js" defer></script>
-  <script defer>
-    function slugify(text) {
-      return (text || "")
-        .toLowerCase()
-        .replace(/[–—]/g, "-")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-    }
-
-    // md.js produces <article class="book__section"> elements as direct
-    // children of .book. The first article carries h1 + preamble. Each
-    // subsequent article opens with an h2.t-display. This pass walks the
-    // sections and stamps each h2-rooted article with a slug id derived
-    // from its heading text. The lead article (h1) does not get an id.
-    function stampSectionIds() {
-      var book = document.querySelector(".book");
-      if (!book) return;
-      var sections = book.querySelectorAll(":scope > article.book__section");
-      Array.prototype.forEach.call(sections, function (section) {
-        if (section.id) return;
-        var h2 = section.querySelector(":scope > h2.t-display");
-        if (!h2) return;
-        var id = slugify(h2.textContent);
-        if (id) section.id = id;
-      });
-    }
-
-    document.addEventListener("kk:md-rendered", function () {
-      stampSectionIds();
-      if (window.KK && typeof window.KK.refresh === "function") {
-        window.KK.refresh();
-      }
-    });
-  </script>
 
   <!-- FABs for tablet + phone. Outside .app so overflow:hidden cannot clip. -->
   <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">

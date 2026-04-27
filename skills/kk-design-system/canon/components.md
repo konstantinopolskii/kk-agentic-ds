@@ -398,17 +398,14 @@ Deep link: `demos/fundamental--accepted/index.html#comment`.
 
 Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections; `toc__indicator` animates between active items. Reach for the sidebar nav in any doc surface that carries more than three sections.
 
+The kit auto-fills the nav from the rendered `.book` heading rank at runtime (1.10.0). The consumer ships an empty shell; `js/kit.js` reads the heading structure and writes the TOC. Hand-curated content is preserved by setting `data-nav="manual"` on the `<nav class="sidebar__nav">` element.
+
+### Auto-fill (default)
+
 ```html
 <aside class="sidebar" aria-label="Navigation">
   <nav class="sidebar__nav" id="toc">
     <span class="toc__indicator" aria-hidden="true"></span>
-    <section class="nav-group">
-      <h4 class="t-subtitle">Group</h4>
-      <ul class="nav-group__items">
-        <li class="t-caption"><a href="#section-a">Section A</a></li>
-        <li class="t-caption"><a href="#section-b">Section B</a></li>
-      </ul>
-    </section>
   </nav>
   <footer class="sidebar__footer t-caption">
     2026, kk.consulting<br />
@@ -417,12 +414,34 @@ Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections
 </aside>
 ```
 
+Kit fills the nav at `KK.init()` (DOMContentLoaded) and re-fills at every `kk:md-rendered` (markdown body). Generated shape varies by heading rank — see `docs/integration/sidebar-nav.md` for the three-mode resolution rule (multi-h1, mixed, flat).
+
+### Hand-curated (opt-out)
+
+```html
+<aside class="sidebar" aria-label="Navigation">
+  <nav class="sidebar__nav" id="toc" data-nav="manual">
+    <span class="toc__indicator" aria-hidden="true"></span>
+    <section class="nav-group">
+      <a class="t-subtitle nav-group__head" href="#section-a">Group</a>
+      <ul class="nav-group__items">
+        <li class="t-caption"><a href="#section-a">Section A</a></li>
+        <li class="t-caption"><a href="#section-b">Section B</a></li>
+      </ul>
+    </section>
+  </nav>
+</aside>
+```
+
+`data-nav="manual"` short-circuits the generator; the kit leaves the nav children untouched. The legacy `<h4 class="t-subtitle">` header shape also stays valid for hand-curated nav, but the anchor form is preferred — it keeps the bold label clickable and scroll-spy-aware.
+
 Rules:
 
 - Nav items chunk into `nav-group` sections of one to nine items.
-- Each `nav-group` header is `<h4 class="t-subtitle">`.
+- Bold label is `<a class="t-subtitle nav-group__head">` for click + scroll-spy. Hand-curated nav may still use `<h4 class="t-subtitle">` for non-clickable headers.
 - Scroll-spy is doc-internal. Cross-doc navigation lives in the inspector, not the sidebar.
 - `toc__indicator` binds once; kit.js repositions on scroll.
+- `data-nav="manual"` opts a single nav out of auto-fill. Other navs on the page keep auto-filling.
 - Used in: three columns, narrow mobile.
 
 Deep link: `demos/fundamental--accepted/index.html#navigation`.

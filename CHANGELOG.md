@@ -2,6 +2,48 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.10.0, 2026-04-27
+
+Minor. Auto-generated sidebar nav. The kit now builds the sidebar TOC at runtime from the rendered `.book` heading rank. The four consuming pages collapse their hand-curated `<section class="nav-group">` blocks to a one-line empty shell; the kit fills it. Per-page `kk:md-rendered` hooks retire — `js/kit.js` listens at the module level and refreshes the TOC, scroll-spy, and section-id stamping on every render.
+
+### Heading-rank rule
+
+Three modes resolve from the rendered `.book`:
+
+- **Multi-h1.** Two or more `book__section` direct children whose first heading is `h1` → bold label per `h1`, items per `h2`-rooted nested book__section under each.
+- **Mixed.** One such section (or zero) and at least one `h3` direct child anywhere → bold label per non-lead `h2` section, items per `h3` direct children. `h2` with no `h3` children stands alone as a label.
+- **Flat.** Single `h1`, no `h3` direct children anywhere → flat list of non-lead `h2` sections, no group label.
+
+Lead article (the `h1.t-hero` page-title section) is excluded from the nav in single-h1 mode. Multi-h1 mode treats every `h1` article as a navigable sample.
+
+### Added
+- `js/kit.js` — `slugify`, `headingLabel`, `getPrimaryHeading`, `stampHeadingIds`, `buildSidebarToc`. Wired into `KK.init()` and `KK.refresh()`. Module-level `document.addEventListener('kk:md-rendered', KK.refresh)` at IIFE close.
+- `nav-group__head` modifier on the bold-label anchor inside a `nav-group` section. Clickable, scroll-spy active state via parent class cascade. Visual parity with the legacy `<h4 class="t-subtitle">` header.
+- `data-nav="manual"` opt-out attribute on `<nav class="sidebar__nav">`. When set, `buildSidebarToc` short-circuits and leaves hand-curated content untouched. Default behaviour (attribute absent) is autonav on.
+- `style.css` — `.nav-group > a.nav-group__head` selector cluster (padding, color, transition, hover, active, narrow-view padding, link reset).
+- `docs/integration/sidebar-nav.md` — new integration doc covering the heading-rank rule, the opt-out, and the generated shape per mode.
+
+### Changed
+- `skills/kk-design-system/canon/components.md § Navigation` — snippet and rules updated. Bold label is now an anchor (`<a class="t-subtitle nav-group__head">`) for click + scroll-spy. The legacy `<h4 class="t-subtitle">` shape stays valid behind `data-nav="manual"`.
+- `index.html`, `demos/fundamental--accepted/index.html`, `demos/comment-persistence/index.html`, `demos/md-renderer-smoke/index.html` — sidebar nav HTML collapsed to `<nav class="sidebar__nav" id="toc"><span class="toc__indicator"></span></nav>`. Hand-curated `<section class="nav-group">` blocks deleted across all four pages.
+- `index.html` — inline post-render hook (slugify + stampSectionIds + KK.refresh on kk:md-rendered) deleted. The kit now owns the slug + stamping logic and the post-render listener.
+- `js/kit.js` — scroll-spy `setActive` and `moveIndicator` track the active anchor's own rect, not its parent. Tight indicator on the row whether the active anchor is an item `<li><a>` or a bold-label `<a class="nav-group__head">` sitting directly inside its nav-group section.
+- `package.json` 1.9.0 → 1.10.0. `.claude-plugin/plugin.json` 1.8.0 → 1.10.0 (plugin.json had drifted from the 1.9.0 release; brought back into lockstep).
+- `index.html` CSS link cache-busting: `?v=1.3.0` → `?v=1.10.0`.
+
+### Removed
+- Hand-curated `<section class="nav-group">` blocks from the four consuming pages (~117 lines across HTML).
+- Inline `<script defer>` block in `index.html` carrying the per-page slugify + stampSectionIds + post-render hook (~33 lines).
+
+### Migration
+Consumers with hand-curated sidebar navs that must keep their hand-curation should add `data-nav="manual"` to the `<nav class="sidebar__nav">` element. Without the attribute, the kit replaces nav children (preserving `.toc__indicator`) with the auto-generated TOC on first init and on every `kk:md-rendered`.
+
+Pages whose sidebar nav was a hand-copy of the manifesto's groups now inherit the rendered-heading-driven shape. Most consumers see no change because their headings already structure the sidebar correctly.
+
+### Exceptions shipped
+- `index.html:20` — sidebar header `Agentic Design System` renders Title Case. Pre-existing string. `voice.md § No AI tells` lists "Title Case headings" as forbidden. Session scope was structural; the brand-name-vs-sentence-case question deferred to a follow-up canon-rework session.
+- `index.html:28` — sidebar footer `Powered by kk.consulting` carries passive construction. Same deferral.
+
 ## 1.9.0, 2026-04-26
 
 Minor. Sibling pipeline. The kit now hosts two pipelines instead of one — `kk-design-system` (existing, ships UI prototypes) and `kk-charter-system` (new, ships per-direction strategic charters). Same eight-stage shape, same gating discipline, same kit canon. Five roles share between them; four new role skills are charter-pipeline-only.

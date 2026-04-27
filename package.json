@@ -1,6 +1,6 @@
 {
   "name": "@konstantinopolskii/design-system",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Agentic Design System by Konstantin Konstantinopolskii. Tokens, components, voice rules, shared kit.js behaviour (scroll-spy, deck, card stack, comment menus, column reveal), plus two sibling pipelines: kk-design-system (eleven role skills, ships UI prototypes) and kk-charter-system (nine role skills, ships per-direction strategic charters). Five roles shared across both. Character-coded and model-tiered.",
   "license": "UNLICENSED",
   "publishConfig": {
