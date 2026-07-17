@@ -14,6 +14,7 @@ Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, an
 |-------|------|-----------|
 | `card` | Static container. Transparent at rest. | `demos/fundamental--accepted/index.html#cards` |
 | `card--interactive` | Sticky active or minimized state with collapsible body. | `demos/fundamental--accepted/index.html#cards` |
+| `card--link` | Anchor card. Whole surface navigates. | `demos/fundamental--accepted/index.html#cards` |
 | `card--shout` | Inverted surface. One per column. | `demos/fundamental--accepted/index.html#cards` |
 | `field` | Label and value sharing one row. No box. | `demos/fundamental--accepted/index.html#fields` |
 | `button` | Full-width affordance. Primary or secondary. | `demos/fundamental--accepted/index.html#buttons` |
@@ -247,16 +248,27 @@ Every widget is a card. Transparent at rest, 3% on hover/focus/active. No border
   </div>
   <button class="button button--primary t-subtitle">Commit the choice</button>
 </div>
+
+<!-- Link card. The whole surface is one navigation affordance. -->
+<a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md">
+  <div class="card__heading">
+    <h3 class="t-title">Patterns</h3>
+    <p class="t-caption">When composing any layout, start here.</p>
+  </div>
+  <span class="button t-subtitle">Browse patterns</span>
+</a>
 ```
 
 Rules:
 
-- Interactive cards need hidden content. A card that only fires an action stays static.
+- Interactive cards need hidden content. A card that only fires an action stays static; a card that opens another document is a link card.
+- Link cards render as an `<a>`. The button inside is a `<span>` labeling the destination, never a nested `<button>` or second `<a>`. One card, one target.
+- The stack script skips link cards: no promotion, no glide, the click just navigates.
 - One active per stack.
 - One shout per column. If everything shouts, nothing does.
 - Primary and minimized button labels never match.
 - A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12 px half-inset on its own. No `card__body` wrapper needed.
-- Used in: card stack, three columns, comment.
+- Used in: card stack, three columns, comment; link cards in: inspector pointer groups, doc shelves.
 
 Deep link: `demos/fundamental--accepted/index.html#cards`.
 
@@ -442,6 +454,7 @@ Rules:
 - Scroll-spy is doc-internal. Cross-doc navigation lives in the inspector, not the sidebar.
 - `toc__indicator` binds once; kit.js repositions on scroll.
 - `data-nav="manual"` opts a single nav out of auto-fill. Other navs on the page keep auto-filling.
+- Anchor jumps glide via the kit's rAF tween. Never declare `scroll-behavior: smooth` on the columns — a CSS glide and a JS glide on the same tree cancel each other and the scroll dies a few pixels in.
 - Used in: three columns, narrow mobile.
 
 Deep link: `demos/fundamental--accepted/index.html#navigation`.

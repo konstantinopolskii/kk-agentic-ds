@@ -2,6 +2,27 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.11.0, 2026-07-17
+
+Minor. Link cards, a rendered doc viewer, and a working sidebar scroll. Three defects shared one root: the pointer cards on the system root were `card--interactive` anchors with no hidden content (off-canon), their clicks triggered the inspector stack's promote-and-glide before navigation, and the destinations were raw markdown files the browser printed as plain text. Nav clicks in the sidebar died a few pixels in because the CSS smooth scroll and the JS smooth scroll cancelled each other.
+
+### Added
+- `card--link` — anchor card variant. The whole surface is one navigation affordance; the button span inside labels the destination. Hover fill from the base card, `scale(0.96)` press, focus-visible surface. The inspector stack script skips link cards entirely: no promotion, no glide, the click just navigates.
+- `doc.html` — rendered viewer for canon markdown. Reads `?src=`, allows relative repo paths only, stamps `data-md-src`, titles the tab after the file, renders through `js/md.js` in the standard three-column shell. Sidebar TOC auto-fills; the inspector carries the book shelf; the current book's own card hides. The five canon pointer cards on the system root now route through it instead of linking raw `.md`.
+- `js/kit.js` — module-level `glideScroll(el, target, duration)`, the kit's one smooth-scroll path. Sidebar nav clicks, sidebar active-group tracking, and the inspector stack all ride it. Nav-click scroll target measured via `getBoundingClientRect` against the book's own box instead of `offsetTop` (which resolves against the body and only matched when the book column started at the page top).
+- `style.css` — `[hidden] { display: none !important }`. Component display values (card's flex) no longer undo the UA hidden rule.
+- Scroll-spy fallback to the first anchored nav id. The lead h1 article is excluded from the generated nav, so the indicator used to sit dead until the reader scrolled past the hero.
+
+### Removed
+- `scroll-behavior: smooth` on `.sidebar, .book`. A CSS glide and a JS glide on the same element tree cancel each other in Chromium and the scroll stops a few pixels in. One owner now: the script.
+- `glideInspectorScroll`'s private tween body — delegates to the shared `glideScroll`.
+
+### Changed
+- `index.html` — nine pointer cards swap `card--interactive` for `card--link`; five canon cards point at `doc.html?src=…`; tokens and demo cards keep direct links. Script tags gain `?v=` cache-busting in line with the CSS links.
+- `skills/kk-design-system/canon/components.md` — card registry and card section document the link-card shape and its rules; navigation rules name the JS-owned glide and forbid re-adding CSS `scroll-behavior` on the columns.
+- `skills/kk-design-system/canon/patterns.md` — inspector-group registry row covers link cards.
+- `package.json` + `.claude-plugin/plugin.json` 1.10.0 → 1.11.0.
+
 ## 1.10.0, 2026-04-27
 
 Minor. Auto-generated sidebar nav. The kit now builds the sidebar TOC at runtime from the rendered `.book` heading rank. The four consuming pages collapse their hand-curated `<section class="nav-group">` blocks to a one-line empty shell; the kit fills it. Per-page `kk:md-rendered` hooks retire — `js/kit.js` listens at the module level and refreshes the TOC, scroll-spy, and section-id stamping on every render.

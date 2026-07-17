@@ -224,6 +224,34 @@
   var scrollSpyObserver = null;
 
   // ================================================================
+  // glideScroll — rAF tween of an element's scrollTop. The kit's one
+  // smooth-scroll path. Native scrollTo({behavior:'smooth'}) is out:
+  // two columns gliding in the same frame (sidebar chasing the active
+  // group while the book jumps to a section) cancel each other in
+  // Chromium, and CSS scroll-behavior fights JS-driven animation on
+  // the same element tree. One rAF per element; a newer glide on the
+  // same element supersedes the running one.
+  // ================================================================
+  var glideIds = (typeof WeakMap !== 'undefined') ? new WeakMap() : null;
+  function glideScroll(el, target, duration) {
+    var startTop = el.scrollTop;
+    var distance = target - startTop;
+    if (Math.abs(distance) < 1) return;
+    var startTime = performance.now();
+    var myId = (glideIds && glideIds.get(el) || 0) + 1;
+    if (glideIds) glideIds.set(el, myId);
+    function step(now) {
+      if (glideIds && glideIds.get(el) !== myId) return;
+      var elapsed = now - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.scrollTop = startTop + distance * eased;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ================================================================
   // Scroll-spy — sidebar indicator tracks the visible section in .book
   //
   // Refresh-friendly: on re-entry, observes any new .book__section
@@ -248,6 +276,20 @@
     var indicator = nav.querySelector('.toc__indicator');
     var firstSections = doc.querySelectorAll('.book__section');
     var firstId = firstSections[0] && firstSections[0].id;
+
+    // The lead article (the h1 hero) is excluded from the generated nav,
+    // so an id can be "best visible" while owning no nav anchor. Falling
+    // back to the first anchored id keeps the indicator alive at the top
+    // of the page instead of leaving the nav stateless until the reader
+    // scrolls past the hero.
+    function firstAnchoredId() {
+      var a = nav.querySelector('a[href^="#"]');
+      return a ? a.getAttribute('href').slice(1) : null;
+    }
+    function anchoredOrFirst(id) {
+      if (id && nav.querySelector('a[href="#' + id + '"]')) return id;
+      return firstAnchoredId();
+    }
 
     function setActive(id) {
       var activeAnchor = null;
@@ -288,7 +330,7 @@
       } else {
         delta = gRect.bottom - sRect.bottom;
       }
-      sidebar.scrollTo({ top: sidebar.scrollTop + delta, behavior: 'smooth' });
+      glideScroll(sidebar, sidebar.scrollTop + delta, 320);
     }
 
     // Indicator measures the active anchor's own rect — tight on the
@@ -335,11 +377,11 @@
       for (var i = 0; i < liveSections.length; i++) {
         if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
       }
-      setActive(best || (liveSections[0] && liveSections[0].id));
+      setActive(anchoredOrFirst(best));
     }, { root: doc, rootMargin: '0px 0px -60% 0px', threshold: 0 });
 
     firstSections.forEach(function (s) { observer.observe(s); });
-    setActive(firstId);
+    setActive(anchoredOrFirst(firstId));
     scrollSpyObserver = observer;
 
     global.addEventListener('resize', function () {
@@ -372,15 +414,21 @@
         for (var i = 0; i < liveSections.length; i++) {
           if (visible.has(liveSections[i].id)) { best = liveSections[i].id; break; }
         }
-        setActive(best || (liveSections[0] && liveSections[0].id));
+        setActive(anchoredOrFirst(best));
       };
       doc.addEventListener('scrollend', release, { once: true });
       doc.addEventListener('wheel', release, { once: true, passive: true });
       doc.addEventListener('touchstart', release, { once: true, passive: true });
       var timeoutId = setTimeout(release, 1500);
 
-      var top = Math.max(0, target.offsetTop - 20);
-      doc.scrollTo({ top: top, behavior: 'smooth' });
+      // Measure against the book's own box, not offsetTop — the offset
+      // chain resolves against the body and only matches by luck when
+      // the book column starts at the page top.
+      var top = Math.max(
+        0,
+        doc.scrollTop + target.getBoundingClientRect().top - doc.getBoundingClientRect().top - 20
+      );
+      glideScroll(doc, top, 320);
     });
 
     bound.scrollSpy = true;
@@ -499,25 +547,9 @@
     var inspector = document.querySelector('.inspector');
     if (!inspector) return;
 
-    // JS-driven tween of inspector.scrollTop. CSS scroll-behavior:smooth
-    // fights the collapsible's height animation on the same element
-    // tree. rAF keeps the glide at display rate.
-    var scrollAnimId = 0;
+    // Inspector glides ride the shared module-level tween.
     function glideInspectorScroll(target, duration) {
-      var startTop = inspector.scrollTop;
-      var distance = target - startTop;
-      if (Math.abs(distance) < 1) return;
-      var startTime = performance.now();
-      var myId = ++scrollAnimId;
-      function step(now) {
-        if (myId !== scrollAnimId) return;
-        var elapsed = now - startTime;
-        var progress = Math.min(elapsed / duration, 1);
-        var eased = 1 - Math.pow(1 - progress, 3);
-        inspector.scrollTop = startTop + distance * eased;
-        if (progress < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
+      glideScroll(inspector, target, duration);
     }
 
     function collapseAllActive() {
@@ -564,6 +596,10 @@
       // Kebab menu + popover are isolated surfaces — they open/close
       // without promoting or demoting any card in the stack.
       if (e.target.closest('.comment__menu, .comment__menu-popover')) return;
+
+      // Link cards navigate. The stack neither promotes nor glides them —
+      // any scroll before a page swap reads as jank.
+      if (e.target.closest('a.card, .card--link')) return;
 
       var card = e.target.closest('.card');
       // Empty space inside the inspector deactivates whatever is

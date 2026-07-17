@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Agentic Design System. Signed, by Konstantin Konstantinopolskii.</title>
+  <title>Reading a book. The Agentic Design System.</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="./vars.css?v=1.11.0">
   <link rel="stylesheet" href="./style.css?v=1.11.0">
@@ -12,9 +12,8 @@
   <div class="app" data-view="doc">
 
     <!-- ============================================================== -->
-    <!-- Sidebar: brand + scroll-spy TOC. Kit auto-fills the nav from   -->
-    <!-- the rendered .book heading rank (1.10.0). Opt-out per consumer -->
-    <!-- by setting data-nav="manual" on the sidebar__nav element.      -->
+    <!-- Sidebar: brand + scroll-spy TOC. Auto-filled from the rendered -->
+    <!-- book heading rank, same as the system root.                    -->
     <!-- ============================================================== -->
     <aside class="sidebar" aria-label="Navigation">
       <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
@@ -30,26 +29,22 @@
     </aside>
 
     <!-- ============================================================== -->
-    <!-- Book: the rendered manifesto. No shell hero. Source #Manifesto -->
-    <!-- carries the page h1 at t-hero via data-md-heading-offset="0".  -->
-    <!-- Post-render hook wraps each top-level ## into a .book__section -->
-    <!-- so scroll-spy tracks and the sidebar TOC resolves.             -->
+    <!-- Book: one canon file, picked by the ?src= query param. The     -->
+    <!-- inline script below stamps data-md-src before md.js runs.      -->
+    <!-- Canon books carry their own h1, so the heading offset is 0.    -->
     <!-- ============================================================== -->
-    <main class="book" id="doc" data-md-src="./skills/kk-design-system/manifesto.md" data-md-heading-offset="0">
+    <main class="book" id="doc" data-md-heading-offset="0">
     </main>
 
     <!-- ============================================================== -->
-    <!-- Inspector: eight pointer cards. Six canon + two demos.         -->
-    <!-- Each card is a card--link anchor wrapping its content.      -->
-    <!-- One inspector__group per rank tier (canon vs demos).           -->
-    <!-- Pattern-first reading order on canon: patterns → components →  -->
-    <!-- voice → pipeline → protocols → tokens.                         -->
+    <!-- Inspector: the shelf. Every canon book plus the system root,   -->
+    <!-- so the reader moves between books without leaving the shell.   -->
     <!-- ============================================================== -->
-    <aside class="inspector" aria-label="Open a book">
+    <aside class="inspector" aria-label="Open another book">
 
       <section class="inspector__group">
         <header class="card card--heading">
-          <h2 class="t-display">Open a book</h2>
+          <h2 class="t-display">Open another book</h2>
         </header>
 
         <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md">
@@ -91,55 +86,55 @@
           </div>
           <span class="button t-subtitle">Check the protocols</span>
         </a>
-
-        <a class="card card--link" href="./skills/kk-design-system/tokens.json">
-          <div class="card__heading">
-            <h3 class="t-title">Tokens</h3>
-            <p class="t-caption">When code needs a design token, read the machine-readable source of truth.</p>
-          </div>
-          <span class="button t-subtitle">Inspect tokens</span>
-        </a>
       </section>
 
       <section class="inspector__group">
         <header class="card card--heading">
-          <h2 class="t-display">Demos</h2>
+          <h2 class="t-display">Return</h2>
         </header>
 
-        <a class="card card--link" href="./demos/fundamental--accepted/index.html">
+        <a class="card card--link" href="./index.html">
           <div class="card__heading">
-            <h3 class="t-title">Fundamental</h3>
-            <p class="t-caption">Live component inventory. Deep-link target for every canon class.</p>
+            <h3 class="t-title">The system root</h3>
+            <p class="t-caption">Manifesto, principles, agents, and the shelf of every book and demo.</p>
           </div>
-          <span class="button t-subtitle">Tour the inventory</span>
-        </a>
-
-        <a class="card card--link" href="./demos/md-renderer-smoke/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Renderer smoke</h3>
-            <p class="t-caption">Side-by-side markdown render vs source. Ship-time check for the .md pipeline.</p>
-          </div>
-          <span class="button t-subtitle">Run the smoke test</span>
-        </a>
-
-        <a class="card card--link" href="./demos/comment-persistence/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Comment persistence</h3>
-            <p class="t-caption">Highlight, comment, reload. <code class="t-code">localStorage</code> by default; switch off or pass a custom adapter.</p>
-          </div>
-          <span class="button t-subtitle">Try the loop</span>
+          <span class="button t-subtitle">Back to the manifesto</span>
         </a>
       </section>
     </aside>
   </div>
 
   <!-- ================================================================ -->
-  <!-- Scripts: kit.js first (auto-init on DOMContentLoaded); md.js     -->
-  <!-- fetches the manifesto into .book and auto-wraps each h2-rooted  -->
-  <!-- region in <article class="book__section">. kit.js listens for   -->
-  <!-- kk:md-rendered itself and stamps section + heading ids, builds  -->
-  <!-- the sidebar TOC, and refreshes scroll-spy. No per-page hook.    -->
+  <!-- The src resolver runs before md.js: reads ?src=, allows only     -->
+  <!-- relative repo paths, stamps data-md-src, and titles the tab      -->
+  <!-- after the file. A missing or rejected src renders a pointer      -->
+  <!-- back to the system root instead of an empty column.              -->
   <!-- ================================================================ -->
+  <script>
+    (function () {
+      var src = new URLSearchParams(location.search).get('src') || '';
+      var relative = src && !/^[a-z][a-z0-9+.-]*:|^\/\/|\.\./i.test(src);
+      var book = document.getElementById('doc');
+      if (relative) {
+        book.setAttribute('data-md-src', src);
+        var name = (src.split('/').pop() || '').replace(/\.md$/, '');
+        if (name) {
+          name = name.charAt(0).toUpperCase() + name.slice(1);
+          document.title = name + '. The Agentic Design System.';
+        }
+        // Hide the current book's own card on the shelf — the reader is
+        // already holding it.
+        var self = document.querySelector('.inspector a[href$="' + src.replace(/^\.\//, '') + '"]');
+        if (self) self.setAttribute('hidden', '');
+      } else {
+        book.innerHTML =
+          '<article class="book__section">' +
+          '<h1 class="t-hero">No book selected</h1>' +
+          '<p class="t-body">This page renders one canon file, named by the src query param. Pick a book from the shelf on the right, or return to the system root.</p>' +
+          '</article>';
+      }
+    })();
+  </script>
   <script src="./js/kit.js?v=1.11.0" defer></script>
   <script src="./js/md.js?v=1.11.0" defer></script>
 
@@ -151,8 +146,8 @@
       <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
     </svg>
   </button>
-  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open a book">
-    <span class="fab__count">9</span>
+  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open another book">
+    <span class="fab__count">6</span>
   </button>
 </body>
 </html>

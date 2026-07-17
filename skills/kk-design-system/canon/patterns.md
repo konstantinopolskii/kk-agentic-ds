@@ -193,7 +193,7 @@ Twelve compositions sliced out of shipped prototypes plus one structural wrapper
     </tr>
     <tr>
       <td class="t-body"><a href="../../../demos/fundamental--accepted/patterns/inspector-group.html"><span class="t-code">inspector-group</span></a></td>
-      <td class="t-body">Heading card above a stack of interactive cards inside the right-hand column.</td>
+      <td class="t-body">Heading card above a stack of interactive or link cards inside the right-hand column.</td>
     </tr>
     <tr>
       <td class="t-body"><a href="../../../demos/fundamental--accepted/patterns/comment-thread.html"><span class="t-code">comment-thread</span></a></td>
