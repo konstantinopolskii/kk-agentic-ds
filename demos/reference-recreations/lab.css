@@ -230,3 +230,48 @@
   gap: var(--space-3);
 }
 .card__toprow > * { margin: 0; }
+
+/* Poster — the eighth type step the seven-size scale refused. One per
+   page, and only when the page IS the word: a nameplate, an identity,
+   the number a product exists to show. Clamped so phones still hold it. */
+.t-poster {
+  font-size: clamp(64px, 11vw, 150px);
+  line-height: 0.95;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tighter);
+  text-wrap: balance;
+}
+/* Inside a shout card the poster answers to the card, not the viewport:
+   container units keep the longest word on one line. */
+.card--shout { container-type: inline-size; }
+.card--shout .t-poster { font-size: clamp(56px, 16cqw, 150px); }
+/* Poster metric — the same step for a number: tabular, tight, allowed
+   to dominate a shout card the way a hero word dominates a page. */
+.metric--poster .metric__value {
+  font-size: clamp(72px, 9vw, 120px);
+  line-height: 1;
+  letter-spacing: var(--track-tighter);
+}
+
+/* Specimen — a glyph proof sheet set in the kit's own face. Hairline
+   cells, one glyph each, weights across the variable axis; at most one
+   cell inverts to ink. Editorial figure material, not a component. */
+.specimen,
+.figure > .specimen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 0.5px solid var(--color-border-strong);
+}
+.specimen > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1;
+  border: 0.5px solid var(--color-border);
+}
+.specimen > .specimen--ink {
+  background: var(--color-text);
+  color: var(--color-bg);
+}

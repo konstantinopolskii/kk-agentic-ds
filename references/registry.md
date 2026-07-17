@@ -300,6 +300,8 @@ Study 01 measures against the real Rank Tracker board (owner-supplied capture) a
 
 **Documented gaps.** Four studies sit outside the band for structural reasons the metric cannot close and the kit will not chase: 06 and 08 rest on photographs, and photo texture blurs softer than our line art and text UI measure; 03 sets 150 px poster type against our 66 px cap; 12 is a poster void, where a 0.0014 absolute delta inflates to 30.9% on tiny denominators. These are the kit's constitution holding, not recreations failing.
 
+**The lab answer.** An owner-sanctioned experiment layer (`demos/reference-recreations/lab.css`) now tests closures the canon refused: `t-poster` and `metric--poster` give 03, 10, 12, and 14 the poster step the 66 px cap denied (each as a `-v2` page beside the shipped original), the board shell gives study 1 its three-rail product skeleton, and `specimen` sets a glyph proof sheet in the kit's own face. Everything in the layer rides kit tokens; each class either earns an evolve into canon or dies in the lab.
+
 ## Signoff
 
 <div class="book__signoff">
