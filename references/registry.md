@@ -154,9 +154,9 @@ Source: SEOmonitor Rank Tracker, dark theme. The working surface of an SEO agenc
 
 Measured. Left rail 72 pt, icon-led. Work column fluid. Right detail rail 320 pt. Row height 44 pt. Keyword at 14 pt regular, position at 15 pt bold tabular, delta as ▲2 at 12 pt colored, sparkline 64 by 20 pt, search volume right-aligned tabular. Toolbar: segment tabs 32 pt tall, search field, date range. Row hairlines at about 8% white.
 
-Kit recreation. The three-column shell is this exact skeleton: sidebar as tool rail, book as work column, inspector as detail rail. Rows become `data-table` with `data-table__num` tabular cells, `data-table__delta` carrying ▲2 as glyph plus `t-caption--bold`, `spark` inline. Segment tabs become a `chip` row with one `data-state="selected"`. Light surface, hairline rows, position bold, everything else regular.
+Kit recreation. Rebuilt against the live board, owner-supplied capture at a 2000 px viewport. A `lab.css` board shell: toolbar over three rails on the reference's 27/27/36 split. Groups rail — `group-card` with a warning line and five stat columns under a shared `legend`. Work list — `kw` rows on hairlines: name and `tag` row, then SERP share, volume with delta and `spark`, rank with a `pill` move stamp, opportunity with its difficulty word. Detail rail — `card--tight` modules: Visibility metrics over a two-series axis `chart`, Search demand with a bar spark and `field--row` splits, SERP and Opportunity paired in a `rail-duo`, Suggestions closing on the one action. Light surface; the dark theme stays in the reference. Blur 2 at the matched viewport: +14.5%, in band.
 
-Gap closed by 1.12.0: `data-table`, `spark`, `chip`, `data-table__delta`.
+Gap held open: board shell, legend-aligned stat grids, `pill`, axis chart — all live in `demos/reference-recreations/lab.css` as evolve candidates, not canon.
 
 ## Study 2. Monthly forecast module
 
@@ -164,7 +164,7 @@ Source: SEOmonitor light screens. One card answers one question: will traffic hi
 
 Measured. Card 480 by 320 pt, 16 pt radius, hairline border. Header row: title 16 pt bold left, info glyph right. Chart area 200 pt tall: twelve gray bars for actual traffic, a line for the forecast, dashed continuation for projection. Month labels 11 pt muted below. Y gridlines hairline. Values appear on hover.
 
-Kit recreation. A `card` with `card__heading`, then a `metric` row stating the headline number in text before any chart: value 38 pt bold, delta line ▲12% vs last month as glyph plus caption. Below, `spark spark--bars` at panel height with month labels in `t-micro t-muted`. Direct labels on first, peak, and last bars; no hover-only truth, no legend. The chart decorates the number, never replaces it.
+Kit recreation. Retired from the demo set at the owner's call — the study stays as the reference record. The pattern it proved still holds: a `card` states the headline number in text before any chart, the chart decorates the number, direct labels beat legends.
 
 Gap closed by 1.12.0: `metric`, `spark--bars`, chart policy text.
 
@@ -294,7 +294,7 @@ The first recreation batch matched structure but not weight: too much air, book 
 
 Mean 17.7%, inside the band. First honest run measured 42.8%; seven rounds of rhythm work closed it.
 
-Studies 01 and 02 measured separately at blur 5 against SEOmonitor's own product imagery (marketing chrome cropped out): 01 rank tracker −6.2%, 02 forecast module −14.5%. Both inside the band.
+Study 01 measures against the real Rank Tracker board (owner-supplied capture) at its own 2000 px viewport: +14.5% at blur 2, in band. The same pair at blur 5 reads +80% — a documented artifact, not a density gap: heavy blur erases a dark theme's low-contrast fine detail while light-theme ink survives, so pairs that cross theme polarity only compare fairly at low blur. Study 02's recreation is retired; its earlier blur-5 number (−14.5% against the forecast module) stands as record.
 
 **What the pass changed.** Product rhythm on all three shells (section pads 24/32, sibling gap 12, heading-below 20, `* + h2` 40, card pads 16/20 with 8 px gap, media rows at 8 px vertical, hero ceremony 60 → 20). `book__section--fill` and `book__section--stage` for full-viewport product screens. The affordance hover law. The trail button on media rows. Pure reading pages left the shell entirely — a blogpost is a bare `.book` with body scroll and full ceremony.
 

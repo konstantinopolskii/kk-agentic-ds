@@ -1,0 +1,232 @@
+/* Lab — invented components for the rank-tracker rebuild experiment.
+   Kit tokens only, kit chart policy, kit hairlines. Nothing here is
+   canon yet: each class is a candidate for the evolve protocol once it
+   proves itself against the reference. Loaded after style.css. */
+
+/* Board shell — a three-rail product dashboard. Toolbar spans the top,
+   three independently scrolling rails below: groups, work list, detail.
+   Sibling of the doc shell; denser, no book ceremony. */
+.app--board {
+  /* Rail proportions from the reference: groups and detail hold their
+     share as the viewport grows, the work list takes the rest. */
+  grid-template-columns: clamp(320px, 27%, 560px) minmax(0, 1fr) clamp(420px, 36%, 740px);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+.board__bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 0.5px solid var(--color-border);
+}
+.board__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.board__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--color-text);
+  color: var(--color-bg);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.board__logo > svg { width: 22px; height: 22px; display: block; }
+.board__controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* Rail — one scrolling column of the board. The groups rail closes with
+   a hairline on its right, the detail rail opens with one on its left;
+   the work list between them stays open. */
+.rail {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-4) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.rail--groups { border-right: 0.5px solid var(--color-border); }
+.rail--detail { border-left: 0.5px solid var(--color-border); gap: var(--space-3); }
+.rail__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-2) var(--space-2);
+}
+.rail__head > * { margin: 0; }
+
+/* Legend — the column headings a rail of aligned stats answers to.
+   Same grid template as the rows below it; micro bold over the strong
+   hairline, exactly like a data-table head. */
+.legend {
+  padding: 0 var(--space-2) var(--space-2);
+  border-bottom: 0.5px solid var(--color-border-strong);
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-bold);
+}
+
+/* Shared column templates: legend and rows use the same one, so numbers
+   sit under their headings without a table element. */
+.cols-groups {
+  display: grid;
+  grid-template-columns: minmax(28px, 0.6fr) minmax(40px, 0.8fr) minmax(56px, 1.2fr) minmax(44px, 1fr) minmax(36px, 0.8fr);
+  gap: var(--space-2);
+  align-items: baseline;
+}
+/* Group stats compress to micro so five columns hold a 360px rail. */
+.group-card .stat__v {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+}
+.cols-kw {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1.3fr) minmax(0, 1fr) 88px;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Group card — one tracked segment: name, its open issues, and the
+   five standing numbers under the rail legend. Active group fills 6%,
+   rest fills on hover only. */
+.group-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+}
+.group-card:hover { background: var(--color-surface-overlay); }
+.group-card[data-state="active"] { background: var(--color-surface-strong); }
+.group-card__title { margin: 0; }
+.group-card__note { margin: 0; }
+
+/* Stat — a value with its delta beneath, for aligned stat grids.
+   Deltas ride glyph plus weight; flat deltas demote to regular muted. */
+.stat { display: flex; flex-direction: column; min-width: 0; }
+.stat__v {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.stat__d {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.stat__d--flat { font-weight: var(--fw-regular); color: var(--color-text-muted); }
+.stat__d--label { font-weight: var(--fw-regular); color: var(--color-text-muted); }
+/* Stat pair — a stat beside its trend mark or move pill, one cell. */
+.stat-pair {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* Keyword row — the work list's unit: name and tags on the first line,
+   the four stat columns under the list legend on the second. Rows
+   separate on hairlines like table rows, hover fills 3%. */
+.kw {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.kw + .kw { border-top: 0.5px solid var(--color-border); }
+.kw:hover { background: var(--color-surface-overlay); }
+.kw__title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+/* Pill — a rank move stamped on the ink surface: solid for movement,
+   quiet outline for standing still. Glyph carries direction. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--fs-micro);
+  line-height: 20px;
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pill--quiet {
+  background: transparent;
+  color: var(--color-text-muted);
+  box-shadow: inset 0 0 0 0.5px var(--color-border-strong);
+}
+
+/* Chart — the panel-scale line chart: y-axis micros on the left, the
+   plot on a hairline grid, series as non-scaling 1.5px strokes. Two
+   series maximum: ink and the 20% hairline tone, per chart policy. */
+.chart {
+  display: flex;
+  gap: var(--space-2);
+  height: 132px;
+}
+.chart__y {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: right;
+  font-size: var(--fs-micro);
+  line-height: 1;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  padding: 1px 0;
+}
+.chart__plot { flex: 1; min-width: 0; position: relative; }
+.chart__plot > svg { width: 100%; height: 100%; display: block; }
+
+/* Scale — a share bar split into named bands, heaviest ink first:
+   ink, 20% hairline, 10% hairline. Values live in the labels row. */
+.scale { display: flex; gap: var(--space-1); height: 6px; }
+.scale > span { border-radius: var(--radius-full); min-width: 6px; }
+.scale__a { background: var(--color-text); }
+.scale__b { background: var(--color-border-strong); }
+.scale__c { background: var(--color-border); }
+
+/* Duo — two detail cards sharing one rail row. */
+.rail-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+/* Card head row — caption-bold title left, micro meta right. */
+.card__toprow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.card__toprow > * { margin: 0; }
