@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parity candidate — Vue components</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp, h } from 'vue'
+    import { KButton, KChip, KChipWrap, KTag, KMetric, KSpark } from '../src/index.js'
+
+    const app = createApp({
+      render: () =>
+        h('main', { class: 'book' }, [
+          h('article', { class: 'book__section' }, [
+            h('h2', { class: 't-display' }, 'Parity'),
+            h('div', { class: 'book__example book__example--row' }, [
+              h(KButton, () => 'Browse patterns'),
+              h(KButton, { primary: true }, () => 'Commit the choice'),
+            ]),
+            h(KChipWrap, () => [
+              h(KChip, { pressed: true }, () => 'Founder'),
+              h(KChip, () => 'Strategist'),
+              h(KChip, () => 'Mentor'),
+            ]),
+            h('div', { class: 'book__example book__example--row' }, [
+              h(KTag, () => 'Foundations'),
+              h(KTag, () => '9 components'),
+              h(KTag, { bold: true }, () => 'Signed'),
+            ]),
+            h('div', { class: 'metric-row' }, [
+              h(KMetric, { value: '30K', label: 'Users monthly', delta: '▲ 100%' }),
+              h(KMetric, { value: '5K', label: 'Users daily' }),
+              h(KMetric, { value: '4.7', label: 'From 1 000+ reviews' }),
+            ]),
+            h('div', { class: 'book__example book__example--row' }, [
+              h(KSpark, {
+                values: [30, 36, 42, 50, 58, 66, 75, 85],
+                label: 'Position, 8 weeks, rising',
+              }),
+            ]),
+            h(KSpark, {
+              values: [44, 48, 45, 52, 49, 56, 53, 60, 58, 66, 74, 82],
+              soft: [0, 1],
+              panel: true,
+              label: 'Traffic, 12 months, actuals soft, forecast ink',
+            }),
+          ]),
+        ]),
+    })
+    // The static golden has no mount div: replace it so the DOM tree
+    // (body > main.book) matches the golden exactly.
+    const el = document.getElementById('app')
+    const host = document.createElement('div')
+    app.mount(host)
+    el.replaceWith(...host.children)
+  </script>
+</body>
+</html>
