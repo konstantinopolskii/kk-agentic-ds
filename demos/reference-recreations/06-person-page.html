@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Person page recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <div class="app app--single">
+    <main class="book" id="doc">
+
+      <article class="book__section book__section--fill book__section--stage">
+        <div class="card card--shout">
+          <figure class="figure">
+            <svg viewBox="0 0 440 330" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1" fill="none" aria-hidden="true">
+              <g transform="translate(20,15)">
+                <path d="M255,45 C225,40 200,52 190,78 C185,92 195,98 188,113 C182,126 172,122 162,136 C152,150 148,158 166,164 C176,168 168,177 170,184 C173,192 187,193 185,202 C183,210 176,212 178,222 C180,233 196,239 206,251 C214,261 220,270 224,284" />
+                <path d="M255,45 C288,50 308,72 313,98 C318,124 302,138 308,163 C312,183 298,194 293,214" />
+                <path d="M188,101 C196,97 206,98 212,104" />
+                <path d="M224,284 C254,277 296,279 328,268" />
+              </g>
+            </svg>
+          </figure>
+          <div>
+            <h1 class="t-hero">Margot Robbie</h1>
+            <p class="t-caption"><span class="t-caption--bold">8 of 32</span> <span class="t-muted">movies watched</span></p>
+            <p class="t-caption"><span class="t-caption--bold">195 151</span> <span class="t-muted">fans on Must</span></p>
+            <p class="t-caption"><span class="t-caption--bold">7.6</span> <span class="t-muted">average rating</span></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="book__section" id="filmography">
+        <h2 class="t-display">Filmography</h2>
+        <div class="chip-wrap">
+          <button class="chip" type="button" aria-pressed="true">All</button>
+          <button class="chip" type="button" aria-pressed="false">Want</button>
+          <button class="chip" type="button" aria-pressed="false">Watched</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Film</th>
+              <th scope="col" class="data-table__num">Year</th>
+              <th scope="col" class="data-table__num">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="data-table__lead">The Wolf of Wall Street</td>
+              <td class="data-table__num">2013</td>
+              <td class="data-table__num">8.2</td>
+            </tr>
+            <tr>
+              <td class="data-table__lead">Suicide Squad</td>
+              <td class="data-table__num">2016</td>
+              <td class="data-table__num">5.9</td>
+            </tr>
+            <tr>
+              <td class="data-table__lead">I, Tonya</td>
+              <td class="data-table__num">2017</td>
+              <td class="data-table__num">7.5</td>
+            </tr>
+            <tr>
+              <td class="data-table__lead">Once Upon a Time in Hollywood</td>
+              <td class="data-table__num">2019</td>
+              <td class="data-table__num">7.6</td>
+            </tr>
+            <tr>
+              <td class="data-table__lead">Barbie</td>
+              <td class="data-table__num">2023</td>
+              <td class="data-table__num">6.9</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="book__section" id="about">
+        <h2 class="t-display">About</h2>
+        <p class="t-body">Margot Robbie started acting on the Australian soap opera Neighbours in 2008 and moved to Los Angeles in 2011.</p>
+        <p class="t-body">She co-founded the production company LuckyChap Entertainment in 2014, with producing credits on Promising Young Woman, Saltburn, and Barbie.</p>
+      </article>
+
+    </main>
+  </div>
+</body>
+</html>

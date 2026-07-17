@@ -26,12 +26,17 @@ Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, an
 | `book__spec` | Key and value rows inside a card. | `demos/fundamental--accepted/index.html#spec-list` |
 | `t-list` | Hairlined prose list. `<ul>` or `<ol>`. | `demos/fundamental--accepted/index.html#lists` |
 | `t-code` | Inline code chip. `.t-code--block` for paragraphs. | `demos/fundamental--accepted/index.html#code` |
+| `chip` | Pressable pill. Selects among peers. | `demos/reference-recreations/01-rank-tracker.html` |
+| `media` | Row molecule: figure, body, trailing meta. | `demos/reference-recreations/08-status-feed.html` |
+| `metric` | Number-first stat for panels. | `demos/reference-recreations/02-forecast-module.html` |
+| `data-table` | Dense product rows with numeric cells. | `demos/reference-recreations/01-rank-tracker.html` |
+| `spark` | Monochrome trend marks under the data-ink policy. | `demos/reference-recreations/02-forecast-module.html` |
 | `preview-frame` | Scaled iframe for doc surfaces. | `demos/fundamental--accepted/index.html#preview-frame` |
 | `registry-table` | Dense two-column inventory for kit docs. | `demos/fundamental--accepted/index.html#registry-table` |
 
 ## Foundations
 
-Foundations are the six rule sets every component sits on top of. Each subsection carries the key rules and a pointer to the live inventory in the fundamental demo. Machine-readable source of truth is `tokens.json`.
+Foundations are the seven rule sets every component sits on top of. Each subsection carries the key rules and a pointer to the live inventory in the fundamental demo. Machine-readable source of truth is `tokens.json`.
 
 ### Material
 
@@ -140,6 +145,20 @@ Default: `200ms × ease-out` on `transform` and `opacity` only.
 
 Deep link: `demos/fundamental--accepted/index.html#motion`.
 
+### Data ink
+
+Charts decorate numbers; they never replace them. Every charted value stays readable as text somewhere on the surface.
+
+- Monochrome data ink. Primary series in `--color-text`; a secondary series demotes to `--color-border-strong`. No red, no green, no second hue.
+- Bars and lines only. No pies, no donuts, no gauges, no radar.
+- Direct labels over legends. Label the first, peak, and last points in text; a legend is a failure to label directly.
+- Deltas are direction glyphs plus weight: ▲2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong.
+- Gridlines and baselines are 0.5 px hairlines.
+- Data-driven dimensions (bar heights, line points) ride custom properties or SVG attributes and may fall below the 4 px grid — data ink is not layout. Everything around the chart stays on the grid.
+- No hover-only truth. Hover may add precision; it never holds the only copy of a value.
+
+Deep link: `demos/reference-recreations/02-forecast-module.html`.
+
 #### Animation registry
 
 Seven keyframes ship in the kit. Every motion in a kit surface either reuses one of these or runs the evolve protocol to add an eighth.
@@ -206,7 +225,7 @@ Use these on any element. No inline styles.
 | `t-caption--bold` | 16 / 24 · Bold 700 | Emphasized caption. |
 | `t-micro` | 14 / 20 · Medium 500 | Captions, citations, metadata. |
 | `t-muted` | opacity to `--color-text-muted` | Metadata only. |
-| `t-subtle` | opacity to `--color-text-subtle` | Placeholders only. |
+| `t-subtle` | opacity to `--color-text-subtle` | Placeholders, and metadata on inverted shout surfaces. |
 
 Forbidden: emitting raw `font-size`, `font-weight`, or `color` on elements. Always pick a utility class.
 
@@ -214,7 +233,7 @@ Deep link: `demos/fundamental--accepted/index.html#type`.
 
 ## Card
 
-Every widget is a card. Transparent at rest, 3% on hover/focus/active. No borders. No shadows. Three variants share one HTML shape. Reach for a card whenever a widget groups a heading, body, and at most one primary action.
+Every widget is a card. Transparent at rest; 3% on focus and active. Hover reacts only on `card--interactive` and `card--link` — a static card is furniture and stays still. Because book cards already rest on the 3% overlay, hover steps one notch further to the 6% strong surface, same ladder as buttons. No borders. No shadows. Three variants share one HTML shape. Reach for a card whenever a widget groups a heading, body, and at most one primary action.
 
 ```html
 <!-- Static card. Default. -->
@@ -261,6 +280,7 @@ Every widget is a card. Transparent at rest, 3% on hover/focus/active. No border
 
 Rules:
 
+- Only `card--interactive` and `card--link` react to hover, and they answer with the strong surface. Static cards never hover — affordance is a promise, and a card that lights up must do something when clicked.
 - Interactive cards need hidden content. A card that only fires an action stays static; a card that opens another document is a link card.
 - Link cards render as an `<a>`. The button inside is a `<span>` labeling the destination, never a nested `<button>` or second `<a>`. One card, one target.
 - The stack script skips link cards: no promotion, no glide, the click just navigates.
@@ -343,16 +363,15 @@ Binary toggle. A switch flips a single setting on or off. Anything with three or
 ```html
 <label class="switch">
   <input class="switch__input" type="checkbox" />
-  <span class="switch__track">
-    <span class="switch__thumb"></span>
-  </span>
-  <span class="t-caption switch__label">Label</span>
+  <span class="switch__track"></span>
+  <span class="t-caption">Label</span>
 </label>
 ```
 
 Rules:
 
 - One label per switch. The label names the setting, not the state.
+- The thumb is `.switch__track::after` — no inner thumb element. The track span stays empty.
 - `9999 px` radius on the thumb. `12 px` radius on the track.
 - Keyboard-operable via `<input type="checkbox">` under the hood.
 - Used in: field, spec list, card.
@@ -602,6 +621,177 @@ Replaces `.t-mono` and `.tag--inline`. The kit no longer ships those classes.
 
 Deep link: `demos/fundamental--accepted/index.html#code`.
 
+## Chip
+
+A tag the user can press. Chips select among peers: segment tabs, filter rails, multi-select wraps. Tag stays metadata, button commits an outcome, chip picks. Sourced from the reference study: role tabs on kk.consulting, habit picker in Joi, filter rows in Must.
+
+```html
+<div class="chip-wrap">
+  <button class="chip" type="button" aria-pressed="true">Founder</button>
+  <button class="chip" type="button" aria-pressed="false">Strategist</button>
+  <button class="chip" type="button" aria-pressed="false">Mentor</button>
+</div>
+```
+
+Rules:
+
+- Renders as `<button class="chip">` with `aria-pressed`, or `data-state="selected"` when a script owns the state.
+- Selected inverts: black surface, white label, bold. One selected per segment group; any number in a multi-select wrap.
+- A chip never navigates. A pill that opens a page is a link card or a plain link.
+- Groups wrap in `.chip-wrap`; the wrap owns the 8 px gaps.
+- Used in: filter rails, segment rows, onboarding multi-selects, data-table toolbars.
+
+Deep link: `demos/reference-recreations/01-rank-tracker.html`.
+
+## Media row
+
+The row molecule every feed, file list, byline, and related list shares: leading figure, two-line body, trailing meta. Sourced from Clique's status feed, WeTransfer's file rows, Must's lists.
+
+```html
+<div class="media">
+  <span class="avatar media__figure">GR</span>
+  <div class="media__body">
+    <p class="t-caption--bold">Giana Rosser</p>
+    <p class="t-caption t-muted">Is watching Last of Us</p>
+  </div>
+  <span class="tag media__trail">3</span>
+</div>
+
+<!-- Action form: the trail holds one compact button. -->
+<div class="media">
+  <span class="avatar media__figure"></span>
+  <div class="media__body">
+    <p class="t-caption--bold">Toki</p>
+    <p class="t-micro t-muted">11 291 km away</p>
+  </div>
+  <div class="media__trail">
+    <button class="button t-caption--bold" type="button">Poke</button>
+  </div>
+</div>
+
+<!-- Anchor form: the whole row is one target, like the link card. -->
+<a class="media" href="./doc.html?src=./references/registry.md">
+  <span class="media__figure media__figure--square"></span>
+  <div class="media__body">
+    <p class="t-caption--bold">Reference registry</p>
+    <p class="t-micro t-muted">12 studies, 5 components</p>
+  </div>
+</a>
+```
+
+Rules:
+
+- Hairline between sibling rows, never above the first or below the last. The field's divider law.
+- Body holds at most two lines: bold caption first, muted caption or micro second.
+- The figure slot takes an `avatar`, an `<img>`, or stays an empty surface disc; `--square` for artwork and files.
+- Trailing slot holds a `tag`, a value, one compact button, or nothing. A button in the trail auto-sizes and drops to the small pads; one action per row, and a row needing more than one is a card.
+- Anchor form navigates as one target. One row, one destination. Anchor rows carry no trail button — a row is a link or an action, never both.
+- Inside a product shell, rows tighten to 8 px vertical pads. The reading shell keeps the roomy default.
+- Used in: feeds, file lists, bylines, related lists, front-page rails, poke lists.
+
+Deep link: `demos/reference-recreations/08-status-feed.html`.
+
+## Metric
+
+The stat sized for panels: number first, label second, delta third. Tabular numerals keep metric columns aligned. Sourced from Must person pages and the SEOmonitor forecast module.
+
+```html
+<div class="metric-row">
+  <div class="metric">
+    <p class="metric__value">195 151</p>
+    <p class="metric__label">Fans on Must</p>
+    <p class="metric__delta">▲ 2 340 <span class="t-muted">this month</span></p>
+  </div>
+  <div class="metric">
+    <p class="metric__value">7.6</p>
+    <p class="metric__label">Average rating</p>
+  </div>
+</div>
+```
+
+Rules:
+
+- Value renders at display scale, bold, tabular. Label at caption, regular. Delta at micro, bold, glyph-first.
+- Delta glyphs are ▲ and ▼. No color. Flat periods drop the delta line instead of printing ▲ 0.
+- Two to four metrics per row. A lone number inside prose is a `stat`, not a metric.
+- Thin space groups thousands: 195 151, never 195,151.
+- Used in: panel grids, shout cards, person pages, forecast modules.
+
+Deep link: `demos/reference-recreations/02-forecast-module.html`.
+
+## Data table
+
+Product rows at density: header micros over a strong hairline, body rows on soft hairlines, numbers right-aligned tabular. The registry table stays a doc primitive; this is the working sibling. Sourced from the Rank Tracker keyword table and the planetarium projects table.
+
+```html
+<table class="data-table">
+  <thead>
+    <tr>
+      <th scope="col">Keyword</th>
+      <th scope="col" class="data-table__num">Position</th>
+      <th scope="col" class="data-table__num">Change</th>
+      <th scope="col" class="data-table__num">Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="data-table__lead">design system audit</td>
+      <td class="data-table__num">3</td>
+      <td class="data-table__num data-table__delta">▲ 2</td>
+      <td class="data-table__num">12 400</td>
+    </tr>
+    <tr>
+      <td class="data-table__lead">agentic pipeline</td>
+      <td class="data-table__num">11</td>
+      <td class="data-table__num data-table__delta data-table__delta--flat">0</td>
+      <td class="data-table__num">880</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+Rules:
+
+- The lead cell is bold; every other cell regular. One distinction step per row.
+- Numeric cells carry `data-table__num`: right-aligned, tabular numerals.
+- Delta cells carry the glyph in text. Flat deltas demote to regular muted via `--flat`.
+- Progress renders as a percent value in text. No bars inside cells; a trend belongs to a `spark` cell.
+- Row hover fills 3%. A clickable row wraps its lead in a link; whole-row click stays with cards.
+- Used in: dashboards, keyword tables, project rosters, admin lists.
+
+Deep link: `demos/reference-recreations/01-rank-tracker.html`.
+
+## Spark
+
+Trend marks under the data-ink policy. Bars for periods, a line for continuity. Inline size rides in tables; panel size carries modules.
+
+```html
+<!-- Inline, in a table cell. Heights are data via --v. -->
+<span class="spark" role="img" aria-label="Positions, 12 weeks, rising">
+  <span class="spark__bar" style="--v: 30%"></span>
+  <span class="spark__bar" style="--v: 45%"></span>
+  <span class="spark__bar" style="--v: 80%"></span>
+</span>
+
+<!-- Panel scale, with direct labels. -->
+<div class="spark spark--panel" role="img" aria-label="Traffic by month">
+  <span class="spark__bar spark__bar--soft" style="--v: 40%"></span>
+  <span class="spark__bar" style="--v: 65%"></span>
+</div>
+<div class="spark-labels"><span>Jan</span><span>Jun</span><span>Dec</span></div>
+```
+
+Rules:
+
+- `--v` carries each bar's height as a percent. Data ink may fall below the 4 px grid; layout around the chart never does.
+- Primary series black; secondary series `--soft` at the 20% hairline tone. Two series maximum.
+- Line variant ships a tiny inline SVG: `stroke="currentColor"`, width 1.5, no fill, no markers, wrapped in `.spark--line`.
+- Every sparkline carries `role="img"` and an `aria-label` stating the trend in words.
+- The chart never holds the only copy of a value. See Data ink under Foundations.
+- Used in: data-table cells, forecast modules, metric panels.
+
+Deep link: `demos/reference-recreations/02-forecast-module.html`.
+
 ## Kit-doc primitives
 
 These two primitives render inside kit docs only. Product prose does not reach for them.
@@ -664,7 +854,7 @@ Deep link: `demos/fundamental--accepted/index.html#registry-table`.
 
 ## Forbidden
 
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`, `toc-`, `fab`, `deck`, `highlight`, `figure`, `quote`, `divider`, `avatar`.
+- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`, `toc-`, `fab`, `deck`, `highlight`, `figure`, `quote`, `divider`, `avatar`, `chip`, `media`, `metric`, `data-table`, `spark`, `panels`, `panel-`, `front`.
 - Inline styles for tokens. Use `var(--token-name)`.
 - New color, spacing, or radius values outside `tokens.json`.
 - Drop shadows, glass, blur, gradients.
@@ -680,10 +870,10 @@ Additions run the evolve protocol. See `pipeline/protocols.md § Evolve`.
 <div class="book__signoff">
   <div class="book__signoff-stats">
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">14</span> components catalogued.</div>
+      <div><span class="t-caption--bold">19</span> components catalogued.</div>
     </div>
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">6</span> foundations rule the rest.</div>
+      <div><span class="t-caption--bold">7</span> foundations rule the rest.</div>
     </div>
   </div>
   <div class="book__signoff-signature">

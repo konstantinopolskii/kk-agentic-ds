@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Agentic Design System. Signed, by Konstantin Konstantinopolskii.</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=1.11.0">
-  <link rel="stylesheet" href="./style.css?v=1.11.0">
+  <link rel="stylesheet" href="./vars.css?v=1.12.0">
+  <link rel="stylesheet" href="./style.css?v=1.12.0">
 </head>
 <body>
   <div class="app" data-view="doc">
@@ -39,11 +39,11 @@
     </main>
 
     <!-- ============================================================== -->
-    <!-- Inspector: eight pointer cards. Six canon + two demos.         -->
+    <!-- Inspector: eleven pointer cards. Seven canon + four demos.     -->
     <!-- Each card is a card--link anchor wrapping its content.      -->
     <!-- One inspector__group per rank tier (canon vs demos).           -->
     <!-- Pattern-first reading order on canon: patterns → components →  -->
-    <!-- voice → pipeline → protocols → tokens.                         -->
+    <!-- voice → pipeline → protocols → tokens → references.            -->
     <!-- ============================================================== -->
     <aside class="inspector" aria-label="Open a book">
 
@@ -99,6 +99,14 @@
           </div>
           <span class="button t-subtitle">Inspect tokens</span>
         </a>
+
+        <a class="card card--link" href="./doc.html?src=./references/registry.md">
+          <div class="card__heading">
+            <h3 class="t-title">Reference registry</h3>
+            <p class="t-caption">Twelve measured studies behind the 1.12.0 components. Common moves, taxonomy, mappings.</p>
+          </div>
+          <span class="button t-subtitle">Study the references</span>
+        </a>
       </section>
 
       <section class="inspector__group">
@@ -129,6 +137,14 @@
           </div>
           <span class="button t-subtitle">Try the loop</span>
         </a>
+
+        <a class="card card--link" href="./demos/reference-recreations/index.html">
+          <div class="card__heading">
+            <h3 class="t-title">Reference recreations</h3>
+            <p class="t-caption">Fourteen product surfaces rebuilt in kit vocabulary: dashboards, feeds, landings, blogpost, news front.</p>
+          </div>
+          <span class="button t-subtitle">Open the gallery</span>
+        </a>
       </section>
     </aside>
   </div>
@@ -140,8 +156,8 @@
   <!-- kk:md-rendered itself and stamps section + heading ids, builds  -->
   <!-- the sidebar TOC, and refreshes scroll-spy. No per-page hook.    -->
   <!-- ================================================================ -->
-  <script src="./js/kit.js?v=1.11.0" defer></script>
-  <script src="./js/md.js?v=1.11.0" defer></script>
+  <script src="./js/kit.js?v=1.12.0" defer></script>
+  <script src="./js/md.js?v=1.12.0" defer></script>
 
   <!-- FABs for tablet + phone. Outside .app so overflow:hidden cannot clip. -->
   <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">
@@ -152,7 +168,7 @@
     </svg>
   </button>
   <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open a book">
-    <span class="fab__count">9</span>
+    <span class="fab__count">11</span>
   </button>
 </body>
 </html>

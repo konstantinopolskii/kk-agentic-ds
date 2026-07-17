@@ -750,10 +750,13 @@ body {
   background: var(--color-border);
   pointer-events: none;
 }
-/* The surface lights up on hover, on input/textarea focus (typing), or when
-   a card is promoted via data-state. Button focus does NOT count — buttons
-   fire and forget; they shouldn't leave a trail. */
-.card:hover,
+/* The surface lights up on hover only where the card itself is an
+   affordance — interactive stack cards and link cards. A static card
+   (a metric panel, a settings group, a step sheet) never reacts to the
+   cursor: hover glow on a dead surface promises a click that goes
+   nowhere. The hover rule itself closes the surface cascade after the
+   doc, stack, and shout rules — see "Affordance hover" further down.
+   Input focus and promotion still light any card. */
 .card:has(input:focus),
 .card:has(textarea:focus),
 .card[data-state="active"] {
@@ -900,11 +903,16 @@ body {
    Picking up the inset here keeps authors from wrapping a single
    paragraph in card__body just to land on the rail. This rule also
    supersedes the former `.book .card > .book__spec` selector: book__spec
-   is always a <dl>, so .card > dl covers it in every context. */
+   is always a <dl>, so .card > dl covers it in every context.
+   Chip rows and media rows carry zero horizontal padding of their own,
+   so they join the same list — a chip row or roster inside a card lands
+   on the text rail, not the shell edge. */
 .card > p,
 .card > ol,
 .card > ul,
-.card > dl {
+.card > dl,
+.card > .chip-wrap,
+.card > .media {
   padding-left: var(--card-inset-x);
   padding-right: var(--card-inset-x);
 }
@@ -1066,11 +1074,17 @@ body {
   align-items: baseline;
   gap: var(--space-2);
 }
-.field__label { width: 72px; flex-shrink: 0; }
+/* Label takes its natural width — a fixed column chokes on real words
+   ("Subscription" is wider than any fixed 72 px) and the overflow
+   collides with the value. The value takes the rest and reads from the
+   right edge, the settings-row convention every phone reference uses. */
+.field__label { flex-shrink: 0; max-width: 60%; }
 .field__value {
   flex: 1;
   color: var(--color-text-muted);
 }
+.field--row .field__value,
+.field--row .field__input { text-align: right; }
 /* Inputs render in the body weight — regular. Bold values look heavy
    inside tight form rows; the label already carries the weight, the
    value just reads. */
@@ -1597,6 +1611,12 @@ body {
 .book .card-stack > .card:not(:first-child):not(.card--heading) {
   background: transparent;
 }
+/* Columns stacks hold peers, not a progressive reveal — every card in a
+   side-by-side comparison keeps its surface. Specificity mirrors the
+   stack rule above so the peer surface wins for non-first cards. */
+.book .card-stack--columns > .card:not(:first-child):not(.card--heading) {
+  background: var(--color-surface-overlay);
+}
 
 /* Shout card background — must sit AFTER the doc rule so it wins on
    ordering where specificity matches. The selector weight is built up
@@ -1610,6 +1630,19 @@ body {
 .book .card.card--shout:not(.card--heading),
 .card-stack > .card.card--shout {
   background: #000000;
+}
+
+/* Affordance hover — closes the surface cascade. Sits after the doc,
+   stack, and shout rules so an interactive or link card steps to the
+   strong surface from any resting context; the stack-scoped selectors
+   carry the weight the peer-surface rules above set up. */
+.card--interactive:hover,
+.card--link:hover,
+.book .card.card--interactive:hover,
+.book .card.card--link:hover,
+.book .card-stack .card.card--interactive:hover,
+.book .card-stack .card.card--link:hover {
+  background: var(--color-surface-strong);
 }
 
 /* =========================================================================
@@ -2204,6 +2237,439 @@ ol.t-list > li::before {
 }
 
 /* =========================================================================
+   1.12.0 — product molecules from the reference study. Five components,
+   three shells, zero new tokens. references/registry.md names the source
+   design each shape answers.
+   ========================================================================= */
+
+/* Chip — a tag the user can press. Selects among peers: segment tabs,
+   filter rails, multi-select wraps. Tag stays metadata; button commits
+   an outcome; chip picks. Selected state inverts — the kit's one
+   emphasis move. Render as <button class="chip">; a group wraps in
+   .chip-wrap. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 0.5px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-regular);
+  cursor: pointer;
+  transition: background-color var(--dur-base) var(--ease-out),
+              color var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.chip:hover { background: var(--color-surface-overlay); }
+.chip:active { transform: scale(0.96); }
+.chip:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+}
+.chip[data-state="selected"],
+.chip[aria-pressed="true"] {
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-color: var(--color-text);
+  font-weight: var(--fw-bold);
+}
+.chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Media — the row molecule every feed, file list, byline, and related
+   list shares: leading figure, two-line body, trailing meta. Hairline
+   between siblings, never above the first or below the last — the
+   field's divider law. Anchor form makes the whole row one target,
+   same law as the link card. */
+.media {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  position: relative;
+}
+.media + .media::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0.5px;
+  background: var(--color-border);
+  pointer-events: none;
+}
+.media__figure {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-strong);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.media__figure > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.media__figure--square { border-radius: var(--radius-sm); }
+.media__body { flex: 1; min-width: 0; }
+.media__body > * { margin: 0; }
+.media__trail { flex-shrink: 0; }
+/* A button riding a media row is a row action — it shrinks to its label
+   instead of claiming the full column width. */
+.media__trail > .button {
+  width: auto;
+  padding: var(--space-2) var(--space-4);
+}
+a.media {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+a.media:hover { background: var(--color-surface-overlay); }
+a.media:active { transform: scale(0.98); }
+
+/* Metric — the stat sized for panels: number first, label second,
+   delta third. Tabular numerals so metric columns align. Delta
+   direction rides a glyph plus weight, never a color — the chart
+   policy in one class. A row of metrics wraps in .metric-row. */
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.metric__value {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.metric__label {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-regular);
+  margin: 0;
+}
+.metric__delta {
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.metric-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+/* Data table — product rows the registry table is forbidden to carry.
+   Header micros bold over a strong hairline; body rows on soft
+   hairlines; the last row ends flush. Numbers right-align tabular so
+   magnitudes scan. Row hover fills 3% like every rest surface. */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+.data-table th {
+  text-align: left;
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: 0.5px solid var(--color-border-strong);
+}
+.data-table td {
+  font-weight: var(--fw-regular);
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  border-bottom: 0.5px solid var(--color-border);
+}
+.data-table th:last-child,
+.data-table td:last-child { padding-right: 0; }
+.data-table tbody tr:last-child > td { border-bottom: none; }
+.data-table tbody tr {
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.data-table tbody tr:hover { background: var(--color-surface-overlay); }
+/* Type-qualified so it outranks the .data-table td weight (0,1,1). */
+td.data-table__lead { font-weight: var(--fw-bold); }
+.data-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+/* Delta cells state direction with a glyph (▲ ▼) and weight. Flat
+   deltas demote to regular muted — absence of change is metadata. */
+.data-table__delta {
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.data-table__delta--flat {
+  font-weight: var(--fw-regular);
+  color: var(--color-text-muted);
+}
+
+/* Spark — trend marks under the chart policy: monochrome data ink,
+   every value readable as text somewhere on the surface, direct labels
+   over legends. Bar heights are data, not layout: each bar carries
+   --v as a percent height. Sub-4px dimensions are legal for data ink
+   only; layout around the chart stays on the grid. */
+.spark {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 24px;
+  width: 96px;
+}
+.spark__bar {
+  flex: 1;
+  min-width: 2px;
+  height: var(--v, 4%);
+  background: var(--color-text);
+}
+/* Secondary series (actuals behind a forecast) demote to the 20%
+   hairline tone — one distinction step, no second hue. */
+.spark__bar--soft { background: var(--color-border-strong); }
+/* Panel scale — a module-height chart on a hairline baseline. */
+.spark--panel {
+  display: flex;
+  width: 100%;
+  height: 160px;
+  gap: var(--space-1);
+  border-bottom: 0.5px solid var(--color-border);
+}
+/* Line variant — consumer ships a tiny inline SVG: stroke currentColor,
+   stroke-width 1.5, no fill, no markers. The wrapper only sizes it. */
+.spark--line { align-items: stretch; }
+.spark--line > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.spark-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   Shells — three siblings of the three-column default, from the
+   reference layout taxonomy. Same tokens, same columns discipline:
+   the shell decides who scrolls, the content never knows.
+   ========================================================================= */
+
+/* Single column — the reading shell. One centered measure, no rails.
+   Landings, community pages, every blogpost. The shell owns the scroll,
+   not the column: a centered column that scrolls itself puts the
+   scrollbar mid-screen at the column's edge and leaves the side gutters
+   deaf to the wheel. Scrolling the shell keeps the bar at the viewport
+   edge and makes the whole page respond, cursor anywhere. */
+.app--single {
+  display: block;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.app--single > .book {
+  max-width: 760px;
+  border: none;
+  height: auto;
+  min-height: 100%;
+  overflow-y: visible;
+}
+
+/* Panel grid — the dashboard shell. Cards as panels on a twelve-column
+   grid, macro gutters, the whole surface scrolls as one page. Span
+   modifiers name intent, not arithmetic. Scroll belongs to the shell,
+   same reason as the reading shell. */
+.app--panels {
+  display: block;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.panels {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-6);
+  align-content: start;
+  padding: var(--space-8) var(--space-10) var(--space-20);
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+.panels > * { grid-column: span 12; }
+.panel--third { grid-column: span 4; }
+.panel--half { grid-column: span 6; }
+.panel--two-thirds { grid-column: span 8; }
+.panel--full { grid-column: span 12; }
+
+/* Front — the news shell. Lead story left, latest rail right, section
+   grid below. The lead earns two thirds; the rail is a tight column of
+   media rows; desks grid three-up under a hairline. Scroll belongs to
+   the shell, same reason as the reading shell. */
+.app--front {
+  display: block;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+.front {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-10);
+  align-content: start;
+  padding: var(--space-8) var(--space-10) var(--space-20);
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+/* Masthead — the nameplate row every front page opens with. Full span,
+   nameplate left, dateline right, closed by the strong newspaper rule. */
+.front__masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: var(--space-4);
+}
+.front__lead { grid-column: 1; }
+.front__rail { grid-column: 2; }
+.front__desks {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  border-top: 0.5px solid var(--color-border);
+  padding-top: var(--space-8);
+}
+@media (max-width: 1024px) {
+  .front { grid-template-columns: 1fr; }
+  .front__lead, .front__rail { grid-column: 1; }
+  .front__desks { grid-template-columns: 1fr; }
+  .panels { padding: var(--space-6) var(--space-6) var(--space-15); }
+  .panel--third, .panel--half, .panel--two-thirds { grid-column: span 12; }
+}
+
+/* =========================================================================
+   Product rhythm — sibling shells carry app surfaces, not books. The
+   reading shell's 80 px ceremony belongs to the manifesto; a settings
+   sheet or a dashboard reads at reference density: sections breathe,
+   groups touch. Measured against the reference registry — target is
+   the reference's spacing band, same tokens, tighter slots. The
+   three-rail doc shell keeps the book rhythm untouched.
+   ========================================================================= */
+.app--single .book__section,
+.app--panels .book__section,
+.app--front .book__section {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-8);
+  margin-top: var(--space-3);
+}
+.app--single .book__section > * + *,
+.app--panels .book__section > * + *,
+.app--front .book__section > * + * {
+  margin-top: var(--space-3);
+}
+.app--single .book__section > .t-display + *,
+.app--single .book__section > .t-title + *,
+.app--single .book__section > h2 + *,
+.app--single .book__section > h3 + *,
+.app--panels .book__section > .t-display + *,
+.app--panels .book__section > .t-title + *,
+.app--panels .book__section > h2 + *,
+.app--panels .book__section > h3 + *,
+.app--front .book__section > .t-display + *,
+.app--front .book__section > .t-title + *,
+.app--front .book__section > h2 + *,
+.app--front .book__section > h3 + * {
+  margin-top: var(--space-5);
+}
+.app--single .book__section > * + .t-display,
+.app--single .book__section > * + h2,
+.app--panels .book__section > * + .t-display,
+.app--panels .book__section > * + h2,
+.app--front .book__section > * + .t-display,
+.app--front .book__section > * + h2 {
+  margin-top: var(--space-10);
+}
+/* The hero's 60 px book ceremony compresses on product surfaces — the
+   identity block sits with its proof, not above it. */
+.app--single .book__section > h1,
+.app--single .book__section > .t-hero,
+.app--panels .book__section > h1,
+.app--panels .book__section > .t-hero,
+.app--front .book__section > h1,
+.app--front .book__section > .t-hero {
+  margin-bottom: var(--space-5);
+}
+.app--single .card,
+.app--panels .card,
+.app--front .card {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-5);
+  gap: var(--space-2);
+}
+.app--single .media,
+.app--panels .media,
+.app--front .media {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+/* Screen-filling stage — one section may claim the leftover viewport
+   (a flashcard word, a hero sheet). Its lone card grows with it. One
+   fill section per page; two would fight over the same space. */
+.app--single .book__section--fill {
+  flex: 1;
+}
+.app--single .book__section--fill > .card {
+  flex: 1;
+  justify-content: space-between;
+}
+
+/* Stage flow — an onboarding or wizard page stacks screens: every stage
+   section claims a full viewport, so the scroll steps one decision at a
+   time. Fill shares leftover space; stage guarantees a whole screen. */
+.app--single .book__section--stage {
+  min-height: 100dvh;
+}
+
+/* Phone tier of the product shells. The hero drops to the display size —
+   a 48 px word on a 375 pt sheet is a poster, not an app screen — and
+   the closing action section rides the bottom of the viewport: the
+   bottom-CTA rule from the reference registry, realized. */
+@media (max-width: 768px) {
+  .app--single .t-hero {
+    font-size: var(--fs-display);
+    line-height: var(--lh-display);
+  }
+  .app--single .book > .book__section:last-child {
+    margin-top: auto;
+  }
+}
+
+/* =========================================================================
    Narrow — one rule: show the column where the change is happening.
    Desktop shows three columns. Tablet shows doc + inspector, with the
    sidebar invoked on demand. Phone shows one column at a time, selected
@@ -2296,6 +2762,10 @@ ol.t-list > li::before {
   .app[data-view="doc"] .book { display: flex; }
   .app[data-view="nav"] .sidebar { display: flex; }
   .app[data-view="inspector"] .inspector { display: flex; }
+  /* Sibling shells carry one column and no view switching — their
+     content is always the view. Without this, a single-column page
+     with no [data-view] renders blank on phones. */
+  .app--single .book { display: flex; }
 
   /* Both corner FABs visible on phone. The view is governed by them —
      no secondary back button inside the column; tapping the inspector

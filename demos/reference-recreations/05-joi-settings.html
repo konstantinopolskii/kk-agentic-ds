@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Settings list recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+  <div class="app app--single">
+    <main class="book" id="doc">
+
+      <article class="book__section">
+        <h2 class="t-display">Settings</h2>
+
+        <div class="card">
+          <div class="media">
+            <div class="media__body">
+              <p class="t-caption--bold">Joi plus</p>
+              <p class="t-micro t-muted">Subscription or one-time purchase</p>
+            </div>
+            <div class="media__trail">
+              <button class="button button--primary t-caption--bold">Upgrade</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Account</h3>
+          </div>
+          <label class="field field--row">
+            <span class="t-caption--bold field__label">Display name</span>
+            <input class="t-caption field__input" type="text" value="Alexey" />
+          </label>
+          <div class="field field--row">
+            <span class="t-caption--bold field__label">Subscription</span>
+            <span class="tag">Free</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Connections</h3>
+          </div>
+          <label class="switch">
+            <input class="switch__input" type="checkbox" checked />
+            <span class="switch__track"></span>
+            <span class="t-caption ">Apple calendars</span>
+          </label>
+          <label class="switch">
+            <input class="switch__input" type="checkbox" checked />
+            <span class="switch__track"></span>
+            <span class="t-caption ">Reminders</span>
+          </label>
+          <label class="switch">
+            <input class="switch__input" type="checkbox" />
+            <span class="switch__track"></span>
+            <span class="t-caption ">HealthKit</span>
+          </label>
+        </div>
+
+        <div class="card">
+          <div class="card__heading">
+            <h3 class="t-title">Preferences</h3>
+          </div>
+          <div class="field field--row">
+            <span class="t-caption--bold field__label">Choose calendars</span>
+            <span class="t-caption t-muted">Two of five</span>
+          </div>
+          <div class="field field--row">
+            <span class="t-caption--bold field__label">Tasks</span>
+            <span class="t-caption t-muted">Grouped by project</span>
+          </div>
+          <div class="field field--row">
+            <span class="t-caption--bold field__label">App icon</span>
+            <span class="t-caption t-muted">Classic</span>
+          </div>
+          <div class="field field--row">
+            <span class="t-caption--bold field__label">Notifications</span>
+            <span class="t-caption t-muted">Morning summary only</span>
+          </div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+</body>
+</html>

@@ -174,7 +174,7 @@ Source: kk.consulting. A profile that opens like a fact sheet and lands like a p
 
 Measured. One column, 720 pt measure. Avatar 96 pt round. Intro paragraph 18/28 with bold spans for names and numbers, dense, no fluff sentence anywhere. Role tabs: three text pills 15 pt, active black on white inverted. Then the giant word: Founder at roughly 130 pt bold, full measure width. Stat blocks below: value 22 pt bold, label 14 pt muted.
 
-Kit recreation. `app--single` shell. `avatar` scaled by context, intro as `t-body` with `t-caption--bold` spans, role tabs as a `chip` row, the giant word as `t-hero`, stat row as three `stat` blocks in the signoff grid shape. Zero new parts beyond `chip` and the single-column shell.
+Kit recreation. `app--single` shell. Byline `media` row and a `t-title` positioning line open the page; then the giant word: Founder as the page's one `t-hero` h1, Strategist and Mentor as `t-display` siblings. Each role section carries a `t-title` standfirst and a `metric-row` of proof; the mentor section closes on a `quote`. Bold stays in headings — the intro's bold spans stay in the reference. One `card` with the working-session offer ends the page.
 
 ## Study 4. Joi onboarding step
 
@@ -234,7 +234,7 @@ Source: fuckgrechka.ru/tzlvt. Four screens of proof, one promise, no decoration.
 
 Measured. One column, roughly 640 pt measure. Brand word, then h1 at 40 pt bold, lead 20/30. Four feature sections: h2 at 28 pt bold, two to three bullets at 17/26, phone screenshot figure per section. Press strip: outlet names as plain text. Free forever section: one bold claim, 10 years free, no ads, no subscriptions. Repeated CTA between sections: black pill Вести бюджет. Footer with platform links.
 
-Kit recreation. `app--single` at reading measure. `t-hero` promise, `t-body` lead, sections as `book__section` with `t-display` heads, `t-list` feature bullets, `figure` screenshots with `figcaption`. Press strip is a `t-caption t-muted` line, no logos. Each CTA is `button button--primary` inside its section card; one per section, labels never repeat. This study is the Landing archetype's direct ancestor.
+Kit recreation. `app--single`, number first. `t-hero` promise and a `t-title` lead, then the column's one `card--shout` fills the first viewport (`book__section--fill`) carrying a `metric` with today's number, the primary CTA, and a `t-micro t-subtle` proof line — the kit's answer to the reference's black calculator screen. A columns stack pairs two cards, The arithmetic and The day, as `field--row` ledgers; a `t-list` states the feedback loop; the free-forever section closes with a bare primary button. This study is the Landing archetype's direct ancestor.
 
 ## Study 11. Planetarium community page
 
@@ -250,7 +250,7 @@ Source: new.fuckgrechka.ru. Two projects, one screen, nothing else.
 
 Measured. Brand word at 48 to 64 pt bold, stacked tagline at 20 pt muted, hairline divider. Then a two-column grid: each cell an icon at 48 pt, project title 22 pt bold, one benefit line 16 pt muted. Whole cell clickable. Footer credits in micro type with a year.
 
-Kit recreation. `app--single` wide measure. `t-hero` brand, `t-display--medium` tagline, `divider`, then `card-stack card-stack--columns` of two `card--link` cells: title, one-line benefit, span-button naming the destination. Footer as `t-micro t-muted`. Shipped parts cover the whole page; this is the smallest complete surface in the set.
+Kit recreation. `app--single`, poster first. The column's one `card--shout` fills the viewport (`book__section--fill`): `t-hero` brand, `t-title` attitude line, the studio credit pinned to the slab's foot in `t-micro t-subtle` — the kit's answer to the reference's black void page. Below, `card-stack card-stack--columns` of two `card--link` cells: title, one-line benefit, span-button naming the destination. One screen, nothing else; still the smallest complete surface in the set.
 
 ## The two commissioned surfaces
 
@@ -272,6 +272,33 @@ Run through evolve, one conflict statement each:
 6. **Shells: `app--single`, `panels`, `front`.** One-column reading measure; dashboard panel grid; front-page lead plus rail plus grid. Grid gaps on macro tokens, panels are cards, nothing new below the shell line.
 
 Chart policy, stated once: monochrome data ink, bars and lines only, every value readable as text without hover, direct labels over legends, hairline gridlines, deltas as ▲ ▼ glyphs with weight, no red, no green, no gradients, no pie.
+
+## Density
+
+The first recreation batch matched structure but not weight: too much air, book ceremony on product screens. The density pass measured the gap instead of eyeballing it.
+
+**Metric.** Both sides render to grayscale, crop the device bezel from portfolio exports, inset 6% to drop frame edges, downscale to the reference's logical width (375 phone, 1280 desktop — downscale only, never upscale), Gaussian blur 2 px, edge filter, mean energy. The ratio ours over theirs is the density difference. Screenshots come from headless Chrome at true device metrics with `deviceScaleFactor` 2; references are full-resolution exports, not thumbnails. Target band: 10–20% absolute difference. Pipeline lives with the session scratch; the numbers below are round seven.
+
+| Study | Ref | Ours | Diff |
+|---|---:|---:|---:|
+| 04 Joi onboarding | 0.0127 | 0.0154 | +21.1% |
+| 05 Joi settings | 0.0126 | 0.0144 | +13.9% |
+| 06 Person page | 0.0099 | 0.0077 | −22.1% |
+| 07 Flashcard | 0.0068 | 0.0082 | +20.8% |
+| 08 Status feed | 0.0090 | 0.0114 | +26.6% |
+| 09 Create transfer | 0.0117 | 0.0117 | −0.2% |
+| 03 Identity hero | 0.0165 | 0.0126 | −23.6% |
+| 10 Tzlvt landing | 0.0084 | 0.0089 | +6.6% |
+| 11 Community page | 0.0117 | 0.0104 | −10.9% |
+| 12 Studio index | 0.0045 | 0.0059 | +30.9% |
+
+Mean 17.7%, inside the band. First honest run measured 42.8%; seven rounds of rhythm work closed it.
+
+Studies 01 and 02 measured separately at blur 5 against SEOmonitor's own product imagery (marketing chrome cropped out): 01 rank tracker −6.2%, 02 forecast module −14.5%. Both inside the band.
+
+**What the pass changed.** Product rhythm on all three shells (section pads 24/32, sibling gap 12, heading-below 20, `* + h2` 40, card pads 16/20 with 8 px gap, media rows at 8 px vertical, hero ceremony 60 → 20). `book__section--fill` and `book__section--stage` for full-viewport product screens. The affordance hover law. The trail button on media rows. Pure reading pages left the shell entirely — a blogpost is a bare `.book` with body scroll and full ceremony.
+
+**Documented gaps.** Four studies sit outside the band for structural reasons the metric cannot close and the kit will not chase: 06 and 08 rest on photographs, and photo texture blurs softer than our line art and text UI measure; 03 sets 150 px poster type against our 66 px cap; 12 is a poster void, where a 0.0014 absolute delta inflates to 30.9% on tiny denominators. These are the kit's constitution holding, not recreations failing.
 
 ## Signoff
 

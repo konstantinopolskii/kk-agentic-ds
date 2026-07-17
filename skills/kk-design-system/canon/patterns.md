@@ -60,6 +60,96 @@ Sidebar on the left, book in the middle, inspector on the right. Only the middle
 
 Preview: [demos/fundamental--accepted/patterns/three-column-shell.html](../../../demos/fundamental--accepted/patterns/three-column-shell.html)
 
+## Single column (product shell)
+
+One centered measure, no rails. The shell for landings, community pages, settings sheets, onboarding flows — any product screen that reads top to bottom. The shell owns the page scroll — the wheel works from any gutter and the scrollbar sits at the viewport edge, never mid-screen at the column's edge. The measure caps at 760 px.
+
+A pure reading page — a blogpost, an essay — takes no shell at all: a bare `.book` on the body, body scroll, full book ceremony. The shell exists for product screens; wrapping an article in it trades the reading rhythm for the product one.
+
+```html
+<div class="app app--single">
+  <main class="book" id="doc">
+    <article class="book__section">
+      <h1 class="t-hero">One promise</h1>
+      <p class="t-body">Lead paragraph.</p>
+    </article>
+    <!-- sections, figures, one primary CTA per section card -->
+  </main>
+</div>
+```
+
+Rules:
+
+- No sidebar, no inspector in the DOM. A single column with empty rails is the wrong shell.
+- Product rhythm applies: sections breathe at 24/32 px, siblings sit at 12 px, a heading holds 20 px below, `* + h2` steps 40 px, cards pad 16/20 with an 8 px gap, media rows tighten to 8 px vertical, and the hero drops its 60 px book ceremony to 20 px. Measured against the reference registry — see `references/registry.md § Density`.
+- `book__section--fill` lets one section claim the leftover viewport; its lone card grows with it and spreads content edge to edge. One fill per page.
+- `book__section--stage` guarantees a section a full viewport: stage flows (onboarding, wizards) stack stages so the scroll steps one decision at a time. Fill shares what is left; stage claims a whole screen.
+- On narrow viewports the hero drops to the display size and the closing action section pins to the viewport bottom, full width, nothing after it.
+- Preview: [demos/reference-recreations/10-tzlvt-landing.html](../../../demos/reference-recreations/10-tzlvt-landing.html), [demos/reference-recreations/04-joi-onboarding.html](../../../demos/reference-recreations/04-joi-onboarding.html); bare book: [demos/reference-recreations/13-blogpost.html](../../../demos/reference-recreations/13-blogpost.html)
+
+## Panel grid (dashboard shell)
+
+Cards as panels on a twelve-column grid, macro gutters, one page scroll. The shell for SaaS dashboards, analytics, admin. Span modifiers name intent: `panel--third`, `panel--half`, `panel--two-thirds`, `panel--full`.
+
+```html
+<div class="app app--panels">
+  <div class="panels">
+    <div class="card panel--third">
+      <div class="metric">
+        <p class="metric__value">12 400</p>
+        <p class="metric__label">Sessions</p>
+        <p class="metric__delta">▲ 8%</p>
+      </div>
+    </div>
+    <div class="card panel--two-thirds"><!-- chart module --></div>
+    <div class="card panel--full"><!-- data table --></div>
+  </div>
+</div>
+```
+
+Rules:
+
+- Every panel is a `card`. The grid owns gutters; panels never carry outer margins.
+- Metrics up top, modules mid, tables full-width below. Reading order survives the collapse to one column at 1024.
+- One shout maximum on the whole grid.
+- Product rhythm applies — same numbers as the single-column shell.
+- Preview: [demos/reference-recreations/02-forecast-module.html](../../../demos/reference-recreations/02-forecast-module.html)
+
+## Front (news shell)
+
+Lead story left at two thirds, latest rail right, desk grid below a hairline. The shell for news fronts, magazine homes, media catalogs.
+
+```html
+<div class="app app--front">
+  <div class="front">
+    <header class="front__masthead">
+      <h1 class="t-hero">The nameplate</h1>
+      <p class="t-micro t-muted">Dateline · issue line</p>
+    </header>
+    <a class="card card--link front__lead" href="#story">
+      <!-- figure, t-display headline, standfirst, byline media row -->
+    </a>
+    <aside class="front__rail">
+      <!-- tight media rows, timestamp muted -->
+    </aside>
+    <section class="front__desks">
+      <!-- three card--link cells per desk -->
+    </section>
+  </div>
+</div>
+```
+
+Rules:
+
+- The masthead spans the full grid: nameplate at `t-hero` left, dateline in muted micro right. It closes with the kit's one 1 px rule — the newspaper line. Hairlines everywhere else stay 0.5 px.
+- The nameplate is the page's h1 and its only `t-hero`; the lead headline steps down to `t-display`.
+- The lead is one link card. One lead; a front with two leads has none.
+- Rail rows are `media` anchors: headline bold caption, timestamp muted micro. No images required to hold the layout. A rail may close with one `card` of field rows for standing numbers; movement renders as bold ▲ ▼ deltas.
+- Desk cells are link cards with a `t-micro t-muted` kicker naming the desk.
+- Collapses to one column at 1024: masthead, lead, rail, desks, in that order.
+- Product rhythm applies — same numbers as the single-column shell.
+- Preview: [demos/reference-recreations/14-newsfront.html](../../../demos/reference-recreations/14-newsfront.html)
+
 ## Card stack
 
 Interactive cards stacked vertically. One active at a time. Inactive cards collapse to heading plus minimized CTA; the active card shows its body and both CTAs. Use it wherever the reader picks one option out of a small group and needs to see every option without losing context.
@@ -118,6 +208,7 @@ Rules:
 
 - Two to four `.card` children. Five-plus columns crowd the row.
 - Each card stays a regular `.card`. Hover and active states inherit from the base component.
+- Inside a book, every column after the first keeps the overlay surface — peers read as equals, not as a heading card with followers.
 - Below the narrow breakpoint, the wrapper stacks columns vertically. Same DOM, no class swap.
 - Replaces the legacy `.tier` / `.tiers` shape, which the kit no longer ships.
 
@@ -219,7 +310,7 @@ Twelve compositions sliced out of shipped prototypes plus one structural wrapper
 <div class="book__signoff">
   <div class="book__signoff-stats">
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">5</span> top-level patterns.</div>
+      <div><span class="t-caption--bold">8</span> top-level patterns.</div>
     </div>
     <div class="stat t-caption">
       <div><span class="t-caption--bold">13</span> registry compositions.</div>

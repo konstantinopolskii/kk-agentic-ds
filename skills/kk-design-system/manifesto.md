@@ -115,7 +115,7 @@ A sibling pipeline lives in this kit: `kk-charter-system` ships per-direction st
 
 Pattern-first reading order. Start at patterns because a layout composes from patterns first; drill into components only when a pattern uses a part we need to customize.
 
-- `canon/patterns.md`. Start here for layout composition. Three-column shell, card stack, narrow mobile, plus the full pattern registry.
+- `canon/patterns.md`. Start here for layout composition. Three-column shell, product shells with their density rhythm, card stack, narrow mobile, plus the full pattern registry.
 - `canon/components.md`. Drill from a pattern into its parts. Foundations, component inventory, forbidden list, typography rhythm.
 - `canon/voice.md`. Words the system speaks. Shape rules, label discipline, the AI-tells inventory.
 - `pipeline/pipeline.md`. How sessions run. Eight stages, eleven role skills, entry-point matching.

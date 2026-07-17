@@ -2,6 +2,58 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.12.0, 2026-07-17
+
+Minor. The reference registry release. Twelve measured studies of nine outside references (SEOmonitor, kk.consulting, amicaliuc, Must, Oppie, Clique, WeTransfer, tzlvt, planetarium, fuckgrechka, asekachov portfolio) distilled into ten common moves, five new components, three page shells, and a chart policy. Zero new tokens: every addition composes the existing nine colors, seven sizes, and the 4 px grid. Fourteen recreation demos prove each study renders in kit vocabulary alone.
+
+### Added
+- `chip` + `chip-wrap` — pressable filter pill. `aria-pressed="true"` (or `data-state="selected"`) inverts to solid text-on-black. The one self-inverting component in the kit.
+- `media` — figure + body + trail row. Avatar or square figure, two-line body, optional trailing tag. Hairline between adjacent rows, whole row can be an anchor. The universal roster, feed, file, and related-list molecule.
+- `metric` + `metric-row` — display-scale tabular number over a muted label, optional `metric__delta` with `▲`/`▼` glyph. Weight and glyph carry direction; color never does.
+- `data-table` — micro bold headers on a strong hairline, caption-size rows on soft hairlines, row hover at 3%. `__lead` (bold first column), `__num` (right-aligned tabular), `__delta`, `__delta--flat`.
+- `spark` + `spark__bar` — bar chart as spans; each bar's height is the `--v` custom property, the page's one legal inline style. `--soft` secondary series, `--panel` module scale, `--line` SVG variant, `spark-labels` endpoints row.
+- Data ink foundation — the chart policy. Monochrome bars and lines only, direct labels over legends, deltas by glyph and weight, hairline gridlines, no hover-only truth. Sub-4px dimensions legal for data ink alone.
+- Three sibling shells: `app--single` (one 760 px reading column), `app--panels` > `panels` (12-column dashboard grid with `panel--third/half/two-thirds/full` spans), `app--front` > `front` (2fr/1fr lead + rail over a three-desk row). Each shell owns its own scroll; all collapse to one column at 1024 px.
+- `.card > .chip-wrap` and `.card > .media` join the raw-children inset rule — chip rows and rosters inside a card land on the 24 px text rail, not the 12 px shell edge.
+- `references/registry.md` — the method, the ten common moves, a six-shell layout taxonomy, a fifteen-row component taxonomy, twelve measured studies with kit mappings, and the specs for the two commissioned surfaces.
+- `demos/reference-recreations/` — gallery plus fourteen pages: twelve study recreations and two commissioned surfaces (one-column blogpost, multi-column news front). Kit classes only, zero custom CSS, the only inline style is `--v` on spark bars.
+- `index.html` — two new pointer cards (reference registry, recreations gallery). Phone fab count 9 → 11.
+
+### Changed
+- `skills/kk-design-system/canon/components.md` — five new registry rows with demo deep links, the data-ink foundation, full sections for chip, media row, metric, data table, and spark. Forbidden prefix list grows by `chip`, `media`, `metric`, `data-table`, `spark`, `panels`, `panel-`, `front`. Nineteen components on seven foundations.
+- `skills/kk-design-system/canon/patterns.md` — three new top-level patterns: single column (reading shell), panel grid (dashboard shell), front (news shell). Eight top-level patterns.
+- Switch canon snippet now matches the shipped CSS: the thumb is `.switch__track::after`, so the dead `switch__thumb` inner span and the phantom `switch__label` class left the snippet.
+- `package.json` + `.claude-plugin/plugin.json` 1.11.0 → 1.12.0.
+
+### Fixed
+- Single-column pages rendered blank under 768 px — the narrow-mode `display: none` on the three columns assumed a `[data-view]` shell. `.app--single .book` now stays visible.
+- `td.data-table__lead` never rendered bold: `.data-table td` (0,1,1) outranked the bare class (0,1,0). Type-qualified the lead selector.
+
+### Density pass, same release
+
+The first recreation batch matched structure but shipped book ceremony on product screens. A measured pass closed the gap: grayscale, bezel-crop, downscale to logical width, blur 2 px, edge energy — ratio ours over reference, target band 10–20%. First honest run 42.8% mean, final 17.7%. Method and per-study table in `references/registry.md § Density`.
+
+Added in the pass:
+- Product rhythm on all three shells — section pads 24/32, sibling gap 12, heading-below 20, `* + h2` 40, card pads 16/20 with 8 px gap, media rows at 8 px vertical, hero ceremony 60 → 20. Phone heroes drop to 38 px; the last section pins to the viewport bottom.
+- `book__section--fill` — one section claims the leftover viewport, its lone card grows with it. One per page.
+- `book__section--stage` — a section guarantees itself a full viewport; stage flows step one decision per screen.
+- `.media__trail > .button` — the row action. Auto width, small pads. One action per row; anchor rows carry none.
+- Affordance hover law — only `card--interactive` and `card--link` react to hover, stepping to the strong surface (6%), since book cards already rest on the overlay (3%). Static cards stay still. The old universal card hover left with it.
+- Columns peer surface — inside a book, `card-stack--columns` children after the first keep the overlay surface instead of going transparent.
+
+Changed in the pass:
+- Pure reading pages leave the shell: a blogpost is a bare `.book` on the body, body scroll, full book ceremony. `demos/reference-recreations/13-blogpost.html` reshaped accordingly; the single-column pattern in `canon/patterns.md` renamed reading shell → product shell.
+- Recreations 03–09 and 12 restructured toward reference density: onboarding stages, full-screen slabs, poke rows with trail buttons, packed first viewports.
+- Studies 01 and 02 measured at blur 5 against SEOmonitor product imagery: −6.2% and −14.5%, both in band.
+
+### Redesign pass, same release
+
+Four pages rebuilt from kit parts after review, supervised and re-audited: the identity hero (03) opens on a byline and positioning line, then Founder as the page's one hero word with metric-row proof per role; the Tzlvt landing (10) leads with today's number in a shout slab that fills the first viewport, backed by two field-row ledger cards; the studio index (12) is a one-screen poster — brand and attitude in a filled shout, two link cards below; the news front (14) gains a masthead.
+
+- `front__masthead` — the nameplate row the front shell opens with. Full grid span, nameplate at `t-hero` left, dateline muted right, closed by the kit's one 1 px rule (hairlines elsewhere stay 0.5 px). Documented in `canon/patterns.md § Front`.
+- A front rail may close with one card of standing numbers; movement renders as bold ▲ ▼ deltas.
+- `t-subtle` scope reconciled in the typography table: placeholders, and metadata on inverted shout surfaces — the shout demos already leaned on it.
+
 ## 1.11.0, 2026-07-17
 
 Minor. Link cards, a rendered doc viewer, and a working sidebar scroll. Three defects shared one root: the pointer cards on the system root were `card--interactive` anchors with no hidden content (off-canon), their clicks triggered the inspector stack's promote-and-glide before navigation, and the destinations were raw markdown files the browser printed as plain text. Nav clicks in the sidebar died a few pixels in because the CSS smooth scroll and the JS smooth scroll cancelled each other.
