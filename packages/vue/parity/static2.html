@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parity golden two — components</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+  <main class="book">
+    <article class="book__section">
+      <h2 class="t-display">Parity two</h2>
+
+      <div class="card">
+        <div class="card__heading">
+          <h3 class="t-title">Static card</h3>
+          <p class="t-caption">Furniture. Stays still.</p>
+        </div>
+        <dl class="book__spec">
+          <div class="book__spec-row">
+            <dt class="book__spec-key">Radius</dt>
+            <dd class="book__spec-value">24 px on cards.</dd>
+          </div>
+          <div class="book__spec-row">
+            <dt class="book__spec-key">Surface</dt>
+            <dd class="book__spec-value">Transparent at rest.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="card card--shout">
+        <div class="card__heading">
+          <h3 class="t-title">Shout card</h3>
+          <p class="t-caption t-muted">One per column.</p>
+        </div>
+        <button class="button button--primary t-subtitle" type="button">Commit the choice</button>
+      </div>
+
+      <a class="card card--link" href="#nowhere">
+        <div class="card__heading">
+          <h3 class="t-title">Link card</h3>
+          <p class="t-caption">Whole surface navigates.</p>
+        </div>
+        <span class="button t-subtitle">Browse patterns</span>
+      </a>
+
+      <div class="card card--interactive" data-state="active">
+        <div class="card__heading">
+          <h3 class="t-title">Interactive card</h3>
+        </div>
+        <div class="card__collapsible">
+          <div class="card__collapsible-inner">
+            <p class="t-caption">Revealed when active.</p>
+          </div>
+        </div>
+        <button class="button t-subtitle" type="button" data-cta="minimized">Open</button>
+        <button class="button button--primary t-subtitle" type="button" data-cta="active">Commit</button>
+      </div>
+
+      <div class="card">
+        <label class="field field--row">
+          <span class="t-caption--bold field__label">Name</span>
+          <input class="t-caption field__input" type="text" value="Sofia">
+        </label>
+        <label class="field">
+          <input class="t-caption field__input" type="text" placeholder="sofia@kk.consulting">
+          <span class="field__fake-caret" aria-hidden="true"></span>
+        </label>
+        <div class="field field--row">
+          <span class="t-caption--bold field__label">Plan</span>
+          <span class="t-caption field__value">Annual</span>
+        </div>
+        <label class="switch">
+          <input class="switch__input" type="checkbox" checked>
+          <span class="switch__track"></span>
+          <span class="t-caption">Weekly digest</span>
+        </label>
+      </div>
+
+      <div class="card">
+        <div class="media">
+          <span class="avatar media__figure">GR</span>
+          <div class="media__body">
+            <p class="t-caption--bold">Giana Rosser</p>
+            <p class="t-caption t-muted">Is watching Last of Us</p>
+          </div>
+          <span class="tag media__trail">3</span>
+        </div>
+        <div class="media">
+          <span class="avatar media__figure"></span>
+          <div class="media__body">
+            <p class="t-caption--bold">Toki</p>
+            <p class="t-micro t-muted">11 291 km away</p>
+          </div>
+          <div class="media__trail">
+            <button class="button t-caption--bold" type="button">Poke</button>
+          </div>
+        </div>
+        <a class="media" href="#registry">
+          <span class="media__figure media__figure--square"></span>
+          <div class="media__body">
+            <p class="t-caption--bold">Reference registry</p>
+            <p class="t-micro t-muted">12 studies, 5 components</p>
+          </div>
+        </a>
+      </div>
+
+      <blockquote class="quote">Structure is the message.<cite>Konstantin</cite></blockquote>
+
+      <p class="t-body">Spacing token <span class="t-code">--space-4</span> resolves to 16 px.</p>
+      <pre class="t-code t-code--block">.card { border-radius: var(--radius-lg); }</pre>
+
+      <ul class="t-list">
+        <li>First item.</li>
+        <li>Second item.</li>
+        <li>Third item.</li>
+      </ul>
+      <ol class="t-list">
+        <li>First step.</li>
+        <li>Second step.</li>
+      </ol>
+
+      <dl class="book__spec book__spec--value">
+        <div class="book__spec-row">
+          <dt class="book__spec-key">Token</dt>
+          <dd class="book__spec-value">16 px</dd>
+          <dd class="book__spec-value">When and why to reach for it.</dd>
+        </div>
+      </dl>
+      <dl class="book__spec book__spec--triple">
+        <div class="book__spec-row">
+          <dt class="book__spec-key">Claim</dt>
+          <dd class="book__spec-value">What we said.</dd>
+          <dd class="book__spec-value">What shipped.</dd>
+          <dd class="book__spec-value">What we did about it.</dd>
+        </div>
+      </dl>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th scope="col">Keyword</th>
+            <th scope="col" class="data-table__num">Position</th>
+            <th scope="col" class="data-table__num">Change</th>
+            <th scope="col" class="data-table__num">Volume</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="data-table__lead">design system audit</td>
+            <td class="data-table__num">3</td>
+            <td class="data-table__num data-table__delta">▲ 2</td>
+            <td class="data-table__num">12 400</td>
+          </tr>
+          <tr>
+            <td class="data-table__lead">agentic pipeline</td>
+            <td class="data-table__num">11</td>
+            <td class="data-table__num data-table__delta data-table__delta--flat">0</td>
+            <td class="data-table__num">880</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th class="t-caption">Class</th>
+            <th class="t-caption">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-body">t-body</td>
+            <td class="t-body">Body text, 22 / 32 Medium.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="divider">
+
+      <figure class="figure">
+        <div class="spark spark--panel" role="img" aria-label="Traffic by month">
+          <span class="spark__bar spark__bar--soft" style="--v: 40%"></span>
+          <span class="spark__bar" style="--v: 55%"></span>
+          <span class="spark__bar" style="--v: 65%"></span>
+          <span class="spark__bar" style="--v: 80%"></span>
+        </div>
+        <figcaption>Traffic climbs through the year.</figcaption>
+      </figure>
+      <div class="spark-labels"><span>Jan</span><span>Jun</span><span>Dec</span></div>
+
+      <div class="book__signoff">
+        <div class="book__signoff-stats">
+          <div class="stat t-caption"><div><span class="t-caption--bold">40</span> components ported.</div></div>
+          <div class="stat t-caption"><div><span class="t-caption--bold">0</span> pixels different.</div></div>
+        </div>
+        <div class="book__signoff-signature">
+          <p class="t-caption">Signed by <span class="t-caption--bold">Konstantin Konstantinopolskii,</span><br>founder at <span class="t-caption--bold">kk.consulting</span><br><span class="t-muted">2026-07-18, Vue port session.</span></p>
+          <img class="book__signoff-signature-img" src="../../../signature.svg" alt="Signature">
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

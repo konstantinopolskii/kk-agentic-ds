@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parity candidate three — Vue doc shell</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp, h } from 'vue'
+    import {
+      KApp, KSidebar, KSidebarNav, KNavGroup, KBook, KBookSection,
+      KInspector, KInspectorGroup, KCard, KCardHeading, KCardCollapsible,
+      KButton, KCommentNew, KCommentThread,
+    } from '../src/index.js'
+
+    const app = createApp({
+      render: () =>
+        h(KApp, { view: 'doc' }, () => [
+          h(KSidebar, { title: 'Parity' }, {
+            default: () => [
+              h(KSidebarNav, { manual: true }, () => [
+                h(KNavGroup, {
+                  head: 'Shell',
+                  href: '#opening',
+                  items: [
+                    { label: 'Opening', href: '#opening', current: true },
+                    { label: 'Second', href: '#second' },
+                  ],
+                }),
+              ]),
+            ],
+            footer: () => ['2026, kk.consulting', h('br'), 'Vue parity'],
+          }),
+          h(KBook, () => [
+            h(KBookSection, { id: 'opening' }, () => [
+              h('h1', { class: 't-hero' }, 'Doc shell'),
+              h('p', { class: 't-body' }, 'Three columns, one scroll owner, the same pixels from either renderer.'),
+            ]),
+            h(KBookSection, { id: 'second' }, () => [
+              h('h2', { class: 't-display' }, 'Second section'),
+              h('p', { class: 't-body' }, 'The nav on the left is hand-curated; the inspector on the right holds the working cards.'),
+            ]),
+          ]),
+          h(KInspector, () => [
+            h(KInspectorGroup, () => [
+              h(KCard, { variant: 'heading' }, () => [h('h2', { class: 't-display' }, 'Tweak')]),
+              h(KCard, { variant: 'interactive', state: 'minimized' }, () => [
+                h(KCardHeading, { title: 'Tweak the tokens', subtitle: 'Brief the agent, pick a direction, scope, commit.' }),
+                h(KCardCollapsible, () => [h('p', { class: 't-caption' }, 'Hidden until active.')]),
+                h(KButton, { cta: 'minimized' }, () => 'Open'),
+                h(KButton, { primary: true, cta: 'active' }, () => 'Commit'),
+              ]),
+            ]),
+            h(KInspectorGroup, () => [
+              h(KCommentNew),
+              h(KCommentThread, {
+                title: 'Spacing question',
+                state: 'active',
+                messages: [
+                  { id: 'm-01', body: 'Why does the heading hug the next paragraph?' },
+                  { id: 'm-02', body: 'Rule 12: headings sit closer to what follows.', role: 'agent' },
+                ],
+              }),
+            ]),
+          ]),
+        ]),
+    })
+    const el = document.getElementById('app')
+    const host = document.createElement('div')
+    app.mount(host)
+    el.replaceWith(...host.children)
+  </script>
+</body>
+</html>

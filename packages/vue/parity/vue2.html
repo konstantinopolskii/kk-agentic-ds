@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parity candidate two — Vue components</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp, h } from 'vue'
+    import {
+      KButton, KCard, KCardHeading, KCardCollapsible, KField, KFieldRow, KSwitch,
+      KMedia, KQuote, KDivider, KList, KCode, KFigure, KSpecList, KSignoff,
+      KDataTable, KDataCell, KRegistryTable, KSpark, KSparkLabels,
+    } from '../src/index.js'
+
+    const app = createApp({
+      render: () =>
+        h('main', { class: 'book' }, [
+          h('article', { class: 'book__section' }, [
+            h('h2', { class: 't-display' }, 'Parity two'),
+
+            h(KCard, () => [
+              h(KCardHeading, { title: 'Static card', subtitle: 'Furniture. Stays still.' }),
+              h(KSpecList, {
+                rows: [
+                  { key: 'Radius', values: ['24 px on cards.'] },
+                  { key: 'Surface', values: ['Transparent at rest.'] },
+                ],
+              }),
+            ]),
+
+            h(KCard, { variant: 'shout' }, () => [
+              h(KCardHeading, { title: 'Shout card', subtitle: 'One per column.', muted: true }),
+              h(KButton, { primary: true }, () => 'Commit the choice'),
+            ]),
+
+            h(KCard, { variant: 'link', href: '#nowhere' }, () => [
+              h(KCardHeading, { title: 'Link card', subtitle: 'Whole surface navigates.' }),
+              h(KButton, { as: 'span' }, () => 'Browse patterns'),
+            ]),
+
+            h(KCard, { variant: 'interactive', state: 'active' }, () => [
+              h(KCardHeading, { title: 'Interactive card' }),
+              h(KCardCollapsible, () => [h('p', { class: 't-caption' }, 'Revealed when active.')]),
+              h(KButton, { cta: 'minimized' }, () => 'Open'),
+              h(KButton, { primary: true, cta: 'active' }, () => 'Commit'),
+            ]),
+
+            h(KCard, () => [
+              h(KField, { label: 'Name', row: true, modelValue: 'Sofia' }),
+              h(KField, { placeholder: 'sofia@kk.consulting', fakeCaret: true }),
+              h(KFieldRow, { label: 'Plan', value: 'Annual' }),
+              h(KSwitch, { label: 'Weekly digest', modelValue: true }),
+            ]),
+
+            h(KCard, () => [
+              h(KMedia, { title: 'Giana Rosser', meta: 'Is watching Last of Us', initials: 'GR', trailTag: '3' }),
+              h(KMedia, { title: 'Toki', meta: '11 291 km away', micro: true }, {
+                trail: () => [h(KButton, { caption: true }, () => 'Poke')],
+              }),
+              h(KMedia, { title: 'Reference registry', meta: '12 studies, 5 components', micro: true, square: true, href: '#registry' }),
+            ]),
+
+            h(KQuote, { cite: 'Konstantin' }, () => 'Structure is the message.'),
+
+            h('p', { class: 't-body' }, [
+              'Spacing token ',
+              h(KCode, () => '--space-4'),
+              ' resolves to 16 px.',
+            ]),
+            h(KCode, { block: true }, () => '.card { border-radius: var(--radius-lg); }'),
+
+            h(KList, { items: ['First item.', 'Second item.', 'Third item.'] }),
+            h(KList, { ordered: true, items: ['First step.', 'Second step.'] }),
+
+            h(KSpecList, {
+              variant: 'value',
+              rows: [{ key: 'Token', values: ['16 px', 'When and why to reach for it.'] }],
+            }),
+            h(KSpecList, {
+              variant: 'triple',
+              rows: [{ key: 'Claim', values: ['What we said.', 'What shipped.', 'What we did about it.'] }],
+            }),
+
+            h(KDataTable, {
+              columns: ['Keyword', { label: 'Position', num: true }, { label: 'Change', num: true }, { label: 'Volume', num: true }],
+            }, () => [
+              h('tr', [
+                h(KDataCell, { lead: true }, () => 'design system audit'),
+                h(KDataCell, { num: true }, () => '3'),
+                h(KDataCell, { delta: true }, () => '▲ 2'),
+                h(KDataCell, { num: true }, () => '12 400'),
+              ]),
+              h('tr', [
+                h(KDataCell, { lead: true }, () => 'agentic pipeline'),
+                h(KDataCell, { num: true }, () => '11'),
+                h(KDataCell, { delta: true, flat: true }, () => '0'),
+                h(KDataCell, { num: true }, () => '880'),
+              ]),
+            ]),
+
+            h(KRegistryTable, { columns: ['Class', 'Role'] }, () => [
+              h('tr', [
+                h('td', { class: 't-body' }, 't-body'),
+                h('td', { class: 't-body' }, 'Body text, 22 / 32 Medium.'),
+              ]),
+            ]),
+
+            h(KDivider),
+
+            h(KFigure, { caption: 'Traffic climbs through the year.' }, () => [
+              h(KSpark, { values: [40, 55, 65, 80], soft: [0], panel: true, label: 'Traffic by month' }),
+            ]),
+            h(KSparkLabels, { labels: ['Jan', 'Jun', 'Dec'] }),
+
+            h(KSignoff, {
+              stats: [
+                { value: '40', text: 'components ported.' },
+                { value: '0', text: 'pixels different.' },
+              ],
+              author: 'Konstantin Konstantinopolskii',
+              role: 'founder',
+              org: 'kk.consulting',
+              stamp: '2026-07-18, Vue port session.',
+              signatureSrc: '../../../signature.svg',
+            }),
+          ]),
+        ]),
+    })
+    const el = document.getElementById('app')
+    const host = document.createElement('div')
+    app.mount(host)
+    el.replaceWith(...host.children)
+  </script>
+</body>
+</html>

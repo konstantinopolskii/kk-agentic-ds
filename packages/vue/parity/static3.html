@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parity golden three — doc shell</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+  <div class="app" data-view="doc">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="sidebar__header t-title">Parity</div>
+      <nav class="sidebar__nav" id="toc" data-nav="manual">
+        <span class="toc__indicator" aria-hidden="true"></span>
+        <section class="nav-group">
+          <a class="t-subtitle nav-group__head" href="#opening">Shell</a>
+          <ul class="nav-group__items">
+            <li class="t-caption"><a href="#opening" aria-current="true">Opening</a></li>
+            <li class="t-caption"><a href="#second">Second</a></li>
+          </ul>
+        </section>
+      </nav>
+      <footer class="sidebar__footer t-caption">2026, kk.consulting<br>Vue parity</footer>
+    </aside>
+    <main class="book" id="doc">
+      <article class="book__section" id="opening">
+        <h1 class="t-hero">Doc shell</h1>
+        <p class="t-body">Three columns, one scroll owner, the same pixels from either renderer.</p>
+      </article>
+      <article class="book__section" id="second">
+        <h2 class="t-display">Second section</h2>
+        <p class="t-body">The nav on the left is hand-curated; the inspector on the right holds the working cards.</p>
+      </article>
+    </main>
+    <aside class="inspector" aria-label="Actions and comments">
+      <section class="inspector__group">
+        <header class="card card--heading">
+          <h2 class="t-display">Tweak</h2>
+        </header>
+        <div class="card card--interactive" data-state="minimized">
+          <div class="card__heading">
+            <h3 class="t-title">Tweak the tokens</h3>
+            <p class="t-caption">Brief the agent, pick a direction, scope, commit.</p>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <p class="t-caption">Hidden until active.</p>
+            </div>
+          </div>
+          <button class="button t-subtitle" type="button" data-cta="minimized">Open</button>
+          <button class="button button--primary t-subtitle" type="button" data-cta="active">Commit</button>
+        </div>
+      </section>
+      <section class="inspector__group">
+        <div class="card card--shout comment-new">
+          <div class="card__heading">
+            <h3 class="t-title">Add a comment</h3>
+          </div>
+          <label class="field">
+            <textarea class="t-caption field__input" placeholder="Type a comment"></textarea>
+          </label>
+          <button class="button button--primary t-subtitle" type="button">Commit</button>
+        </div>
+        <div class="card card--interactive comment-thread" data-state="active">
+          <div class="card__heading">
+            <h3 class="t-title">Spacing question</h3>
+          </div>
+          <div class="card__collapsible">
+            <div class="card__collapsible-inner">
+              <div class="comment-msg" data-message-id="m-01">
+                <p class="t-caption">Why does the heading hug the next paragraph?</p>
+              </div>
+              <div class="comment-msg" data-message-id="m-02" data-author-role="agent">
+                <p class="t-caption">Rule 12: headings sit closer to what follows.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+</body>
+</html>
