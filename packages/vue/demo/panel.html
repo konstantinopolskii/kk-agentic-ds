@@ -41,7 +41,12 @@
               h(KCard, { span: 'third' }, () => [
                 h(KCardHeading, { title: 'Contribution history', subtitle: 'Six months of activity.' }),
                 h(KCardBody, () => [
-                  h(KSpark, { values: [45, 62, 55, 80, 58, 92], panel: true, label: 'Contributions by month, December to May, rising' }),
+                  h(KSpark, {
+                    values: [32, 38, 35, 42, 40, 37, 45, 48, 44, 52, 50, 47, 55, 58, 54, 62, 60, 57, 66, 70, 65, 74, 72, 78, 82, 95],
+                    panel: true,
+                    emphasize: 25,
+                    label: 'Contributions by week, 26 weeks, rising into May',
+                  }),
                   h(KSparkLabels, { labels: ['Dec', 'May'] }),
                 ]),
                 h('div', { class: 'metric-row' }, [
@@ -158,7 +163,12 @@
                   h(KMetric, { value: '$12 450', label: 'Position buying power' }),
                 ]),
                 h(KCardBody, () => [
-                  h(KSpark, { values: [52, 55, 50, 58, 62, 60, 66, 64, 70, 74, 72, 80], label: 'VOO closes, six months, rising' , panel: true }),
+                  h(KSpark, {
+                    values: [50, 52, 49, 54, 56, 53, 58, 57, 60, 62, 59, 63, 66, 64, 68, 70, 67, 72, 74, 71, 76, 78, 75, 80, 79, 84],
+                    panel: true,
+                    emphasize: 25,
+                    label: 'VOO weekly closes, six months, rising',
+                  }),
                   h(KSparkLabels, { labels: ['Jan', 'Mar', 'Jun'] }),
                 ]),
               ]),
@@ -182,8 +192,13 @@
               h(KCard, { span: 'third' }, () => [
                 h(KCardHeading, { title: 'Power usage', subtitle: 'Whole home, through the day.' }),
                 h(KCardBody, () => [
-                  h(KSpark, { values: [30, 45, 52, 40, 62, 55, 85, 70], panel: true, label: 'Power draw by three-hour block, peak at six' }),
-                  h(KSparkLabels, { labels: ['6a', '12p', '8p'] }),
+                  h(KSpark, {
+                    values: [12, 10, 9, 9, 11, 14, 22, 35, 42, 38, 33, 30, 32, 35, 33, 36, 40, 48, 62, 78, 85, 72, 58, 46],
+                    panel: true,
+                    emphasize: 23,
+                    label: 'Power draw by hour, last day, evening peak',
+                  }),
+                  h(KSparkLabels, { labels: ['24 hours ago', 'now'] }),
                 ]),
                 h('div', { class: 'metric-row' }, [
                   h(KMetric, { value: '3.4 kW', label: 'Drawing now' }),

@@ -2,6 +2,18 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.14.1, 2026-07-18
+
+Patch. The spark-granularity rule. Panel sparks were rendering a handful of fat slabs — more ink than information, the data-ink policy inverted. Canon now names the floor and where the ink goes.
+
+### Added
+- Spark canon rules: panel sparks carry 16–32 bars at the natural fine period (weeks across months, hours across a day); the history runs `--soft` and one bar — the current or selected period — carries full ink. All-black panel sparks are reserved for modules where the whole series is the message. Inline sparks stay all-ink. No CSS change: `spark__bar--soft` already carries the tone.
+- `KSpark` `emphasize` prop — one index keeps full ink, every other bar demotes. Additive; the `soft` list still works when `emphasize` is unset.
+
+### Changed
+- `packages/vue/demo/panel.html` — the three panel sparks move from 6–12 slabs to 26 weekly and 24 hourly bars with the latest period emphasized.
+- `package.json` + `.claude-plugin/plugin.json` 1.14.0 → 1.14.1.
+
 ## 1.14.0, 2026-07-18
 
 Minor. The rail-by-default release. The card inset flips from an allowlist to an inverted default: every direct child of a card lands on the 24 px text rail automatically, and only the kit's own bleeders opt out. This closes the recurring misalignment class where each new child type (a metric row, a data table, a spec list, a bare spark) missed the enumerated inset rule and sat on the 12 px shell edge until someone noticed.

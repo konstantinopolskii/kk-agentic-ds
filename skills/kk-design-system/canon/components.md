@@ -785,6 +785,8 @@ Rules:
 
 - `--v` carries each bar's height as a percent. Data ink may fall below the 4 px grid; layout around the chart never does.
 - Primary series black; secondary series `--soft` at the 20% hairline tone. Two series maximum.
+- Panel sparks earn their width with granularity: 16–32 bars. Six slabs across a module is a poster, not a chart — the ink outweighs the information. Pick the natural fine period (weeks across months, hours across a day) over the coarse one.
+- Panel sparks spend ink where the reader looks: the history runs `--soft`, one bar — the current or selected period — carries full ink. An all-black panel spark is reserved for the rare module where the whole series is the message. Inline sparks stay all-ink; at cell scale a soft ramp reads as fading, not emphasis.
 - Line variant ships a tiny inline SVG: `stroke="currentColor"`, width 1.5, no fill, no markers, wrapped in `.spark--line`.
 - Every sparkline carries `role="img"` and an `aria-label` stating the trend in words.
 - The chart never holds the only copy of a value. See Data ink under Foundations.
