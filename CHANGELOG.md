@@ -2,6 +2,15 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.15.1, 2026-07-18
+
+Patch. Spark geometry and the delta-glyph lockdown.
+
+### Changed
+- Spark bars: 2 px gap at panel scale (was 4 px — a third of the module went to air and the series broke into slabs) and rounded corners, 4 px panel / 2 px inline.
+- Canon hardens the glyph rule: ▲/▼ are retired — the face renders them so old content survives, but they never ship in new work. Direction glyphs appear in exactly one place: beside a number, inside a delta. Never as list markers, buttons, labels, or decoration.
+- `package.json` + `.claude-plugin/plugin.json` 1.15.0 → 1.15.1.
+
 ## 1.15.0, 2026-07-18
 
 Minor. The delta-arrow release. Deltas read as ↑ and ↓, not ▲ and ▼ — the triangle was a stand-in from the day the kit face had no arrows at all. Now it does.

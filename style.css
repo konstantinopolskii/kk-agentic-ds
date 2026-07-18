@@ -2474,18 +2474,24 @@ td.data-table__lead { font-weight: var(--fw-bold); }
   min-width: 2px;
   height: var(--v, 4%);
   background: var(--color-text);
+  /* Rounded on all four corners — 2 px inline, 4 px at panel scale. */
+  border-radius: 2px;
 }
 /* Secondary series (actuals behind a forecast) demote to the 20%
    hairline tone — one distinction step, no second hue. */
 .spark__bar--soft { background: var(--color-border-strong); }
-/* Panel scale — a module-height chart on a hairline baseline. */
+/* Panel scale — a module-height chart on a hairline baseline. The
+   2 px gap is data-ink territory (sub-4 legal): at 16–32 bars a 4 px
+   gap spends a third of the module on air and the series stops
+   reading as one shape. */
 .spark--panel {
   display: flex;
   width: 100%;
   height: 160px;
-  gap: var(--space-1);
+  gap: 2px;
   border-bottom: 0.5px solid var(--color-border);
 }
+.spark--panel .spark__bar { border-radius: 4px; }
 /* Line variant — consumer ships a tiny inline SVG: stroke currentColor,
    stroke-width 1.5, no fill, no markers. The wrapper only sizes it. */
 .spark--line { align-items: stretch; }

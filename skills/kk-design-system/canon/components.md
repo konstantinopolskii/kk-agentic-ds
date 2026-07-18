@@ -152,7 +152,8 @@ Charts decorate numbers; they never replace them. Every charted value stays read
 - Monochrome data ink. Primary series in `--color-text`; a secondary series demotes to `--color-border-strong`. No red, no green, no second hue.
 - Bars and lines only. No pies, no donuts, no gauges, no radar.
 - Direct labels over legends. Label the first, peak, and last points in text; a legend is a failure to label directly.
-- Deltas are direction glyphs plus weight: ↑2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong. The ↑ and ↓ arrows render from the kit's own face (`Commissioner-Deltas.woff2`, scoped by unicode-range) — Commissioner itself has no arrows, and the system fallback is oversized and off-baseline. The face also keeps ▲/▼ for older content, but new deltas write arrows.
+- Deltas are direction glyphs plus weight: ↑2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong. The ↑ and ↓ arrows render from the kit's own face (`Commissioner-Deltas.woff2`, scoped by unicode-range) — Commissioner itself has no arrows, and the system fallback is oversized and off-baseline. ▲ and ▼ are retired: the face still renders them so old content doesn't break, but they never ship in new work.
+- Direction glyphs appear in exactly one place: beside a number, inside a delta. Never as list markers, never in buttons or labels, never as decoration. A page whose arrows outnumber its deltas is using them wrong.
 - Gridlines and baselines are 0.5 px hairlines.
 - Data-driven dimensions (bar heights, line points) ride custom properties or SVG attributes and may fall below the 4 px grid — data ink is not layout. Everything around the chart stays on the grid.
 - No hover-only truth. Hover may add precision; it never holds the only copy of a value.
@@ -712,7 +713,7 @@ The stat sized for panels: number first, label second, delta third. Tabular nume
 Rules:
 
 - Value renders at display scale, bold, tabular. Label at caption, regular. Delta at micro, bold, glyph-first.
-- Delta glyphs are ↑ and ↓. No color. Flat periods drop the delta line instead of printing ↑ 0.
+- Delta glyphs are ↑ and ↓ — ▲/▼ are retired. No color. Flat periods drop the delta line instead of printing ↑ 0. Direction glyphs live beside numbers in deltas only, never as decoration.
 - Two to four metrics per row. A lone number inside prose is a `stat`, not a metric.
 - Thin space groups thousands: 195 151, never 195,151.
 - Used in: panel grids, shout cards, person pages, forecast modules.
@@ -786,6 +787,7 @@ Rules:
 - `--v` carries each bar's height as a percent. Data ink may fall below the 4 px grid; layout around the chart never does.
 - Primary series black; secondary series `--soft` at the 20% hairline tone. Two series maximum.
 - Panel sparks earn their width with granularity: 16–32 bars. Six slabs across a module is a poster, not a chart — the ink outweighs the information. Pick the natural fine period (weeks across months, hours across a day) over the coarse one.
+- Bars sit 2 px apart and round all four corners — 4 px at panel scale, 2 px inline. Both numbers are data-ink territory, not layout grid.
 - Panel sparks spend ink where the reader looks: the history runs `--soft`, one bar — the current or selected period — carries full ink. An all-black panel spark is reserved for the rare module where the whole series is the message. Inline sparks stay all-ink; at cell scale a soft ramp reads as fading, not emphasis.
 - Line variant ships a tiny inline SVG: `stroke="currentColor"`, width 1.5, no fill, no markers, wrapped in `.spark--line`.
 - Every sparkline carries `role="img"` and an `aria-label` stating the trend in words.
