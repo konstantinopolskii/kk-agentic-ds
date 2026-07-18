@@ -2,6 +2,19 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.13.0, 2026-07-18
+
+Minor. The delta-glyph and collapsible-rail release. Two long-standing visual debts paid: the delta triangles now render from the kit's own face instead of the system fallback, and collapsible card bodies land on the same text rail as every other card child.
+
+### Added
+- `fonts/commissioner/Commissioner-Deltas.woff2` — a 536-byte two-glyph face for ▲ (U+25B2) and ▼ (U+25BC), drawn to Commissioner's own metrics (2000 upm, 1426 cap height; 760×560 filled triangles centered on the digit body). Neither the shipped subsets nor upstream Commissioner contain these glyphs, so every delta in every demo fell back to the system font's oversized, off-baseline triangle. A third `@font-face` under the same `Commissioner` family, scoped by `unicode-range: U+25B2, U+25BC`, swaps them in with zero markup changes.
+- Collapsible bodies land on the rail via markup, not selectors: prose and rosters inside `card__collapsible-inner` wrap in the existing `card__body`, which already carries the half-inset. Fields, decks, and comment lists stay flush and keep their bleed. The Vue layer's `KCardCollapsible` adds the wrapper automatically (`flush` opts out); `KCardBody` ships for direct use.
+
+### Changed
+- `skills/kk-design-system/canon/components.md` — card rule names the collapsible `card__body` pattern; data-ink foundation notes the delta glyphs ship in the kit face.
+- `packages/vue/` — `KCardCollapsible` wraps its slot in `card__body`, `KCardBody` exported, demo exercises both fixes.
+- `package.json` + `.claude-plugin/plugin.json` 1.12.0 → 1.13.0.
+
 ## 1.12.0, 2026-07-17
 
 Minor. The reference registry release. Twelve measured studies of nine outside references (SEOmonitor, kk.consulting, amicaliuc, Must, Oppie, Clique, WeTransfer, tzlvt, planetarium, fuckgrechka, asekachov portfolio) distilled into ten common moves, five new components, three page shells, and a chart policy. Zero new tokens: every addition composes the existing nine colors, seven sizes, and the 4 px grid. Fourteen recreation demos prove each study renders in kit vocabulary alone.

@@ -23,6 +23,20 @@
   font-display: swap;
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
+/* Delta glyphs — ▲ (U+25B2) and ▼ (U+25BC) carry every delta in the kit,
+   but neither the shipped subsets nor upstream Commissioner contain them,
+   so they fell back to the system font's oversized off-baseline triangle.
+   This 536-byte face ships two kit-drawn triangles built to Commissioner's
+   own metrics (2000 upm, 1426 cap): 760×560 filled marks centered on the
+   digit body. unicode-range scopes the face to exactly those two glyphs. */
+@font-face {
+  font-family: "Commissioner";
+  src: url("./fonts/commissioner/Commissioner-Deltas.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+25B2, U+25BC;
+}
 
 /* =========================================================================
    Reset & base
@@ -906,7 +920,11 @@ body {
    is always a <dl>, so .card > dl covers it in every context.
    Chip rows and media rows carry zero horizontal padding of their own,
    so they join the same list — a chip row or roster inside a card lands
-   on the text rail, not the shell edge. */
+   on the text rail, not the shell edge.
+   Inside a collapsible the same rail comes from markup, not selectors:
+   prose and rosters in a collapsible body wrap in .card__body, which
+   already carries the half-inset. Fields, decks, and comment lists sit
+   flush in the inner as before — they manage their own bleed. */
 .card > p,
 .card > ol,
 .card > ul,

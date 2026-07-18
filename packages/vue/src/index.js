@@ -25,6 +25,7 @@ export { default as KFrontDesks } from './components/KFrontDesks.js'
 // Cards
 export { default as KCard } from './components/KCard.js'
 export { default as KCardHeading } from './components/KCardHeading.js'
+export { default as KCardBody } from './components/KCardBody.js'
 export { default as KCardCollapsible } from './components/KCardCollapsible.js'
 export { default as KCardStack } from './components/KCardStack.js'
 

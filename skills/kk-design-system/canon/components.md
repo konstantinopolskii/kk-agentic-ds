@@ -152,7 +152,7 @@ Charts decorate numbers; they never replace them. Every charted value stays read
 - Monochrome data ink. Primary series in `--color-text`; a secondary series demotes to `--color-border-strong`. No red, no green, no second hue.
 - Bars and lines only. No pies, no donuts, no gauges, no radar.
 - Direct labels over legends. Label the first, peak, and last points in text; a legend is a failure to label directly.
-- Deltas are direction glyphs plus weight: ▲2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong.
+- Deltas are direction glyphs plus weight: ▲2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong. The ▲ and ▼ glyphs render from the kit's own two-glyph face (`Commissioner-Deltas.woff2`, scoped by unicode-range) — Commissioner itself has no triangles, and the system fallback triangle is oversized and off-baseline.
 - Gridlines and baselines are 0.5 px hairlines.
 - Data-driven dimensions (bar heights, line points) ride custom properties or SVG attributes and may fall below the 4 px grid — data ink is not layout. Everything around the chart stays on the grid.
 - No hover-only truth. Hover may add precision; it never holds the only copy of a value.
@@ -287,7 +287,7 @@ Rules:
 - One active per stack.
 - One shout per column. If everything shouts, nothing does.
 - Primary and minimized button labels never match.
-- A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12 px half-inset on its own. No `card__body` wrapper needed.
+- A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12 px half-inset on its own. No `card__body` wrapper needed. Inside `card__collapsible-inner` the rule flips: wrap prose and rosters in `card__body` so they land on the heading's text rail. Fields, decks, and comment lists stay flush — they manage their own bleed.
 - Used in: card stack, three columns, comment; link cards in: inspector pointer groups, doc shelves.
 
 Deep link: `demos/fundamental--accepted/index.html#cards`.
