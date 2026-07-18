@@ -287,7 +287,7 @@ Rules:
 - One active per stack.
 - One shout per column. If everything shouts, nothing does.
 - Primary and minimized button labels never match.
-- A `<p>`, `<ol>`, `<ul>`, or `<dl>` dropped straight inside a card picks up the 12 px half-inset on its own. No `card__body` wrapper needed. Inside `card__collapsible-inner` the rule flips: wrap prose and rosters in `card__body` so they land on the heading's text rail. Fields, decks, and comment lists stay flush — they manage their own bleed.
+- The rail is the default. Every direct child of a card — prose, lists, spec lists, chip rows, media rosters, metric rows, data tables, sparks, anything — lands on the 24 px text rail automatically. Never add per-child padding or margin to reach the rail; the kit already put you there. The only elements off the default are the kit's own bleeders, a closed list: `card__heading` and `card__body` (pad themselves), `card__collapsible` (inner manages the rail), fields and switches (flush hover fill, hairline inset to the rail), decks, dividers. Extending that list is a kit change, not a page decision. Inside `card__collapsible-inner` wrap prose and rosters in `card__body`; fields, decks, and comment lists sit flush there.
 - Used in: card stack, three columns, comment; link cards in: inspector pointer groups, doc shelves.
 
 Deep link: `demos/fundamental--accepted/index.html#cards`.

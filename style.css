@@ -911,37 +911,48 @@ body {
   padding-right: var(--card-inset-x);
 }
 
-/* Raw prose direct-children of a card pay their half too. A bare <p>,
-   <ol>, <ul>, or <dl> dropped inside a card used to sit at the 12 px
-   shell padding and miss the 24 px rail every other child lands on.
-   Picking up the inset here keeps authors from wrapping a single
-   paragraph in card__body just to land on the rail. This rule also
-   supersedes the former `.book .card > .book__spec` selector: book__spec
-   is always a <dl>, so .card > dl covers it in every context.
-   Chip rows and media rows carry zero horizontal padding of their own,
-   so they join the same list — a chip row or roster inside a card lands
-   on the text rail, not the shell edge.
-   Inside a collapsible the same rail comes from markup, not selectors:
-   prose and rosters in a collapsible body wrap in .card__body, which
-   already carries the half-inset. Fields, decks, and comment lists sit
-   flush in the inner as before — they manage their own bleed. */
-.card > p,
-.card > ol,
-.card > ul,
-.card > dl,
-.card > .chip-wrap,
-.card > .media {
-  padding-left: var(--card-inset-x);
-  padding-right: var(--card-inset-x);
-}
-
-/* Buttons hold their own inset as margin, not padding — their internal
-   padding is reserved for label centering. Margin of 12 px stacks with
-   the card shell's 12 px for the standard 24 px rail, so a CTA sits on
-   the same visual line as the heading above it. */
-.card > .button {
+/* The rail is the default. Every direct child of a card takes a 12 px
+   margin that stacks with the shell's 12 px padding, landing content on
+   the 24 px text rail without the author doing anything. The old model
+   enumerated which children get the inset (p, ol, ul, dl, chip-wrap,
+   media) — and every child type outside the list (a metric row, a data
+   table, a bare spark) sat on the shell edge until someone noticed.
+   Inverted, the exception list is the closed set of kit parts that own
+   their own bleed, and it only changes when the kit does:
+   card__heading and card__body pad themselves; the collapsible is a
+   full-width machine whose inner manages the rail; fields and switches
+   keep their flush hover fill and inset their hairline to the rail;
+   decks pad themselves; dividers span the shell. A heading card pads
+   its children directly, so they opt out wholesale.
+   Margins, not padding, so a table's rules end on the rail exactly
+   where a field's hairline does.
+   The doubled .card.card is cascade armor, not a typo: several
+   components carry their own `margin: 0` reset (book__spec, lists),
+   declared later in this file at single-class specificity. At plain
+   .card > * weight the rail would lose those ties by source order and
+   the spec list would silently fall off the rail again. Two classes
+   outweigh every single-class reset; opting out of the rail is done
+   here, in the exception list below, never by a component's own
+   margin declaration. */
+.card.card > * {
   margin-left: var(--card-inset-x);
   margin-right: var(--card-inset-x);
+}
+.card.card > :where(.card__heading, .card__body, .card__collapsible,
+  .field, .switch, .deck, .divider),
+.card.card--heading > * {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Full-width children must drop to width:auto under the rail margins —
+   a 100% box plus 24 px of margin overflows the card. Flex stretch
+   fills them to the railed width. Buttons also spend their internal
+   padding on label centering, so the rail rides the margin alone. */
+.card > .button,
+.card > .data-table,
+.card > .registry-table,
+.card > .spark--panel {
   width: auto;
 }
 

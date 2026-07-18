@@ -2,6 +2,19 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.14.0, 2026-07-18
+
+Minor. The rail-by-default release. The card inset flips from an allowlist to an inverted default: every direct child of a card lands on the 24 px text rail automatically, and only the kit's own bleeders opt out. This closes the recurring misalignment class where each new child type (a metric row, a data table, a spec list, a bare spark) missed the enumerated inset rule and sat on the 12 px shell edge until someone noticed.
+
+### Changed
+- `.card > p/ol/ul/dl/.chip-wrap/.media` half-inset rule replaced by `.card.card > * { margin-inline: var(--card-inset-x) }`. The exception list is closed and kit-owned: `card__heading`, `card__body`, `card__collapsible` (pad or manage themselves), `field` and `switch` (flush hover fill, hairline inset to the rail), `deck`, `divider`; heading cards reset all children. The doubled class is cascade armor — components carrying their own `margin: 0` reset (spec list, lists) would otherwise defeat the rail by source order.
+- Margins, not padding, carry the rail, so a data table's rules end where a field's hairline does, and the rail stacks with whatever padding a density-tuned card declares.
+- Full-width children (`.button`, `.data-table`, `.registry-table`, `.spark--panel`) drop to `width: auto` under the rail margins; flex stretch fills them to the railed width.
+- `.card > .button` margin rule retired — the default now provides it.
+- `skills/kk-design-system/canon/components.md` — card rule rewritten: the rail is the default, extending the bleed list is a kit change, never a page decision.
+- Existing pages with card children outside the old allowlist shift 12 px onto the rail. That shift is the fix, not a regression: parity pairs re-verified pixel-identical, manifesto doc and demo shells swept at zero rail deviations.
+- `package.json` + `.claude-plugin/plugin.json` 1.13.0 → 1.14.0.
+
 ## 1.13.0, 2026-07-18
 
 Minor. The delta-glyph and collapsible-rail release. Two long-standing visual debts paid: the delta triangles now render from the kit's own face instead of the system fallback, and collapsible card bodies land on the same text rail as every other card child.
