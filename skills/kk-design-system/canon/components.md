@@ -152,7 +152,7 @@ Charts decorate numbers; they never replace them. Every charted value stays read
 - Monochrome data ink. Primary series in `--color-text`; a secondary series demotes to `--color-border-strong`. No red, no green, no second hue.
 - Bars and lines only. No pies, no donuts, no gauges, no radar.
 - Direct labels over legends. Label the first, peak, and last points in text; a legend is a failure to label directly.
-- Deltas are direction glyphs plus weight: ▲2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong. The ▲ and ▼ glyphs render from the kit's own two-glyph face (`Commissioner-Deltas.woff2`, scoped by unicode-range) — Commissioner itself has no triangles, and the system fallback triangle is oversized and off-baseline.
+- Deltas are direction glyphs plus weight: ↑2 bold for movement, regular muted for flat. If a delta needs color to be understood, the label is wrong. The ↑ and ↓ arrows render from the kit's own face (`Commissioner-Deltas.woff2`, scoped by unicode-range) — Commissioner itself has no arrows, and the system fallback is oversized and off-baseline. The face also keeps ▲/▼ for older content, but new deltas write arrows.
 - Gridlines and baselines are 0.5 px hairlines.
 - Data-driven dimensions (bar heights, line points) ride custom properties or SVG attributes and may fall below the 4 px grid — data ink is not layout. Everything around the chart stays on the grid.
 - No hover-only truth. Hover may add precision; it never holds the only copy of a value.
@@ -700,7 +700,7 @@ The stat sized for panels: number first, label second, delta third. Tabular nume
   <div class="metric">
     <p class="metric__value">195 151</p>
     <p class="metric__label">Fans on Must</p>
-    <p class="metric__delta">▲ 2 340 <span class="t-muted">this month</span></p>
+    <p class="metric__delta">↑ 2 340 <span class="t-muted">this month</span></p>
   </div>
   <div class="metric">
     <p class="metric__value">7.6</p>
@@ -712,7 +712,7 @@ The stat sized for panels: number first, label second, delta third. Tabular nume
 Rules:
 
 - Value renders at display scale, bold, tabular. Label at caption, regular. Delta at micro, bold, glyph-first.
-- Delta glyphs are ▲ and ▼. No color. Flat periods drop the delta line instead of printing ▲ 0.
+- Delta glyphs are ↑ and ↓. No color. Flat periods drop the delta line instead of printing ↑ 0.
 - Two to four metrics per row. A lone number inside prose is a `stat`, not a metric.
 - Thin space groups thousands: 195 151, never 195,151.
 - Used in: panel grids, shout cards, person pages, forecast modules.
@@ -737,7 +737,7 @@ Product rows at density: header micros over a strong hairline, body rows on soft
     <tr>
       <td class="data-table__lead">design system audit</td>
       <td class="data-table__num">3</td>
-      <td class="data-table__num data-table__delta">▲ 2</td>
+      <td class="data-table__num data-table__delta">↑ 2</td>
       <td class="data-table__num">12 400</td>
     </tr>
     <tr>

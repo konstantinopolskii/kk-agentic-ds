@@ -2,6 +2,18 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.15.0, 2026-07-18
+
+Minor. The delta-arrow release. Deltas read as ↑ and ↓, not ▲ and ▼ — the triangle was a stand-in from the day the kit face had no arrows at all. Now it does.
+
+### Added
+- ↑ (U+2191) and ↓ (U+2193) in `Commissioner-Deltas.woff2`, drawn to Commissioner's metrics: 170-unit stem at the bold stroke weight, 560×380 chevron head, 940 units tall, centered on the same optical center as the digits. The face grows from 536 to 604 bytes and keeps ▲/▼ for compatibility with content that used them.
+
+### Changed
+- Canon delta glyph is ↑/↓ everywhere: metric deltas, data-table deltas, front-rail movement lines. `canon/components.md`, `canon/patterns.md`, and the registry chart policy updated; demos and parity fixtures swapped (parity re-verified pixel-identical).
+- The Latin subset's `@font-face` drops its false U+2191/2193 claim — the subset never contained the arrows, and the claim would shadow the Deltas face.
+- `package.json` + `.claude-plugin/plugin.json` 1.14.1 → 1.15.0.
+
 ## 1.14.1, 2026-07-18
 
 Patch. The spark-granularity rule. Panel sparks were rendering a handful of fat slabs — more ink than information, the data-ink policy inverted. Canon now names the floor and where the ink goes.

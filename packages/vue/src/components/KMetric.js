@@ -1,7 +1,7 @@
 import { h } from 'vue'
 
 /* Metric — canonical: value first, label second, delta third. Delta
-   direction rides the glyph the author writes (▲ ▼), never a color. */
+   direction rides the glyph the author writes (↑ ↓), never a color. */
 export default {
   name: 'KMetric',
   props: {

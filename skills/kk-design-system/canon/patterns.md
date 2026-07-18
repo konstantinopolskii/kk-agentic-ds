@@ -98,7 +98,7 @@ Cards as panels on a twelve-column grid, macro gutters, one page scroll. The she
       <div class="metric">
         <p class="metric__value">12 400</p>
         <p class="metric__label">Sessions</p>
-        <p class="metric__delta">▲ 8%</p>
+        <p class="metric__delta">↑ 8%</p>
       </div>
     </div>
     <div class="card panel--two-thirds"><!-- chart module --></div>
@@ -144,7 +144,7 @@ Rules:
 - The masthead spans the full grid: nameplate at `t-hero` left, dateline in muted micro right. It closes with the kit's one 1 px rule — the newspaper line. Hairlines everywhere else stay 0.5 px.
 - The nameplate is the page's h1 and its only `t-hero`; the lead headline steps down to `t-display`.
 - The lead is one link card. One lead; a front with two leads has none.
-- Rail rows are `media` anchors: headline bold caption, timestamp muted micro. No images required to hold the layout. A rail may close with one `card` of field rows for standing numbers; movement renders as bold ▲ ▼ deltas.
+- Rail rows are `media` anchors: headline bold caption, timestamp muted micro. No images required to hold the layout. A rail may close with one `card` of field rows for standing numbers; movement renders as bold ↑ ↓ deltas.
 - Desk cells are link cards with a `t-micro t-muted` kicker naming the desk.
 - Collapses to one column at 1024: masthead, lead, rail, desks, in that order.
 - Product rhythm applies — same numbers as the single-column shell.

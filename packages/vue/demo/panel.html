@@ -84,8 +84,8 @@
               h(KCard, { span: 'third' }, () => [
                 h(KCardHeading, { title: 'Savings targets', subtitle: 'Active milestones for 2024.' }),
                 h('div', { class: 'metric-row' }, [
-                  h(KMetric, { value: '$420 000', label: 'Retirement, 65% there', delta: '▲ $273 000 saved' }),
-                  h(KMetric, { value: '$85 000', label: 'Real estate, 32% there', delta: '▲ $27 200 saved' }),
+                  h(KMetric, { value: '$420 000', label: 'Retirement, 65% there', delta: '↑ $273 000 saved' }),
+                  h(KMetric, { value: '$85 000', label: 'Real estate, 32% there', delta: '↑ $27 200 saved' }),
                 ]),
                 h(KButton, () => 'Set a new goal'),
               ]),
@@ -131,13 +131,13 @@
                   h('tr', [
                     h(KDataCell, { lead: true }, () => 'Vanguard S&P 500'),
                     h(KDataCell, { num: true }, () => '112'),
-                    h(KDataCell, { delta: true }, () => '▲ 4.2%'),
+                    h(KDataCell, { delta: true }, () => '↑ 4.2%'),
                     h(KDataCell, { num: true }, () => '$48 230'),
                   ]),
                   h('tr', [
                     h(KDataCell, { lead: true }, () => 'Vanguard Dividend'),
                     h(KDataCell, { num: true }, () => '450'),
-                    h(KDataCell, { delta: true }, () => '▲ 1.8%'),
+                    h(KDataCell, { delta: true }, () => '↑ 1.8%'),
                     h(KDataCell, { num: true }, () => '$26 033'),
                   ]),
                   h('tr', [
@@ -149,7 +149,7 @@
                   h('tr', [
                     h(KDataCell, { lead: true }, () => 'Realty Income'),
                     h(KDataCell, { num: true }, () => '320'),
-                    h(KDataCell, { delta: true }, () => '▼ 0.6%'),
+                    h(KDataCell, { delta: true }, () => '↓ 0.6%'),
                     h(KDataCell, { num: true }, () => '$15 136'),
                   ]),
                 ]),
@@ -159,7 +159,7 @@
               h(KCard, { span: 'half' }, () => [
                 h(KCardHeading, { title: 'Stock performance', subtitle: 'VOO, six months of closes.' }),
                 h('div', { class: 'metric-row' }, [
-                  h(KMetric, { value: '$430.16', label: 'Last close', delta: '▲ 2.3% this month' }),
+                  h(KMetric, { value: '$430.16', label: 'Last close', delta: '↑ 2.3% this month' }),
                   h(KMetric, { value: '$12 450', label: 'Position buying power' }),
                 ]),
                 h(KCardBody, () => [

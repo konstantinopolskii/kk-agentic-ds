@@ -271,7 +271,7 @@ Run through evolve, one conflict statement each:
 5. **`spark`.** Inline trend, bars or line, monochrome, hairline baseline. Data-driven heights ride a custom property per bar; the chart policy legalizes sub-4 data-ink dimensions while layout stays on the grid.
 6. **Shells: `app--single`, `panels`, `front`.** One-column reading measure; dashboard panel grid; front-page lead plus rail plus grid. Grid gaps on macro tokens, panels are cards, nothing new below the shell line.
 
-Chart policy, stated once: monochrome data ink, bars and lines only, every value readable as text without hover, direct labels over legends, hairline gridlines, deltas as ▲ ▼ glyphs with weight, no red, no green, no gradients, no pie.
+Chart policy, stated once: monochrome data ink, bars and lines only, every value readable as text without hover, direct labels over legends, hairline gridlines, deltas as ↑ ↓ glyphs with weight, no red, no green, no gradients, no pie.
 
 ## Density
 
