@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel — every pattern on one board</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp, h, ref } from 'vue'
+    import {
+      KApp, KPanels, KCard, KCardHeading, KCardBody, KButton,
+      KChip, KChipWrap, KField, KFieldRow, KSwitch,
+      KMedia, KSpecList, KSignoff, KMetric, KSpark, KSparkLabels,
+      KDataTable, KDataCell,
+    } from '../src/index.js'
+
+    const app = createApp({
+      setup() {
+        const holdingsFilter = ref('stocks')
+        const slot = ref('9:00')
+        const publicStats = ref(true)
+        const emailReports = ref(true)
+        const alertTx = ref(true)
+        const alertSecurity = ref(true)
+        const alertMilestones = ref(false)
+        const alertMarket = ref(false)
+
+        return () =>
+          h(KApp, { view: 'panels' }, () => [
+            h(KPanels, () => [
+
+              // Contribution history — chart + numbers + one action.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Contribution history', subtitle: 'Six months of activity.' }),
+                h(KCardBody, () => [
+                  h(KSpark, { values: [45, 62, 55, 80, 58, 92], panel: true, label: 'Contributions by month, December to May, rising' }),
+                  h(KSparkLabels, { labels: ['Dec', 'May'] }),
+                ]),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '$1 000', label: 'Scheduled May 25' }),
+                  h(KMetric, { value: 'Weekly', label: 'Auto-save cadence' }),
+                ]),
+                h(KButton, () => 'Open the full report'),
+              ]),
+
+              // Payout threshold — a small form that reads as prose.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Payout threshold', subtitle: 'The minimum balance before a payout triggers.' }),
+                h(KFieldRow, { label: 'Currency', value: 'USD — United States dollar' }),
+                h(KField, { label: 'Minimum', row: true, modelValue: '$2 500.00' }),
+                h(KField, { placeholder: 'Notes for this payout configuration', fakeCaret: true }),
+                h(KButton, { primary: true }, () => 'Save the threshold'),
+              ]),
+
+              // Claimable balance — the one shout on the board.
+              h(KCard, { variant: 'shout', span: 'third' }, () => [
+                h(KCardHeading, { title: 'Claimable balance', subtitle: 'Pending setup.', muted: true }),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '$0.00', label: 'Ready to claim' }),
+                ]),
+                h(KSpecList, {
+                  rows: [
+                    { key: 'Net royalties', values: ['$0.00'] },
+                    { key: 'Processing fee', values: ['−$0.00'] },
+                  ],
+                }),
+                h(KButton, { primary: true }, () => 'Connect the bank'),
+              ]),
+
+              // Savings targets — metrics carry the progress in words.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Savings targets', subtitle: 'Active milestones for 2024.' }),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '$420 000', label: 'Retirement, 65% there', delta: '▲ $273 000 saved' }),
+                  h(KMetric, { value: '$85 000', label: 'Real estate, 32% there', delta: '▲ $27 200 saved' }),
+                ]),
+                h(KButton, () => 'Set a new goal'),
+              ]),
+
+              // Recent transactions — the media-row roster.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Recent transactions', subtitle: 'Latest account activity.' }),
+                h(KMedia, { title: 'Blue Bottle Coffee', meta: 'Food and drink · today, 10:24', micro: true, initials: 'BB', trailTag: '−$6.50' }),
+                h(KMedia, { title: 'Whole Foods Market', meta: 'Groceries · yesterday', micro: true, initials: 'WF', trailTag: '−$142.30' }),
+                h(KMedia, { title: 'Stripe payout', meta: 'Income · Oct 12', micro: true, initials: 'SP', trailTag: '+$4 200' }),
+                h(KMedia, { title: 'Uber Technologies', meta: 'Transport · Oct 11', micro: true, initials: 'UT', trailTag: '−$24.10' }),
+                h(KButton, () => 'Show all activity'),
+              ]),
+
+              // Buy investment — form + spec + commit.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Buy investment', subtitle: 'Market orders execute at the current price.' }),
+                h(KField, { label: 'Amount', row: true, modelValue: '$1 000.00' }),
+                h(KFieldRow, { label: 'Order type', value: 'Market order' }),
+                h(KSpecList, {
+                  rows: [
+                    { key: 'Estimated shares', values: ['1.95'] },
+                    { key: 'Buying power', values: ['$12 450.00'] },
+                  ],
+                }),
+                h(KButton, { primary: true }, () => 'Review the order'),
+              ]),
+
+              // Holdings — live chip segment + data table with kit deltas.
+              h(KCard, { span: 'half' }, () => [
+                h(KCardHeading, { title: 'Holdings', subtitle: 'Positions and six-month movement.' }),
+                h(KChipWrap, {
+                  modelValue: holdingsFilter.value,
+                  'onUpdate:modelValue': (v) => { holdingsFilter.value = v },
+                }, () => [
+                  h(KChip, { value: 'stocks' }, () => 'Stocks'),
+                  h(KChip, { value: 'etfs' }, () => 'ETFs'),
+                  h(KChip, { value: 'reits' }, () => 'REITs'),
+                ]),
+                h(KDataTable, {
+                  columns: ['Position', { label: 'Shares', num: true }, { label: 'Change', num: true }, { label: 'Value', num: true }],
+                }, () => [
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'Vanguard S&P 500'),
+                    h(KDataCell, { num: true }, () => '112'),
+                    h(KDataCell, { delta: true }, () => '▲ 4.2%'),
+                    h(KDataCell, { num: true }, () => '$48 230'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'Vanguard Dividend'),
+                    h(KDataCell, { num: true }, () => '450'),
+                    h(KDataCell, { delta: true }, () => '▲ 1.8%'),
+                    h(KDataCell, { num: true }, () => '$26 033'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'Apple'),
+                    h(KDataCell, { num: true }, () => '85'),
+                    h(KDataCell, { delta: true, flat: true }, () => '0'),
+                    h(KDataCell, { num: true }, () => '$18 488'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'Realty Income'),
+                    h(KDataCell, { num: true }, () => '320'),
+                    h(KDataCell, { delta: true }, () => '▼ 0.6%'),
+                    h(KDataCell, { num: true }, () => '$15 136'),
+                  ]),
+                ]),
+              ]),
+
+              // Stock performance — number first, chart second.
+              h(KCard, { span: 'half' }, () => [
+                h(KCardHeading, { title: 'Stock performance', subtitle: 'VOO, six months of closes.' }),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '$430.16', label: 'Last close', delta: '▲ 2.3% this month' }),
+                  h(KMetric, { value: '$12 450', label: 'Position buying power' }),
+                ]),
+                h(KCardBody, () => [
+                  h(KSpark, { values: [52, 55, 50, 58, 62, 60, 66, 64, 70, 74, 72, 80], label: 'VOO closes, six months, rising' , panel: true }),
+                  h(KSparkLabels, { labels: ['Jan', 'Mar', 'Jun'] }),
+                ]),
+              ]),
+
+              // Transfer funds — from, to, amount, the facts, one commit.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Transfer funds', subtitle: 'Move money between connected accounts.' }),
+                h(KFieldRow, { label: 'From', value: 'Main checking · $12 450' }),
+                h(KFieldRow, { label: 'To', value: 'High-yield savings · $42 100' }),
+                h(KField, { label: 'Amount', row: true, modelValue: '$1 200.00' }),
+                h(KSpecList, {
+                  rows: [
+                    { key: 'Arrives', values: ['Today, Apr 14'] },
+                    { key: 'Fee', values: ['$0.00'] },
+                  ],
+                }),
+                h(KButton, { primary: true }, () => 'Confirm the transfer'),
+              ]),
+
+              // Power usage — home dashboard slice.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Power usage', subtitle: 'Whole home, through the day.' }),
+                h(KCardBody, () => [
+                  h(KSpark, { values: [30, 45, 52, 40, 62, 55, 85, 70], panel: true, label: 'Power draw by three-hour block, peak at six' }),
+                  h(KSparkLabels, { labels: ['6a', '12p', '8p'] }),
+                ]),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '3.4 kW', label: 'Drawing now' }),
+                  h(KMetric, { value: '1.2 kW', label: 'Solar feeding back' }),
+                ]),
+                h(KFieldRow, { label: 'Battery', value: '85% charged' }),
+              ]),
+
+              // Upcoming payments — dated roster, values in the trail.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Upcoming payments', subtitle: 'Scheduled through April.' }),
+                h(KMedia, { title: 'Rent', meta: 'Apr 1 · autopay on', micro: true, square: true, trailTag: '$2 400' }),
+                h(KMedia, { title: 'Netflix', meta: 'Apr 15 · entertainment', micro: true, square: true, trailTag: '$19.99' }),
+                h(KMedia, { title: 'Auto insurance', meta: 'Apr 22 · six-month term', micro: true, square: true, trailTag: '$186' }),
+                h(KButton, () => 'Plan the month'),
+              ]),
+
+              // Preferences — switches + a reset/commit pair.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Preferences', subtitle: 'Account settings and notifications.' }),
+                h(KFieldRow, { label: 'Currency', value: 'USD — United States dollar' }),
+                h(KSwitch, { label: 'Public statistics', modelValue: publicStats.value, 'onUpdate:modelValue': (v) => { publicStats.value = v } }),
+                h(KSwitch, { label: 'Monthly royalty reports by email', modelValue: emailReports.value, 'onUpdate:modelValue': (v) => { emailReports.value = v } }),
+                h(KButton, () => 'Reset to defaults'),
+                h(KButton, { primary: true }, () => 'Save preferences'),
+              ]),
+
+              // Profile — figure + fields.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Profile', subtitle: 'How you appear around the studio.' }),
+                h(KMedia, { title: 'Sofia Hlazunova', meta: 'Design lead · joined 2024', micro: true, initials: 'SH' }),
+                h(KField, { label: 'Name', row: true, modelValue: 'Sofia Hlazunova' }),
+                h(KField, { label: 'Email', row: true, modelValue: 'sofia@kk.consulting' }),
+                h(KField, { placeholder: 'A line about yourself', textarea: true }),
+                h(KButton, { primary: true }, () => 'Save the profile'),
+              ]),
+
+              // Invite team — two emails and a link to share.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Invite the team', subtitle: 'Members join this workspace.' }),
+                h(KField, { placeholder: 'alex@example.com', fakeCaret: true }),
+                h(KField, { placeholder: 'sam@example.com' }),
+                h(KFieldRow, { label: 'Join as', value: 'Editor' }),
+                h('p', { class: 't-caption t-muted' }, ['Or share the invite link ', h('span', { class: 't-code' }, 'app.co/invite/x8f2k'), '.']),
+                h(KButton, { primary: true }, () => 'Send the invites'),
+              ]),
+
+              // Notifications — the switch stack.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Notifications', subtitle: 'What deserves a ping.' }),
+                h(KSwitch, { label: 'Transaction alerts', modelValue: alertTx.value, 'onUpdate:modelValue': (v) => { alertTx.value = v } }),
+                h(KSwitch, { label: 'Security alerts', modelValue: alertSecurity.value, 'onUpdate:modelValue': (v) => { alertSecurity.value = v } }),
+                h(KSwitch, { label: 'Goal milestones', modelValue: alertMilestones.value, 'onUpdate:modelValue': (v) => { alertMilestones.value = v } }),
+                h(KSwitch, { label: 'Daily market summary', modelValue: alertMarket.value, 'onUpdate:modelValue': (v) => { alertMarket.value = v } }),
+                h(KButton, { primary: true }, () => 'Save the selection'),
+              ]),
+
+              // Invoice — spec rows, total as a field row, two actions.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Invoice INV-2847', subtitle: 'Due March 30. Pending.' }),
+                h(KSpecList, {
+                  rows: [
+                    { key: 'License', values: ['$499.00'] },
+                    { key: 'Support', values: ['$1 188.00'] },
+                    { key: 'Components', values: ['$750.00'] },
+                  ],
+                }),
+                h(KFieldRow, { label: 'Total due', value: '$2 437.00' }),
+                h(KButton, () => 'Download the PDF'),
+                h(KButton, { primary: true }, () => 'Pay now'),
+              ]),
+
+              // Milestone — a goal form.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Set a milestone', subtitle: 'Name the target and we pace the saving.' }),
+                h(KField, { placeholder: 'New car, home downpayment', fakeCaret: true }),
+                h(KField, { label: 'Target', row: true, modelValue: '$15 000' }),
+                h(KFieldRow, { label: 'By', value: 'December 2025' }),
+                h(KButton, () => 'Discard the draft'),
+                h(KButton, { primary: true }, () => 'Create the goal'),
+              ]),
+
+              // Book appointment — live chip slots.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Book an appointment', subtitle: 'Dr. Sarah Chen · cardiology · March 18.' }),
+                h(KChipWrap, {
+                  modelValue: slot.value,
+                  'onUpdate:modelValue': (v) => { slot.value = v },
+                }, () => [
+                  h(KChip, { value: '9:00' }, () => '9:00'),
+                  h(KChip, { value: '10:30' }, () => '10:30'),
+                  h(KChip, { value: '11:00' }, () => '11:00'),
+                  h(KChip, { value: '13:30' }, () => '13:30'),
+                ]),
+                h(KFieldRow, { label: 'New patient', value: 'Arrive 15 minutes early' }),
+                h(KButton, { primary: true }, () => 'Book the slot'),
+              ]),
+
+              // Empty state — first-run card.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Distribute a track', subtitle: 'Nothing released yet.' }),
+                h(KCardBody, () => [
+                  h('p', { class: 't-caption t-muted' }, 'Upload the first master and it reaches Spotify, Apple Music, and the rest within a day.'),
+                ]),
+                h(KButton, { primary: true }, () => 'Create a release'),
+              ]),
+
+              // Social links — the URL stack.
+              h(KCard, { span: 'third' }, () => [
+                h(KCardHeading, { title: 'Social links', subtitle: 'Where the catalog points.' }),
+                h(KField, { label: 'Spotify', row: true, modelValue: 'spotify.com/artist/3j2k' }),
+                h(KField, { label: 'Instagram', row: true, modelValue: '@julianduryea_music' }),
+                h(KField, { label: 'Website', row: true, placeholder: 'https://yoursite.com' }),
+                h(KButton, { primary: true }, () => 'Save the links'),
+              ]),
+
+              // Signoff — the board ships signed.
+              h('div', { class: 'card panel--full' }, [
+                h(KSignoff, {
+                  stats: [
+                    { value: '20', text: 'product slices on one board.' },
+                    { value: '0', text: 'classes outside the kit.' },
+                  ],
+                  author: 'Konstantin Konstantinopolskii',
+                  role: 'founder',
+                  org: 'kk.consulting',
+                  stamp: '2026-07-18, panel session.',
+                  signatureSrc: '../../../signature.svg',
+                }),
+              ]),
+            ]),
+          ])
+      },
+    })
+    const el = document.getElementById('app')
+    const host = document.createElement('div')
+    app.mount(host)
+    el.replaceWith(...host.children)
+  </script>
+</body>
+</html>

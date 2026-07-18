@@ -16,6 +16,8 @@ Components carry simple state: chip segment groups (`v-model` on `KChipWrap`), s
 
 `demo/index.html` is the live proof — a full doc shell rendered by Vue and driven by kit.js: column reveal cascade on first paint, auto-filled sidebar TOC with the gliding indicator, interactive card promotion (`inspector-card-focus`), and the whole comment flow (select text in the book, the draft appears in the stack, Enter forms the thread, localStorage persists it). Vue reactivity and kit DOM mutations coexist: a re-render patches only what Vue tracks and leaves the kit's injected nav, threads, highlights, and `data-state` flips alone.
 
+`demo/panel.html` is the breadth proof — twenty product slices on the panels shell: forms, rosters, sparks, metrics, a data table with delta glyphs, switch stacks, live chip segments, one shout, and a full-span signoff. No kit.js needed; the panels shell has no book, sidebar, or inspector. Chip and switch state runs on Vue refs.
+
 ## Components
 
 | Component | Canonical markup |
