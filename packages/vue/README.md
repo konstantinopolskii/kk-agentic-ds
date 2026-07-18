@@ -12,7 +12,9 @@ Vue 3 layer for the KK agentic design system. Components are thin emitters of ca
 
 ## Behavior split
 
-Components carry simple state: chip segment groups (`v-model` on `KChipWrap`), switch and field `v-model`, comment draft emit. Everything heavier — scroll-spy TOC, card-stack promotion, comment menus and edit flows, narrow-viewport column swaps — stays in `js/kit.js`, which binds to the same DOM these components emit. Load `kit.js` after mount and call `KK.init()`; the behavior layer cannot tell the renderers apart.
+Components carry simple state: chip segment groups (`v-model` on `KChipWrap`), switch and field `v-model`, comment draft emit. Everything heavier — scroll-spy TOC, card-stack promotion, comment menus and edit flows, narrow-viewport column swaps — stays in `js/kit.js`, which binds to the same DOM these components emit. Load `kit.js` as a classic script in the head: it binds `KK.init` to DOMContentLoaded, which fires after module scripts run, so the Vue tree is mounted before the kit walks it. The behavior layer cannot tell the renderers apart.
+
+`demo/index.html` is the live proof — a full doc shell rendered by Vue and driven by kit.js: column reveal cascade on first paint, auto-filled sidebar TOC with the gliding indicator, interactive card promotion (`inspector-card-focus`), and the whole comment flow (select text in the book, the draft appears in the stack, Enter forms the thread, localStorage persists it). Vue reactivity and kit DOM mutations coexist: a re-render patches only what Vue tracks and leaves the kit's injected nav, threads, highlights, and `data-state` flips alone.
 
 ## Components
 

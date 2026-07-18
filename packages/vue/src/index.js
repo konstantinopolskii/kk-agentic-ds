@@ -31,6 +31,7 @@ export { default as KCardStack } from './components/KCardStack.js'
 // Comments
 export { default as KCommentNew } from './components/KCommentNew.js'
 export { default as KCommentThread } from './components/KCommentThread.js'
+export { default as KCommentStack } from './components/KCommentStack.js'
 
 // Controls
 export { default as KButton } from './components/KButton.js'

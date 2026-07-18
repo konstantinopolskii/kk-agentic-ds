@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue shell — full doc surface</title>
+  <link rel="preload" href="../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../vars.css">
+  <link rel="stylesheet" href="../../../style.css">
+  <!-- Behavior layer. Classic script binds KK.init to DOMContentLoaded,
+       which fires after the module below has mounted the Vue tree: the
+       kit meets a complete DOM and cannot tell the renderers apart.
+       Reveals, scroll-spy, card stack, comments — all kit.js. -->
+  <script src="../../../js/kit.js"></script>
+  <script type="importmap">
+    { "imports": { "vue": "../node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp, h, ref } from 'vue'
+    import {
+      KApp, KSidebar, KSidebarNav, KBook, KBookSection,
+      KInspector, KInspectorGroup, KCommentStack,
+      KCard, KCardHeading, KCardCollapsible, KButton,
+      KChip, KChipWrap, KFieldRow, KSwitch,
+      KQuote, KMedia, KSpecList, KSignoff, KFigure,
+      KMetric, KSpark, KSparkLabels, KDataTable, KDataCell,
+    } from '../src/index.js'
+
+    const app = createApp({
+      setup() {
+        const role = ref('founder')
+        const digest = ref(true)
+        const roleLabels = { founder: 'Founder', strategist: 'Strategist', mentor: 'Mentor' }
+
+        return () =>
+          h(KApp, { view: 'doc' }, () => [
+            h(KSidebar, { title: 'Vue shell' }, {
+              default: () => [h(KSidebarNav)],
+              footer: () => ['2026, kk.consulting', h('br'), 'Rendered by Vue, driven by kit.js'],
+            }),
+
+            h(KBook, () => [
+              h(KBookSection, () => [
+                h('h1', { class: 't-hero' }, 'The Vue shell'),
+                h('p', { class: 't-body' }, 'Every element on this page is a Vue component emitting canonical kit markup. Every animation is js/kit.js binding to that markup after mount: the columns cascade in on first paint, the nav on the left wrote itself from the heading rank, and selecting any text in this column opens a comment draft on the right.'),
+                h('p', { class: 't-body' }, 'Same pixels as the hand-written kit, proven at zero diff. This page adds the moving parts.'),
+              ]),
+
+              h(KBookSection, () => [
+                h('h2', { class: 't-display' }, 'Inventory'),
+                h('p', { class: 't-body' }, 'The port covers the full canon: shells, cards, controls, content, data, and the two kit-doc primitives.'),
+                h('h3', { class: 't-title' }, 'Cards'),
+                h('p', { class: 't-body' }, 'Five variants share one shape. The inspector on the right runs the interactive stack — click a minimized card and the kit promotes it.'),
+                h(KCard, () => [
+                  h(KCardHeading, { title: 'One shape, five variants', subtitle: 'Static, interactive, link, shout, heading.' }),
+                  h(KSpecList, {
+                    rows: [
+                      { key: 'Components', values: ['41 thin emitters, no styles shipped.'] },
+                      { key: 'Behavior', values: ['Simple state in Vue, heavy runtime in kit.js.'] },
+                      { key: 'Parity', values: ['23 616 000 pixels compared, 0 different.'] },
+                    ],
+                  }),
+                ]),
+                h('h3', { class: 't-title' }, 'Voices'),
+                h(KQuote, { cite: 'The manifesto' }, () => 'Structure is the message.'),
+                h(KCard, () => [
+                  h(KMedia, { title: 'Sofia Hlazunova', meta: 'Reviewed the card family', initials: 'SH', trailTag: 'design' }),
+                  h(KMedia, { title: 'Claude', meta: 'Ported 41 components', initials: 'CL', trailTag: 'agent' }),
+                ]),
+              ]),
+
+              h(KBookSection, () => [
+                h('h2', { class: 't-display' }, 'Numbers'),
+                h('p', { class: 't-body' }, 'Data ink stays monochrome: the chart decorates the numbers, the numbers stay readable as text.'),
+                h('div', { class: 'metric-row' }, [
+                  h(KMetric, { value: '41', label: 'Components ported' }),
+                  h(KMetric, { value: '3', label: 'Parity pairs', delta: '▲ 2 this session' }),
+                  h(KMetric, { value: '0', label: 'Pixels different' }),
+                ]),
+                h(KFigure, { caption: 'Port coverage by session, share of canon inventory.' }, () => [
+                  h(KSpark, { values: [15, 15, 40, 100], soft: [0, 1], panel: true, label: 'Coverage climbs from six components to the full canon' }),
+                ]),
+                h(KSparkLabels, { labels: ['Scaffold', 'Full port'] }),
+                h(KDataTable, {
+                  columns: ['Layer', { label: 'Components', num: true }, { label: 'Change', num: true }],
+                }, () => [
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'shells'),
+                    h(KDataCell, { num: true }, () => '13'),
+                    h(KDataCell, { delta: true }, () => '▲ 13'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'cards and comments'),
+                    h(KDataCell, { num: true }, () => '8'),
+                    h(KDataCell, { delta: true }, () => '▲ 7'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'controls and content'),
+                    h(KDataCell, { num: true }, () => '15'),
+                    h(KDataCell, { delta: true }, () => '▲ 10'),
+                  ]),
+                  h('tr', [
+                    h(KDataCell, { lead: true }, () => 'data and doc primitives'),
+                    h(KDataCell, { num: true }, () => '5'),
+                    h(KDataCell, { delta: true, flat: true }, () => '0'),
+                  ]),
+                ]),
+              ]),
+
+              h(KBookSection, () => [
+                h('h2', { class: 't-display' }, 'Choices'),
+                h('p', { class: 't-body' }, 'This section is live Vue state: the chips are a segment group on v-model, the switch drives the row under it.'),
+                h(KCard, () => [
+                  h(KChipWrap, {
+                    modelValue: role.value,
+                    'onUpdate:modelValue': (v) => { role.value = v },
+                  }, () => [
+                    h(KChip, { value: 'founder' }, () => 'Founder'),
+                    h(KChip, { value: 'strategist' }, () => 'Strategist'),
+                    h(KChip, { value: 'mentor' }, () => 'Mentor'),
+                  ]),
+                  h(KFieldRow, { label: 'Speaking as', value: roleLabels[role.value] }),
+                  h(KSwitch, {
+                    label: 'Weekly digest',
+                    modelValue: digest.value,
+                    'onUpdate:modelValue': (v) => { digest.value = v },
+                  }),
+                  h(KFieldRow, { label: 'Digest', value: digest.value ? 'On, Mondays' : 'Off' }),
+                ]),
+              ]),
+
+              h(KBookSection, () => [
+                h('h2', { class: 't-display' }, 'Signoff'),
+                h(KSignoff, {
+                  stats: [
+                    { value: '41', text: 'components in the Vue layer.' },
+                    { value: '1', text: 'behavior layer, shared with plain HTML.' },
+                  ],
+                  author: 'Konstantin Konstantinopolskii',
+                  role: 'founder',
+                  org: 'kk.consulting',
+                  stamp: '2026-07-18, Vue shell session.',
+                  signatureSrc: '../../../signature.svg',
+                }),
+              ]),
+            ]),
+
+            h(KInspector, () => [
+              h(KInspectorGroup, () => [
+                h(KCard, { variant: 'heading' }, () => [h('h2', { class: 't-display' }, 'Tweak')]),
+                h(KCard, { variant: 'interactive', state: 'active' }, () => [
+                  h(KCardHeading, { title: 'Promote a card', subtitle: 'Click a minimized card below. The kit runs the focus animation.' }),
+                  h(KCardCollapsible, () => [
+                    h('p', { class: 't-caption' }, 'One active per stack. The promotion keyframe is inspector-card-focus: scale, skew, and a transient blur that clears inside the same animation.'),
+                  ]),
+                  h(KButton, { cta: 'minimized' }, () => 'Open'),
+                  h(KButton, { primary: true, cta: 'active' }, () => 'Got it'),
+                ]),
+                h(KCard, { variant: 'interactive' }, () => [
+                  h(KCardHeading, { title: 'Swap the columns', subtitle: 'Narrow the window and the FAB swaps views.' }),
+                  h(KCardCollapsible, () => [
+                    h('p', { class: 't-caption' }, 'Each column re-reveals from its own side when it returns: sidebar from the left, inspector from the right, book from below.'),
+                  ]),
+                  h(KButton, { cta: 'minimized' }, () => 'Open'),
+                  h(KButton, { primary: true, cta: 'active' }, () => 'Noted'),
+                ]),
+                h(KCard, { variant: 'interactive' }, () => [
+                  h(KCardHeading, { title: 'Watch the nav', subtitle: 'Scroll the book. The indicator glides.' }),
+                  h(KCardCollapsible, () => [
+                    h('p', { class: 't-caption' }, 'The TOC on the left was written by the kit from the heading rank Vue rendered. Nobody hand-curated it.'),
+                  ]),
+                  h(KButton, { cta: 'minimized' }, () => 'Open'),
+                  h(KButton, { primary: true, cta: 'active' }, () => 'Seen'),
+                ]),
+              ]),
+              h(KInspectorGroup, () => [
+                h(KCard, { variant: 'heading' }, () => [h('h2', { class: 't-display' }, 'Comments')]),
+                h(KCommentStack),
+              ]),
+            ]),
+          ])
+      },
+    })
+    const el = document.getElementById('app')
+    const host = document.createElement('div')
+    app.mount(host)
+    el.replaceWith(...host.children)
+  </script>
+</body>
+</html>
