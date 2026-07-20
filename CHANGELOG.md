@@ -2,6 +2,20 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 2.1.1, 2026-07-20
+
+Patch. The five board and poster recreations plus the recreations gallery shipped unstyled in `demos/generated`. Their layout lives in `demos/reference-recreations/lab.css`, the experiment sheet the canon does not carry, and `ssg.mjs` only ever emitted `vars.css` + `style.css`. `page_check` diffs the body alone, so a missing head sheet passed the gate and rendered a collapsed page in the browser.
+
+### Fixed
+- `demos/generated/{01-rank-tracker-v2,03-identity-hero-v2,10-tzlvt-landing-v2,12-studio-index-v2,14-newsfront-v2,index}.html` now link `lab.css` and render their board grid and poster layouts, matching the frozen `reference-recreations` twins.
+
+### Added
+- `ssg.mjs` takes a repeatable `--css <href>` flag: extra page-local stylesheets, emitted verbatim after `style.css`. The generated set's head assets were otherwise fixed.
+- `demos/generated/lab.css` — a copy of the experiment sheet, so the generated gallery is self-contained.
+
+### Changed
+- `kit-snapshot` and comments-demo footers, and the three version manifests, to 2.1.1.
+
 ## 2.1.0, 2026-07-20
 
 Minor. Every page in the repo is now authored in Vue: 39 SFC pages under `packages/vue/sfc/pages`, statics generated through `ssg.mjs`, and a public markdown surface replacing the client-side `js/md.js` pipeline. The retired h() twins and their harnesses are deleted; the frozen 1.x statics stay as the only markup oracle.

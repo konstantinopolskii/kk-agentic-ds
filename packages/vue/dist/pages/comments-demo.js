@@ -66,7 +66,7 @@ var comments_demo_default = /* @__PURE__ */ defineComponent({
 			return openBlock(), createBlock(unref(KApp), { view: "doc" }, {
 				default: withCtx(() => [
 					createVNode(unref(KSidebar), { title: "Comment persistence" }, {
-						footer: withCtx(() => [..._cache[0] || (_cache[0] = [createTextVNode("kit 2.1.0, comments demo", -1)])]),
+						footer: withCtx(() => [..._cache[0] || (_cache[0] = [createTextVNode("kit 2.1.1, comments demo", -1)])]),
 						default: withCtx(() => [createVNode(unref(KSidebarNav))]),
 						_: 1
 					}),

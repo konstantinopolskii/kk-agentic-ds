@@ -62,8 +62,10 @@ Pages live in `sfc/pages/*.vue` and build through `vite.pages.config.ts` into `d
 
 ```
 npx vite build -c vite.pages.config.ts
-node ssg.mjs dist/pages/<name>.js <out.html> --title "Page title"
+node ssg.mjs dist/pages/<name>.js <out.html> --title "Page title" [--css href ...]
 ```
+
+`--css` adds a page-local stylesheet after `style.css`, emitted verbatim. Only the board and poster recreations need it: their layout lives in `demos/reference-recreations/lab.css`, the experiment sheet the canon does not carry, copied to `demos/generated/lab.css` so the gallery is self-contained. Every other page renders on `vars.css` + `style.css` alone.
 
 Generated sets: `demos/generated/` (reference recreations), `demos/generated/fundamental/` (pattern pages), `demos/kit-snapshot/`, `demos/comments/`, `demos/md-renderer-smoke/`, and the repo root `index.html` + `doc.html`.
 

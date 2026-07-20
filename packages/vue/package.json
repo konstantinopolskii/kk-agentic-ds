@@ -1,6 +1,6 @@
 {
   "name": "@konstantinopolskii/vue",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Vue components for the KK agentic design system. Thin emitters of canonical kit markup: components own structure, style.css owns every pixel.",
   "type": "module",
   "main": "dist/index.js",

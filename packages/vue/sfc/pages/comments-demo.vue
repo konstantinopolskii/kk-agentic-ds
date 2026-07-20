@@ -146,7 +146,7 @@ const signoffStats: SignoffStat[] = [
   <KApp view="doc">
     <KSidebar title="Comment persistence">
       <KSidebarNav />
-      <template #footer>kit 2.1.0, comments demo</template>
+      <template #footer>kit 2.1.1, comments demo</template>
     </KSidebar>
 
     <main id="doc" ref="bookRef" class="book">

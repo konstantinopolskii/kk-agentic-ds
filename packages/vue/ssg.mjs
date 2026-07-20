@@ -20,9 +20,19 @@ import { renderToString } from '@vue/server-renderer'
 const args = process.argv.slice(2)
 const titleIdx = args.indexOf('--title')
 const title = titleIdx > -1 ? args.splice(titleIdx, 2)[1] : 'Generated page'
+// Extra per-page stylesheets (repeatable --css <href>), injected right
+// after style.css and emitted verbatim (href is page-relative, caller's
+// choice). For experimental recreation pages whose layout lives in a
+// page-local sheet — demos/reference-recreations/lab.css — rather than the
+// global style.css. The head-asset set is otherwise fixed, and page_check
+// diffs only <body>, so a missing page sheet renders unstyled and silent.
+const extraCss = []
+for (let i = args.indexOf('--css'); i > -1; i = args.indexOf('--css')) {
+  extraCss.push(args.splice(i, 2)[1])
+}
 const [moduleArg, outArg] = args
 if (!moduleArg || !outArg) {
-  console.error('usage: node ssg.mjs <page-module.js> <out.html> [--title "Page title"]')
+  console.error('usage: node ssg.mjs <page-module.js> <out.html> [--title "Page title"] [--css href ...]')
   process.exit(2)
 }
 
@@ -58,7 +68,7 @@ const html = `<!DOCTYPE html>
   <link rel="preload" href="${toOut('fonts/commissioner/Commissioner-Latin.woff2')}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="${toOut('vars.css')}">
   <link rel="stylesheet" href="${toOut('style.css')}">
-  <script type="importmap">
+${extraCss.map((h) => `  <link rel="stylesheet" href="${h}">`).join('\n')}${extraCss.length ? '\n' : ''}  <script type="importmap">
     { "imports": { "vue": "${vueHref}", "@konstantinopolskii/vue": "${kitHref}" } }
   </script>
 </head>

@@ -76,7 +76,7 @@ interface SignoffStat {
 }
 const signoffStats: SignoffStat[] = [
   { value: '50', text: 'components on this page.' },
-  { value: '2.1.0', text: 'the kit version it maps.' },
+  { value: '2.1.1', text: 'the kit version it maps.' },
 ]
 
 interface CommentMessage {
@@ -97,7 +97,7 @@ const inspectorMessages: CommentMessage[] = [
   <KApp view="doc">
     <KSidebar title="Kit snapshot">
       <KSidebarNav />
-      <template #footer>UI kit 2.1.0<br />50 components, one page.</template>
+      <template #footer>UI kit 2.1.1<br />50 components, one page.</template>
     </KSidebar>
 
     <KBook id="doc">

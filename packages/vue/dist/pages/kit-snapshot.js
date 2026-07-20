@@ -95,7 +95,7 @@ var kit_snapshot_default = /* @__PURE__ */ defineComponent({
 			value: "50",
 			text: "components on this page."
 		}, {
-			value: "2.1.0",
+			value: "2.1.1",
 			text: "the kit version it maps."
 		}];
 		const inspectorMessages = [{
@@ -111,7 +111,7 @@ var kit_snapshot_default = /* @__PURE__ */ defineComponent({
 				default: withCtx(() => [
 					createVNode(unref(KSidebar), { title: "Kit snapshot" }, {
 						footer: withCtx(() => [..._cache[3] || (_cache[3] = [
-							createTextVNode("UI kit 2.1.0", -1),
+							createTextVNode("UI kit 2.1.1", -1),
 							createElementVNode("br", null, null, -1),
 							createTextVNode("50 components, one page.", -1)
 						])]),
