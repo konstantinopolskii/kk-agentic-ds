@@ -1,56 +1,10 @@
-# Dropdown — integration
+# Dropdown integration
 
-How a consumer wires the kit's dropdown into their own state. Covers the data attribute the behavior scans for, the event it dispatches, and the Vue emitter's `select`. Everything visual lives in `manifesto.md § Components` and `components.md § Dropdown`.
+How a consumer wires `KDropdown`, the Vue 2.0 menu-button popover. Covers the `items` shape, the `select` emit, the scoped trigger slot, and open/close behavior. Everything visual lives in `manifesto.md § Components` and `components.md § Dropdown`.
 
 Scope: dropdown only.
 
-## What the kit does
-
-`initDropdown()` runs from `KK.init()` and `KK.refresh()`. It binds two delegated document listeners once (idempotent, safe to over-call). For every `.dropdown[data-dropdown]` on the page it:
-
-- toggles the trigger's `aria-expanded` and the popover's `data-state` on trigger click,
-- closes any open popover on outside-click and on `Escape`,
-- moves roving focus across `.dropdown__item` rows with Up/Down (Home/End jump to the ends),
-- activates a row on click or on Enter/Space (each row is a real `<button>`, so activation is native),
-- returns focus to the trigger after selection or `Escape`.
-
-The kit does not know what a selection means. It dispatches an event; the consumer decides what happens.
-
-## Data attributes
-
-Set by the consumer on the markup:
-
-| Attribute | On | Purpose |
-|-----------|-----|---------|
-| `data-dropdown` | `.dropdown` | Marks the wrapper as a live dropdown. Without it the kit skips the element. |
-| `data-value` | `.dropdown__item` | Optional payload for a row. Surfaces on the event as `detail.value`. Falls back to the row's trimmed text when absent. |
-
-Set by the kit (do not hand-edit; they are the source of truth for state):
-
-| Attribute | On | Values |
-|-----------|-----|--------|
-| `aria-expanded` | `.dropdown__trigger` | `"true"` / `"false"` |
-| `data-state` | `.dropdown__popover` | `"open"` / `"closed"` |
-
-## Event
-
-`kk:dropdown-select` — `CustomEvent`, dispatched on the `.dropdown` element, bubbles.
-
-```js
-document.addEventListener('kk:dropdown-select', function (e) {
-  const { label, value, index } = e.detail;
-  // label: trimmed text of the chosen row
-  // value: the row's data-value, or label when the attribute is absent
-  // index: zero-based position of the row within the popover
-  applySort(value);
-});
-```
-
-Listen once on a stable ancestor (`document`, or the container that holds your dropdowns). The event bubbles, so one listener covers every dropdown on the page. Branch on the originating element via `e.target` when you run more than one.
-
-## Vue
-
-`KDropdown` emits `select` with the chosen item — the raw entry from `items` (a string, or the `{ label, value }` object you passed), not the kit's flattened detail.
+## The shape
 
 ```vue
 <KDropdown
@@ -70,10 +24,53 @@ function onSort(item) {
 }
 ```
 
-Open/close state is internal to the component. Override the trigger with the `trigger` slot (it receives `{ open, toggle }`) or author the rows in the default slot when a plain list is not enough. The component renders the same DOM the kit behavior expects, so a page that also loads `js/kit.js` keeps working without conflict.
+Open state (`open` ref) is internal to the component — nothing to wire.
+
+## Props
+
+| Prop | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `label` | `string` | `'Options'` | Text on the default trigger button. Ignored when the `trigger` slot is used. |
+| `items` | `(string \| { label: string; value?: unknown })[]` | `[]` | Rows rendered in the popover when the default slot is not overridden. A plain string is normalized to `{ label: string, value: string }`. |
+
+## Emits
+
+| Event | Payload | Fires |
+| --- | --- | --- |
+| `select` | the chosen entry from `items` — a string or `{ label, value }`, whichever shape you passed | Click on a `.dropdown__item` row. The popover closes right after. |
+
+`select` hands back the raw entry, not a flattened `{ label, value, index }` detail — read `item.value` directly.
+
+## Slots
+
+- **`trigger`** — scoped, receives `{ open, toggle }`. Replace the default button entirely; call `toggle()` from your own markup, or read `open` to style an active state.
+- **default** — replace the generated `.dropdown__item` rows with hand-authored ones when a plain list isn't enough. The component still renders the `.dropdown__popover` wrapper and its open/close state around whatever you put in the slot.
+
+```vue
+<KDropdown>
+  <template #trigger="{ open, toggle }">
+    <button class="button t-subtitle" :aria-expanded="open" @click="toggle">
+      Custom trigger
+    </button>
+  </template>
+  <button class="dropdown__item" role="menuitem" type="button" @click="pick('a')">Option A</button>
+</KDropdown>
+```
+
+## Behavior the component owns
+
+`KDropdown` wraps `useDropdown`, a 1:1 port of the Escape close, outside-click close, and roving item focus from the pre-2.0 `initDropdown`, scoped to this instance instead of a document-level delegated listener.
+
+- **Outside click.** A click anywhere outside the root `.dropdown` element closes the popover.
+- **Escape.** Closes the popover and returns focus to the trigger.
+- **Roving focus.** Opening focuses the first `.dropdown__item`; ArrowDown/ArrowUp move with wrap, Home/End jump to the ends. Selecting an item returns focus to the trigger.
+- **Trigger toggle, select-close, and the open/select focus moves** live directly in `KDropdown.vue` against its own local `open` ref, not in the composable.
 
 ## Common mistakes
 
-- **Missing `data-dropdown`.** The trigger looks styled but never opens: the kit only wires wrappers carrying the attribute.
-- **Reading the trigger label to learn the choice.** The kit never rewrites the trigger. Read `detail.value` from the event, or drive the label yourself from your own state.
-- **Two listeners fighting.** Do not add per-dropdown click handlers alongside the kit. Listen once for `kk:dropdown-select` and branch on `e.target`.
+- **Reading the trigger label to learn the choice.** `KDropdown` never rewrites its own trigger text. Read the `select` payload, or drive the label from your own state.
+- **Binding `data-dropdown` by hand.** That attribute was the pre-2.0 kit's opt-in marker for its delegated listener; `KDropdown` needs no such marker; it wires its own instance on mount.
+
+## Legacy: kit.js
+
+The pre-2.0 static demos still run `initDropdown()` from `KK.init()`/`KK.refresh()`: `data-dropdown` marks a live wrapper, `data-value` supplies a row's payload, and a chosen row dispatches the bubbling `kk:dropdown-select` CustomEvent (`detail: { label, value, index }`) on the `.dropdown` element. That surface is frozen on `js/kit.js`; no new consumers.

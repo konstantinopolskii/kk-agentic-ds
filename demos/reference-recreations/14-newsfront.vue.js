@@ -10,7 +10,7 @@ import {
   KMedia,
   KFigure,
   KButton,
-} from '../../packages/vue/src/index.js'
+} from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 14-newsfront.html. Same DOM, kit shells/cards where they
    match exactly. The lead card's heading (h2.t-display + p.t-body) and

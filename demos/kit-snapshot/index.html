@@ -13,17 +13,10 @@
 </head>
 <body>
   <div id="app"></div>
-  <!-- behavior layer: defines window.KK, auto-inits on DOMContentLoaded -->
-  <script src="../../js/kit.js"></script>
   <script type="module">
     import { createApp } from 'vue'
     import App from './index.vue.js'
-    const host = document.createElement('div')
-    createApp(App).mount(host)
-    document.getElementById('app').replaceWith(...host.children)
-    // The DOM is now static in the page. Bind kit.js behavior against it.
-    // Idempotent with the DOMContentLoaded auto-init that follows.
-    if (window.KK) window.KK.init()
+    createApp(App).mount('#app')
   </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KCard, KButton } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KCard, KButton } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 07-flashcard.html. Same DOM, kit components where they
    exist, raw h() for the one bespoke variant (book__section--fill has

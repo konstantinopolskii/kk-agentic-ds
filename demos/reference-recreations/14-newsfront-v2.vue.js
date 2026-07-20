@@ -10,7 +10,7 @@ import {
   KFigure,
   KButton,
   KFieldRow,
-} from '../../packages/vue/src/index.js'
+} from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 14-newsfront-v2.html. Kit components where the shape
    matches (KApp/KFront/KFrontRail/KFrontDesks/KCard/KCardHeading/

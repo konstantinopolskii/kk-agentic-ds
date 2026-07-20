@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KMedia } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KMedia } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of index.html. Same DOM: KApp(single) > KBook > five
    KBookSection articles, each a heading + KMedia rows (KMedia's

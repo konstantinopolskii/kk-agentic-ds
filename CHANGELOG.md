@@ -2,6 +2,28 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 2.0.0, 2026-07-20
+
+Major. One authoring surface: the kit's components are now Vue single-file components with TypeScript. Same markup, same pixels, same behavior — the CSS never moved and three gates prove the ports (per-component SSR parity against the retired h() layer, 20/20 page-level SSR parity against the frozen static demos, 20/20 pixel parity at 0 changed pixels).
+
+### Added
+- `packages/vue/sfc` — 50 single-file components across prose, controls, cards, data, kit-doc, interactive, comments, and shells. Zero styles shipped; `vars.css` + `style.css` stay the only pixel truth.
+- `packages/vue/sfc/composables` — the behavior layer, ported 1:1 from kit.js: `useScrollSpy`, `useNarrowView`, `useColumnReveal`, `useInspectorStack`, `useDeck`, `useModal`, `useDropdown`, `useTabs`, `toast()`, `useCommentFlow`, `useCommentStore`, `useCommentSecret`, `useCommentMenus`. Components wire their own behavior on mount; shells take `:behavior="false"` to opt out. Dropdown keeps the full roving item focus (ArrowUp/Down with wrap, Home/End) from the vanilla kit.
+- `packages/vue/dist` — committed ESM build with a single bundled `index.d.ts` (vite 8 + vue-tsc + api-extractor). `vue` is external.
+- `packages/vue/ssg.mjs` — static-page generator: SSR body plus in-place hydration, so generated pages paint with zero JS and then wire behavior. First artifact: `demos/generated/07-flashcard.html`.
+- `packages/vue/tests` — 153 tests: parity specs for all 50 components against the h() oracle, behavior specs for every composable.
+- Vue API blocks in `canon/components.md` for every documented component: props, defaults, emits, slots, v-model.
+- Integration docs for modal, dropdown, toast, pagination, and sidebar-nav rewritten Vue-first; comment.md rewritten around the composable API (`currentAuthor` is now a required option — the kit no longer hardcodes a demo author).
+
+### Removed
+- Nothing visible. No class, token, or markup shape changed.
+
+### Moved
+- Behavior ownership: from `js/kit.js` document-level delegation to per-component wiring in the SFC layer. kit.js is frozen — it keeps serving `index.html` and the pre-2.0 static demos, takes bug fixes only.
+- The h() render-function layer at `packages/vue/src` is retired in place as the frozen markup oracle for the parity tests. Never edit it.
+- The 21 demo Vue twins (`demos/reference-recreations/*.vue.js`, `demos/kit-snapshot`) now import from `packages/vue/dist`. The kit-snapshot page runs pure Vue behavior — no kit.js on the page.
+- Old static demo pages are frozen artifacts; new static pages are build artifacts generated through `ssg.mjs`.
+
 ## 1.16.0, 2026-07-20
 
 Minor. Six interactive components, and a comprehensive one-page snapshot of the whole kit.

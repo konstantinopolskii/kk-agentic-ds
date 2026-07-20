@@ -1,6 +1,6 @@
 {
   "name": "@konstantinopolskii/vue",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Vue components for the KK agentic design system. Thin emitters of canonical kit markup: components own structure, style.css owns every pixel.",
   "type": "module",
   "main": "src/index.js",
@@ -14,7 +14,20 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "vue": "^3.5.0"
+    "@microsoft/api-extractor": "^7.58.11",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "happy-dom": "^20.11.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5",
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.0",
+    "vue-tsc": "^3.3.7"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json"
+  }
 }

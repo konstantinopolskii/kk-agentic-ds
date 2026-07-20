@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KCard, KCardHeading, KTag } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KCard, KCardHeading, KTag } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 05-joi-settings.html. Same DOM, kit components where
    their emitted markup matches exactly; raw h() for bespoke bits:

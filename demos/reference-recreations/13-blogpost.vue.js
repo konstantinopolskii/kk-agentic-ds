@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KBook, KBookSection, KMedia, KQuote, KFigure, KList, KStat } from '../../packages/vue/src/index.js'
+import { KBook, KBookSection, KMedia, KQuote, KFigure, KList, KStat } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 13-blogpost.html. Same DOM, kit components where they
    exist, raw h() for the bespoke bits: the diagram's SVG has no

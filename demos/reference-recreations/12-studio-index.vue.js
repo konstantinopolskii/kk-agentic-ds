@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KCard, KCardHeading, KCardStack, KButton } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KCard, KCardHeading, KCardStack, KButton } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 12-studio-index.html. Same DOM, kit components where
    they exist, raw h() for the bespoke shout-card heading (h1.t-hero +

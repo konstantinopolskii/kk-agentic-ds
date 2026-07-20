@@ -93,7 +93,7 @@ Catalogue, not draw. Copy briefs out of scope. Designers own UI copy.
 - **Role skill:** `kk-role-design-engineer`
 - **Model:** Sonnet. **Character:** Sara Soueidan.
 - **Input:** DS Manager component map + task split + every 03b hand-off + direction doc.
-- **Output:** Prototype built piece by piece, saved to disk as each piece lands. HTML + CSS + JS using kit classes and shared `kit.js`. Designer UI copy drafts verbatim; dummy text flagged where drafts are missing.
+- **Output:** Prototype built piece by piece, saved to disk as each piece lands. Vue pages from `packages/vue` components (static HTML generated via `packages/vue/ssg.mjs` when the deliverable is a static page). Designer UI copy drafts verbatim; dummy text flagged where drafts are missing.
 - **Canon load:** `manifesto.md` (full file, including §Foundations and §Components), `tokens.json`, `patterns/*`, `voice.md` §AI tells.
 - **Gate:** Stages 6a + 6b run in parallel on the built files. Then stage 7.
 - **Self-doc:** `documentation/<session>/05-design-engineer.md`

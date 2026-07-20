@@ -15,7 +15,7 @@ import {
   KMetric,
   KSparkLabels,
   KSpecList,
-} from '../../packages/vue/src/index.js'
+} from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 01-rank-tracker.html. Same DOM, kit components where
    they exist. The sidebar nav-group here has no clickable head (just

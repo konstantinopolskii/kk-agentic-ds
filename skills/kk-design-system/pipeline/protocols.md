@@ -21,7 +21,7 @@ Every browser-affecting change ends with a verified console and screenshot in th
 
 Every kit change moves a fixed set of files together. If one is missing, the PR is not ready. Walk the list before staging.
 
-1. The code. `vars.css`, `style.css`, `js/kit.js`, `js/md.js`, or the skill file being changed.
+1. The code. `vars.css`, `style.css`, `packages/vue` (sfc source plus rebuilt dist, committed together), `js/md.js`, or the skill file being changed. `js/kit.js` is frozen legacy — it serves the pre-2.0 static demos and takes no new work.
 2. The doc. `index.html` plus the markdown under `skills/kk-design-system/` (`manifesto.md`, `canon/*.md`, `pipeline/*.md`), whichever section owns the rule.
 3. The skill reference files. `tokens.json`, `canon/voice.md`, `manifesto.md`. These are what the agent reads. Drift between CSS and skill reference files is the worst failure mode, because the agent trusts the skill files.
 4. `CHANGELOG.md`. One entry, in the format Added / Removed / Moved.

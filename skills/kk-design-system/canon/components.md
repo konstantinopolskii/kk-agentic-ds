@@ -6,7 +6,7 @@ This book is reference. Inventory first, foundations second, components third, k
 
 ## Using the snippets
 
-Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, and `js/kit.js` loaded. Snippets do not stand alone. Their job is to show the exact class structure a consumer copies into a kit-wrapped surface.
+Vue SFCs are the authoring surface (`packages/vue/sfc/components/*.vue`, composables in `packages/vue/sfc/composables/*.ts`, import surface `packages/vue/sfc/index.ts`). Every component entry below carries the markup contract (HTML snippet, the exact class structure `vars.css` and `style.css` bind to) plus the Vue API that emits it: import name, props, emits, slots, v-model. Author pages with the components; the snippet is what the component must render, not a copy-paste target. `js/kit.js` remains as frozen legacy behind the static demo pages only.
 
 ## Component registry
 
@@ -196,19 +196,19 @@ Seven keyframes ship in the kit. Every motion in a kit surface either reuses one
 
 **reveal-from-left.**
 
-- Mechanics. 320 ms, `--ease-out`. translateX −12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Mechanics. 320 ms, `--ease-out`. translateX −12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `useColumnReveal`, wired on `KApp` mount.
 - Why it exists. The sidebar comes in from its own side of the screen. The motion reads as the column entering from where it lives, not floating up from the page.
 - Applications. Sidebar reveal on initial paint or when `data-view="nav"` swaps in at narrow viewport.
 
 **reveal-from-right.**
 
-- Mechanics. 320 ms, `--ease-out`. translateX 12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Mechanics. 320 ms, `--ease-out`. translateX 12 px, scale 0.96, opacity 0 → translateX 0, scale 1, opacity 1. Attached inline by `useColumnReveal`, wired on `KApp` mount.
 - Why it exists. The inspector comes in from its own side. Mirrors the sidebar reveal so the two columns read as a pair.
 - Applications. Inspector reveal on initial paint or when `data-view="inspector"` swaps in at narrow viewport.
 
 **reveal-from-below.**
 
-- Mechanics. 320 ms, `--ease-out`. translateY 16 px, scale 0.98, opacity 0 → translateY 0, scale 1, opacity 1. Attached inline by `js/kit.js`.
+- Mechanics. 320 ms, `--ease-out`. translateY 16 px, scale 0.98, opacity 0 → translateY 0, scale 1, opacity 1. Attached inline by `useColumnReveal`, wired on `KApp` mount.
 - Why it exists. The book column has no side of its own. It rises into place from below the fold so the first paint reads as content arriving.
 - Applications. Doc/book column reveal on initial paint at narrow viewport.
 
@@ -297,6 +297,19 @@ Rules:
 - The rail is the default. Every direct child of a card — prose, lists, spec lists, chip rows, media rosters, metric rows, data tables, sparks, anything — lands on the 24 px text rail automatically. Never add per-child padding or margin to reach the rail; the kit already put you there. The only elements off the default are the kit's own bleeders, a closed list: `card__heading` and `card__body` (pad themselves), `card__collapsible` (inner manages the rail), fields and switches (flush hover fill, hairline inset to the rail), decks, dividers. Extending that list is a kit change, not a page decision. Inside `card__collapsible-inner` wrap prose and rosters in `card__body`; fields, decks, and comment lists sit flush there.
 - Used in: card stack, three columns, comment; link cards in: inspector pointer groups, doc shelves.
 
+**Vue.** `KCard` (`variant: 'static' | 'interactive' | 'link' | 'shout' | 'heading' = 'static'`, `href = ''`, `tight = false`, `selectable = false`, `state: 'active' | 'minimized' | null = null`, `span: 'third' | 'half' | 'two-thirds' | 'full' | null = null`, `lead = false`); one default slot. `variant: 'link'` renders an `<a>`, `variant: 'heading'` a `<header>`, everything else a `<div>`. `span` puts the card on the panels grid; `lead` marks it the front-page lead story. `KCardHeading` (`title`, `subtitle = ''`, `muted = false`) renders the `h3.t-title` and optional subtitle — no slot, both are props. `KCardBody` wraps injected content on the text rail, no props. `KCardCollapsible` (`flush = false`) wraps its slot in `card__body` unless `flush`, for children that manage their own bleed. `KCardStack` (`columns = false`) groups cards; the promote/demote/glide the stack script performs comes from `useInspectorStack`, wired automatically when the stack sits inside `<KInspector>` (see Navigation). A stack rendered outside an inspector wires the same composable by hand: `useInspectorStack(rootEl.value)` on mount.
+
+```html
+<KCard variant="interactive" :state="state">
+  <KCardHeading title="Interactive card" />
+  <KCardCollapsible>
+    <!-- revealed when active -->
+  </KCardCollapsible>
+  <KButton cta="minimized">Open</KButton>
+  <KButton primary cta="active">Commit</KButton>
+</KCard>
+```
+
 Deep link: `demos/fundamental--accepted/index.html#cards`.
 
 ## Field
@@ -323,6 +336,13 @@ Rules:
 - Placeholders are real examples, not labels.
 - Used in: card, spec list.
 
+**Vue.** `KField` (`label = ''`, `modelValue = ''`, `placeholder = ''`, `type = 'text'`, `textarea = false`, `row = false`, `fakeCaret = false`) is the editable form: v-model on `modelValue`, emits `update:modelValue`. `row` adds `field--row` for a label-sharing-a-row layout; `textarea` swaps the `<input>` for a `<textarea>`. `KFieldRow` (`label`, `value = ''`) is the read-only display form — a label and a value sharing one row, no input; the default slot overrides `value` for richer content.
+
+```html
+<KField label="Email" row v-model="email" placeholder="sofia@kk.consulting" />
+<KField placeholder="Type a comment" fake-caret v-model="draft" />
+```
+
 Deep link: `demos/fundamental--accepted/index.html#fields`.
 
 ## Button
@@ -343,6 +363,8 @@ Rules:
 - Secondary and primary labels never repeat.
 - Used in: card, comment, signoff.
 
+**Vue.** `KButton` (`primary = false`, `as: 'button' | 'span' = 'button'`, `type = 'button'`, `cta: 'minimized' | 'active' | null = null`, `caption = false`); one default slot, no emits — bind `@click` directly. `as="span"` renders the link-card destination label. `cta` stamps `data-cta` for the interactive-card state pair. `caption` drops the label to caption-bold for the media-trail form instead of the default `t-subtitle`.
+
 Deep link: `demos/fundamental--accepted/index.html#buttons`.
 
 ## Tag
@@ -360,6 +382,8 @@ Rules:
 - Never a link, never a button, never an input trigger.
 - Reach for a tag to name a category, a count, or a state that the user cannot change from here.
 - Used in: card heading, registry table, spec list.
+
+**Vue.** `KTag` (`bold = false`); one default slot, no emits.
 
 Deep link: `demos/fundamental--accepted/index.html#tags`.
 
@@ -382,6 +406,8 @@ Rules:
 - `9999 px` radius on the thumb. `12 px` radius on the track.
 - Keyboard-operable via `<input type="checkbox">` under the hood.
 - Used in: field, spec list, card.
+
+**Vue.** `KSwitch` (`label`, `modelValue = false`); v-model on `modelValue`, emits `update:modelValue`. `label` is required and names the setting, not the state, matching the rule above.
 
 Deep link: `demos/fundamental--accepted/index.html#switches`.
 
@@ -423,12 +449,26 @@ Two shapes, one pattern. Draft (shout) and thread (interactive card with collaps
 Rules:
 
 - Two shapes only. Draft uses `card--shout`. Thread uses `card--interactive`.
-- Every `.comment-msg` carries `data-message-id`. Kit stamps it at creation time; consumers pre-rendering server HTML can seed the id.
-- Agent-authored messages carry `data-author-role="agent"`. Consumers set it at render time; kit never classifies messages itself.
-- Kebab menu carries five actions: Approve, Edit, Reply, Archive thread, Delete. Approve is hidden unless the thread's last list message has `data-author-role="agent"`. Edit collapses the whole thread into a single field-card prefilled with the targeted message's body; Enter commits and re-forms the thread, Escape (or clicking another card) cancels.
+- Every `.comment-msg` carries `data-message-id`. `useCommentFlow` stamps it at creation time; consumers pre-rendering server HTML can seed the id, and `useCommentStore` stamps any pre-rendered message still missing one on mount.
+- Agent-authored messages carry `data-author-role="agent"`. Consumers set it at render time; the components never classify messages themselves.
+- Kebab menu carries five actions: Approve, Edit, Reply, Archive thread, Delete. `useCommentMenus` opens and closes the popover and recomputes Approve's availability each time it opens; Approve stays hidden unless the thread's last list message has `data-author-role="agent"`. `useCommentFlow` runs the five actions. Edit collapses the whole thread into a single field-card prefilled with the targeted message's body; Enter commits and re-forms the thread, Escape (or clicking another card) cancels.
 - Archive sets `data-archived="true"` on the thread. DOM retained, hidden via CSS.
 - Used in: inspector, three columns.
 - Runtime events, config keys, and consumer integration patterns: `docs/integration/comment.md`.
+
+**Vue.** `KCommentNew` (`title = 'Add a comment'`, `placeholder = 'Type a comment'`, `modelValue = ''`, `commitLabel = 'Commit'`) is the draft card: v-model on `modelValue`, emits `update:modelValue` and `commit` (with the draft text). `KCommentThread` (`title`, `state: 'active' | 'minimized' = 'minimized'`, `archived = false`, `messages: KCommentThreadMessage[]`, each `{ id, body, role? }`) is the structural thread render — no emits; the kebab, edit, reply, archive, and approve actions all live in `useCommentFlow`, not in the component. `KCommentStack` is the empty inspector container the comment system owns at runtime; ship it plain (`<KCommentStack />`) or pre-seeded with `KCommentThread` children.
+
+Behavior is composable, not component-owned. Wire `useCommentFlow(bookRef, inspectorRef, { currentAuthor })` once per book/inspector pair — `currentAuthor` is required (no silent demo-author default) and stamps every draft, reply, and edit committed locally; it listens for `kk:comment` on the stack for persistence and drives the whole selection-to-draft-to-thread flow described above. `useCommentStore(bookRef, inspectorRef, options?)` persists the stack (`localStorage` by default, keyed `kk:comments:<pathname>`; pass `adapter` for a DB-backed store or `enabled: false` to disable) and restores it plus its doc-side highlights on mount. `useCommentSecret(inspectorRef)` and the standalone `extractCommentsFromStack(stackEl)` pull the thread data back out as JSON — the hidden `data-kk-action="copy-comments"` strip at the top of the inspector copies it to the clipboard.
+
+```html
+<KInspector ref="inspectorRef">
+  <KCommentStack />
+</KInspector>
+```
+```ts
+useCommentFlow(bookRef, inspectorRef, { currentAuthor: session.name })
+useCommentStore(bookRef, inspectorRef)
+```
 
 Deep link: `demos/fundamental--accepted/index.html#comment`.
 
@@ -436,7 +476,7 @@ Deep link: `demos/fundamental--accepted/index.html#comment`.
 
 Sidebar nav with scroll-spy indicator. `sidebar__nav` wraps `nav-group` sections; `toc__indicator` animates between active items. Reach for the sidebar nav in any doc surface that carries more than three sections.
 
-The kit auto-fills the nav from the rendered `.book` heading rank at runtime (1.10.0). The consumer ships an empty shell; `js/kit.js` reads the heading structure and writes the TOC. Hand-curated content is preserved by setting `data-nav="manual"` on the `<nav class="sidebar__nav">` element.
+`KSidebarNav` auto-fills the nav from the rendered `.book` heading rank on mount, via `useScrollSpy` (2.0.0). Ship the shell empty; the composable reads the heading structure and writes the TOC once, at mount. Hand-curated content is preserved by passing the `manual` prop (renders `data-nav="manual"`) on `<KSidebarNav>`.
 
 ### Auto-fill (default)
 
@@ -452,7 +492,7 @@ The kit auto-fills the nav from the rendered `.book` heading rank at runtime (1.
 </aside>
 ```
 
-Kit fills the nav at `KK.init()` (DOMContentLoaded) and re-fills at every `kk:md-rendered` (markdown body). Generated shape varies by heading rank — see `docs/integration/sidebar-nav.md` for the three-mode resolution rule (multi-h1, mixed, flat).
+`useScrollSpy` runs once, at `KSidebarNav` mount. Generated shape varies by heading rank — see `docs/integration/sidebar-nav.md` for the three-mode resolution rule (multi-h1, mixed, flat).
 
 ### Hand-curated (opt-out)
 
@@ -471,17 +511,31 @@ Kit fills the nav at `KK.init()` (DOMContentLoaded) and re-fills at every `kk:md
 </aside>
 ```
 
-`data-nav="manual"` short-circuits the generator; the kit leaves the nav children untouched. The legacy `<h4 class="t-subtitle">` header shape also stays valid for hand-curated nav, but the anchor form is preferred — it keeps the bold label clickable and scroll-spy-aware.
+`manual` short-circuits the generator; `KSidebarNav` leaves its children untouched. Author `KNavGroup` directly inside it. The legacy `<h4 class="t-subtitle">` header shape also stays valid for hand-curated nav (`KNavGroup` without `href` renders it), but the anchor form is preferred — it keeps the bold label clickable and scroll-spy-aware.
 
 Rules:
 
 - Nav items chunk into `nav-group` sections of one to nine items.
 - Bold label is `<a class="t-subtitle nav-group__head">` for click + scroll-spy. Hand-curated nav may still use `<h4 class="t-subtitle">` for non-clickable headers.
 - Scroll-spy is doc-internal. Cross-doc navigation lives in the inspector, not the sidebar.
-- `toc__indicator` binds once; kit.js repositions on scroll.
-- `data-nav="manual"` opts a single nav out of auto-fill. Other navs on the page keep auto-filling.
-- Anchor jumps glide via the kit's rAF tween. Never declare `scroll-behavior: smooth` on the columns — a CSS glide and a JS glide on the same tree cancel each other and the scroll dies a few pixels in.
+- `toc__indicator` binds once; `useScrollSpy` repositions it on scroll.
+- `manual` opts a single nav out of auto-fill. Other navs on the page keep auto-filling.
+- Anchor jumps glide via `useScrollSpy`'s own rAF tween. Never declare `scroll-behavior: smooth` on the columns — a CSS glide and a JS glide on the same tree cancel each other and the scroll dies a few pixels in.
 - Used in: three columns, narrow mobile.
+
+**Vue.** `KSidebar` (`title = ''`) is the column shell: default slot for the nav, `footer` slot for `sidebar__footer`. `KSidebarNav` (`id = 'toc'`, `manual = false`) owns the `useScrollSpy` wiring described above — no emits. `KNavGroup` (`head`, `href = ''`, `items: { label, href, current? }[]`) renders one section; omit `href` for the non-clickable `<h4>` header. Reach for `KNavGroup` directly when `manual` is set; otherwise ship `<KSidebarNav>` empty and let it build its own children.
+
+```html
+<KSidebar>
+  <KSidebarNav manual>
+    <KNavGroup head="Group" href="section-a" :items="[
+      { label: 'Section A', href: 'section-a' },
+      { label: 'Section B', href: 'section-b' },
+    ]" />
+  </KSidebarNav>
+  <template #footer>2026, kk.consulting</template>
+</KSidebar>
+```
 
 Deep link: `demos/fundamental--accepted/index.html#navigation`.
 
@@ -518,6 +572,8 @@ Rules:
 - Byline carries author name, role, organization. Timestamp in `t-muted`.
 - Signature is an SVG image.
 - Used in: every book, every product deliverable.
+
+**Vue.** `KSignoff` (`stats: { value, text }[]`, `author`, `role`, `org`, `stamp`, `signatureSrc`) renders each stat through `KStat` (`value`, `text` — a lone number inside prose, both required) and the byline/signature from the remaining props. No slots, no emits — pass two or four `stats` entries; the component does not enforce the never-three rule, so the caller still owns it.
 
 Deep link: `demos/fundamental--accepted/index.html#signoff`.
 
@@ -561,6 +617,14 @@ Rules:
 - Key cells render at Medium 500, full black. No muted defaults.
 - Used in: card, signoff stats, book.
 
+**Vue.** `KSpecList` (`variant: 'plain' | 'value' | 'triple' = 'plain'`, `rows: { key: string, values: string[] }[]`) is fully data-driven — no slots. Column count follows `values.length` per row; the component does not clamp it to two, three, or four, so pick `variant` and row shape to match.
+
+```html
+<KSpecList variant="value" :rows="[
+  { key: 'Token', values: ['16 px', 'When and why to reach for it.'] },
+]" />
+```
+
 Deep link: `demos/fundamental--accepted/index.html#spec-list`.
 
 ## List
@@ -588,6 +652,8 @@ Rules:
 - Structural markers render black, full ink. No muted defaults, no thin gray dashes.
 - Single list class for both prose and tabular data patterns.
 - Used in: book, card, spec list.
+
+**Vue.** `KList` (`ordered = false`, `items: string[] | null = null`) renders `<ol>` when `ordered`, else `<ul>`. Author `<li>` markup directly in the default slot, or pass `items` for a plain string list — the slot wins when both are present.
 
 Deep link: `demos/fundamental--accepted/index.html#lists`.
 
@@ -626,6 +692,8 @@ Block (`.t-code--block`):
 
 Replaces `.t-mono` and `.tag--inline`. The kit no longer ships those classes.
 
+**Vue.** `KCode` (`block = false`) renders a `<pre class="t-code t-code--block">` when `block`, else an inline `<span class="t-code">`. One default slot either way.
+
 Deep link: `demos/fundamental--accepted/index.html#code`.
 
 ## Chip
@@ -647,6 +715,16 @@ Rules:
 - A chip never navigates. A pill that opens a page is a link card or a plain link.
 - Groups wrap in `.chip-wrap`; the wrap owns the 8 px gaps.
 - Used in: filter rails, segment rows, onboarding multi-selects, data-table toolbars.
+
+**Vue.** `KChipWrap` (`modelValue?: string | number`) is the segment group: v-model, emits `update:modelValue`. `KChip` (`pressed = false`, `value?: string | number`) emits `click`. Inside a `KChipWrap`, a chip carrying `value` reads its pressed state from the group and clicking it selects that value — the `pressed` prop is ignored. Outside a wrap, `KChip` stands alone on `pressed`.
+
+```html
+<KChipWrap v-model="role">
+  <KChip value="founder">Founder</KChip>
+  <KChip value="strategist">Strategist</KChip>
+  <KChip value="mentor">Mentor</KChip>
+</KChipWrap>
+```
 
 Deep link: `demos/reference-recreations/01-rank-tracker.html`.
 
@@ -696,6 +774,8 @@ Rules:
 - Inside a product shell, rows tighten to 8 px vertical pads. The reading shell keeps the roomy default.
 - Used in: feeds, file lists, bylines, related lists, front-page rails, poke lists.
 
+**Vue.** `KMedia` (`title`, `meta = ''`, `micro = false`, `href = ''`, `initials = ''`, `square = false`, `trailTag = ''`); renders an `<a>` when `href` is set, else a `<div>`. `figure` slot overrides the default avatar/square figure; `trail` slot renders inside `media__trail` for the one-compact-button form (ignored when `trailTag` is set — `trailTag` wins). `micro` drops the second body line to `t-micro`.
+
 Deep link: `demos/reference-recreations/08-status-feed.html`.
 
 ## Metric
@@ -723,6 +803,8 @@ Rules:
 - Two to four metrics per row. A lone number inside prose is a `stat`, not a metric.
 - Thin space groups thousands: 195 151, never 195,151.
 - Used in: panel grids, shout cards, person pages, forecast modules.
+
+**Vue.** `KMetric` (`value: string | number`, `label = ''`, `delta = ''`); no slots, no emits. `metric-row` is not componentized — wrap `KMetric` siblings in a plain `<div class="metric-row">`.
 
 Deep link: `demos/reference-recreations/02-forecast-module.html`.
 
@@ -766,6 +848,18 @@ Rules:
 - Row hover fills 3%. A clickable row wraps its lead in a link; whole-row click stays with cards.
 - Used in: dashboards, keyword tables, project rosters, admin lists.
 
+**Vue.** `KDataTable` (`columns: (string | { label: string, num?: boolean })[]`) renders `<thead>` from `columns`; author body `<tr>` rows in the default slot, built from `KDataCell` (`lead = false`, `num = false`, `delta = false`, `flat = false`) in each `<td>`. `delta` implies the numeric class; `flat` demotes a delta cell to regular muted.
+
+```html
+<KDataTable :columns="['Keyword', { label: 'Position', num: true }, { label: 'Change', num: true }]">
+  <tr>
+    <KDataCell lead>design system audit</KDataCell>
+    <KDataCell num>3</KDataCell>
+    <KDataCell delta>↑ 2</KDataCell>
+  </tr>
+</KDataTable>
+```
+
 Deep link: `demos/reference-recreations/01-rank-tracker.html`.
 
 ## Spark
@@ -800,6 +894,8 @@ Rules:
 - The chart never holds the only copy of a value. See Data ink under Foundations.
 - Used in: data-table cells, forecast modules, metric panels.
 
+**Vue.** `KSpark` (`values: number[]`, `label: string`, `panel = false`, `soft: number[] = []`, `emphasize: number | null = null`) renders `<span>` inline or `<div class="spark--panel">` when `panel`; `role="img"` and `aria-label` come straight from `label`. `emphasize` (a bar index) inverts the spend: that one bar keeps full ink, every other demotes to `--soft`, overriding `soft` when set. `KSparkLabels` (`labels: string[]`) renders the direct-label row underneath. The line variant (`.spark--line`, inline SVG) has no Vue wrapper yet — author it directly per the markup contract.
+
 Deep link: `demos/reference-recreations/02-forecast-module.html`.
 
 ## Kit-doc primitives
@@ -827,6 +923,8 @@ Rules:
 - Pair with `.card--interactive.card--selectable` in the doc column when the preview is driven by a click-to-select registry.
 - Kit docs only. Product prose does not render iframes.
 - Used in: patterns book, registry pages.
+
+**Vue.** `KPreviewFrame` (`src`, `title`) — no slots, no emits. Both props required; `title` is the iframe's accessible name.
 
 Deep link: `demos/fundamental--accepted/index.html#preview-frame`.
 
@@ -860,6 +958,8 @@ Rules:
 - Kit docs only. Product prose does not render inventory tables.
 - Used in: components registry, patterns registry, voice registry.
 
+**Vue.** `KRegistryTable` (`columns: string[]`) renders the header row from `columns`; author body `<tr>` markup (`td.t-body`) in the default slot.
+
 Deep link: `demos/fundamental--accepted/index.html#registry-table`.
 
 ## Modal
@@ -867,7 +967,7 @@ Deep link: `demos/fundamental--accepted/index.html#registry-table`.
 One decision, held over a scrim. The dialog is a white surface at `24 px` radius, centered over 40%-black. No shadow: the scrim and a `0.5 px` hairline carry the edge. Heading is one contrast step, ink title over a muted subtitle. Reach for a modal when the user must confirm, name, or cancel one thing before the page moves on. Anything the page can host inline is not a modal.
 
 ```html
-<button class="button button--primary t-subtitle" data-modal-open="publish-modal">
+<button class="button button--primary t-subtitle">
   Publish deliverable
 </button>
 
@@ -897,10 +997,24 @@ Rules:
 - The × uses the character `×` with `aria-label="Close"`. Never an icon font, never an arrow glyph.
 - Cancel is a plain button. Red is never invented for it; a destructive action names itself in the primary label.
 - One primary per foot. Full-width buttons split the foot row evenly.
-- The trigger sets `data-modal-open="id"`; the dialog is `#id`. Every close control sets `data-modal-close`.
-- Opening traps focus in the dialog and locks body scroll; closing restores focus to the opener.
+- The trigger toggles the `KModal`'s v-model; any button works, no special attribute needed. Every close control inside the dialog still carries `data-modal-close` — the scrim and the × ship it already, and it is how the component's own click handler recognizes a close.
+- Opening traps focus in the dialog and locks body scroll; closing restores focus to the opener. `useModal` drives both, watching the v-model.
 - Used in: signoff, three columns, charter workspace.
-- Runtime API and data attributes: `docs/integration/modal.md`.
+- The legacy `data-modal-open="id"` trigger attribute is a vanilla-kit convention; `KModal` does not read it — toggle its v-model directly.
+
+**Vue.** `KModal` (`id`, `title = ''`, `subtitle = ''`, `modelValue = false`); v-model on `modelValue` (open state), emits `update:modelValue`. Default slot is the body; `foot` slot holds the action buttons. Teleports to `<body>` once mounted (SSR renders in place, so the closed-state markup still matches the parity oracle). `useModal` is wired internally — nothing to call by hand.
+
+```html
+<KButton primary @click="open = true">Publish deliverable</KButton>
+<KModal id="publish-modal" v-model="open" title="Publish deliverable"
+        subtitle="This shares the signed charter with the client workspace.">
+  The document locks after publish. Reopen it from the workspace to draft a revision.
+  <template #foot>
+    <KButton @click="open = false">Cancel</KButton>
+    <KButton primary @click="publish">Publish</KButton>
+  </template>
+</KModal>
+```
 
 Deep link: `demos/kit-snapshot/index.html#modal`.
 
@@ -924,9 +1038,15 @@ Rules:
 - The trigger is a `.button`. It commits to opening the menu, so it looks like every other button.
 - Items are actions, not settings. A row that toggles a state is a switch; a row that names a category is a tag.
 - One contrast step: a hovered or focused item fills to the 3% overlay. No bold, no color shift.
-- Escape closes the popover and returns focus to the trigger. Outside-click closes it too.
+- Escape closes the popover and returns focus to the trigger. Outside-click closes it too. `useDropdown` drives both; the component itself handles the trigger toggle and closing on item select.
 - Popover radius is `16 px`, item radius `12 px`. Never a shadow.
 - Used in: card heading, data table row, toolbar.
+
+**Vue.** `KDropdown` (`label = 'Options'`, `items: (string | { label: string, value?: unknown })[] = []`); emits `select` with the chosen item. `trigger` slot overrides the default `.button` trigger (scoped: `{ open, toggle }`); default slot overrides the item list markup entirely.
+
+```html
+<KDropdown label="Export" :items="['Download PDF', 'Copy share link']" @select="onExport" />
+```
 
 Deep link: `demos/kit-snapshot/index.html#dropdown`.
 
@@ -960,8 +1080,18 @@ Rules:
 - Tabs are peers. Ordered or gated views belong in a flow, not a strip.
 - Label the view, not its state. "Billing", not "Billing (open)".
 - Sentence case. One or two words a tab.
-- Arrow keys move and select across the strip; Home and End jump to the ends.
+- Arrow keys move and select across the strip; Home and End jump to the ends. `useTabs` drives the roving keyboard selection; click-select is the component's own local state.
 - Used in: card, inspector, panels.
+
+**Vue.** `KTabs` (`id`, `tabs: { label: string }[]`, `modelValue = 0`); v-model on `modelValue` (selected index), emits `update:modelValue`. Named slots `panel-0`, `panel-1`, … hold each panel's body, matched by tab index.
+
+```html
+<KTabs id="acct" v-model="tab" :tabs="[{ label: 'Overview' }, { label: 'Members' }, { label: 'Billing' }]">
+  <template #panel-0>Nine seats in use across two workspaces.</template>
+  <template #panel-1>Invite a teammate by email to add them to this workspace.</template>
+  <template #panel-2>Next invoice posts on 1 August for $240.</template>
+</KTabs>
+```
 
 Deep link: `demos/kit-snapshot/index.html#tabs`.
 
@@ -981,9 +1111,11 @@ Rules:
 - One line only. If the hint wraps, it belongs in the body, not a bubble.
 - The bubble is inverted (black) and carries a soft shadow — the one place a shadow is earned. A tooltip on a white surface would take none.
 - `pointer-events: none` on the bubble. It is a hint, never a target; put no links or buttons inside it.
-- Opens on hover and on keyboard focus; Escape or leaving closes it. `aria-describedby` on the trigger points at the bubble id.
+- Opens on hover and on keyboard focus; Escape or leaving closes it. The component drives this itself (no exported composable) and keeps one bubble open page-wide, closing whichever tooltip was already open when a new one shows. `aria-describedby` on the trigger points at the bubble id.
 - Never load-bearing. If the user cannot finish without the text, it is not a tooltip.
 - Used in: field label, spec list, card heading, data-table header.
+
+**Vue.** `KTooltip` (`text = ''`, `label = '?'`); `trigger` slot overrides the default `?` badge. No v-model, no emits — the open state is internal.
 
 Deep link: `demos/kit-snapshot/index.html#tooltip`.
 
@@ -1003,13 +1135,19 @@ Transient confirmation. A toast reports that an action landed, then leaves on it
 
 Rules:
 
-- One stack per page. It is a singleton; `KK.toast()` finds it or builds it, and every toast lands in the same bottom-center column.
+- One stack per page. It is a singleton; the `toast()` composable finds it or builds it, and every toast lands in the same bottom-center column.
 - Inverted surface. The black background earns the soft shadow. Nothing else about the toast carries depth.
 - No status colors. Success, warning, and error share one ink surface. The words carry the meaning, not a green or a red.
 - At most one action, labelled with a verb. "Undo", not "OK". Clicking it dismisses the toast.
 - The dismiss × always ships. A toast clears itself after four seconds; the × lets the user clear it sooner.
 - `aria-live="polite"` so a screen reader announces the message without cutting off what it was already reading.
 - Used in: save flows, undo affordances, copy-to-clipboard, background job completion.
+
+**Vue.** `toast(text, opts?)` is the imperative call for real usage, not a component. `opts` takes `action` (verb label), `onAction` (callback, fires before dismiss), and `duration` (ms; default 4000, `0` keeps it open until the user dismisses it or triggers the action). It builds and animates the toast into the singleton stack on `document.body` and is a client-only no-op under SSR. `KToast` (`text`, `action = ''`) is the presentational counterpart — a single static, already-open toast for snapshots and server-rendered markup; it does not auto-dismiss.
+
+```ts
+toast('Draft saved', { action: 'Undo', onAction: () => restoreDraft() })
+```
 
 Deep link: `demos/kit-snapshot/index.html#toast`.
 
@@ -1039,6 +1177,12 @@ Rules:
 - Disable prev on the first page and next on the last. Drop the edge to 0.3 opacity, never remove it.
 - Collapse a run of skipped pages to one `…` gap. The gap is `aria-hidden` and never clickable.
 - Used in: data table, status feed.
+
+**Vue.** `KPagination` (`pages`, `current = 1`, `window = 5`); emits `change` (page number) and `update:current` (mirrors it, for v-model:current). Fully presentational — it computes the gapped page sequence but owns no fetch; the consumer feeds `current` back in.
+
+```html
+<KPagination :pages="12" v-model:current="page" @change="fetchPage" />
+```
 
 Deep link: `demos/kit-snapshot/index.html#pagination`.
 
@@ -1070,7 +1214,7 @@ Additions run the evolve protocol. See `pipeline/protocols.md § Evolve`.
     <p class="t-caption">
       Signed by <span class="t-caption--bold">Konstantin Konstantinopolskii,</span><br />
       founder at <span class="t-caption--bold">kk.consulting</span><br />
-      <span class="t-muted">2026-04-24, content-architecture session.</span>
+      <span class="t-muted">2026-07-20, Vue 2.0 migration session.</span>
     </p>
     <img class="book__signoff-signature-img" src="../../signature.svg" alt="Signature" />
   </div>

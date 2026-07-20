@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KChip, KChipWrap, KCard, KMetric, KFieldRow, KSparkLabels } from '../../packages/vue/src/index.js'
+import { KChip, KChipWrap, KCard, KMetric, KFieldRow, KSparkLabels } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 01-rank-tracker-v2.html. Board shell has no KApp view
    (app--board / data-view="board" is bespoke), so the outer shell and

@@ -7,7 +7,7 @@ import {
   KCardHeading,
   KCardStack,
   KFieldRow,
-} from '../../packages/vue/src/index.js'
+} from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 10-tzlvt-landing-v2.html. Kit components where the emitted
    markup matches exactly; raw h() for bespoke variants with no component

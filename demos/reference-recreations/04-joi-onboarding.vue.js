@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KCard, KChipWrap, KChip } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KCard, KChipWrap, KChip } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 04-joi-onboarding.html. Same DOM, kit components where
    they exist. book__section--stage has no component (raw h, same as

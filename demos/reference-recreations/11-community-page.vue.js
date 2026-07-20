@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KCard, KCardHeading, KDataTable, KDataCell, KList } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KCard, KCardHeading, KDataTable, KDataCell, KList } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 11-community-page.html. Same DOM, kit components where
    they match exactly. The join button in the static markup has no

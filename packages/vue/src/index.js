@@ -1,11 +1,8 @@
-/* KK agentic design system — Vue layer.
-   Components are thin emitters of canonical kit markup. They own
-   structure and behavior; vars.css + style.css own every pixel. No
-   component ships styles. No class or style props exist: the canon's
-   variants are the API, and off-canon output is unrepresentable.
-   Runtime behavior beyond simple state (scroll-spy, card stacks,
-   comment flows) stays in js/kit.js, which binds to the same DOM
-   these components emit. */
+/* KK agentic design system — retired h() layer.
+   FROZEN as of 2.0.0: this tree is the markup oracle the SFC layer at
+   ../sfc is parity-gated against (tests/parity renders both and diffs
+   the strings). Never edit — a change here silently moves the goalposts
+   for every parity test. The live library is sfc/ built to dist/. */
 
 // Shells
 export { default as KApp } from './components/KApp.js'

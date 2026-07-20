@@ -1,5 +1,11 @@
 /* kit.js — behavioural layer for the KK Agentic Design System kit.
  *
+ * FROZEN as of 2.0.0. The Vue layer at packages/vue owns all behavior
+ * for new work; every module below was ported 1:1 into its composables
+ * (see packages/vue/sfc/composables). This file keeps serving the
+ * pre-2.0 static demos and index.html exactly as shipped. Bug fixes
+ * only; no new modules, no new consumers.
+ *
  * Extracted from the inline <script> at the bottom of index.html in 0.7.0.
  * Plain script, no build step, no framework. Auto-inits on DOMContentLoaded.
  *

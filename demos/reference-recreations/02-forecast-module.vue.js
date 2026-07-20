@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KPanels, KCard, KMetric, KCardHeading, KSparkLabels, KSpecList } from '../../packages/vue/src/index.js'
+import { KApp, KPanels, KCard, KMetric, KCardHeading, KSparkLabels, KSpecList } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 02-forecast-module.html. KSpark is not used here: its
    style binding serializes as an object (`--v:42%;`) while the static

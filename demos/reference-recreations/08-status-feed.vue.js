@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBookSection, KCard, KCardHeading, KMedia, KButton } from '../../packages/vue/src/index.js'
+import { KApp, KBookSection, KCard, KCardHeading, KMedia, KButton } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 08-status-feed.html. Static main.book carries no id here
    (unlike the doc-shell pages), so the book element is raw h() — KBook

@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KCard, KFigure, KChipWrap, KChip, KDataTable, KDataCell } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KCard, KFigure, KChipWrap, KChip, KDataTable, KDataCell } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 06-person-page.html. Same DOM, kit components where they
    exist, raw h() for the bespoke variants (book__section--fill and

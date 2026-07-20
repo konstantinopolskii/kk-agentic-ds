@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KBookSection, KMedia, KMetric, KQuote, KCard, KCardHeading } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KBookSection, KMedia, KMetric, KQuote, KCard, KCardHeading } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 03-identity-hero-v2.html. Same DOM, kit components where
    they exist, raw h() for the metric-row wrapper (no component), the

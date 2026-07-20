@@ -1,10 +1,10 @@
 /* Kit snapshot — every component on one page, built from the Vue layer.
    Plain Vue, no Reka, no extra deps. Components emit canonical markup;
-   vars.css + style.css own every pixel; js/kit.js owns every behavior
-   once the tree is mounted and detached into the page. The interactive
-   families (modal, dropdown, tabs, tooltip, toast, pagination) render as
-   static canon markup and come alive under KK.init(). */
-import { h } from 'vue'
+   vars.css + style.css own every pixel. Every component wires its own
+   behavior now — modal, dropdown, tabs, and tooltip are self-contained;
+   toast spawns through the `toast()` composable. No behavior layer
+   script runs on this page. */
+import { h, ref } from 'vue'
 import {
   KApp, KSidebar, KSidebarNav, KBook, KBookSection, KInspector, KInspectorGroup,
   KCard, KCardHeading, KCardBody, KCardCollapsible, KCardStack,
@@ -14,7 +14,8 @@ import {
   KPreviewFrame, KRegistryTable,
   KModal, KDropdown, KTabs, KTooltip, KToast, KPagination,
   KCommentThread, KCommentNew,
-} from '../../packages/vue/src/index.js'
+  toast,
+} from '../../packages/vue/dist/index.js'
 
 // ---- small builders -------------------------------------------------------
 
@@ -38,6 +39,7 @@ const specimen = (...children) => h('div', { class: 'card' }, children)
 export default {
   name: 'KitSnapshot',
   setup() {
+    const modalOpen = ref(false)
     return () =>
       h(KApp, { view: 'doc' }, () => [
         // ---- sidebar: brand + auto-filled scroll-spy TOC ----
@@ -53,7 +55,7 @@ export default {
             h('div', { class: 'card card--shout' }, [
               h('h1', { class: 't-hero' }, 'Every component'),
               h('p', { class: 't-caption t-subtle' },
-                'The whole kit on one surface. Built from the Vue layer, styled by the kit, driven by kit.js.'),
+                'The whole kit on one surface. Built from the Vue layer, styled by the kit, each component driving its own behavior.'),
             ]),
           ]),
 
@@ -79,8 +81,8 @@ export default {
           ),
           section('code', 'Code', 'Monospace chip inline, block for a run of lines.',
             specimen(
-              h('p', { class: 't-caption' }, ['Call ', h(KCode, {}, () => 'KK.refresh()'), ' after injecting new DOM.']),
-              h(KCode, { block: true }, () => 'KK.openModal(\'publish\');\nKK.toast(\'Draft saved\', { action: \'Undo\' });'),
+              h('p', { class: 't-caption' }, ['Call ', h(KCode, {}, () => 'toast()'), ' after a draft saves.']),
+              h(KCode, { block: true }, () => 'import { toast } from \'@konstantinopolskii/vue\'\n<KModal v-model="open" title="Publish" />'),
             ),
           ),
           section('quote', 'Quote', 'One pulled line, attributed.',
@@ -240,12 +242,16 @@ export default {
               h('button', {
                 class: 'button button--primary t-subtitle',
                 type: 'button',
-                'data-modal-open': 'snapshot-modal',
+                onClick: () => { modalOpen.value = true },
               }, 'Publish deliverable'),
             ),
-            // the dialog itself — kit.js binds open/close
-            h(KModal, { id: 'snapshot-modal', title: 'Publish deliverable',
-              subtitle: 'This shares the signed charter with the client workspace.' }, {
+            // the dialog owns its own open state: modelValue in, update:modelValue out
+            h(KModal, {
+              id: 'snapshot-modal', title: 'Publish deliverable',
+              subtitle: 'This shares the signed charter with the client workspace.',
+              modelValue: modalOpen.value,
+              'onUpdate:modelValue': (v) => { modalOpen.value = v },
+            }, {
               default: () => 'The document locks after publish. Reopen it from the workspace to draft a revision.',
               foot: () => [
                 h('button', { class: 'button t-subtitle', type: 'button', 'data-modal-close': '' }, 'Cancel'),
@@ -255,13 +261,14 @@ export default {
           ),
           section('dropdown', 'Dropdown', 'Menu button and popover. Picks one action. Escape and outside-click close it.',
             specimen(
-              // slot-based so kit.js is the single behavior owner (no Vue handlers)
+              // trigger slot gets { open, toggle } straight off KDropdown's own state
               h(KDropdown, { label: 'Export' }, {
-                trigger: () => h('button', {
+                trigger: ({ open, toggle }) => h('button', {
                   class: 'dropdown__trigger button t-subtitle',
                   type: 'button',
                   'aria-haspopup': 'menu',
-                  'aria-expanded': 'false',
+                  'aria-expanded': open ? 'true' : 'false',
+                  onClick: toggle,
                 }, 'Export'),
                 default: () => [
                   h('button', { class: 'dropdown__item', role: 'menuitem', type: 'button' }, 'Download PDF'),
@@ -291,15 +298,15 @@ export default {
           ),
           section('toast', 'Toast', 'Transient confirmation. Inverted, bottom-center, self-clearing after four seconds.',
             specimen(
-              // live trigger — native onclick attribute, driven by kit.js at runtime
+              // live trigger — calls the toast() composable straight
               h('button', {
                 class: 'button t-subtitle',
                 type: 'button',
-                onclick: "window.KK && KK.toast('Draft saved', { action: 'Undo' })",
+                onClick: () => toast('Draft saved', { action: 'Undo' }),
               }, 'Save draft'),
               h('p', { class: 't-micro t-muted' }, 'Static specimen:'),
               // Plain wrapper, not .toast-stack: the stack is fixed bottom-center,
-              // and KK.toast() must build its own on <body>, not target this demo.
+              // and toast() builds its own on <body>, not this demo.
               // The .toast styles itself, so it shows inline as-is.
               h('div', {}, [
                 h(KToast, { text: 'Draft saved', action: 'Undo' }),
@@ -333,7 +340,7 @@ export default {
             h(KSignoff, {
               stats: [
                 { value: '50', text: 'components on this page.' },
-                { value: '1.16.0', text: 'the kit version it maps.' },
+                { value: '2.0.0', text: 'the kit version it maps.' },
               ],
               author: 'Konstantin Konstantinopolskii',
               role: 'founder',

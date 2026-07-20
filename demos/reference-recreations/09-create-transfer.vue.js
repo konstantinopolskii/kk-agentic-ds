@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { KApp, KBook, KCard, KCardHeading, KChipWrap, KChip, KMedia } from '../../packages/vue/src/index.js'
+import { KApp, KBook, KCard, KCardHeading, KChipWrap, KChip, KMedia } from '../../packages/vue/dist/index.js'
 
 /* Vue twin of 09-create-transfer.html. Same DOM, kit components where
    their emitted markup matches exactly; raw h() for bespoke bits:
