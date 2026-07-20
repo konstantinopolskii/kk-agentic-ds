@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>App landing recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><div class="app app--single"><!--[--><main class="book" id="doc"><!--[--><article class="book__section book__section--fill"><h1 class="t-hero">Money that lasts until payday</h1><p class="t-title">Tzlvt divides what you have by the days until income. You get one number a day. Hold it and the month holds.</p><div class="card card--shout"><!--[--><div class="metric"><p class="metric__value">631</p><p class="metric__label">Today&#39;s budget, from 18 939 across 30 days</p></div><button class="button button--primary t-subtitle">Start the budget</button><p class="t-micro t-subtle">4.7 from 1 000+ ratings · iOS, Android, and the browser</p><!--]--></div></article><article class="book__section" id="how"><!--[--><h2 class="t-display">One number, recalculated as you live</h2><div class="card-stack card-stack--columns"><!--[--><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">The arithmetic</h3><!----></div><div class="field field--row"><span class="t-caption--bold field__label">You have</span><span class="t-caption field__value"><!--[-->18 939<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Next income</span><span class="t-caption field__value"><!--[-->Aug 1<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Days left</span><span class="t-caption field__value"><!--[-->30<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Today</span><span class="t-caption field__value"><!--[-->631<!--]--></span></div><!--]--></div><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">The day</h3><!----></div><div class="field field--row"><span class="t-caption--bold field__label">Groceries</span><span class="t-caption field__value"><!--[-->−340<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Metro</span><span class="t-caption field__value"><!--[-->−62<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Coffee</span><span class="t-caption field__value"><!--[-->−180<!--]--></span></div><div class="field field--row"><span class="t-caption--bold field__label">Tomorrow</span><span class="t-caption field__value"><!--[-->633<!--]--></span></div><!--]--></div><!--]--></div><ul class="t-list"><li>Overspend today and tomorrow&#39;s number shrinks.</li><li>Save today and tomorrow&#39;s number grows.</li><li>Log income and the day rate rises on the spot.</li></ul><!--]--></article><article class="book__section" id="free"><!--[--><h2 class="t-display">Ten years free</h2><p class="t-body">No ads and no subscriptions. The paid sibling pays the bills, so the budget stays free for the people who need the number most.</p><p class="t-caption t-muted">Written about by Meduza, vc.ru, and Lifehacker.</p><button class="button button--primary t-subtitle">Get the app</button><!--]--></article><!--]--></main><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../packages/vue/dist/pages/10-tzlvt-landing.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

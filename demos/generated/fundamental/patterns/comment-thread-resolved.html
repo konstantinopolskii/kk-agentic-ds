@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Resolved comment thread</title>
+  <link rel="preload" href="../../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../vars.css">
+  <link rel="stylesheet" href="../../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><div class="comment-stack"><!--[--><div class="card card--interactive comment-thread" data-resolved="true" data-state="minimized"><div class="comment-thread__preview"><div class="comment-thread__resolved"><span class="comment-thread__resolved-stamp t-caption" aria-hidden="true">&check;</span><span class="comment-thread__resolved-snippet t-caption">The signoff timestamp should carry the timezone.</span><span class="comment-thread__resolved-byline t-caption t-muted">Konstantin Konstantinopolskii</span></div></div></div><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../../../packages/vue/dist/pages/pattern-comment-thread-resolved.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

@@ -2,6 +2,28 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 2.1.0, 2026-07-20
+
+Minor. Every page in the repo is now authored in Vue: 39 SFC pages under `packages/vue/sfc/pages`, statics generated through `ssg.mjs`, and a public markdown surface replacing the client-side `js/md.js` pipeline. The retired h() twins and their harnesses are deleted; the frozen 1.x statics stay as the only markup oracle.
+
+### Added
+- `renderMarkdown(md, { headingOffset })` — public markdown-to-kit-HTML export, a 1:1 port of `js/md.js`'s renderer, gated byte-identical by `packages/vue/md_check.mjs` against three samples plus the manifesto. Pure and SSR-safe. Integration doc at `docs/integration/markdown.md`.
+- `packages/vue/sfc/pages` — 39 pages: the 20 reference recreations, 14 pattern pages, kit-snapshot, the comments demo, the manifesto front page, the doc viewer, and the renderer smoke page.
+- `packages/vue/vite.pages.config.ts` — pages build, one ESM module per page under `dist/pages/`, `vue` and the kit external, resolved at runtime through each static's importmap.
+- Gates: `page_check.mjs` (20/20 vs frozen statics, semantic normalization so pages use real components), `patterns_check.mjs` (14/14 vs `demos/fundamental--accepted`), `md_check.mjs` (4/4 byte-exact), `manifesto_check.mjs` (book equals `renderMarkdown` output; generated root `index.html` in sync with its source).
+- Generated static sets: `demos/generated/` + `demos/generated/fundamental/`, `demos/comments/` (the 2.0 comment demo on `useCommentStore` adapters), regenerated `demos/kit-snapshot/` and `demos/md-renderer-smoke/`.
+- `useCommentMenus` exported from the package index (was internal-only by omission).
+- `packages/vue/package.json` packaging fix: `main`/`types`/`exports`/`files` now point at `dist` (they pointed at the retired `src`, so consumers and Node self-reference resolved the frozen h() oracle).
+
+### Removed
+- The h() page twins and browser harnesses: `demos/reference-recreations/*.vue.js` + `*.vue.html` (40 files), `demos/kit-snapshot/index.vue.js`, and `port_check.mjs`. The frozen `demos/reference-recreations/*.html` statics stay untouched as the parity oracle.
+
+### Moved
+- Root `index.html` (the manifesto), `doc.html` (the canon viewer), and `demos/md-renderer-smoke/` are now generated from SFC pages. The manifesto bakes `manifesto.md` at build via `renderMarkdown`; the doc viewer fetches `?src=` after mount and re-wires scroll-spy on injection — the legacy pages' `kk:md-rendered` TOC rebuild, reproduced without kit.js.
+- `js/md.js` joins `js/kit.js` as frozen legacy: it keeps serving the pre-2.0 static demos and lives on as `md_check.mjs`'s parity oracle. No new consumers.
+- Two manifesto shelf cards point at 2.0 successors: comment persistence → `demos/comments/`, reference recreations → `demos/generated/`. The legacy demos stay frozen at their old paths (`demos/comment-persistence/` carries a freeze banner).
+- `ssg.mjs` shell: the hydration wrapper is `display: contents` so `.app` keeps body as its height ancestor (the unstyled wrapper was stealing scroll from `.book`, the kit's one scroll owner), and importmap hrefs carry an explicit `./` prefix (a bare relative path is a null import-map entry, which broke repo-root pages).
+
 ## 2.0.0, 2026-07-20
 
 Major. One authoring surface: the kit's components are now Vue single-file components with TypeScript. Same markup, same pixels, same behavior — the CSS never moved and three gates prove the ports (per-component SSR parity against the retired h() layer, 20/20 page-level SSR parity against the frozen static demos, 20/20 pixel parity at 0 changed pixels).

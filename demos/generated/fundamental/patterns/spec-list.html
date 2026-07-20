@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Spec list</title>
+  <link rel="preload" href="../../../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../../../vars.css">
+  <link rel="stylesheet" href="../../../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><!--[--><div class="card"><!--[--><dl class="book__spec"><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--ease-out</span></dt><dd class="book__spec-value">Hover, focus, state flips.</dd></div><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--ease-spring</span></dt><dd class="book__spec-value">Switch thumbs, small confirmations.</dd></div><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--ease-swing</span></dt><dd class="book__spec-value">Long reveals, column arrivals.</dd></div></dl><!--]--></div><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">Scale</h3><!----></div><dl class="book__spec book__spec--value"><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--space-4</span></dt><dd class="book__spec-value"><span class="t-code">16px</span></dd><dd class="book__spec-value">row to row.</dd></div><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--space-6</span></dt><dd class="book__spec-value"><span class="t-code">24px</span></dd><dd class="book__spec-value">card gaps, text rail.</dd></div><div class="book__spec-row"><dt class="book__spec-key"><span class="t-code">--space-8</span></dt><dd class="book__spec-value"><span class="t-code">32px</span></dd><dd class="book__spec-value">section to section.</dd></div></dl><!--]--></div><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">Weight rules</h3><!----></div><dl class="book__spec book__spec--triple"><!--[--><div class="book__spec-row"><dt class="book__spec-key">Regular</dt><!--[--><dd class="book__spec-value">reads too thin at 400</dd><dd class="book__spec-value">Regular sits on 500.</dd><!--]--></div><div class="book__spec-row"><dt class="book__spec-key">Medium</dt><!--[--><dd class="book__spec-value">subtitle under display</dd><dd class="book__spec-value">500, paired with bold 700 headline.</dd><!--]--></div><div class="book__spec-row"><dt class="book__spec-key">Bold</dt><!--[--><dd class="book__spec-value">headings, labels</dd><dd class="book__spec-value">700, one step up from the 500 body.</dd><!--]--></div><!--]--></dl><!--]--></div><!--]--></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../../../packages/vue/dist/pages/pattern-spec-list.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

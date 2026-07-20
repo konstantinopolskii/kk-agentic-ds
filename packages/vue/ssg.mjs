@@ -34,11 +34,21 @@ const outDir = dirname(outPath)
 const App = (await import(pathToFileURL(modulePath).href)).default
 const body = await renderToString(createSSRApp(App))
 
-const toOut = (p) => relative(outDir, join(repoRoot, p)).split('\\').join('/')
-const rel = relative(outDir, modulePath).split('\\').join('/')
-const moduleHref = rel.startsWith('.') ? rel : './' + rel
+// Import-map values must parse as URLs: a relative path without a
+// ./ or ../ prefix resolves to null and the browser blocks the import.
+// Outputs below repo root get ../ from relative() naturally; outputs AT
+// repo root get a bare "packages/…" and need the ./ prefix stamped.
+const dotted = (p) => (p.startsWith('.') ? p : './' + p)
+const toOut = (p) => dotted(relative(outDir, join(repoRoot, p)).split('\\').join('/'))
+const moduleHref = dotted(relative(outDir, modulePath).split('\\').join('/'))
 const vueHref = toOut('packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js')
+const kitHref = toOut('packages/vue/dist/index.js')
 
+// display: contents — the hydration container must not exist in layout:
+// .app resolves height: 100% against its parent, and legacy pages put
+// .app directly under body. An unstyled wrapper div breaks that chain
+// (height resolves to auto, the app grows to content height, and the
+// document steals scroll from .book, the kit's one scroll owner).
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,11 +59,11 @@ const html = `<!DOCTYPE html>
   <link rel="stylesheet" href="${toOut('vars.css')}">
   <link rel="stylesheet" href="${toOut('style.css')}">
   <script type="importmap">
-    { "imports": { "vue": "${vueHref}" } }
+    { "imports": { "vue": "${vueHref}", "@konstantinopolskii/vue": "${kitHref}" } }
   </script>
 </head>
 <body>
-  <div id="app">${body}</div>
+  <div id="app" style="display: contents">${body}</div>
   <script type="module">
     import { createSSRApp } from 'vue'
     import App from '${moduleHref}'

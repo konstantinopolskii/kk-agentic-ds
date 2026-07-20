@@ -20,7 +20,8 @@ The export surface is `sfc/index.ts`. Groups:
 - **interactive** · `KModal`, `KDropdown`, `KTabs`, `KTooltip`, `KToast`, `KPagination`
 - **comments** · `KCommentNew`, `KCommentThread`, `KCommentStack`
 - **shells** · `KApp`, `KBook`, `KBookSection`, `KSidebar`, `KSidebarNav`, `KNavGroup`, `KInspector`, `KInspectorGroup`, `KPanels`, `KFront` + `KFrontMasthead`, `KFrontRail`, `KFrontDesks`
-- **composables** · `toast`, `useScrollSpy`, `useNarrowView`, `useColumnReveal`, `useInspectorStack`, `useDeck`, `useCommentFlow`, `useCommentStore`, `useCommentSecret`
+- **composables** · `toast`, `useScrollSpy`, `useNarrowView`, `useColumnReveal`, `useInspectorStack`, `useDeck`, `useCommentFlow`, `useCommentStore`, `useCommentSecret`, `useCommentMenus`
+- **markdown** · `renderMarkdown`
 
 ## Behavior model
 
@@ -34,6 +35,10 @@ toast('Draft saved', { action: 'Undo', onAction: () => undo() })
 
 The comment flow (draft, thread, menus, persistence) is composed from `useCommentFlow` and `useCommentStore`. A page wires only the composables it needs.
 
+## Markdown
+
+`renderMarkdown(md, { headingOffset })` turns markdown into kit-classed HTML: the same dialect `js/md.js` rendered, ported 1:1 and gated byte-identical by `md_check.mjs`. Pure string in, string out — no DOM, no fetch, SSR-safe. Pages either bake content at build time (`?raw` import, see `sfc/pages/manifesto.vue`) or fetch and inject after mount (see `sfc/pages/doc-viewer.vue`). `headingOffset` shifts every heading rank down; 0 means the document's own `#` is the page hero.
+
 ## Build and test
 
 ```
@@ -42,20 +47,26 @@ npm test           # vitest run
 npm run typecheck  # vue-tsc --noEmit
 ```
 
-Three parity gates, each stricter than the last:
+The parity gates, each scoped to one surface:
 
-- **`tests/parity`** · every component against the frozen `h()` oracle at `../../src`, markup for markup.
-- **`port_check.mjs`** · SSR structural parity, 20 pages rendered through the Vue module and diffed against the frozen static demos in `demos/reference-recreations`. 20/20.
+- **`tests/parity`** · every component against the frozen `h()` oracle at `src/`, markup for markup.
+- **`page_check.mjs`** · SSR structural parity for `sfc/pages/*.vue` against the frozen statics in `demos/reference-recreations`. Normalizes serialization artifacts (attribute order, class token order, void self-close) so pages use real components, not markup hacks. 20/20.
+- **`patterns_check.mjs`** · same check for the pattern pages against `demos/fundamental--accepted`. 14/14.
+- **`md_check.mjs`** · `renderMarkdown` against the frozen `js/md.js` in a real DOM, byte-exact, across three samples plus the manifesto itself. 4/4.
+- **`manifesto_check.mjs`** · the manifesto page: SSR renders, book equals `renderMarkdown` output, generated root `index.html` in sync with the source.
 - **pixel harness** (`parity/`) · `static*.html` goldens against `vue*.html` twins, screenshot-diffed at fixed viewports through headless Chrome. 0 pixels different.
 
 ## Static pages
 
-`ssg.mjs` renders any page module to a self-contained HTML file: SSR body paints with zero JS, then a module script hydrates the same component in place.
+Pages live in `sfc/pages/*.vue` and build through `vite.pages.config.ts` into `dist/pages/<name>.js`, one module per page, with `vue` and the kit external. `ssg.mjs` renders any page module to a self-contained HTML file: SSR body paints with zero JS, then a module script hydrates the same component in place over an importmap.
 
 ```
-node ssg.mjs <page-module.js> <out.html> --title "Page title"
+npx vite build -c vite.pages.config.ts
+node ssg.mjs dist/pages/<name>.js <out.html> --title "Page title"
 ```
+
+Generated sets: `demos/generated/` (reference recreations), `demos/generated/fundamental/` (pattern pages), `demos/kit-snapshot/`, `demos/comments/`, `demos/md-renderer-smoke/`, and the repo root `index.html` + `doc.html`.
 
 ## Legacy
 
-`../../src` is the frozen `h()` oracle. Never edit it: it exists only for the parity tests to gate against. `../../js/kit.js` is frozen for the old static demos; nothing in this package loads it.
+`src/` is the frozen `h()` oracle. Never edit it: it exists only for the parity tests to gate against. `../../js/kit.js` and `../../js/md.js` are frozen for the old static demos; nothing in this package loads them — `md_check.mjs` reads `md.js` only as the parser's parity oracle.

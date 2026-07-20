@@ -5,170 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Agentic Design System. Signed, by Konstantin Konstantinopolskii.</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=1.12.0">
-  <link rel="stylesheet" href="./style.css?v=1.12.0">
+  <link rel="stylesheet" href="./vars.css">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">
+    { "imports": { "vue": "./packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "./packages/vue/dist/index.js" } }
+  </script>
 </head>
 <body>
-  <div class="app" data-view="doc">
-
-    <!-- ============================================================== -->
-    <!-- Sidebar: brand + scroll-spy TOC. Kit auto-fills the nav from   -->
-    <!-- the rendered .book heading rank (1.10.0). Opt-out per consumer -->
-    <!-- by setting data-nav="manual" on the sidebar__nav element.      -->
-    <!-- ============================================================== -->
-    <aside class="sidebar" aria-label="Navigation">
-      <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
-
-      <nav class="sidebar__nav" id="toc">
-        <span class="toc__indicator" aria-hidden="true"></span>
-      </nav>
-
-      <footer class="sidebar__footer t-caption">
-        2026, fuckgrechka.ru<br />
-        Powered by kk.consulting
-      </footer>
-    </aside>
-
-    <!-- ============================================================== -->
-    <!-- Book: the rendered manifesto. No shell hero. Source #Manifesto -->
-    <!-- carries the page h1 at t-hero via data-md-heading-offset="0".  -->
-    <!-- Post-render hook wraps each top-level ## into a .book__section -->
-    <!-- so scroll-spy tracks and the sidebar TOC resolves.             -->
-    <!-- ============================================================== -->
-    <main class="book" id="doc" data-md-src="./skills/kk-design-system/manifesto.md" data-md-heading-offset="0">
-    </main>
-
-    <!-- ============================================================== -->
-    <!-- Inspector: eleven pointer cards. Seven canon + four demos.     -->
-    <!-- Each card is a card--link anchor wrapping its content.      -->
-    <!-- One inspector__group per rank tier (canon vs demos).           -->
-    <!-- Pattern-first reading order on canon: patterns → components →  -->
-    <!-- voice → pipeline → protocols → tokens → references.            -->
-    <!-- ============================================================== -->
-    <aside class="inspector" aria-label="Open a book">
-
-      <section class="inspector__group">
-        <header class="card card--heading">
-          <h2 class="t-display">Open a book</h2>
-        </header>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md">
-          <div class="card__heading">
-            <h3 class="t-title">Patterns</h3>
-            <p class="t-caption">When composing any layout, start here. Three columns, card stack, narrow mobile.</p>
-          </div>
-          <span class="button t-subtitle">Browse patterns</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/components.md">
-          <div class="card__heading">
-            <h3 class="t-title">Components</h3>
-            <p class="t-caption">When drilling from a pattern into a part, find every foundation, component, and forbidden thing.</p>
-          </div>
-          <span class="button t-subtitle">Find a component</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/voice.md">
-          <div class="card__heading">
-            <h3 class="t-title">Voice</h3>
-            <p class="t-caption">When writing a string, find shape rules and the AI-tells inventory in one place.</p>
-          </div>
-          <span class="button t-subtitle">Read the voice guide</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/pipeline.md">
-          <div class="card__heading">
-            <h3 class="t-title">Pipeline</h3>
-            <p class="t-caption">When entering or evaluating a session, find stages, role roster, and communication protocol.</p>
-          </div>
-          <span class="button t-subtitle">Walk the pipeline</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/protocols.md">
-          <div class="card__heading">
-            <h3 class="t-title">Protocols</h3>
-            <p class="t-caption">When shipping, evolving, or logging an exception, find bundle, semver, evolve, backlog, ideation.</p>
-          </div>
-          <span class="button t-subtitle">Check the protocols</span>
-        </a>
-
-        <a class="card card--link" href="./skills/kk-design-system/tokens.json">
-          <div class="card__heading">
-            <h3 class="t-title">Tokens</h3>
-            <p class="t-caption">When code needs a design token, read the machine-readable source of truth.</p>
-          </div>
-          <span class="button t-subtitle">Inspect tokens</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./references/registry.md">
-          <div class="card__heading">
-            <h3 class="t-title">Reference registry</h3>
-            <p class="t-caption">Twelve measured studies behind the 1.12.0 components. Common moves, taxonomy, mappings.</p>
-          </div>
-          <span class="button t-subtitle">Study the references</span>
-        </a>
-      </section>
-
-      <section class="inspector__group">
-        <header class="card card--heading">
-          <h2 class="t-display">Demos</h2>
-        </header>
-
-        <a class="card card--link" href="./demos/fundamental--accepted/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Fundamental</h3>
-            <p class="t-caption">Live component inventory. Deep-link target for every canon class.</p>
-          </div>
-          <span class="button t-subtitle">Tour the inventory</span>
-        </a>
-
-        <a class="card card--link" href="./demos/md-renderer-smoke/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Renderer smoke</h3>
-            <p class="t-caption">Side-by-side markdown render vs source. Ship-time check for the .md pipeline.</p>
-          </div>
-          <span class="button t-subtitle">Run the smoke test</span>
-        </a>
-
-        <a class="card card--link" href="./demos/comment-persistence/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Comment persistence</h3>
-            <p class="t-caption">Highlight, comment, reload. <code class="t-code">localStorage</code> by default; switch off or pass a custom adapter.</p>
-          </div>
-          <span class="button t-subtitle">Try the loop</span>
-        </a>
-
-        <a class="card card--link" href="./demos/reference-recreations/index.html">
-          <div class="card__heading">
-            <h3 class="t-title">Reference recreations</h3>
-            <p class="t-caption">Fourteen product surfaces rebuilt in kit vocabulary: dashboards, feeds, landings, blogpost, news front.</p>
-          </div>
-          <span class="button t-subtitle">Open the gallery</span>
-        </a>
-      </section>
-    </aside>
+  <div id="app" style="display: contents"><!--[--><div class="app" data-view="doc"><!--[--><aside class="sidebar" aria-label="Navigation"><!----><!--[--><div class="sidebar__header t-title">Agentic<br>Design System</div><nav class="sidebar__nav" id="toc"><span class="toc__indicator" aria-hidden="true"></span><!--[--><!--]--></nav><!--]--><footer class="sidebar__footer t-caption"><!--[-->2026, fuckgrechka.ru<br>Powered by kk.consulting<!--]--></footer></aside><main class="book" id="doc"><article class="book__section"><h1 class="t-hero">The Agentic Design System</h1>
+<p class="t-body">A design system for AI-assisted product work. A thin set of components, rules, and role skills that ship coherent screens before human review. Three readers: the maintainer shipping tags, the pipeline agent loading canon at role spawn, the human at the repo root discovering the system.</p>
+<p class="t-body">Agentic because AI does most of the drafting. The rules here exist so a junior agent, or a junior human, ships work that reads as finished before anyone opens it.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Why this exists</h2>
+<p class="t-body">Four layers stack inside every screen we ship.</p>
+<ul class="t-list"><li>Meanings. What we say. Voice, labels, job stories.</li><li>Perception. What the reader sees first. Signal, hierarchy, contrast.</li><li>Matter. What we render. Components, tokens, grid.</li><li>Pipeline. How we work on it. Stages, role skills, gates.</li></ul>
+<p class="t-body">Each layer has canonical rules. Each layer has a file. The manifesto is the opening read; the other canon files are the rest of the library.</p>
+<p class="t-body">Three names for the shape of a finished screen: signal, noise, magic.</p>
+<ul class="t-list"><li>Signal. What the user came here for. Obvious under a second.</li><li>Noise. Everything else. Isolated, demoted, or removed.</li><li>Magic. Not placed. Emerges after signal is clear and noise is gone. Last step, never first.</li></ul>
+<p class="t-body">After this read, we know which book to open next, and why.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Philosophy</h2>
+<p class="t-body">A product is a document. The document is the UI. The system treats both as one object.</p>
+<p class="t-body">Rules are canonical. The reading is prose. This is a book, not a spec.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Principles</h2>
+<p class="t-body">Six principles. One short paragraph each. Everything downstream leans on them.</p>
+<h3 class="t-title">Pure signal</h3>
+<p class="t-body">Utilitarian modernism, not postmodern complexity. Effort spent decoding the interface is proportional to how bad it is. Beauty is a side effect of clarity.</p>
+<h3 class="t-title">Expected patterns</h3>
+<p class="t-body">Known patterns cost nothing. Fighting them raises cognitive load for no gain. Red button cancels. X closes. Back arrow goes back. Hamburger opens navigation. No reinventing what every reader already recognizes.</p>
+<h3 class="t-title">Eighty / twenty</h3>
+<p class="t-body">Primary signal takes 80% of visual weight. Secondary fits in 20%. Fractal. Applies to screen, panel, card, row. Empty space counts toward the 80%.</p>
+<h3 class="t-title">Chunking</h3>
+<p class="t-body">Working memory handles about seven items. Past seven, scanning degrades into a wall. When a collection grows past seven, break it into categories. Each category becomes its own shorter list. Fractal. Applies to nav groups, token tables, decision trees, checklists.</p>
+<h3 class="t-title">Radical contrast</h3>
+<p class="t-body">Gray mush is the default AI failure mode: muted everything, contrast nowhere, signal lost. The cure is hypertrophied contrast. Hero 66 px against body 22 px. One distinction step between two elements: bold vs regular, or big vs small, or black vs muted. Never all three at once.</p>
+<h3 class="t-title">The iPad feel</h3>
+<p class="t-body">Three panes in one frame, each with its own scroll. Only the middle column moves during reading. Soft corners on every surface inside. Crisp edges outside, where the document meets the screen. No skeuomorphism, no liquid glass. No drop shadows, gradients, glass, or blur, except for active elements rendered on a black or inverted background where a soft shadow is permitted as material affordance. The floating action button at narrow viewports qualifies because its rest state sits on a black background.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Job stories</h2>
+<p class="t-body">Job stories, not user stories. A user hires a product for a job; the frame is the hire, not the persona. One priority job per screen. Secondary scenarios are isolated or hidden until requested.</p>
+<p class="t-body">Formula: <code class="t-code">context + motivation = step → value</code>.</p>
+<p class="t-body">Anti-pattern: designing from a component first, then inventing a job to justify it.</p>
+<p class="t-body">Example. Voice transcription during an interview. Context: the interviewer cannot look away. Motivation: do not lose the question. Step: glance. Value: keep flow. So the screen is huge question cards that swipe themselves, every control hidden.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Time to value</h2>
+<p class="t-body">Path length is measured in time to the first insight, not clicks. A principle shaping design decisions, not a KPI tracked on a dashboard. Cut steps where possible. Deliver value before the first tap when possible. The fastest path from land to insight wins, regardless of click count.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Agents</h2>
+<p class="t-body">Role skills drive the pipelines that live in this kit. Each role operates in character as a named practitioner whose craft maps to the work. Two pipelines today: <code class="t-code">kk-design-system</code> (11 roles, ships UI prototypes) and <code class="t-code">kk-charter-system</code> (9 roles, ships per-direction strategic charters). Five roles are shared. Short roster here; full detail at <code class="t-code">pipeline/pipeline.md § Role roster</code>.</p>
+<p class="t-body">Shared across both pipelines:</p>
+<ul class="t-list"><li>Margaret Hamilton, analyst, stage 1. Apollo-era decomposition rigor refuses to ship unspecified paths.</li><li>Steve Jobs, fresh-eyes jobstory, stages 3a and 3c. Reads as the intended user with a 0.2-second clarity bar.</li><li>George Orwell, voice, stage 6c (kk-ds) / 6b (kk-charter). Six rules for clear prose, ancestor of the AI-tells inventory.</li><li>Erika Hall, meta-reviewer, stage 7. Rubric-gated critique that rejects "it's fine".</li><li>Joan Didion, meta-retro, on demand. Observes the pattern that was there all along.</li></ul>
+<p class="t-body">Specific to <code class="t-code">kk-design-system</code>:</p>
+<ul class="t-list"><li>Paula Scher, design director, stage 2. Brings multiple directions, commits to one, writes the direction doc.</li><li>Susan Kare, designer, stage 3b. Answers every fresh-eyes question in full, by hand, no state skipped.</li><li>Muriel Cooper, DS manager, stage 4. Catalogues designer hand-offs into a component list and a task split.</li><li>Sara Soueidan, design engineer, stage 5. Ships piece by piece, honors the kit, saves each piece as it lands.</li><li>Steve Jobs, consistency-jobstory, stage 6a. Same 0.2-second bar on the built prototype.</li><li>Dieter Rams, consistency-DS, stage 6b. Ten Principles eye, flags inventory drift on sight.</li><li>Jina Anne, pattern discoverer, post-pipeline. Cataloguer whose craft is naming systems.</li><li>Rachel Andrew, maintainer. Spec revisions with bundle discipline, tag and push before close.</li></ul>
+<p class="t-body">Specific to <code class="t-code">kk-charter-system</code>:</p>
+<ul class="t-list"><li>Tina Brown, charter director, stage 2. Reshapes a portfolio of categories before the writers finish protesting; locks the direction map.</li><li>Janet Malcolm, charter writer, stage 3b (×N parallel). Builds each direction's charter from documentary evidence, cites every claim, refuses gloss.</li><li>Indra Nooyi, portfolio manager, stage 4. Pulled PepsiCo's portfolio into one ranking; same craft consolidates dates and conflicts across charters.</li><li>Jan Tschichold, consistency-charter, stage 6a. Penguin Books's compositional grammar — refuses drift between directions on the same imprint.</li></ul>
+</article>
+<article class="book__section"><h2 class="t-display">Pipeline</h2>
+<p class="t-body">Eight stages across three phases. Think (stages 1–2) produces approved intent plus direction with per-pattern tasks. Design (stages 3a–3c, N designers in parallel) produces high-fidelity per-pattern answers to fresh-eyes questions. Build (stages 4–7) produces a shipping prototype, three cold-read audits across jobstory, DS, voice, plus strict meta-review. Meta-retro runs on demand; reiterate-from-any-stage is user-triggered.</p>
+<p class="t-body">Every kit-touching session starts by picking a path. Read <code class="t-code">pipeline/pipeline.md § Entry point matching — the recipe map</code> before code touches disk. Default is the full walk; deviations need a stamp. Architectural impact picks the recipe, not diff size — a three-line CSS edit can still walk the canon path if it changes structural behavior.</p>
+<p class="t-body">Full stages, gates, inputs, outputs at <code class="t-code">pipeline/pipeline.md</code>.</p>
+<p class="t-body">A sibling pipeline lives in this kit: <code class="t-code">kk-charter-system</code> ships per-direction strategic charters instead of UI prototypes. Same eight-stage shape, same gating discipline, five shared roles. Orchestrator + manifesto + pipeline at <code class="t-code">../kk-charter-system/</code>.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Navigation</h2>
+<p class="t-body">Pattern-first reading order. Start at patterns because a layout composes from patterns first; drill into components only when a pattern uses a part we need to customize.</p>
+<ul class="t-list"><li><code class="t-code">canon/patterns.md</code>. Start here for layout composition. Three-column shell, product shells with their density rhythm, card stack, narrow mobile, plus the full pattern registry.</li><li><code class="t-code">canon/components.md</code>. Drill from a pattern into its parts. Foundations, component inventory, forbidden list, typography rhythm.</li><li><code class="t-code">canon/voice.md</code>. Words the system speaks. Shape rules, label discipline, the AI-tells inventory.</li><li><code class="t-code">pipeline/pipeline.md</code>. How sessions run. Eight stages, eleven role skills, entry-point matching.</li><li><code class="t-code">pipeline/protocols.md</code>. Ship, bundle, semver, evolve, backlog, ideation. Maintainer rules for kit evolution.</li><li><code class="t-code">tokens.json</code>. Machine-readable source of truth for color, space, radii, type, motion.</li><li><code class="t-code">../kk-charter-system/</code>. Sibling pipeline that ships strategic charters; orchestrator, manifesto, pipeline. Five roles shared with this one.</li></ul>
+<p class="t-body">Every canon doc ships signed. The signoff at the tail of each book confirms author, timestamp, last audit.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Signoff</h2>
+<div class="book__signoff">
+  <div class="book__signoff-stats">
+    <div class="stat t-caption">
+      <div><span class="t-caption--bold">200</span> lines from 685.</div>
+    </div>
+    <div class="stat t-caption">
+      <div><span class="t-caption--bold">9</span> sections, one sitting.</div>
+    </div>
   </div>
-
-  <!-- ================================================================ -->
-  <!-- Scripts: kit.js first (auto-init on DOMContentLoaded); md.js     -->
-  <!-- fetches the manifesto into .book and auto-wraps each h2-rooted  -->
-  <!-- region in <article class="book__section">. kit.js listens for   -->
-  <!-- kk:md-rendered itself and stamps section + heading ids, builds  -->
-  <!-- the sidebar TOC, and refreshes scroll-spy. No per-page hook.    -->
-  <!-- ================================================================ -->
-  <script src="./js/kit.js?v=1.12.0" defer></script>
-  <script src="./js/md.js?v=1.12.0" defer></script>
-
-  <!-- FABs for tablet + phone. Outside .app so overflow:hidden cannot clip. -->
-  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">
-    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-      <rect width="18" height="2" rx="1" fill="currentColor"/>
-      <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
-      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
-    </svg>
-  </button>
-  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open a book">
-    <span class="fab__count">11</span>
-  </button>
+  <div class="book__signoff-signature">
+    <p class="t-caption">
+      Signed by <span class="t-caption--bold">Konstantin Konstantinopolskii,</span><br />
+      founder at <span class="t-caption--bold">kk.consulting</span><br />
+      <span class="t-muted">2026-04-24, content-architecture session.</span>
+    </p>
+    <img class="book__signoff-signature-img" src="signature.svg" alt="Signature" />
+  </div>
+</div></article></main><aside class="inspector" aria-label="Open a book"><!--[--><section class="inspector__group"><!--[--><header class="card card--heading"><!--[--><h2 class="t-display">Open a book</h2><!--]--></header><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md"><!--[--><div class="card__heading"><h3 class="t-title">Patterns</h3><p class="t-caption">When composing any layout, start here. Three columns, card stack, narrow mobile.</p></div><span class="button t-subtitle">Browse patterns</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/components.md"><!--[--><div class="card__heading"><h3 class="t-title">Components</h3><p class="t-caption">When drilling from a pattern into a part, find every foundation, component, and forbidden thing.</p></div><span class="button t-subtitle">Find a component</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/voice.md"><!--[--><div class="card__heading"><h3 class="t-title">Voice</h3><p class="t-caption">When writing a string, find shape rules and the AI-tells inventory in one place.</p></div><span class="button t-subtitle">Read the voice guide</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/pipeline.md"><!--[--><div class="card__heading"><h3 class="t-title">Pipeline</h3><p class="t-caption">When entering or evaluating a session, find stages, role roster, and communication protocol.</p></div><span class="button t-subtitle">Walk the pipeline</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/protocols.md"><!--[--><div class="card__heading"><h3 class="t-title">Protocols</h3><p class="t-caption">When shipping, evolving, or logging an exception, find bundle, semver, evolve, backlog, ideation.</p></div><span class="button t-subtitle">Check the protocols</span><!--]--></a><a class="card card--link" href="./skills/kk-design-system/tokens.json"><!--[--><div class="card__heading"><h3 class="t-title">Tokens</h3><p class="t-caption">When code needs a design token, read the machine-readable source of truth.</p></div><span class="button t-subtitle">Inspect tokens</span><!--]--></a><a class="card card--link" href="./doc.html?src=./references/registry.md"><!--[--><div class="card__heading"><h3 class="t-title">Reference registry</h3><p class="t-caption">Twelve measured studies behind the 1.12.0 components. Common moves, taxonomy, mappings.</p></div><span class="button t-subtitle">Study the references</span><!--]--></a><!--]--></section><section class="inspector__group"><!--[--><header class="card card--heading"><!--[--><h2 class="t-display">Demos</h2><!--]--></header><a class="card card--link" href="./demos/fundamental--accepted/index.html"><!--[--><div class="card__heading"><h3 class="t-title">Fundamental</h3><p class="t-caption">Live component inventory. Deep-link target for every canon class.</p></div><span class="button t-subtitle">Tour the inventory</span><!--]--></a><a class="card card--link" href="./demos/md-renderer-smoke/index.html"><!--[--><div class="card__heading"><h3 class="t-title">Renderer smoke</h3><p class="t-caption">Side-by-side markdown render vs source. Ship-time check for the .md pipeline.</p></div><span class="button t-subtitle">Run the smoke test</span><!--]--></a><a class="card card--link" href="./demos/comments/index.html"><!--[--><div class="card__heading"><h3 class="t-title">Comment persistence</h3><p class="t-caption">Highlight, comment, reload. <code class="t-code">localStorage</code> by default; switch off or pass a custom adapter.</p></div><span class="button t-subtitle">Try the loop</span><!--]--></a><a class="card card--link" href="./demos/generated/index.html"><!--[--><div class="card__heading"><h3 class="t-title">Reference recreations</h3><p class="t-caption">Fourteen product surfaces rebuilt in kit vocabulary: dashboards, feeds, landings, blogpost, news front.</p></div><span class="button t-subtitle">Open the gallery</span><!--]--></a><!--]--></section><!--]--></aside><!--]--></div><button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar"><svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true"><rect width="18" height="2" rx="1" fill="currentColor"/><rect y="6" width="18" height="2" rx="1" fill="currentColor"/><rect y="12" width="18" height="2" rx="1" fill="currentColor"/></svg></button><button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open a book"><span class="fab__count">11</span></button><!--]--></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from './packages/vue/dist/pages/manifesto.js'
+    createSSRApp(App).mount('#app')
+  </script>
 </body>
 </html>

@@ -7,67 +7,175 @@
   <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../vars.css">
   <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../packages/vue/dist/index.js" } }
+  </script>
 </head>
 <body>
-  <div class="app" data-view="doc">
+  <div id="app" style="display: contents"><div class="app" data-view="doc"><!--[--><aside class="sidebar" aria-label="Navigation"><div class="sidebar__header t-title">Renderer</div><!--[--><nav class="sidebar__nav" id="toc"><span class="toc__indicator" aria-hidden="true"></span><!--[--><!--]--></nav><!--]--><footer class="sidebar__footer t-caption"><!--[-->renderMarkdown() smoke test<!--]--></footer></aside><main id="doc" class="book"><!--[--><article class="book__section" id="sample-a"><!--[--><p class="t-caption t-muted">sample-a.md</p><div class="card-stack card-stack--columns"><!--[--><div class="card"><h3 class="t-title">Render</h3><div><article class="book__section"><h1 class="t-hero">Core prose path</h1>
+<p class="t-body">Three articles below, each fed by a different <code class="t-code">data-md-src</code>. Every article is a <code class="t-code">doc__section</code> with the same scaffolding as <code class="t-code">index.html</code>. What you see here is what kit docs look like when their body is rendered from markdown.</p>
+<p class="t-body">Exercises the core prose path. Every heading level, body paragraphs, unordered and ordered lists, internal and external links, and inline code spans.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Section heading</h2>
+<p class="t-body">A body paragraph. The renderer wraps it in <code class="t-code">&lt;p class="t-body"&gt;</code>. The surrounding utility class comes from the kit, not this file.</p>
+<h3 class="t-title">Card-level heading</h3>
+<p class="t-body">Short body under a card-level heading. Links render inline: the <a href="../fundamental--accepted/index.html">fundamental demo</a> lives next door, and the <a href="../../patterns.html">patterns registry</a> sits at the repo root.</p>
+<p class="t-body">Under the article's <code class="t-code">data-md-heading-offset="0"</code> contract, source <code class="t-code">#</code> lands at h1 / t-hero, <code class="t-code">##</code> at h2 / t-display, <code class="t-code">###</code> at h3 / t-title, <code class="t-code">####</code> at h4 / t-subtitle. Source <code class="t-code">#####</code> and deeper demote to <code class="t-code">&lt;p class="t-caption"&gt;</code> regular because the kit has no heading rank below subtitle.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Lists</h2>
+<p class="t-body">Unordered list:</p>
+<ul class="t-list"><li>First item, unmarked.</li><li>Second item with a <a href="https://example.com">link</a>.</li><li>Third item with <code class="t-code">inline code</code>.</li></ul>
+<p class="t-body">Ordered list:</p>
+<ol class="t-list"><li>Fetch the markdown.</li><li>Render to HTML with kit classes.</li><li>Inject into the container.</li></ol>
+</article>
+<article class="book__section"><h2 class="t-display">Mixed content paragraph</h2>
+<p class="t-body">A paragraph can carry a <a href="#anchor">link</a> and <code class="t-code">inline code</code> in one line. Each runs through the inline pass after the block pass settles. Bold and italic render in their sanctioned contexts only. Bold lives in headings. Italic lives in quotes. See Sample B for the quote demo.</p></article></div></div><div class="card"><h3 class="t-title">Source</h3><pre><code class="t-code t-code--block"># Core prose path
 
-    <aside class="sidebar" aria-label="Navigation">
-      <div class="sidebar__header t-title">Renderer</div>
+Three articles below, each fed by a different `data-md-src`. Every article is a `doc__section` with the same scaffolding as `index.html`. What you see here is what kit docs look like when their body is rendered from markdown.
 
-      <nav class="sidebar__nav" id="toc">
-        <span class="toc__indicator" aria-hidden="true"></span>
-      </nav>
+Exercises the core prose path. Every heading level, body paragraphs, unordered and ordered lists, internal and external links, and inline code spans.
 
-      <footer class="sidebar__footer t-caption">
-        md.js renderer
-      </footer>
-    </aside>
+## Section heading
 
-    <main class="book" id="doc">
-      <!--
-        Local serve: browsers block fetch() of file://. From the repo root:
-          python3 -m http.server 8765
-        Then open http://localhost:8765/demos/md-renderer-smoke/
+A body paragraph. The renderer wraps it in `&lt;p class=&quot;t-body&quot;&gt;`. The surrounding utility class comes from the kit, not this file.
 
-        Offset is explicit 0 so each article renders its own markdown
-        hierarchy starting at h1/t-hero. The shell carries no page h1 or
-        part label; three article h1s coexist on this internal test page.
-      -->
+### Card-level heading
 
-      <article class="book__section" id="sample-a" data-md-src="./sample-a.md" data-md-heading-offset="0"></article>
-      <article class="book__section" id="sample-b" data-md-src="./sample-b.md" data-md-heading-offset="0"></article>
-      <article class="book__section" id="sample-c" data-md-src="./sample-c.md" data-md-heading-offset="0"></article>
-    </main>
+Short body under a card-level heading. Links render inline: the [fundamental demo](../fundamental--accepted/index.html) lives next door, and the [patterns registry](../../patterns.html) sits at the repo root.
 
-    <aside class="inspector" aria-label="Inspector">
-      <section class="inspector__group">
-        <header class="card card--heading">
-          <h2 class="t-display">Notes</h2>
-        </header>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Renderer is dumb</h3>
-            <p class="t-caption">The <code class="t-code">book__section</code> wrapper lives in the shell, not the renderer. Each article is one markdown file.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card__heading">
-            <h3 class="t-title">Watch for errors</h3>
-            <p class="t-caption">Open devtools. <code class="t-code">kk:md-rendered</code> fires once per article. Zero errors.</p>
-          </div>
-        </div>
-      </section>
-    </aside>
+Under the article&#39;s `data-md-heading-offset=&quot;0&quot;` contract, source `#` lands at h1 / t-hero, `##` at h2 / t-display, `###` at h3 / t-title, `####` at h4 / t-subtitle. Source `#####` and deeper demote to `&lt;p class=&quot;t-caption&quot;&gt;` regular because the kit has no heading rank below subtitle.
 
+## Lists
+
+Unordered list:
+
+- First item, unmarked.
+- Second item with a [link](https://example.com).
+- Third item with `inline code`.
+
+Ordered list:
+
+1. Fetch the markdown.
+2. Render to HTML with kit classes.
+3. Inject into the container.
+
+## Mixed content paragraph
+
+A paragraph can carry a [link](#anchor) and `inline code` in one line. Each runs through the inline pass after the block pass settles. Bold and italic render in their sanctioned contexts only. Bold lives in headings. Italic lives in quotes. See Sample B for the quote demo.
+</code></pre></div><!--]--></div><!--]--></article><article class="book__section" id="sample-b"><!--[--><p class="t-caption t-muted">sample-b.md</p><div class="card-stack card-stack--columns"><!--[--><div class="card"><h3 class="t-title">Render</h3><div><article class="book__section"><h1 class="t-hero">Dense blocks</h1>
+<p class="t-body">Exercises the denser block types. Tables render with <code class="t-code">registry-table</code>. Blockquotes render with <code class="t-code">quote</code>. Code fences render <code class="t-code">pre &gt; code</code> with <code class="t-code">t-mono</code>.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Table</h2>
+<table class="registry-table"><thead><tr><th class="t-caption--bold">Class</th><th class="t-caption--bold">Role</th><th class="t-caption--bold">Size</th></tr></thead><tbody><tr><td class="t-caption"><code class="t-code">t-hero</code></td><td class="t-caption">Document title</td><td class="t-caption">66 / 66</td></tr><tr><td class="t-caption"><code class="t-code">t-display</code></td><td class="t-caption">Section heading</td><td class="t-caption">38 / 38</td></tr><tr><td class="t-caption"><code class="t-code">t-body</code></td><td class="t-caption">Body text</td><td class="t-caption">22 / 32</td></tr><tr><td class="t-caption"><code class="t-code">t-caption</code></td><td class="t-caption">UI labels</td><td class="t-caption">16 / 24</td></tr></tbody></table>
+</article>
+<article class="book__section"><h2 class="t-display">Blockquote</h2>
+<blockquote class="quote">The document is the UI. Words are 90% of the design. Getting the voice wrong breaks the system more visibly than any missing pixel.</blockquote>
+</article>
+<article class="book__section"><h2 class="t-display">Fenced code block</h2>
+<pre><code class="t-code t-code--block">// kit.js public surface
+KK.init();
+KK.refresh();
+KK.enableCommentSelectionFlow();</code></pre>
+</article>
+<article class="book__section"><h2 class="t-display">Horizontal rule</h2>
+<p class="t-body">A paragraph above a horizontal rule. The rule below renders from <code class="t-code">---</code> on its own line and acts as an inline separator between this paragraph and the quote that follows.</p>
+<hr />
+<blockquote class="quote">A blockquote after the rule. Renders with the kit's <code class="t-code">quote</code> class: solid left rule, body-sized, black.</blockquote></article></div></div><div class="card"><h3 class="t-title">Source</h3><pre><code class="t-code t-code--block"># Dense blocks
+
+Exercises the denser block types. Tables render with `registry-table`. Blockquotes render with `quote`. Code fences render `pre &gt; code` with `t-mono`.
+
+## Table
+
+| Class | Role | Size |
+|---|---|---|
+| `t-hero` | Document title | 66 / 66 |
+| `t-display` | Section heading | 38 / 38 |
+| `t-body` | Body text | 22 / 32 |
+| `t-caption` | UI labels | 16 / 24 |
+
+## Blockquote
+
+&gt; The document is the UI. Words are 90% of the design. Getting the voice wrong breaks the system more visibly than any missing pixel.
+
+## Fenced code block
+
+```
+// kit.js public surface
+KK.init();
+KK.refresh();
+KK.enableCommentSelectionFlow();
+```
+
+## Horizontal rule
+
+A paragraph above a horizontal rule. The rule below renders from `---` on its own line and acts as an inline separator between this paragraph and the quote that follows.
+
+---
+
+&gt; A blockquote after the rule. Renders with the kit&#39;s `quote` class: solid left rule, body-sized, black.
+</code></pre></div><!--]--></div><!--]--></article><article class="book__section" id="sample-c"><!--[--><p class="t-caption t-muted">sample-c.md</p><div class="card-stack card-stack--columns"><!--[--><div class="card"><h3 class="t-title">Render</h3><div><article class="book__section"><h1 class="t-hero">Raw HTML passthrough</h1>
+<p class="t-body">Markdown cannot express the kit's card, field, or stat patterns. Authors drop raw HTML inline. The renderer passes it through unchanged.</p>
+</article>
+<article class="book__section"><h2 class="t-display">Card embedded in markdown</h2>
+<div class="card">
+  <div class="card__heading">
+    <h3 class="t-title">Card from markdown</h3>
+    <p class="t-caption t-muted">Authored as raw HTML inside a .md file.</p>
   </div>
+  <p class="t-body">Body paragraph inside the card. The kit's card CSS still applies. No renderer magic needed beyond passthrough.</p>
+</div>
+<p class="t-caption t-muted">Example</p>
+</article>
+<article class="book__section"><h2 class="t-display">Prose between raw HTML</h2>
+<p class="t-body">A paragraph between two raw HTML blocks. The block pass resumes after the card closes.</p>
+<div class="card card--shout">
+  <div class="card__heading">
+    <h3 class="t-title">Shout card</h3>
+    <p class="t-caption t-muted">Raw HTML, one per column.</p>
+  </div>
+  <p class="t-body">Everything inside inverts against the kit's shout surface.</p>
+</div>
+<p class="t-caption t-muted">Example</p>
+</article>
+<article class="book__section"><h2 class="t-display">Security note</h2>
+<p class="t-body">Markdown source is author-controlled. The <code class="t-code">.md</code> files live in the repo alongside the renderer. Passthrough is safe by construction. A future use case that renders user-submitted markdown requires a sanitiser at the render boundary.</p></article></div></div><div class="card"><h3 class="t-title">Source</h3><pre><code class="t-code t-code--block"># Raw HTML passthrough
 
-  <script src="../../js/kit.js" defer></script>
-  <script src="../../js/md.js" defer></script>
-  <script>
-    document.addEventListener('kk:md-rendered', function () {
-      console.log('[smoke] kk:md-rendered fired; articles:',
-        document.querySelectorAll('[data-md-src]').length);
-    });
+Markdown cannot express the kit&#39;s card, field, or stat patterns. Authors drop raw HTML inline. The renderer passes it through unchanged.
+
+## Card embedded in markdown
+
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card__heading&quot;&gt;
+    &lt;h3 class=&quot;t-title&quot;&gt;Card from markdown&lt;/h3&gt;
+    &lt;p class=&quot;t-caption t-muted&quot;&gt;Authored as raw HTML inside a .md file.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;t-body&quot;&gt;Body paragraph inside the card. The kit&#39;s card CSS still applies. No renderer magic needed beyond passthrough.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;t-caption t-muted&quot;&gt;Example&lt;/p&gt;
+
+## Prose between raw HTML
+
+A paragraph between two raw HTML blocks. The block pass resumes after the card closes.
+
+&lt;div class=&quot;card card--shout&quot;&gt;
+  &lt;div class=&quot;card__heading&quot;&gt;
+    &lt;h3 class=&quot;t-title&quot;&gt;Shout card&lt;/h3&gt;
+    &lt;p class=&quot;t-caption t-muted&quot;&gt;Raw HTML, one per column.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;t-body&quot;&gt;Everything inside inverts against the kit&#39;s shout surface.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p class=&quot;t-caption t-muted&quot;&gt;Example&lt;/p&gt;
+
+## Security note
+
+Markdown source is author-controlled. The `.md` files live in the repo alongside the renderer. Passthrough is safe by construction. A future use case that renders user-submitted markdown requires a sanitiser at the render boundary.
+</code></pre></div><!--]--></div><!--]--></article><!--]--></main><aside class="inspector" aria-label="Inspector"><!--[--><section class="inspector__group"><!--[--><header class="card card--heading"><!--[--><h2 class="t-display">Notes</h2><!--]--></header><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">Renderer is dumb</h3><p class="t-caption">Each article.book__section pairs one sample&#39;s render output with its raw source. wrapInSections still owns the nested structure inside the render side.</p></div><!--]--></div><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">Fully baked, no fetch</h3><p class="t-caption">renderMarkdown() runs at setup time against a build-time ?raw import — no client fetch, no kk:md-rendered event to wait on. Check devtools for zero console errors.</p></div><!--]--></div><!--]--></section><!--]--></aside><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../packages/vue/dist/pages/md-smoke.js'
+    createSSRApp(App).mount('#app')
   </script>
 </body>
 </html>

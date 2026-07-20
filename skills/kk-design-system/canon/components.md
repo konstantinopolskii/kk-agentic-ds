@@ -629,7 +629,7 @@ Deep link: `demos/fundamental--accepted/index.html#spec-list`.
 
 ## List
 
-Caption-sized hairlined list for prose or tabular data. Both `<ul>` (disc marker) and `<ol>` (decimal marker). Hairline separates each item from the next. `js/md.js` emits this class automatically for markdown-rendered lists.
+Caption-sized hairlined list for prose or tabular data. Both `<ul>` (disc marker) and `<ol>` (decimal marker). Hairline separates each item from the next. `renderMarkdown` in `@konstantinopolskii/vue` emits this class automatically for markdown-rendered lists (the frozen `js/md.js` did the same for pre-2.0 pages).
 
 ```html
 <!-- Unordered list with bullet markers. -->

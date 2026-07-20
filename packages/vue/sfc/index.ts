@@ -93,3 +93,10 @@ export type {
 } from './composables/useCommentStore'
 export { useCommentSecret, extractCommentsFromStack } from './composables/useCommentSecret'
 export type { CommentThreadData, CommentThreadMessageData } from './composables/useCommentSecret'
+export { useCommentMenus } from './composables/useCommentMenus'
+
+// Markdown — pure md→HTML pipeline, 1:1 port of js/md.js's render(). SSR-
+// safe (no DOM, no window, no fetch). js/md.js's fetch/init half stays
+// legacy; Vue pages fetch or ?raw-import their own markdown.
+export { renderMarkdown } from './markdown'
+export type { RenderMarkdownOptions } from './markdown'

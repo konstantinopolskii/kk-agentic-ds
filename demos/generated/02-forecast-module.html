@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Forecast module recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><div class="app app--panels"><!--[--><div class="panels"><!--[--><div class="card panel--third"><!--[--><div class="metric"><p class="metric__value">12 400</p><p class="metric__label">Sessions in June</p><p class="metric__delta">↑ 8% vs May</p></div><!--]--></div><div class="card panel--third"><!--[--><div class="metric"><p class="metric__value">386</p><p class="metric__label">Conversions in June</p><p class="metric__delta">↑ 12% vs May</p></div><!--]--></div><div class="card panel--third"><!--[--><div class="metric"><p class="metric__value">92%</p><p class="metric__label">Forecast confidence</p><!----></div><!--]--></div><div class="card panel--full"><!--[--><div class="card__heading"><h3 class="t-title">Monthly forecast</h3><p class="t-caption t-muted">Organic sessions, actuals against forecast</p></div><div class="metric"><p class="metric__value">148 000</p><p class="metric__label">Forecast for December</p><p class="metric__delta">↑ 12% vs last December</p></div><div class="spark spark--panel" role="img" aria-label="Organic sessions by month. January 96 000, rising and dipping through summer, then climbing from September to a December forecast of 148 000."><!--[--><span class="spark__bar spark__bar--soft" style="--v:42%;"></span><span class="spark__bar spark__bar--soft" style="--v:38%;"></span><span class="spark__bar spark__bar--soft" style="--v:46%;"></span><span class="spark__bar spark__bar--soft" style="--v:52%;"></span><span class="spark__bar spark__bar--soft" style="--v:58%;"></span><span class="spark__bar spark__bar--soft" style="--v:50%;"></span><span class="spark__bar spark__bar--soft" style="--v:34%;"></span><span class="spark__bar spark__bar--soft" style="--v:40%;"></span><span class="spark__bar" style="--v:70%;"></span><span class="spark__bar" style="--v:80%;"></span><span class="spark__bar" style="--v:90%;"></span><span class="spark__bar" style="--v:100%;"></span><!--]--></div><div class="spark-labels"><!--[--><span>Jan</span><span>Jun</span><span>Dec</span><!--]--></div><p class="t-micro t-muted">Jan 96 000 · Jun 118 000 · Dec 148 000 forecast</p><!--]--></div><div class="card panel--half"><!--[--><div class="card__heading"><h3 class="t-title">Search Console is disconnected</h3><p class="t-caption">The forecast runs on data last synced July 2. Reconnect to resume daily updates.</p></div><button class="button button--primary t-subtitle">Reconnect Search Console</button><!--]--></div><div class="card panel--half"><!--[--><div class="card__heading"><h3 class="t-title">How the forecast reads</h3><!----></div><dl class="book__spec"><!--[--><div class="book__spec-row"><dt class="book__spec-key">Model</dt><!--[--><dd class="book__spec-value">Seasonal fit on 24 months</dd><!--]--></div><div class="book__spec-row"><dt class="book__spec-key">Updated</dt><!--[--><dd class="book__spec-value">Daily at 06:00</dd><!--]--></div><div class="book__spec-row"><dt class="book__spec-key">Confidence</dt><!--[--><dd class="book__spec-value">92% on current pace</dd><!--]--></div><!--]--></dl><!--]--></div><!--]--></div><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../packages/vue/dist/pages/02-forecast-module.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

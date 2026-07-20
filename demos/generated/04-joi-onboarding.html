@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Onboarding steps recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><div class="app app--single"><!--[--><main class="book" id="doc"><!--[--><article class="book__section book__section--stage"><div class="card"><!--[--><p class="t-micro t-muted">Step 1 of 6</p><div class="card__heading"><h2 class="t-display">Set your wake-up and wind-down hours</h2></div><label class="field field--row"><span class="t-caption--bold field__label">Wake up</span><input class="t-caption field__input" type="text" value="09:00"><!----></label><label class="field field--row"><span class="t-caption--bold field__label">Wind down</span><input class="t-caption field__input" type="text" value="21:00"><!----></label><button class="button button--primary t-subtitle">Next</button><!--]--></div></article><article class="book__section book__section--stage"><div class="card"><!--[--><p class="t-micro t-muted">Step 6 of 6</p><div class="card__heading"><h2 class="t-display">Pick a few habits to kickstart your daily routine</h2></div><div class="chip-wrap"><!--[--><button class="chip" type="button" aria-pressed="true"><!--[-->Exercise<!--]--></button><button class="chip" type="button" aria-pressed="true"><!--[-->Meditate<!--]--></button><button class="chip" type="button" aria-pressed="true"><!--[-->Read books<!--]--></button><button class="chip" type="button" aria-pressed="false"><!--[-->Plan a day<!--]--></button><button class="chip" type="button" aria-pressed="false"><!--[-->Do yoga<!--]--></button><button class="chip" type="button" aria-pressed="false"><!--[-->Write in journal<!--]--></button><button class="chip" type="button" aria-pressed="false"><!--[-->Healthy breakfast<!--]--></button><!--]--></div><button class="button button--primary t-subtitle">Continue with three habits</button><!--]--></div></article><!--]--></main><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../packages/vue/dist/pages/04-joi-onboarding.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

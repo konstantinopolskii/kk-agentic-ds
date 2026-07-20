@@ -34,7 +34,7 @@ Rules:
 - Hero clears its own line-height via the section's heading rules. 60 px below the hero, the hero-to-intro gap.
 - Subsequent sections carry a hairline top border, 32 px top padding, 20 px top margin.
 - `.book__signoff` sits at `.book` level, outside any article. Same rule for hand-authored as for md-rendered docs.
-- Markdown source: `js/md.js` auto-wraps each h2-rooted region in a section. Authors do not write the article wrapper in source markdown. The renderer does it.
+- Markdown source: `renderMarkdown` (`@konstantinopolskii/vue`, see `docs/integration/markdown.md`) auto-wraps each h2-rooted region in a section. Authors do not write the article wrapper in source markdown. The renderer does it. The frozen `js/md.js` renders the same dialect for pre-2.0 pages.
 
 ## Three columns (default shell)
 

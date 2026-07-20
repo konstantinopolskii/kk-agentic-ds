@@ -1121,6 +1121,15 @@ declare interface NavItem {
     current?: boolean;
 }
 
+/** Pure port of js/md.js's render(src, headingOffset). No DOM, no window,
+ *  no fetch — safe to call from SSR or plain Node. Output is byte-identical
+ *  to `window.KKMd.render(md, opts?.headingOffset)` for the same input. */
+export declare function renderMarkdown(md: string, opts?: RenderMarkdownOptions): string;
+
+export declare interface RenderMarkdownOptions {
+    headingOffset?: number;
+}
+
 declare type Row = {
     key: string;
     values: string[];
@@ -1155,6 +1164,8 @@ export declare interface UseCommentFlowOptions {
     /** kit.js KK.config.i18n.reply default: 'Reply…'. */
     replyLabel?: string;
 }
+
+export declare function useCommentMenus(containerRef: Ref<HTMLElement | null>): void;
 
 export declare function useCommentSecret(inspectorRef: Ref<HTMLElement | null>): {
     extractComments: () => CommentThreadData[];

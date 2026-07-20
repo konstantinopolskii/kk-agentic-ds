@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Create transfer recreation</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "../../packages/vue/dist/index.js" } }
+  </script>
+</head>
+<body>
+  <div id="app" style="display: contents"><div class="app app--single"><!--[--><main class="book" id="doc"><!--[--><article class="book__section book__section--fill"><div class="card"><!--[--><div class="card__heading"><h3 class="t-title">Create a transfer</h3><!----></div><div class="chip-wrap"><!--[--><button class="chip" type="button" aria-pressed="true"><!--[-->Get a link<!--]--></button><button class="chip" type="button" aria-pressed="false"><!--[-->Send as email<!--]--></button><!--]--></div><div class="media"><span class="avatar media__figure">+</span><div class="media__body"><p class="t-caption--bold">Upload files</p><p class="t-micro t-muted">Up to 3 GB on the free plan</p></div><!----></div><label class="field"><input class="t-caption field__input" type="text" placeholder="Email"></label><label class="field"><input class="t-caption field__input" type="text" placeholder="Title and message"></label><div class="field field--row"><span class="t-caption--bold field__label">Expires in</span><span class="field__value t-caption">3 days</span></div><div class="field field--row"><span class="t-caption--bold field__label">Downloads</span><span class="field__value t-caption">Up to 50</span></div><button class="button t-subtitle">Transfer</button><!--]--></div></article><!--]--></main><!--]--></div></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from '../../packages/vue/dist/pages/09-create-transfer.js'
+    createSSRApp(App).mount('#app')
+  </script>
+</body>
+</html>

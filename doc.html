@@ -5,149 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Reading a book. The Agentic Design System.</title>
   <link rel="preload" href="./fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./vars.css?v=1.12.0">
-  <link rel="stylesheet" href="./style.css?v=1.12.0">
+  <link rel="stylesheet" href="./vars.css">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">
+    { "imports": { "vue": "./packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js", "@konstantinopolskii/vue": "./packages/vue/dist/index.js" } }
+  </script>
 </head>
 <body>
-  <div class="app" data-view="doc">
-
-    <!-- ============================================================== -->
-    <!-- Sidebar: brand + scroll-spy TOC. Auto-filled from the rendered -->
-    <!-- book heading rank, same as the system root.                    -->
-    <!-- ============================================================== -->
-    <aside class="sidebar" aria-label="Navigation">
-      <div class="sidebar__header t-title">Agentic<br />Design&nbsp;System</div>
-
-      <nav class="sidebar__nav" id="toc">
-        <span class="toc__indicator" aria-hidden="true"></span>
-      </nav>
-
-      <footer class="sidebar__footer t-caption">
-        2026, fuckgrechka.ru<br />
-        Powered by kk.consulting
-      </footer>
-    </aside>
-
-    <!-- ============================================================== -->
-    <!-- Book: one canon file, picked by the ?src= query param. The     -->
-    <!-- inline script below stamps data-md-src before md.js runs.      -->
-    <!-- Canon books carry their own h1, so the heading offset is 0.    -->
-    <!-- ============================================================== -->
-    <main class="book" id="doc" data-md-heading-offset="0">
-    </main>
-
-    <!-- ============================================================== -->
-    <!-- Inspector: the shelf. Every canon book plus the system root,   -->
-    <!-- so the reader moves between books without leaving the shell.   -->
-    <!-- ============================================================== -->
-    <aside class="inspector" aria-label="Open another book">
-
-      <section class="inspector__group">
-        <header class="card card--heading">
-          <h2 class="t-display">Open another book</h2>
-        </header>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md">
-          <div class="card__heading">
-            <h3 class="t-title">Patterns</h3>
-            <p class="t-caption">When composing any layout, start here. Three columns, card stack, narrow mobile.</p>
-          </div>
-          <span class="button t-subtitle">Browse patterns</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/components.md">
-          <div class="card__heading">
-            <h3 class="t-title">Components</h3>
-            <p class="t-caption">When drilling from a pattern into a part, find every foundation, component, and forbidden thing.</p>
-          </div>
-          <span class="button t-subtitle">Find a component</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/voice.md">
-          <div class="card__heading">
-            <h3 class="t-title">Voice</h3>
-            <p class="t-caption">When writing a string, find shape rules and the AI-tells inventory in one place.</p>
-          </div>
-          <span class="button t-subtitle">Read the voice guide</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/pipeline.md">
-          <div class="card__heading">
-            <h3 class="t-title">Pipeline</h3>
-            <p class="t-caption">When entering or evaluating a session, find stages, role roster, and communication protocol.</p>
-          </div>
-          <span class="button t-subtitle">Walk the pipeline</span>
-        </a>
-
-        <a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/protocols.md">
-          <div class="card__heading">
-            <h3 class="t-title">Protocols</h3>
-            <p class="t-caption">When shipping, evolving, or logging an exception, find bundle, semver, evolve, backlog, ideation.</p>
-          </div>
-          <span class="button t-subtitle">Check the protocols</span>
-        </a>
-      </section>
-
-      <section class="inspector__group">
-        <header class="card card--heading">
-          <h2 class="t-display">Return</h2>
-        </header>
-
-        <a class="card card--link" href="./index.html">
-          <div class="card__heading">
-            <h3 class="t-title">The system root</h3>
-            <p class="t-caption">Manifesto, principles, agents, and the shelf of every book and demo.</p>
-          </div>
-          <span class="button t-subtitle">Back to the manifesto</span>
-        </a>
-      </section>
-    </aside>
-  </div>
-
-  <!-- ================================================================ -->
-  <!-- The src resolver runs before md.js: reads ?src=, allows only     -->
-  <!-- relative repo paths, stamps data-md-src, and titles the tab      -->
-  <!-- after the file. A missing or rejected src renders a pointer      -->
-  <!-- back to the system root instead of an empty column.              -->
-  <!-- ================================================================ -->
-  <script>
-    (function () {
-      var src = new URLSearchParams(location.search).get('src') || '';
-      var relative = src && !/^[a-z][a-z0-9+.-]*:|^\/\/|\.\./i.test(src);
-      var book = document.getElementById('doc');
-      if (relative) {
-        book.setAttribute('data-md-src', src);
-        var name = (src.split('/').pop() || '').replace(/\.md$/, '');
-        if (name) {
-          name = name.charAt(0).toUpperCase() + name.slice(1);
-          document.title = name + '. The Agentic Design System.';
-        }
-        // Hide the current book's own card on the shelf — the reader is
-        // already holding it.
-        var self = document.querySelector('.inspector a[href$="' + src.replace(/^\.\//, '') + '"]');
-        if (self) self.setAttribute('hidden', '');
-      } else {
-        book.innerHTML =
-          '<article class="book__section">' +
-          '<h1 class="t-hero">No book selected</h1>' +
-          '<p class="t-body">This page renders one canon file, named by the src query param. Pick a book from the shelf on the right, or return to the system root.</p>' +
-          '</article>';
-      }
-    })();
+  <div id="app" style="display: contents"><!--[--><div class="app" data-view="doc"><!--[--><aside class="sidebar" aria-label="Navigation"><!----><!--[--><div class="sidebar__header t-title">Agentic<br>Design System</div><nav class="sidebar__nav" id="toc"><span class="toc__indicator" aria-hidden="true"></span></nav><!--]--><footer class="sidebar__footer t-caption"><!--[-->2026, fuckgrechka.ru<br>Powered by kk.consulting<!--]--></footer></aside><main id="doc" class="book"></main><aside class="inspector" aria-label="Open another book"><!--[--><section class="inspector__group"><!--[--><header class="card card--heading"><!--[--><h2 class="t-display">Open another book</h2><!--]--></header><!--[--><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/patterns.md"><!--[--><div class="card__heading"><h3 class="t-title">Patterns</h3><p class="t-caption">When composing any layout, start here. Three columns, card stack, narrow mobile.</p></div><span class="button t-subtitle">Browse patterns</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/components.md"><!--[--><div class="card__heading"><h3 class="t-title">Components</h3><p class="t-caption">When drilling from a pattern into a part, find every foundation, component, and forbidden thing.</p></div><span class="button t-subtitle">Find a component</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/canon/voice.md"><!--[--><div class="card__heading"><h3 class="t-title">Voice</h3><p class="t-caption">When writing a string, find shape rules and the AI-tells inventory in one place.</p></div><span class="button t-subtitle">Read the voice guide</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/pipeline.md"><!--[--><div class="card__heading"><h3 class="t-title">Pipeline</h3><p class="t-caption">When entering or evaluating a session, find stages, role roster, and communication protocol.</p></div><span class="button t-subtitle">Walk the pipeline</span><!--]--></a><a class="card card--link" href="./doc.html?src=./skills/kk-design-system/pipeline/protocols.md"><!--[--><div class="card__heading"><h3 class="t-title">Protocols</h3><p class="t-caption">When shipping, evolving, or logging an exception, find bundle, semver, evolve, backlog, ideation.</p></div><span class="button t-subtitle">Check the protocols</span><!--]--></a><!--]--><!--]--></section><section class="inspector__group"><!--[--><header class="card card--heading"><!--[--><h2 class="t-display">Return</h2><!--]--></header><a class="card card--link" href="./index.html"><!--[--><div class="card__heading"><h3 class="t-title">The system root</h3><p class="t-caption">Manifesto, principles, agents, and the shelf of every book and demo.</p></div><span class="button t-subtitle">Back to the manifesto</span><!--]--></a><!--]--></section><!--]--></aside><!--]--></div><button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar"><svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true"><rect width="18" height="2" rx="1" fill="currentColor"></rect><rect y="6" width="18" height="2" rx="1" fill="currentColor"></rect><rect y="12" width="18" height="2" rx="1" fill="currentColor"></rect></svg></button><button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open another book"><span class="fab__count">6</span></button><!--]--></div>
+  <script type="module">
+    import { createSSRApp } from 'vue'
+    import App from './packages/vue/dist/pages/doc-viewer.js'
+    createSSRApp(App).mount('#app')
   </script>
-  <script src="./js/kit.js?v=1.12.0" defer></script>
-  <script src="./js/md.js?v=1.12.0" defer></script>
-
-  <!-- FABs for tablet + phone. Outside .app so overflow:hidden cannot clip. -->
-  <button class="fab fab--nav" data-view-target="nav" type="button" aria-label="Open the sidebar">
-    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
-      <rect width="18" height="2" rx="1" fill="currentColor"/>
-      <rect y="6" width="18" height="2" rx="1" fill="currentColor"/>
-      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
-    </svg>
-  </button>
-  <button class="fab fab--inspector" data-view-target="inspector" type="button" aria-label="Open another book">
-    <span class="fab__count">6</span>
-  </button>
 </body>
 </html>

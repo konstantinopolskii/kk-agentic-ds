@@ -10,7 +10,11 @@
     "esModuleInterop": true,
     "allowJs": true,
     "types": ["vite/client"],
-    "lib": ["ESNext", "DOM", "DOM.Iterable"]
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@konstantinopolskii/vue": ["./sfc/index.ts"]
+    }
   },
   "include": ["sfc/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"]

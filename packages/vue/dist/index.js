@@ -3174,4 +3174,246 @@ function useCommentSecret(inspectorRef) {
 	};
 }
 //#endregion
-export { KApp_default as KApp, KAvatar_default as KAvatar, KBook_default as KBook, KBookSection_default as KBookSection, KButton_default as KButton, KCard_default as KCard, KCardBody_default as KCardBody, KCardCollapsible_default as KCardCollapsible, KCardHeading_default as KCardHeading, KCardStack_default as KCardStack, KChip_default as KChip, KChipWrap_default as KChipWrap, KCode_default as KCode, KCommentNew_default as KCommentNew, KCommentStack_default as KCommentStack, KCommentThread_default as KCommentThread, KDataCell_default as KDataCell, KDataTable_default as KDataTable, KDivider_default as KDivider, KDropdown_default as KDropdown, KField_default as KField, KFieldRow_default as KFieldRow, KFigure_default as KFigure, KFront_default as KFront, KFrontDesks_default as KFrontDesks, KFrontMasthead_default as KFrontMasthead, KFrontRail_default as KFrontRail, KInspector_default as KInspector, KInspectorGroup_default as KInspectorGroup, KList_default as KList, KMedia_default as KMedia, KMetric_default as KMetric, KModal_default as KModal, KNavGroup_default as KNavGroup, KPagination_default as KPagination, KPanels_default as KPanels, KPreviewFrame_default as KPreviewFrame, KQuote_default as KQuote, KRegistryTable_default as KRegistryTable, KSidebar_default as KSidebar, KSidebarNav_default as KSidebarNav, KSignoff_default as KSignoff, KSpark_default as KSpark, KSparkLabels_default as KSparkLabels, KSpecList_default as KSpecList, KStat_default as KStat, KSwitch_default as KSwitch, KTabs_default as KTabs, KTag_default as KTag, KToast_default as KToast, KTooltip_default as KTooltip, extractCommentsFromStack, toast, useColumnReveal, useCommentFlow, useCommentSecret, useCommentStore, useDeck, useInspectorStack, useNarrowView, useScrollSpy };
+//#region sfc/composables/useCommentMenus.ts
+function useCommentMenus(containerRef) {
+	function closeAllMenus(except) {
+		containerRef.value?.querySelectorAll(".comment__menu[aria-expanded=\"true\"]").forEach((btn) => {
+			if (btn === except) return;
+			btn.setAttribute("aria-expanded", "false");
+		});
+	}
+	function refreshApproveAvailability(thread) {
+		if (!thread) return;
+		if (thread.getAttribute("data-resolved") === "true" || thread.getAttribute("data-archived") === "true") {
+			thread.removeAttribute("data-can-approve");
+			return;
+		}
+		const list = thread.querySelector(".comment-thread__list");
+		const listMsgs = list ? list.querySelectorAll(":scope > .comment-msg") : [];
+		const last = listMsgs.length ? listMsgs[listMsgs.length - 1] : null;
+		if (last && last.getAttribute("data-author-role") === "agent") thread.setAttribute("data-can-approve", "true");
+		else thread.removeAttribute("data-can-approve");
+	}
+	function onClick(e) {
+		const container = containerRef.value;
+		if (!container) return;
+		const target = e.target;
+		const btn = target.closest(".comment__menu");
+		if (btn && container.contains(btn)) {
+			const wasOpen = btn.getAttribute("aria-expanded") === "true";
+			closeAllMenus(btn);
+			if (!wasOpen) refreshApproveAvailability(btn.closest(".comment-thread"));
+			btn.setAttribute("aria-expanded", wasOpen ? "false" : "true");
+			e.stopPropagation();
+			return;
+		}
+		const popover = target.closest(".comment__menu-popover");
+		if (popover && container.contains(popover)) {
+			closeAllMenus();
+			return;
+		}
+		closeAllMenus();
+	}
+	function onKeydown(e) {
+		if (e.key === "Escape") closeAllMenus();
+	}
+	onMounted(() => {
+		document.addEventListener("click", onClick);
+		document.addEventListener("keydown", onKeydown);
+	});
+	onBeforeUnmount(() => {
+		document.removeEventListener("click", onClick);
+		document.removeEventListener("keydown", onKeydown);
+	});
+}
+//#endregion
+//#region sfc/markdown.ts
+var CLASS_MAP = {
+	h1: "t-hero",
+	h2: "t-display",
+	h3: "t-title",
+	h4: "t-subtitle",
+	p: "t-body",
+	ul: "t-list",
+	ol: "t-list",
+	blockquote: "quote",
+	table: "registry-table",
+	th: "t-caption--bold",
+	td: "t-caption"
+};
+var STASH_OPEN = "";
+var STASH_CLOSE = "";
+function escHtml(s) {
+	return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+function isRawHtmlLine(line) {
+	return /^<[a-zA-Z/!]/.test(line);
+}
+function wrapInSections(html) {
+	const parts = html.split(/(<h2\b[^>]*>)/);
+	if (parts.length === 1) return parts[0].trim() ? "<article class=\"book__section\">" + parts[0] + "</article>" : "";
+	const sections = [];
+	if (parts[0].trim()) sections.push("<article class=\"book__section\">" + parts[0] + "</article>");
+	for (let i = 1; i < parts.length; i += 2) {
+		const h2tag = parts[i];
+		const content = parts[i + 1] || "";
+		sections.push("<article class=\"book__section\">" + h2tag + content + "</article>");
+	}
+	return sections.join("\n");
+}
+/** Pure port of js/md.js's render(src, headingOffset). No DOM, no window,
+*  no fetch — safe to call from SSR or plain Node. Output is byte-identical
+*  to `window.KKMd.render(md, opts?.headingOffset)` for the same input. */
+function renderMarkdown(md, opts) {
+	const offset = opts?.headingOffset == null ? 0 : opts.headingOffset | 0;
+	const blocks = [];
+	function stash(html) {
+		blocks.push(html);
+		return STASH_OPEN + (blocks.length - 1) + STASH_CLOSE;
+	}
+	function unstash(html) {
+		const re = /* @__PURE__ */ new RegExp("(\\d+)", "g");
+		return html.replace(re, (_match, i) => blocks[+i]);
+	}
+	function inline(text) {
+		text = text.replace(/`([^`\n]+)`/g, (_match, code) => stash("<code class=\"t-code\">" + escHtml(code) + "</code>"));
+		text = text.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
+		text = text.replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
+		text = text.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, "<a href=\"$2\">$1</a>");
+		return text;
+	}
+	function renderTable(block) {
+		const lines = block.split("\n").filter((l) => l.trim().length);
+		if (lines.length < 2) return null;
+		function cells(line) {
+			return line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+		}
+		const header = cells(lines[0]);
+		const sep = lines[1];
+		if (!/^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/.test(sep)) return null;
+		const rows = lines.slice(2).map(cells);
+		let html = "<table class=\"registry-table\"><thead><tr>";
+		header.forEach((h) => {
+			html += "<th class=\"t-caption--bold\">" + inline(h) + "</th>";
+		});
+		html += "</tr></thead><tbody>";
+		rows.forEach((r) => {
+			html += "<tr>";
+			r.forEach((c) => {
+				html += "<td class=\"t-caption\">" + inline(c) + "</td>";
+			});
+			html += "</tr>";
+		});
+		html += "</tbody></table>";
+		return html;
+	}
+	function renderList(items, ordered) {
+		const tag = ordered ? "ol" : "ul";
+		let out = "<" + tag + " class=\"t-list\">";
+		items.forEach((it) => {
+			out += "<li>" + inline(it.trim()) + "</li>";
+		});
+		out += "</" + tag + ">";
+		return out;
+	}
+	const lines = md.replace(/\r\n?/g, "\n").split("\n");
+	const out = [];
+	let i = 0;
+	while (i < lines.length) {
+		const line = lines[i];
+		if (!line.trim()) {
+			i++;
+			continue;
+		}
+		if (/^```/.test(line)) {
+			const buf = [];
+			i++;
+			while (i < lines.length && !/^```/.test(lines[i])) {
+				buf.push(lines[i]);
+				i++;
+			}
+			i++;
+			out.push("<pre><code class=\"t-code t-code--block\">" + escHtml(buf.join("\n")) + "</code></pre>");
+			continue;
+		}
+		if (/^---+\s*$/.test(line)) {
+			out.push("<hr />");
+			i++;
+			continue;
+		}
+		const h = /^(#{1,6})\s+(.*)$/.exec(line);
+		if (h) {
+			let level = h[1].length + offset;
+			if (level < 1) level = 1;
+			const inner = inline(h[2].trim());
+			if (level > 4) out.push("<p class=\"t-caption\">" + inner + "</p>");
+			else {
+				const tag = "h" + level;
+				out.push("<" + tag + " class=\"" + CLASS_MAP[tag] + "\">" + inner + "</" + tag + ">");
+			}
+			i++;
+			continue;
+		}
+		if (/^>\s?/.test(line)) {
+			const qbuf = [];
+			while (i < lines.length && /^>\s?/.test(lines[i])) {
+				qbuf.push(lines[i].replace(/^>\s?/, ""));
+				i++;
+			}
+			out.push("<blockquote class=\"quote\">" + inline(qbuf.join(" ")) + "</blockquote>");
+			continue;
+		}
+		if (/\|/.test(line) && i + 1 < lines.length && /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/.test(lines[i + 1])) {
+			const tbuf = [line];
+			i++;
+			while (i < lines.length && lines[i].trim() && /\|/.test(lines[i])) {
+				tbuf.push(lines[i]);
+				i++;
+			}
+			const tbl = renderTable(tbuf.join("\n"));
+			if (tbl) {
+				out.push(tbl);
+				continue;
+			}
+		}
+		if (/^[-*+]\s+/.test(line)) {
+			const uitems = [];
+			while (i < lines.length && /^[-*+]\s+/.test(lines[i])) {
+				uitems.push(lines[i].replace(/^[-*+]\s+/, ""));
+				i++;
+			}
+			out.push(renderList(uitems, false));
+			continue;
+		}
+		if (/^\d+\.\s+/.test(line)) {
+			const oitems = [];
+			while (i < lines.length && /^\d+\.\s+/.test(lines[i])) {
+				oitems.push(lines[i].replace(/^\d+\.\s+/, ""));
+				i++;
+			}
+			out.push(renderList(oitems, true));
+			continue;
+		}
+		if (isRawHtmlLine(line)) {
+			const rbuf = [line];
+			i++;
+			while (i < lines.length && lines[i].trim()) {
+				rbuf.push(lines[i]);
+				i++;
+			}
+			out.push(rbuf.join("\n"));
+			continue;
+		}
+		const pbuf = [line];
+		i++;
+		while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|```|>|---+\s*$|[-*+]\s|\d+\.\s)/.test(lines[i])) {
+			if (isRawHtmlLine(lines[i])) break;
+			pbuf.push(lines[i]);
+			i++;
+		}
+		out.push("<p class=\"t-body\">" + inline(pbuf.join(" ")) + "</p>");
+	}
+	return unstash(wrapInSections(out.join("\n")));
+}
+//#endregion
+export { KApp_default as KApp, KAvatar_default as KAvatar, KBook_default as KBook, KBookSection_default as KBookSection, KButton_default as KButton, KCard_default as KCard, KCardBody_default as KCardBody, KCardCollapsible_default as KCardCollapsible, KCardHeading_default as KCardHeading, KCardStack_default as KCardStack, KChip_default as KChip, KChipWrap_default as KChipWrap, KCode_default as KCode, KCommentNew_default as KCommentNew, KCommentStack_default as KCommentStack, KCommentThread_default as KCommentThread, KDataCell_default as KDataCell, KDataTable_default as KDataTable, KDivider_default as KDivider, KDropdown_default as KDropdown, KField_default as KField, KFieldRow_default as KFieldRow, KFigure_default as KFigure, KFront_default as KFront, KFrontDesks_default as KFrontDesks, KFrontMasthead_default as KFrontMasthead, KFrontRail_default as KFrontRail, KInspector_default as KInspector, KInspectorGroup_default as KInspectorGroup, KList_default as KList, KMedia_default as KMedia, KMetric_default as KMetric, KModal_default as KModal, KNavGroup_default as KNavGroup, KPagination_default as KPagination, KPanels_default as KPanels, KPreviewFrame_default as KPreviewFrame, KQuote_default as KQuote, KRegistryTable_default as KRegistryTable, KSidebar_default as KSidebar, KSidebarNav_default as KSidebarNav, KSignoff_default as KSignoff, KSpark_default as KSpark, KSparkLabels_default as KSparkLabels, KSpecList_default as KSpecList, KStat_default as KStat, KSwitch_default as KSwitch, KTabs_default as KTabs, KTag_default as KTag, KToast_default as KToast, KTooltip_default as KTooltip, extractCommentsFromStack, renderMarkdown, toast, useColumnReveal, useCommentFlow, useCommentMenus, useCommentSecret, useCommentStore, useDeck, useInspectorStack, useNarrowView, useScrollSpy };
