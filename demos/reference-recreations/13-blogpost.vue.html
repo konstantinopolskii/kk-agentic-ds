@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Blogpost, one column — Vue</title>
+  <link rel="preload" href="../../fonts/commissioner/Commissioner-Latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../vars.css">
+  <link rel="stylesheet" href="../../style.css">
+  <script type="importmap">
+    { "imports": { "vue": "../../packages/vue/node_modules/vue/dist/vue.esm-browser.prod.js" } }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module">
+    import { createApp } from 'vue'
+    import App from './13-blogpost.vue.js'
+    const host = document.createElement('div')
+    createApp(App).mount(host)
+    document.getElementById('app').replaceWith(...host.children)
+  </script>
+</body>
+</html>
