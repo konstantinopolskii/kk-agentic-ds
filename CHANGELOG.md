@@ -2,6 +2,14 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.15.2, 2026-07-20
+
+Patch. Deck cards visible on the shout again.
+
+### Changed
+- `.deck-card` inactive background moves from `var(--color-surface-strong)` (a 6% black tint) to a solid `#dcdcdc`. The deck always lives inside a black shout; a semi-transparent tint composited onto that black and the fanned-back cards vanished, leaving only the white active card. A solid gray keeps every card visible, one tonal step under the active white one, whatever surface sits behind the deck. Regression dated to 1.3.0, when the background was switched from a solid `#cccccc` to the token tint.
+- `package.json` + `.claude-plugin/plugin.json` 1.15.1 → 1.15.2.
+
 ## 1.15.1, 2026-07-18
 
 Patch. Spark geometry and the delta-glyph lockdown.

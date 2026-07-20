@@ -1935,7 +1935,12 @@ body {
   --color-surface-overlay: rgba(0, 0, 0, 0.03);
   --color-surface-strong:  rgba(0, 0, 0, 0.06);
   --color-border:          rgba(0, 0, 0, 0.1);
-  background: var(--color-surface-strong);
+  /* Opaque gray, not a token tint: the deck always lives inside a
+     black shout, and a semi-transparent surface token (6% black)
+     would composite onto the shout's black and vanish. A solid value
+     keeps every fanned-back card visible, one tonal step under the
+     white active card, whatever surface sits behind the deck. */
+  background: #dcdcdc;
   color: #000000;
   border-radius: var(--radius-lg);
   padding: var(--space-5);
