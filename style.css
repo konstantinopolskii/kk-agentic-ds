@@ -2123,7 +2123,7 @@ body {
    ========================================================================= */
 
 /* Lists — each li reads as a row, same as a book__spec row. A 0.5px
-   hairline sits between rows; the marker (numeral or hairline
+   hairline sits between rows; the marker (numeral or a 4 px black dot
    bullet) sits in the left gutter like a key column. Structurally
    still a ul/ol for semantics, visually a tight tabular list. */
 .t-list {
@@ -2165,9 +2165,10 @@ ul.t-list > li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: calc(var(--space-3) + var(--lh-caption) / 2);
-  width: var(--space-3);
-  height: 0.5px;
+  top: calc(var(--space-3) + var(--lh-caption) / 2 - var(--space-1) / 2);
+  width: var(--space-1);
+  height: var(--space-1);
+  border-radius: var(--radius-full);
   background: var(--color-text);
 }
 ol.t-list { counter-reset: t-list; }

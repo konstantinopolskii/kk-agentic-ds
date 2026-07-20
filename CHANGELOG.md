@@ -2,6 +2,14 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.15.3, 2026-07-20
+
+Patch. Unordered list marker becomes a black dot.
+
+### Changed
+- `ul.t-list > li::before` marker moves from a 12 px × 0.5px gray-reading hairline dash to a 4 px solid black dot (`--space-1` square, `--radius-full`, `--color-text`), vertically centered on the first caption line. The old dash rendered as a dull light gray at 0.5px and read as an afterthought; a full-ink dot at 0.25em reads as an intentional bullet and stays on the 4 px grid. `ol.t-list` decimal numerals are unchanged.
+- `package.json` + `.claude-plugin/plugin.json` 1.15.2 → 1.15.3.
+
 ## 1.15.2, 2026-07-20
 
 Patch. Deck cards visible on the shout again.

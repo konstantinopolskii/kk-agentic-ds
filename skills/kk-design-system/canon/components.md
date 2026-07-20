@@ -578,8 +578,8 @@ Caption-sized hairlined list for prose or tabular data. Both `<ul>` (disc marker
 Rules:
 
 - Caption size (16 / 24) with hairlines between items.
-- Custom markers: bullet (`ul`) or decimal (`ol`) in the left gutter, Bold 700.
-- Structural markers render black, Medium 500. No muted defaults.
+- Custom markers in the left gutter: `ul` gets a 4 px black dot, `ol` a decimal numeral Bold 700.
+- Structural markers render black, full ink. No muted defaults, no thin gray dashes.
 - Single list class for both prose and tabular data patterns.
 - Used in: book, card, spec list.
 
