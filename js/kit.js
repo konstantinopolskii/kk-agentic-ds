@@ -219,7 +219,13 @@
     commentPersistence: false,
     commentMount: false,
     commentAutoEnable: false,
-    commentSecret: false
+    commentSecret: false,
+    modal: false,
+    dropdown: false,
+    tabs: false,
+    tooltip: false,
+    toast: false,
+    pagination: false
   };
   var scrollSpyObserver = null;
 
@@ -2127,6 +2133,584 @@
   }
 
   // ================================================================
+  // EXPANSION 1.16.0 — interactive modules (modal, dropdown, tabs,
+  // tooltip, toast, pagination). Same delegated, idempotent,
+  // KK.refresh-safe shape as the comment/deck modules above.
+  // ================================================================
+  // ================================================================
+  // Modal — centered dialog over a scrim. Trigger lives in page markup
+  // as [data-modal-open="ID"]; the dialog is the element #ID. Opening
+  // moves focus into the dialog and traps Tab within it; closing
+  // restores focus to the opener. Scrim click, any [data-modal-close],
+  // and Escape all close. Body scroll locks while any modal is open.
+  //
+  // Idempotent + KK.refresh-safe: the document listeners bind once
+  // (guarded by bound.modal), and they resolve [data-modal-open] /
+  // [data-modal-close] live, so modals injected later need no
+  // re-binding. Mirrors initCommentMenus (outside-click + Escape).
+  //
+  // Integrator wiring:
+  //   1. Add `modal: false` to the `bound` sentinel object.
+  //   2. Call initModal() inside KK.init() and KK.refresh().
+  // ================================================================
+  var modalOpeners = (typeof WeakMap !== 'undefined') ? new WeakMap() : null;
+  function initModal() {
+    if (bound.modal) return;
+
+    // Visible, focusable controls inside a dialog, in DOM order.
+    function focusables(dialog) {
+      return Array.prototype.filter.call(
+        dialog.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), ' +
+          'select:not([disabled]), textarea:not([disabled]), ' +
+          '[tabindex]:not([tabindex="-1"])'
+        ),
+        function (el) {
+          return el.offsetWidth || el.offsetHeight || el.getClientRects().length;
+        }
+      );
+    }
+
+    function anyOpen() {
+      return !!document.querySelector('.modal[data-state="open"]');
+    }
+
+    KK.openModal = function (id) {
+      var modal = document.getElementById(id);
+      if (!modal || !modal.classList.contains('modal')) return;
+      if (modal.getAttribute('data-state') === 'open') return;
+
+      // Portal to <body> so the fixed scrim and dialog resolve against
+      // the viewport, not a transformed ancestor. The column-reveal
+      // orchestrator leaves an identity transform on every
+      // .book__section (animation-fill-mode: both), which establishes a
+      // containing block that would otherwise trap the scrim to the
+      // reading column. Idempotent: a re-opened modal already sits in body.
+      if (modal.parentNode !== document.body) document.body.appendChild(modal);
+
+      // Remember the opener so focus can return to it on close.
+      var opener = document.activeElement;
+      if (opener && modalOpeners) modalOpeners.set(modal, opener);
+
+      modal.setAttribute('data-state', 'open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden'; // body scroll lock
+
+      var dialog = modal.querySelector('.modal__dialog');
+      if (!dialog) return;
+      var f = focusables(dialog);
+      if (f.length) {
+        f[0].focus();
+      } else {
+        if (!dialog.hasAttribute('tabindex')) dialog.setAttribute('tabindex', '-1');
+        dialog.focus();
+      }
+    };
+
+    KK.closeModal = function (id) {
+      var modal = document.getElementById(id);
+      if (!modal || modal.getAttribute('data-state') !== 'open') return;
+
+      modal.setAttribute('data-state', 'closed');
+      modal.setAttribute('aria-hidden', 'true');
+      if (!anyOpen()) document.documentElement.style.overflow = '';
+
+      var opener = modalOpeners && modalOpeners.get(modal);
+      if (opener && typeof opener.focus === 'function' && opener.isConnected) {
+        opener.focus();
+      }
+      if (modalOpeners) modalOpeners.delete(modal);
+    };
+
+    // Open + close triggers on one delegated click listener.
+    document.addEventListener('click', function (e) {
+      var opener = e.target.closest('[data-modal-open]');
+      if (opener && opener.getAttribute('data-modal-open')) {
+        e.preventDefault();
+        KK.openModal(opener.getAttribute('data-modal-open'));
+        return;
+      }
+      var closer = e.target.closest('[data-modal-close]');
+      if (closer) {
+        var modal = closer.closest('.modal');
+        if (modal && modal.id) KK.closeModal(modal.id);
+      }
+    });
+
+    // Escape closes the open modal; Tab is trapped within its dialog.
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        var openEsc = document.querySelector('.modal[data-state="open"]');
+        if (openEsc && openEsc.id) {
+          e.preventDefault();
+          KK.closeModal(openEsc.id);
+        }
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      var openModal = document.querySelector('.modal[data-state="open"]');
+      if (!openModal) return;
+      var dialog = openModal.querySelector('.modal__dialog');
+      if (!dialog) return;
+
+      var f = focusables(dialog);
+      if (!f.length) { e.preventDefault(); return; }
+      var first = f[0];
+      var last = f[f.length - 1];
+      var active = document.activeElement;
+
+      // Pull any stray focus back inside, then wrap at both ends.
+      if (!dialog.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+
+    bound.modal = true;
+  }
+
+  // ================================================================
+  // Dropdown — menu-button popover. The trigger toggles a role="menu"
+  // popover; outside-click and Escape close it (mirrors initCommentMenus).
+  // Up/Down give roving focus over the menuitems, Home/End jump to the
+  // ends; Enter/Space activate natively because each row is a real
+  // <button role="menuitem">. Choosing a row dispatches
+  // `kk:dropdown-select` on the .dropdown and returns focus to the
+  // trigger. Idempotent; safe under KK.refresh().
+  //
+  // Integrator: add `dropdown: false` to the `bound` sentinel object and
+  // call initDropdown() from both KK.init() and KK.refresh().
+  // ================================================================
+  function initDropdown() {
+    if (bound.dropdown) return;
+
+    function items(dd) {
+      return Array.prototype.slice.call(dd.querySelectorAll('.dropdown__item'));
+    }
+
+    function closeAll(except) {
+      document
+        .querySelectorAll('.dropdown[data-dropdown] .dropdown__popover[data-state="open"]')
+        .forEach(function (pop) {
+          var dd = pop.closest('[data-dropdown]');
+          if (dd === except) return;
+          pop.setAttribute('data-state', 'closed');
+          var trigger = dd.querySelector('.dropdown__trigger');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    function openDropdown(dd) {
+      var pop = dd.querySelector('.dropdown__popover');
+      var trigger = dd.querySelector('.dropdown__trigger');
+      if (!pop) return;
+      pop.setAttribute('data-state', 'open');
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+      var first = items(dd)[0];
+      if (first) first.focus();
+    }
+
+    function focusTrigger(dd) {
+      var trigger = dd.querySelector('.dropdown__trigger');
+      if (trigger) trigger.focus();
+    }
+
+    function activate(dd, item) {
+      var text = (item.textContent || '').trim();
+      var value = item.getAttribute('data-value');
+      dd.dispatchEvent(new CustomEvent('kk:dropdown-select', {
+        bubbles: true,
+        detail: {
+          label: text,
+          value: value === null ? text : value,
+          index: items(dd).indexOf(item)
+        }
+      }));
+      closeAll(null);
+      focusTrigger(dd);
+    }
+
+    document.addEventListener('click', function (e) {
+      var trigger = e.target.closest('.dropdown__trigger');
+      if (trigger) {
+        var dd = trigger.closest('[data-dropdown]');
+        var wasOpen = trigger.getAttribute('aria-expanded') === 'true';
+        closeAll(null);
+        if (!wasOpen) openDropdown(dd);
+        e.stopPropagation();
+        return;
+      }
+      var item = e.target.closest('.dropdown__item');
+      if (item) {
+        var owner = item.closest('[data-dropdown]');
+        if (owner) activate(owner, item);
+        return;
+      }
+      closeAll(null);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        var openPop = document.querySelector('.dropdown[data-dropdown] .dropdown__popover[data-state="open"]');
+        if (openPop) {
+          var dd = openPop.closest('[data-dropdown]');
+          closeAll(null);
+          focusTrigger(dd);
+        }
+        return;
+      }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Home' || e.key === 'End') {
+        var pop = e.target.closest('.dropdown__popover[data-state="open"]');
+        if (!pop) return;
+        var list = items(pop.closest('[data-dropdown]'));
+        if (!list.length) return;
+        e.preventDefault();
+        var i = list.indexOf(document.activeElement);
+        var next;
+        if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = list.length - 1;
+        else if (e.key === 'ArrowDown') next = i < 0 ? 0 : (i + 1) % list.length;
+        else next = i <= 0 ? list.length - 1 : i - 1;
+        list[next].focus();
+      }
+    });
+
+    bound.dropdown = true;
+  }
+
+  // ================================================================
+  // Tabs — underlined tab strip over stacked panels.
+  //
+  // INTEGRATOR WIRING (paste inside the KK IIFE in js/kit.js):
+  //   1. Add a sentinel to the `bound` object:  tabs: false
+  //   2. Call initTabs() from KK.init() AND KK.refresh().
+  //
+  // Fully delegated (two document-level listeners, bound once), so it
+  // is idempotent and picks up any `.tabs` injected after load without
+  // re-binding — same shape as initCommentMenus. No public API: the DOM
+  // state (aria-selected + panel [hidden]) is the whole contract.
+  // Automatic-activation model: moving focus with the arrow keys also
+  // selects the tab, so the visible panel always follows the focus ring.
+  // ================================================================
+  function initTabs() {
+    if (bound.tabs) return;
+
+    // Select `tab`, deselect its siblings, and show the matching panel.
+    // Pass focus=true for keyboard-driven moves so the focus ring rides
+    // the selection; click keeps the pointer's own focus behaviour.
+    function selectTab(tab, focus) {
+      var list = tab.closest('.tabs__list');
+      if (!list) return;
+      list.querySelectorAll('.tabs__tab').forEach(function (t) {
+        var isTarget = t === tab;
+        t.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (!panel) return;
+        if (isTarget) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      });
+      if (focus) tab.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      var tab = e.target.closest('.tabs__tab');
+      if (!tab) return;
+      selectTab(tab, false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var tab = e.target.closest ? e.target.closest('.tabs__tab') : null;
+      if (!tab) return;
+      var list = tab.closest('.tabs__list');
+      if (!list) return;
+      var tabs = Array.prototype.slice.call(list.querySelectorAll('.tabs__tab'));
+      var i = tabs.indexOf(tab);
+      if (i === -1) return;
+
+      var next = null;
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+          next = tabs[(i + 1) % tabs.length];
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          next = tabs[(i - 1 + tabs.length) % tabs.length];
+          break;
+        case 'Home':
+          next = tabs[0];
+          break;
+        case 'End':
+          next = tabs[tabs.length - 1];
+          break;
+        default:
+          return;
+      }
+      e.preventDefault();
+      selectTab(next, true);
+    });
+
+    bound.tabs = true;
+  }
+
+  // ================================================================
+  // Tooltip — hint bubble on an inline trigger
+  //
+  // Integrator: paste initTooltip into the js/kit.js IIFE, add
+  //   tooltip: false
+  // to the `bound` sentinel object, and call initTooltip() from both
+  // KK.init() and KK.refresh() (alongside initDeck / initCommentMenus).
+  // No public KK.* API — the component is declarative markup only.
+  //
+  // Delegated at the document level so it is idempotent and picks up any
+  // tooltip added later (KK.refresh needs no per-instance rebind): one
+  // pointer pair, one focus pair, one Escape handler cover every
+  // [data-tooltip] on the page. Mirrors the single-listener shape of
+  // initCommentMenus.
+  // ================================================================
+  function initTooltip() {
+    if (bound.tooltip) return;
+
+    function bubbleFor(tip) {
+      return tip ? tip.querySelector('.tooltip__bubble') : null;
+    }
+    function openTip(tip) {
+      var bubble = bubbleFor(tip);
+      if (bubble) bubble.setAttribute('data-state', 'open');
+    }
+    function closeTip(tip) {
+      var bubble = bubbleFor(tip);
+      if (bubble) bubble.setAttribute('data-state', 'closed');
+    }
+    function closeAll(except) {
+      document.querySelectorAll('.tooltip__bubble[data-state="open"]').forEach(function (bubble) {
+        if (except && except.contains(bubble)) return;
+        bubble.setAttribute('data-state', 'closed');
+      });
+    }
+
+    // Pointer. mouseover/mouseout bubble (mouseenter/leave do not), so a
+    // single delegated pair reaches every trigger. The bubble itself is
+    // pointer-events:none, so it never fires these — leaving the trigger
+    // always closes.
+    document.addEventListener('mouseover', function (e) {
+      var tip = e.target.closest('.tooltip[data-tooltip]');
+      if (!tip) return;
+      var bubble = bubbleFor(tip);
+      if (bubble && bubble.getAttribute('data-state') === 'open') return;
+      closeAll(tip);
+      openTip(tip);
+    });
+    document.addEventListener('mouseout', function (e) {
+      var tip = e.target.closest('.tooltip[data-tooltip]');
+      if (!tip) return;
+      // Ignore moves that stay inside the same tooltip.
+      if (e.relatedTarget && tip.contains(e.relatedTarget)) return;
+      closeTip(tip);
+    });
+
+    // Keyboard / assistive tech. focusin/focusout bubble to document.
+    document.addEventListener('focusin', function (e) {
+      var tip = e.target.closest('.tooltip[data-tooltip]');
+      if (!tip) return;
+      closeAll(tip);
+      openTip(tip);
+    });
+    document.addEventListener('focusout', function (e) {
+      var tip = e.target.closest('.tooltip[data-tooltip]');
+      if (!tip) return;
+      if (e.relatedTarget && tip.contains(e.relatedTarget)) return;
+      closeTip(tip);
+    });
+
+    // Escape closes any open bubble.
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    bound.tooltip = true;
+  }
+
+  // ================================================================
+  // Toast — inverted status message, bottom-center singleton stack.
+  //
+  // KK.toast(text, opts) is the imperative entry: find or build the
+  // stack, append a toast, play it in, auto-dismiss after
+  // opts.duration (default 4000ms; 0 keeps it until dismissed), and
+  // wire the dismiss × plus an optional action button. initToast()
+  // delegates close/action clicks so a toast printed by the server (or
+  // rendered by <KToast>) dismisses without the imperative path.
+  //
+  // Manifesto: the toast is a black/inverted surface, so the soft FAB
+  // shadow is permitted material. No status colors — one ink surface,
+  // meaning lives in the words.
+  //
+  // Add `toast: false` to the `bound` sentinel map; it also runs safe
+  // if the flag is absent (undefined is falsy on first pass).
+  // ================================================================
+  function toastStackEl() {
+    var stack = document.querySelector('.toast-stack[data-toast-stack]');
+    if (stack) return stack;
+    stack = document.createElement('div');
+    stack.className = 'toast-stack';
+    stack.setAttribute('data-toast-stack', '');
+    stack.setAttribute('aria-live', 'polite');
+    stack.setAttribute('aria-atomic', 'false');
+    document.body.appendChild(stack);
+    return stack;
+  }
+
+  function dismissToast(toast) {
+    if (!toast || toast.getAttribute('data-state') === 'closed') return;
+    toast.setAttribute('data-state', 'closed');
+    var removed = false;
+    function remove() {
+      if (removed) return;
+      removed = true;
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }
+    toast.addEventListener('transitionend', remove, { once: true });
+    // Fallback: if no transition fires (reduced-motion collapses the
+    // token to ~0), tear down anyway so the node never lingers.
+    global.setTimeout(remove, 400);
+  }
+
+  KK.toast = function (text, opts) {
+    opts = opts || {};
+    var stack = toastStackEl();
+
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('data-state', 'closed');
+
+    var span = document.createElement('span');
+    span.className = 'toast__text';
+    span.textContent = text == null ? '' : String(text);
+    toast.appendChild(span);
+
+    if (opts.action) {
+      var action = document.createElement('button');
+      action.className = 'toast__action';
+      action.type = 'button';
+      action.textContent = String(opts.action);
+      action.addEventListener('click', function () {
+        if (typeof opts.onAction === 'function') opts.onAction();
+        dismissToast(toast);
+      });
+      toast.appendChild(action);
+    }
+
+    var close = document.createElement('button');
+    close.className = 'toast__close';
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Dismiss');
+    close.textContent = '×';
+    close.addEventListener('click', function () { dismissToast(toast); });
+    toast.appendChild(close);
+
+    stack.appendChild(toast);
+
+    // Force a reflow so the from-state paints before we flip to open —
+    // otherwise the enter transition is skipped and the toast pops in.
+    void toast.offsetWidth;
+    toast.setAttribute('data-state', 'open');
+
+    var duration = typeof opts.duration === 'number' ? opts.duration : 4000;
+    if (duration > 0) {
+      global.setTimeout(function () { dismissToast(toast); }, duration);
+    }
+
+    return toast;
+  };
+
+  // Server-rendered toasts (or <KToast> markup): delegate dismissal for
+  // the close × and the action button. Idempotent and refresh-safe —
+  // one document-level listener, bound once. Imperative toasts also
+  // carry direct listeners; dismissToast guards against double-fire.
+  function initToast() {
+    if (bound.toast) return;
+    document.addEventListener('click', function (e) {
+      var hit = e.target.closest('.toast__close, .toast__action');
+      if (!hit) return;
+      dismissToast(hit.closest('.toast'));
+    });
+    bound.toast = true;
+  }
+
+  // ================================================================
+  // Pagination — optimistic aria-current + a page-change event.
+  //
+  // Paste this function inside the js/kit.js IIFE, next to initDeck /
+  // initCommentMenus. It reuses the module-level `bound` guard object and
+  // runs off one delegated document listener, so it is idempotent and
+  // safe under KK.refresh().
+  //
+  // Presentational component: the page buttons are consumer-wired. This
+  // module only moves aria-current to the resolved page (optimistically)
+  // and fires a bubbling `kk:page-change` CustomEvent carrying
+  // { page, previous } so the consumer can fetch the next slice. Edge
+  // buttons resolve to the current page number +/- 1; when an edge steps
+  // past the visible window the numerals are left as-is and the consumer
+  // re-renders. Disabled edges are ignored. No KK.* method — the event is
+  // the whole contract.
+  //
+  // Wire the call into KK.init() and KK.refresh() alongside the other
+  // init* modules:
+  //     initPagination();
+  // ================================================================
+  function initPagination() {
+    if (bound.pagination) return;
+
+    function pageNum(btn) {
+      return btn ? parseInt(btn.textContent, 10) : null;
+    }
+
+    document.addEventListener('click', function (e) {
+      var control = e.target.closest('.pagination__page, .pagination__edge');
+      if (!control || control.disabled) return;
+      var nav = control.closest('.pagination');
+      if (!nav) return;
+
+      var pages = Array.prototype.slice.call(nav.querySelectorAll('.pagination__page'));
+      var currentBtn = nav.querySelector('.pagination__page[aria-current="page"]');
+      var previous = pageNum(currentBtn);
+
+      var targetNum;
+      if (control.classList.contains('pagination__edge')) {
+        if (previous == null) return;
+        targetNum = control.getAttribute('data-dir') === 'prev' ? previous - 1 : previous + 1;
+      } else {
+        targetNum = pageNum(control);
+      }
+      if (targetNum == null || targetNum === previous) return;
+
+      // Optimistic: move aria-current to the matching visible numeral if
+      // the window still holds one. When an edge steps past the window the
+      // consumer re-renders, so leaving the marker where it is is correct.
+      var match = pages.filter(function (b) { return pageNum(b) === targetNum; })[0];
+      if (match) {
+        pages.forEach(function (b) { b.removeAttribute('aria-current'); });
+        match.setAttribute('aria-current', 'page');
+      }
+
+      nav.dispatchEvent(new CustomEvent('kk:page-change', {
+        bubbles: true,
+        detail: { page: targetNum, previous: previous },
+      }));
+    });
+
+    bound.pagination = true;
+  }
+
+  // ================================================================
   // Public API
   // ================================================================
   KK.init = function () {
@@ -2149,6 +2733,12 @@
     autoEnableCommentSelectionFlow();
     initCommentSecretCopy();
     initDeck();
+    initModal();
+    initDropdown();
+    initTabs();
+    initTooltip();
+    initToast();
+    initPagination();
     KK.initialized = true;
   };
 
@@ -2175,6 +2765,12 @@
     autoEnableCommentSelectionFlow();
     initCommentSecretCopy();
     initDeck();
+    initModal();
+    initDropdown();
+    initTabs();
+    initTooltip();
+    initToast();
+    initPagination();
   };
 
   KK.enableCommentSelectionFlow = function () {

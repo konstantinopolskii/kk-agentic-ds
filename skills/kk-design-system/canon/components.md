@@ -33,6 +33,12 @@ Every HTML snippet below pastes into a kit page with `vars.css`, `style.css`, an
 | `spark` | Monochrome trend marks under the data-ink policy. | `demos/reference-recreations/02-forecast-module.html` |
 | `preview-frame` | Scaled iframe for doc surfaces. | `demos/fundamental--accepted/index.html#preview-frame` |
 | `registry-table` | Dense two-column inventory for kit docs. | `demos/fundamental--accepted/index.html#registry-table` |
+| `modal` | One decision held over a scrim. White dialog, no shadow. | `demos/kit-snapshot/index.html#modal` |
+| `dropdown` | Menu button and popover. Picks one action. | `demos/kit-snapshot/index.html#dropdown` |
+| `tabs` | One surface, peer views under a shared strip. | `demos/kit-snapshot/index.html#tabs` |
+| `tooltip` | One line of hint on hover or focus. Inverted bubble. | `demos/kit-snapshot/index.html#tooltip` |
+| `toast` | Transient confirmation. Inverted, bottom-center, self-clearing. | `demos/kit-snapshot/index.html#toast` |
+| `pagination` | Page numerals with CSS-drawn prev and next chevrons. | `demos/kit-snapshot/index.html#pagination` |
 
 ## Foundations
 
@@ -856,9 +862,189 @@ Rules:
 
 Deep link: `demos/fundamental--accepted/index.html#registry-table`.
 
+## Modal
+
+One decision, held over a scrim. The dialog is a white surface at `24 px` radius, centered over 40%-black. No shadow: the scrim and a `0.5 px` hairline carry the edge. Heading is one contrast step, ink title over a muted subtitle. Reach for a modal when the user must confirm, name, or cancel one thing before the page moves on. Anything the page can host inline is not a modal.
+
+```html
+<button class="button button--primary t-subtitle" data-modal-open="publish-modal">
+  Publish deliverable
+</button>
+
+<div class="modal" id="publish-modal" data-state="closed" aria-hidden="true">
+  <div class="modal__scrim" data-modal-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="publish-modal-t">
+    <button class="modal__close" data-modal-close aria-label="Close">×</button>
+    <div class="modal__heading">
+      <h3 class="t-title" id="publish-modal-t">Publish deliverable</h3>
+      <p class="t-caption t-muted">This shares the signed charter with the client workspace.</p>
+    </div>
+    <div class="modal__body">
+      The document locks after publish. Reopen it from the workspace to draft a revision.
+    </div>
+    <div class="modal__foot">
+      <button class="button t-subtitle" data-modal-close>Cancel</button>
+      <button class="button button--primary t-subtitle">Publish</button>
+    </div>
+  </div>
+</div>
+```
+
+Rules:
+
+- One dialog surface. Heading, body, foot in that order. Foot is optional; a modal without an action still closes on ×, scrim, or Escape.
+- White surface, so no shadow. Radius is `--radius-lg` — the dialog case, never `--radius-md`.
+- The × uses the character `×` with `aria-label="Close"`. Never an icon font, never an arrow glyph.
+- Cancel is a plain button. Red is never invented for it; a destructive action names itself in the primary label.
+- One primary per foot. Full-width buttons split the foot row evenly.
+- The trigger sets `data-modal-open="id"`; the dialog is `#id`. Every close control sets `data-modal-close`.
+- Opening traps focus in the dialog and locks body scroll; closing restores focus to the opener.
+- Used in: signoff, three columns, charter workspace.
+- Runtime API and data attributes: `docs/integration/modal.md`.
+
+Deep link: `demos/kit-snapshot/index.html#modal`.
+
+## Dropdown
+
+A menu button and its popover. The trigger carries the label; the popover holds a short list of actions the user picks one from. Reach for a dropdown when a handful of related commands would crowd the surface as separate buttons. The popover is a white surface, so it earns no shadow: a `0.5px` hairline and the page behind it do the separating.
+
+```html
+<div class="dropdown" data-dropdown>
+  <button class="dropdown__trigger button t-subtitle" aria-haspopup="menu" aria-expanded="false">Export</button>
+  <div class="dropdown__popover" role="menu" data-state="closed">
+    <button class="dropdown__item" role="menuitem" type="button">Download PDF</button>
+    <button class="dropdown__item" role="menuitem" type="button">Copy share link</button>
+    <button class="dropdown__item" role="menuitem" type="button">Send to inspector</button>
+  </div>
+</div>
+```
+
+Rules:
+
+- The trigger is a `.button`. It commits to opening the menu, so it looks like every other button.
+- Items are actions, not settings. A row that toggles a state is a switch; a row that names a category is a tag.
+- One contrast step: a hovered or focused item fills to the 3% overlay. No bold, no color shift.
+- Escape closes the popover and returns focus to the trigger. Outside-click closes it too.
+- Popover radius is `16 px`, item radius `12 px`. Never a shadow.
+- Used in: card heading, data table row, toolbar.
+
+Deep link: `demos/kit-snapshot/index.html#dropdown`.
+
+## Tabs
+
+One surface, several views. Tabs swap the panel under a shared strip without a page change. The selected tab is the only ink on the row; every other tab waits at muted weight under the same hairline. Reach for tabs when the views are peers. If one view must come before the next, that is a flow, not tabs.
+
+```html
+<div class="tabs" data-tabs>
+  <div class="tabs__list" role="tablist">
+    <button class="tabs__tab" role="tab" id="acct-t0" aria-controls="acct-p0" aria-selected="true">Overview</button>
+    <button class="tabs__tab" role="tab" id="acct-t1" aria-controls="acct-p1" aria-selected="false">Members</button>
+    <button class="tabs__tab" role="tab" id="acct-t2" aria-controls="acct-p2" aria-selected="false">Billing</button>
+  </div>
+  <div class="tabs__panel" role="tabpanel" id="acct-p0" aria-labelledby="acct-t0">
+    <p class="t-caption">Nine seats in use across two workspaces.</p>
+  </div>
+  <div class="tabs__panel" role="tabpanel" id="acct-p1" aria-labelledby="acct-t1" hidden>
+    <p class="t-caption">Invite a teammate by email to add them to this workspace.</p>
+  </div>
+  <div class="tabs__panel" role="tabpanel" id="acct-p2" aria-labelledby="acct-t2" hidden>
+    <p class="t-caption">Next invoice posts on 1 August for $240.</p>
+  </div>
+</div>
+```
+
+Rules:
+
+- One tab is selected at all times. It carries full ink and a 2 px ink underline; the rest stay muted.
+- One step of contrast. Muted goes to ink and the underline appears. Weight never changes and the label never fills.
+- Tabs are peers. Ordered or gated views belong in a flow, not a strip.
+- Label the view, not its state. "Billing", not "Billing (open)".
+- Sentence case. One or two words a tab.
+- Arrow keys move and select across the strip; Home and End jump to the ends.
+- Used in: card, inspector, panels.
+
+Deep link: `demos/kit-snapshot/index.html#tabs`.
+
+## Tooltip
+
+A hint on demand. An inline trigger reveals one line of micro copy on hover or keyboard focus; the bubble is an inverted black surface that floats above the trigger and never takes the pointer. Reach for a tooltip to explain a control the label alone cannot carry — never to store text the user needs to finish the task.
+
+```html
+<span class="tooltip" data-tooltip>
+  <button class="tooltip__trigger" type="button" aria-describedby="tt-net">?</button>
+  <span class="tooltip__bubble" role="tooltip" id="tt-net" data-state="closed">Gross minus refunds and platform fees.</span>
+</span>
+```
+
+Rules:
+
+- One line only. If the hint wraps, it belongs in the body, not a bubble.
+- The bubble is inverted (black) and carries a soft shadow — the one place a shadow is earned. A tooltip on a white surface would take none.
+- `pointer-events: none` on the bubble. It is a hint, never a target; put no links or buttons inside it.
+- Opens on hover and on keyboard focus; Escape or leaving closes it. `aria-describedby` on the trigger points at the bubble id.
+- Never load-bearing. If the user cannot finish without the text, it is not a tooltip.
+- Used in: field label, spec list, card heading, data-table header.
+
+Deep link: `demos/kit-snapshot/index.html#tooltip`.
+
+## Toast
+
+Transient confirmation. A toast reports that an action landed, then leaves on its own. Inverted surface, bottom-center, one line of copy with an optional action and a dismiss. If the user has to decide something, reach for a modal. A toast never asks a question.
+
+```html
+<div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="false">
+  <div class="toast" data-state="open" role="status">
+    <span class="toast__text">Draft saved</span>
+    <button class="toast__action" type="button">Undo</button>
+    <button class="toast__close" aria-label="Dismiss" type="button">×</button>
+  </div>
+</div>
+```
+
+Rules:
+
+- One stack per page. It is a singleton; `KK.toast()` finds it or builds it, and every toast lands in the same bottom-center column.
+- Inverted surface. The black background earns the soft shadow. Nothing else about the toast carries depth.
+- No status colors. Success, warning, and error share one ink surface. The words carry the meaning, not a green or a red.
+- At most one action, labelled with a verb. "Undo", not "OK". Clicking it dismisses the toast.
+- The dismiss × always ships. A toast clears itself after four seconds; the × lets the user clear it sooner.
+- `aria-live="polite"` so a screen reader announces the message without cutting off what it was already reading.
+- Used in: save flows, undo affordances, copy-to-clipboard, background job completion.
+
+Deep link: `demos/kit-snapshot/index.html#toast`.
+
+## Pagination
+
+One row of page numerals with a prev and a next chevron. The current page is the only ink numeral, sitting on a surface-strong fill; the rest stay muted until hovered. Reach for pagination when a list outgrows one screen and the user moves through it a page at a time. Runs of hidden pages collapse to a single gap, so the row never scrolls.
+
+```html
+<nav class="pagination" aria-label="Pagination">
+  <button class="pagination__edge" data-dir="prev" aria-label="Previous page" type="button"></button>
+  <button class="pagination__page" type="button">1</button>
+  <span class="pagination__gap" aria-hidden="true">…</span>
+  <button class="pagination__page" type="button">3</button>
+  <button class="pagination__page" type="button" aria-current="page">4</button>
+  <button class="pagination__page" type="button">5</button>
+  <span class="pagination__gap" aria-hidden="true">…</span>
+  <button class="pagination__page" type="button">12</button>
+  <button class="pagination__edge" data-dir="next" aria-label="Next page" type="button"></button>
+</nav>
+```
+
+Rules:
+
+- Chevrons are CSS-drawn from a rotated bordered square, never a font glyph. The Commissioner face carries no chevron; a `‹` falls back to the system font and breaks.
+- One current page per nav. Mark it with `aria-current="page"`; that is the only ink numeral.
+- Numerals sit muted. The current page is the single distinction step: muted to ink, plus the surface-strong fill.
+- Disable prev on the first page and next on the last. Drop the edge to 0.3 opacity, never remove it.
+- Collapse a run of skipped pages to one `…` gap. The gap is `aria-hidden` and never clickable.
+- Used in: data table, status feed.
+
+Deep link: `demos/kit-snapshot/index.html#pagination`.
+
 ## Forbidden
 
-- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`, `toc-`, `fab`, `deck`, `highlight`, `figure`, `quote`, `divider`, `avatar`, `chip`, `media`, `metric`, `data-table`, `spark`, `panels`, `panel-`, `front`.
+- Any class not starting with `t-`, `card`, `field`, `button`, `tag`, `switch`, `sidebar`, `book`, `nav-group`, `inspector`, `comment`, `stat`, `swatch`, `app`, `preview-frame`, `registry-table`, `toc-`, `fab`, `deck`, `highlight`, `figure`, `quote`, `divider`, `avatar`, `chip`, `media`, `metric`, `data-table`, `spark`, `panels`, `panel-`, `front`, `modal`, `dropdown`, `tabs`, `tooltip`, `toast`, `pagination`.
 - Inline styles for tokens. Use `var(--token-name)`.
 - New color, spacing, or radius values outside `tokens.json`.
 - Drop shadows, glass, blur, gradients.
@@ -874,7 +1060,7 @@ Additions run the evolve protocol. See `pipeline/protocols.md § Evolve`.
 <div class="book__signoff">
   <div class="book__signoff-stats">
     <div class="stat t-caption">
-      <div><span class="t-caption--bold">19</span> components catalogued.</div>
+      <div><span class="t-caption--bold">25</span> components catalogued.</div>
     </div>
     <div class="stat t-caption">
       <div><span class="t-caption--bold">7</span> foundations rule the rest.</div>

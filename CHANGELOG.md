@@ -2,6 +2,26 @@
 
 Every release names: what was added, what was removed, what moved. Consumers read this when bumping versions.
 
+## 1.16.0, 2026-07-20
+
+Minor. Six interactive components, and a comprehensive one-page snapshot of the whole kit.
+
+### Added
+- `modal` — one decision held over a 40%-black scrim. White dialog at `--radius-lg`, no shadow (the scrim plus a 0.5px hairline carry the edge). Opens from a `[data-modal-open="id"]` trigger; closes on ×, scrim, or Escape. Traps focus, locks body scroll, restores focus to the opener. `KK.openModal(id)` / `KK.closeModal(id)` drive it imperatively; on open the dialog portals to `<body>` so its fixed positioning resolves against the viewport, not a transformed ancestor.
+- `dropdown` — a menu button and its popover. Trigger reuses `.button`; the popover is a white surface, so no shadow, hairline only. One item selected per click; Escape and outside-click close. Vue `KDropdown` emits `select`.
+- `tabs` — an underlined strip over stacked panels. One contrast step: the selected tab goes ink with a 2px underline, the rest stay muted. Click plus arrow-key selection, Home/End to the ends. `initTabs()` owns it.
+- `tooltip` — a one-line hint on an inline trigger, revealed on hover or keyboard focus. Inverted black bubble (earns the one permitted soft shadow, same license as `.fab`), `pointer-events: none`, never load-bearing.
+- `toast` — a transient inverted confirmation, bottom-center, self-clearing after four seconds. `KK.toast(text, { action, onAction, duration })` finds or builds the singleton stack on `<body>`. One ink surface, no status colors, an optional verb action and a dismiss ×.
+- `pagination` — a numeral row with prev and next chevrons drawn from a rotated bordered square (the Commissioner face carries no chevron glyph). One ink current page on a surface-strong fill; runs of hidden pages collapse to one `…` gap. `KPagination` emits `change`.
+- Vue layer: `KModal`, `KDropdown`, `KTabs`, `KTooltip`, `KToast`, `KPagination` under `packages/vue/src/components/`, exported from the index.
+- `demos/kit-snapshot/` — a plain-Vue page rendering every component (44 existing + 6 new) in the three-column doc shell, with the six interactive families live under `js/kit.js`. Sidebar TOC auto-fills; anchors `#modal … #pagination` back the canon deep links.
+- Integration docs at `docs/integration/{modal,dropdown,toast,pagination}.md` for the four components with a public API surface. Tabs and tooltip are declarative-only.
+
+### Changed
+- `js/kit.js` gains `initModal`/`initDropdown`/`initTabs`/`initTooltip`/`initToast`/`initPagination`, wired into `KK.init()` and `KK.refresh()`. All delegated and idempotent, same shape as the comment and deck modules. `bound` gains six flags.
+- Canon `components.md`: six component sections, six registry rows, the Forbidden allow-list widened by the six new prefixes, the signoff count 19 → 25.
+- `package.json` + `.claude-plugin/plugin.json` 1.15.3 → 1.16.0.
+
 ## 1.15.3, 2026-07-20
 
 Patch. Unordered list marker becomes a black dot.

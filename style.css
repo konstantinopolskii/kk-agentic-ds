@@ -2916,3 +2916,446 @@ td.data-table__lead { font-weight: var(--fw-bold); }
   min-height: 50vh;
   display: block;
 }
+
+/* =========================================================================
+   Interactive components — added 1.16.0. Modal, dropdown, tabs, tooltip,
+   toast, pagination. Overlays hold height with a hairline + surface, not a
+   shadow; the two inverted surfaces (tooltip bubble, toast) earn the one
+   permitted soft shadow. See manifesto § Material.
+   ========================================================================= */
+/* === modal === */
+/* Centered dialog over a 40%-black scrim. White surface, so no shadow —
+   separation comes from the scrim plus a 0.5px hairline on the dialog.
+   Radius-lg (24px) marks it as the dialog case. One contrast step in the
+   heading: ink title, muted subtitle. Open motion rides --dur-base +
+   --ease-out; the × close hovers on --dur-fast. */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+}
+
+.modal[data-state="closed"] {
+  display: none;
+}
+
+.modal__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* no blur, no gradient */
+}
+
+.modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-bg);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  /* White surface on a scrim: no box-shadow. The hairline carries the edge. */
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  width: var(--space-7);
+  height: var(--space-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-title);
+  line-height: 1;
+  color: var(--color-text);
+  background: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.modal__close:hover {
+  background: var(--color-surface-overlay);
+}
+
+.modal__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-right: var(--space-7); /* keep the title clear of the × */
+}
+
+.modal__body {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--color-text);
+}
+
+.modal__foot {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Full-width buttons split the row evenly; a single button fills it. */
+.modal__foot > .button {
+  flex: 1;
+}
+
+/* Open motion — scrim fades, dialog lifts and settles. Plays only on the
+   closed → open transition, since [data-state="closed"] is display:none.
+   Durations resolve to 0.01ms under prefers-reduced-motion via the tokens. */
+.modal[data-state="open"] .modal__scrim {
+  animation: modal-scrim-in var(--dur-base) var(--ease-out);
+}
+
+.modal[data-state="open"] .modal__dialog {
+  animation: modal-dialog-in var(--dur-base) var(--ease-out);
+}
+
+@keyframes modal-scrim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === dropdown === */
+/* Menu-button popover. Trigger reuses .button; the popover is a white
+   surface on the page, so it earns NO shadow — separation comes from the
+   0.5px hairline border alone (manifesto § Material). Radius token, one
+   contrast step (item hover fills to the 3% overlay), motion on tokens. */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown__popover {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  min-width: 180px;
+  background: var(--color-bg);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-1);
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  /* No box-shadow: white surface. The hairline + page contrast separate it. */
+}
+
+.dropdown__popover[data-state="closed"] { display: none; }
+
+.dropdown__popover[data-state="open"] {
+  display: flex;
+  animation: dropdown-in var(--dur-fast) var(--ease-out);
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown__item {
+  width: 100%;
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: var(--fw-regular);
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.dropdown__item:hover { background: var(--color-surface-overlay); }
+.dropdown__item:focus-visible {
+  outline: none;
+  background: var(--color-surface-overlay);
+}
+
+/* === tabs === */
+/* Underlined tab strip. One step of contrast: inactive rows sit at
+   --color-text-muted, the selected row goes full ink and grows a 2 px
+   ink underline. Weight stays --fw-regular on every tab. No shadow, no
+   fill, no radius — the hairline under the list and the ink underline
+   under the selected tab carry the whole affordance. */
+.tabs {
+  display: block;
+}
+
+.tabs__list {
+  display: flex;
+  gap: var(--space-5);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.tabs__tab {
+  padding: var(--space-2) 0;
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-subtitle);
+  font-weight: var(--fw-regular);
+  color: var(--color-text-muted);
+  background: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  /* Overlap the list hairline so the ink underline replaces it cleanly. */
+  margin-bottom: -0.5px;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-bottom-color var(--dur-fast) var(--ease-out);
+}
+
+.tabs__tab[aria-selected="true"] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+}
+
+.tabs__tab:focus-visible {
+  outline: 2px solid var(--color-border-strong);
+  outline-offset: 2px;
+}
+
+.tabs__panel {
+  padding-top: var(--space-4);
+}
+
+.tabs__panel[hidden] {
+  display: none;
+}
+
+/* === tooltip === */
+/* Tooltip — a one-line hint on an inline trigger. The bubble is an
+   inverted (black) surface floating above the trigger, revealed on
+   hover or keyboard focus and dismissed on leave, blur, or Escape.
+   Because the surface is black, a soft shadow is the one earned
+   material affordance (same license as .fab); a white surface would
+   get none. Behaviour lives in initTooltip() in js/kit.js. */
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Trigger — a hairline help badge by default. Muted at rest, ink on
+   hover/focus: one contrast step (muted → ink), weight and box held
+   constant. cursor: help names the affordance. */
+.tooltip__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-6);
+  height: var(--space-6);
+  padding: 0;
+  border: 0.5px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--fs-micro);
+  line-height: 1;
+  font-weight: var(--fw-bold);
+  cursor: help;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.tooltip__trigger:hover,
+.tooltip__trigger:focus-visible {
+  color: var(--color-text);
+}
+
+/* Bubble — inverted surface above the trigger, centred on it. Never a
+   pointer target. Fades on --dur-fast; the closed state hides it. */
+.tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: var(--fs-micro);
+  line-height: var(--lh-micro);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  z-index: 150;
+  pointer-events: none;
+  /* Permitted: soft shadow on an inverted/black surface. See manifesto § Material. */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--dur-fast) var(--ease-out),
+              visibility var(--dur-fast) var(--ease-out);
+}
+.tooltip__bubble[data-state="closed"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* === toast === */
+
+/* Singleton stack, bottom-center. Fixed, shrinks to its widest toast.
+   pointer-events:none lets clicks fall through the empty gap between
+   stacked toasts; each toast re-arms its own pointer events. */
+.toast-stack {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Inverted surface: black bg, white ink. The black background earns the
+   soft material shadow — same permission as the FAB (manifesto § Material).
+   No status colors; one ink surface carries every message. */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-text);
+  color: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: auto;
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+
+/* Enter/exit: translateY(8px) + fade. Open (default) rests at rest.
+   The imperative path inserts with data-state="closed", reflows, then
+   flips to "open" so the transition plays; dismissal flips back. */
+.toast[data-state="closed"] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* Inverted-ghost action. Weight is the one contrast step against the
+   message text; no fill, no border. */
+.toast__action {
+  color: var(--color-bg);
+  font-weight: var(--fw-bold);
+  background: 0;
+  border: 0;
+}
+
+/* Dismiss ×. Muted by opacity — the one contrast step against the ink
+   message. Full ink on hover. */
+.toast__close {
+  color: var(--color-bg);
+  opacity: 0.6;
+  font-size: var(--fs-subtitle);
+  line-height: 1;
+  background: 0;
+  border: 0;
+}
+
+.toast__close:hover {
+  opacity: 1;
+}
+
+/* === pagination === */
+/* Numeral row with prev/next chevrons. Muted numerals, one ink current
+   page on a surface-strong fill. No shadow (white surface, no inverted
+   affordance). Chevrons are CSS-drawn rotated corners, never a font
+   glyph — the Commissioner face carries no chevron. Tokens only. */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pagination__page,
+.pagination__edge {
+  min-width: var(--space-8);
+  height: var(--space-8);
+  padding: 0 var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.pagination__page:hover,
+.pagination__edge:not([disabled]):hover {
+  background: var(--color-surface-overlay);
+}
+
+/* One step (muted -> ink) plus a surface-strong fill affordance. */
+.pagination__page[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: var(--fw-bold);
+  background: var(--color-surface-strong);
+}
+
+/* Edge chevron: an empty button whose ::before is a bordered square
+   showing only its left and bottom edges, rotated into a chevron. The
+   2px ink is a drawn-glyph affordance, not a hairline separator. */
+.pagination__edge {
+  padding: 0;
+}
+
+.pagination__edge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-left: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-text);
+}
+
+.pagination__edge[data-dir="prev"]::before {
+  transform: rotate(45deg);
+}
+
+.pagination__edge[data-dir="next"]::before {
+  transform: rotate(-135deg);
+}
+
+.pagination__edge[disabled] {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* The gap glyph shares the row's line-box so its baseline lands with
+   the numerals; it never widens into a scrollable strip. */
+.pagination__gap {
+  height: var(--space-8);
+  padding: 0 var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--color-text-muted);
+}
+

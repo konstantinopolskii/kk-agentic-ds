@@ -65,3 +65,11 @@ export { default as KDataCell } from './components/KDataCell.js'
 // Kit-doc primitives
 export { default as KPreviewFrame } from './components/KPreviewFrame.js'
 export { default as KRegistryTable } from './components/KRegistryTable.js'
+
+// Interactive (1.16.0) — behavior lives in js/kit.js; these emit the markup
+export { default as KModal } from './components/KModal.js'
+export { default as KDropdown } from './components/KDropdown.js'
+export { default as KTabs } from './components/KTabs.js'
+export { default as KTooltip } from './components/KTooltip.js'
+export { default as KToast } from './components/KToast.js'
+export { default as KPagination } from './components/KPagination.js'
